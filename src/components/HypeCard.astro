@@ -1,0 +1,48 @@
+---
+import { CollectionEntry, getCollection } from "astro:content";
+
+export interface Props {
+    entry: CollectionEntry<"hype">;
+}
+
+const { data } = Astro.props.entry;
+const { title, description, url, thumbnail } = data;
+
+const website = (
+    await getCollection("websites", ({ data }) => url?.includes(data.url))
+)[0]?.data;
+---
+
+<a
+    href={url}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="flex flex-col xl:flex-row gap-6 -mx-4 px-4 py-4 hover:bg-gray-600 transition-all rounded-xl"
+>
+    <div class="space-y-4">
+        <h2 class="font-bold text-xl">{title}</h2>
+        <p class="whitespace-pre-wrap">{description}</p>
+        <div class="flex flex-wrap text-sm text-gray-300">
+            {
+                website && (
+                    <p class="inline-flex items-center">
+                        <img
+                            src={website.icon}
+                            class="w-3 h-3 mr-2 object-cover"
+                        />
+                        {website.title}
+                    </p>
+                )
+            }
+        </div>
+    </div>
+    {
+        thumbnail && (
+            <img
+                src={thumbnail}
+                alt={title}
+                class="aspect-video h-40 xl:h-32 rounded-lg object-cover order-first xl:order-last"
+            />
+        )
+    }
+</a>
