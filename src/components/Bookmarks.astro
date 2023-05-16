@@ -7,7 +7,12 @@ const allWebsites = await getCollection("websites");
     {
         allWebsites.map((website) => (
             <li class="block border-b border-gray-400 last:border-b-0 py-4">
-                <a href={website.data.url} class="flex gap-4 items-center">
+                <a
+                    href={website.data.url}
+                    class="flex gap-4 items-center"
+                    target="_blank"
+                    rel="noopener"
+                >
                     <img
                         src={website.data.icon}
                         alt={website.data.title}

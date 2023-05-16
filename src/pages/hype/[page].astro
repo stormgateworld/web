@@ -1,0 +1,45 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Box from "../../components/Box.astro";
+import { getCollection } from "astro:content";
+import HypeCard from "../../components/HypeCard.astro";
+import type { PaginateFunction } from "astro";
+
+export async function getStaticPaths({
+    paginate,
+}: {
+    paginate: PaginateFunction;
+}) {
+    // Generate pages from our array of astronauts, with 2 to a page
+    return paginate((await getCollection("hype")).reverse(), { pageSize: 3 });
+}
+// All paginated data is passed on the "page" prop
+const { page } = Astro.props;
+---
+
+<Layout title="Stormgate World">
+    <section class="container max-w-4xl mx-auto px-4 relative">
+        <main>
+            <div class="flex flex-col lg:flex-row gap-8 my-8">
+                <div class="flex-auto">
+                    <Box title={"Hype"}>
+                        <p class="mb-12">
+                            Community news, interviews, in-game footage and more
+                            to get you excited
+                        </p>
+                        <div class="space-y-6">
+                            {page.data.map((item) => <HypeCard entry={item} />)}
+                        </div>
+                    </Box>
+                </div>
+            </div>
+        </main>
+        <div class="flex justify-between">
+            {page.url.prev ? <a href={page.url.prev}>Previous</a> : <span />}
+            <span class="text-center flex-auto"
+                >Page {page.currentPage} of {page.lastPage}</span
+            >
+            {page.url.next ? <a href={page.url.next}>Next</a> : <span />}
+        </div>
+    </section>
+</Layout>

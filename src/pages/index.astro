@@ -6,7 +6,7 @@ import { getCollection } from "astro:content";
 import HypeCard from "../components/HypeCard.astro";
 import hero from "../assets/hero.png";
 import logoWhite from "../assets/stormgate-logo-white.png";
-const hype = (await getCollection("hype")).reverse().slice(0, 2);
+const hype = (await getCollection("hype")).reverse().slice(0, 5);
 ---
 
 <Layout title="Stormgate World">
@@ -19,8 +19,28 @@ const hype = (await getCollection("hype")).reverse().slice(0, 2);
     </div>
     <section class="container mx-auto px-4 relative">
         <main>
-            <div class="py-12">
-                <img src={logoWhite.src} class="h-16" />
+            <div class="py-12 px-2">
+                <img src={logoWhite.src} class="-ml-2 h-16" />
+                <p class="text-2xl font-bold my-6">
+                    Get ready for the launch of Stormgate!
+                </p>
+
+                <p class="text-lg font-medium max-w-xl my-4 leading-relaxed">
+                    Developed by the talented Blizzard-veterans at FrostGiant
+                    Studios, Stormgate® is a highly anticipated free-to-play RTS
+                    Game coming to PC, with a private beta in mid-2023. Play
+                    solo or co-op in a futuristic settings with The Human
+                    Resistance, The Demonic Invaders and other to be revealed
+                    factions.
+                </p>
+
+                <p class="text-md font-medium max-w-xl leading-relaxed">
+                    On Stormgate World, you can find recent updates, community
+                    links, and other stuff to get you excited about the game.
+                    This is fan-made website brought to you by the creators of
+                    AoE4 World, the biggest community site for Age of Empires IV
+                    – with great hopes and plans for Stormgate.
+                </p>
             </div>
 
             <div class="flex flex-col lg:flex-row gap-8 my-8">
