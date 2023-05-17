@@ -3,14 +3,17 @@ import Layout from "../layouts/Layout.astro";
 import Bookmarks from "../components/Bookmarks.astro";
 import Box from "../components/Box.astro";
 import { getCollection } from "astro:content";
+import { sortCollectionByDate } from "../lib/utils";
 import HypeCard from "../components/HypeCard.astro";
 import hero from "../assets/hero.png";
 import logoWhite from "../assets/stormgate-logo-white.png";
-const hype = (await getCollection("hype")).reverse().slice(0, 5);
+const hype = (await getCollection("hype"))
+    .sort(sortCollectionByDate)
+    .slice(0, 5);
 ---
 
 <Layout title="Stormgate World">
-    <div class="h-[800px] w-full absolute -z-0">
+    <div class="h-[800px] w-full absolute -z-0 top-0">
         <img src={hero.src} class="w-full h-full object-cover absolute" />
         <div
             class="absolute inset-0 bg-gradient-to-b from-transparent to-gray-800"
@@ -41,6 +44,14 @@ const hype = (await getCollection("hype")).reverse().slice(0, 5);
                     AoE4 World, the biggest community site for Age of Empires IV
                     – with great hopes and plans for Stormgate.
                 </p>
+
+                <a
+                    href="https://playstormgate.com"
+                    target="_blank"
+                    class="bg-white rounded-full px-6 py-2 text-black my-6 inline-block font-bold"
+                >
+                    Sign up for beta
+                </a>
             </div>
 
             <div class="flex flex-col lg:flex-row gap-8 my-8">

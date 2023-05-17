@@ -6,7 +6,7 @@ const hypeCollection = defineCollection({
         thumbnail: z.string().optional(),
         url: z.string().optional(),
         publisher: z.string().optional(),
-        date: z.date().optional(),
+        date: z.date(),
     }),
 });
 
