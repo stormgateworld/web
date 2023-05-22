@@ -1,5 +1,6 @@
 ---
 import { CollectionEntry, getCollection } from "astro:content";
+import Timeago from "./Timeago.astro";
 
 export interface Props {
     entry: CollectionEntry<"hype">;
@@ -11,22 +12,6 @@ const { title, description, url, thumbnail, publisher, date } = data;
 const website = (
     await getCollection("websites", ({ data }) => url?.includes(data.url))
 )[0]?.data;
-
-const formatDateRelative = (date: Date) => {
-    const now = new Date();
-    const diff = now.getTime() - date.getTime();
-    const months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30));   
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-
-    if (months > 0) 
-        return `${months} month${months > 1 ? "s" : ""} ago`;
-     else
-    if (days > 0) 
-        return `${days} day${days > 1 ? "s" : ""} ago`;
-     else 
-        return "today";
-    
-};
 ---
 
 <a
@@ -37,7 +22,10 @@ const formatDateRelative = (date: Date) => {
 >
     <div class="space-y-4 flex-auto">
         <h2 class="font-bold font-display text-xl">{title}</h2>
-        <p class="whitespace-pre-wrap max-w-prose text-gray-50 leading-relaxed">{description}</p>
+        <p
+            class="whitespace-pre-wrap max-w-prose text-gray-50 leading-relaxed"
+            set:text={description}
+        />
         <div class="flex flex-wrap text-sm text-gray-300 gap-3">
             {
                 website && (
@@ -51,7 +39,13 @@ const formatDateRelative = (date: Date) => {
                 )
             }
             {publisher && <p>{publisher}</p>}
-            {date && <p>{formatDateRelative(date)}</p>}
+            {
+                date && (
+                    <p>
+                        <Timeago date={date} />
+                    </p>
+                )
+            }
         </div>
     </div>
     {

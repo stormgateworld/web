@@ -1,0 +1,40 @@
+---
+export interface Props {
+    date?: Date;
+}
+
+const { date } = Astro.props;
+---
+
+<astro-timeago data-date={date}>
+    {date?.toLocaleDateString("en", { dateStyle: "medium" })}
+</astro-timeago>
+<script>
+    class TimeAgo extends HTMLElement {
+        constructor() {
+            super();
+            if (this.dataset.date) {
+                const date = new Date(this.dataset.date);
+                this.setAttribute(
+                    "title",
+                    date.toLocaleDateString("en", { dateStyle: "full" })
+                );
+                this.textContent = this.formatDateRelative(date);
+            }
+        }
+
+        formatDateRelative = (date: Date) => {
+            const now = new Date();
+            const diff = now.getTime() - date.getTime();
+            const months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30));
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+            if (months > 0)
+                return `${months} month${months > 1 ? "s" : ""} ago`;
+            else if (days > 0) return `${days} day${days > 1 ? "s" : ""} ago`;
+            else return "today";
+        };
+    }
+
+    customElements.define("astro-timeago", TimeAgo);
+</script>
