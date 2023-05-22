@@ -39,6 +39,7 @@ const website = (
                 )
             }
             {publisher && <p>{publisher}</p>}
+            { (website || publisher) && date && <span class="px-0">&middot;</span> }
             {
                 date && (
                     <p>
