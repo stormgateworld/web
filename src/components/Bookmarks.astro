@@ -6,7 +6,7 @@ const allWebsites = await getCollection("websites");
 <ul class="flex flex-col">
     {
         allWebsites.map((website) => (
-            <li class="block border-b border-gray-400 last:border-b-0 py-4">
+            <li class="block border-b border-gray-300/30 last:border-b-0 py-4">
                 <a
                     href={website.data.url}
                     class="flex gap-4 items-center"
@@ -19,8 +19,12 @@ const allWebsites = await getCollection("websites");
                         class="w-8 h-8 object-cover rounded-xs"
                     />
                     <div>
-                        <p class="font-bold">{website.data.title}</p>
-                        <p>{website.data.subtitle}</p>
+                        <p class="font-bold font-display">
+                            {website.data.title}
+                        </p>
+                        <p class="font-display text-gray-50">
+                            {website.data.subtitle}
+                        </p>
                     </div>
                 </a>
             </li>

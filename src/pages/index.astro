@@ -12,7 +12,7 @@ const hype = (await getCollection("hype"))
     .slice(0, 5);
 ---
 
-<Layout title="Stormgate World">
+<Layout title="Home">
     <div class="h-[800px] w-full absolute -z-0 top-0">
         <img src={hero.src} class="w-full h-full object-cover absolute" />
         <div
@@ -48,9 +48,15 @@ const hype = (await getCollection("hype"))
                 <a
                     href="https://playstormgate.com"
                     target="_blank"
-                    class="bg-white rounded-full px-6 py-2 text-black my-6 inline-block font-bold"
+                    class="bg-white rounded-full mr-4 px-6 py-2 text-black my-6 inline-block font-bold"
                 >
                     Sign up for beta
+                </a>
+                <a
+                    href="/tldr"
+                    class="bg-transparent text-white border border-white rounded-full px-6 py-2 my-6 inline-block font-bold"
+                >
+                    Learn more
                 </a>
             </div>
 

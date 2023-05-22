@@ -1,8 +1,23 @@
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
     theme: {
         extend: {
+            fontFamily: {
+                sans: [
+                    "Montserrat Variable",
+                    "Montserrat",
+                    ...defaultTheme.fontFamily.sans,
+                ],
+                display: [
+                    "Sen",
+                    "Montserrat Variable",
+                    "Montserrat",
+                    ...defaultTheme.fontFamily.sans,
+                ],
+            },
             colors: {
                 gray: {
                     50: "#E9E9EA",
@@ -19,5 +34,5 @@ module.exports = {
             },
         },
     },
-    plugins: [],
+    plugins: [require("@tailwindcss/typography")],
 };

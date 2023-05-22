@@ -17,9 +17,6 @@ const formatDateRelative = (date: Date) => {
     const diff = now.getTime() - date.getTime();
     const months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30));   
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor(diff / (1000 * 60 * 60));
-    const minutes = Math.floor(diff / (1000 * 60));
-    const seconds = Math.floor(diff / 1000);
 
     if (months > 0) 
         return `${months} month${months > 1 ? "s" : ""} ago`;
@@ -39,8 +36,8 @@ const formatDateRelative = (date: Date) => {
     class="flex flex-col xl:flex-row gap-6 -mx-4 px-4 py-4 hover:bg-gray-600 transition-all rounded-xl"
 >
     <div class="space-y-4 flex-auto">
-        <h2 class="font-bold text-xl">{title}</h2>
-        <p class="whitespace-pre-wrap max-w-prose">{description}</p>
+        <h2 class="font-bold font-display text-xl">{title}</h2>
+        <p class="whitespace-pre-wrap max-w-prose text-gray-50 leading-relaxed">{description}</p>
         <div class="flex flex-wrap text-sm text-gray-300 gap-3">
             {
                 website && (
