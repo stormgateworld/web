@@ -15,10 +15,7 @@ const { date } = Astro.props;
             super();
             if (this.dataset.date) {
                 const date = new Date(this.dataset.date);
-                this.setAttribute(
-                    "title",
-                    date.toLocaleDateString("en", { dateStyle: "full" })
-                );
+                this.setAttribute("title", this.innerText);
                 this.textContent = this.formatDateRelative(date);
             }
         }

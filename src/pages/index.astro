@@ -16,7 +16,7 @@ const hype = (await getCollection("hype"))
     <div class="h-[800px] w-full absolute -z-0 top-0">
         <img src={hero} class="w-full h-full object-cover absolute" />
         <div
-            class="absolute inset-0 bg-gradient-to-b from-transparent to-gray-800"
+            class="absolute inset-0 bg-gradient-to-b from-transparent to-gray-900"
         >
         </div>
     </div>
@@ -48,13 +48,13 @@ const hype = (await getCollection("hype"))
                 <a
                     href="https://playstormgate.com"
                     target="_blank"
-                    class="bg-white rounded-full mr-4 px-6 py-2 border border-black text-black my-6 inline-block font-bold hover:bg-transparent hover:text-white hover:border-white"
+                    class="bg-white rounded-full mr-4 px-6 py-2 border text-black my-6 inline-block font-bold border-white hover:bg-gray-100 transition"
                 >
                     Sign up for beta
                 </a>
                 <a
                     href="/tldr"
-                    class="bg-transparent text-white border border-white rounded-full px-6 py-2 my-6 inline-block font-bold hover:bg-white hover:text-black"
+                    class="bg-transparent text-white border border-white rounded-full px-6 py-2 my-6 inline-block font-bold hover:bg-white/20 transition"
                 >
                     Learn more
                 </a>
