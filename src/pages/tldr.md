@@ -2,7 +2,6 @@
 layout: ../layouts/Page.astro
 title: 'TL;DR: Everything you need to know about Stormgate'
 ---
-
 # TL;DR:
 Everything you need to know about Stormgate, summarized.
 
