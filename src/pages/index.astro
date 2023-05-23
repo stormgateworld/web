@@ -7,9 +7,15 @@ import { sortCollectionByDate } from "../lib/utils";
 import HypeCard from "../components/HypeCard.astro";
 import hero from "../assets/hero.png";
 import logoWhite from "../assets/stormgate-logo-white.png";
+import VideoCard from "../components/VideoCard.astro";
+
 const hype = (await getCollection("hype"))
     .sort(sortCollectionByDate)
     .slice(0, 5);
+
+const videos = (await getCollection("videos"))
+    .sort(sortCollectionByDate)
+    .slice(0, 4);
 ---
 
 <Layout title="Home">
@@ -72,6 +78,18 @@ const hype = (await getCollection("hype"))
                     <Box title={"Bookmarks"}>
                         <Bookmarks />
                     </Box>
+                </div>
+            </div>
+            <div class="">
+                <h3
+                    class="font-bold font-display text-white/70 text-xl my-4 flex-auto"
+                >
+                    Featured Videos
+                </h3>
+                <div
+                    class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+                >
+                    {videos.map((video) => <VideoCard entry={video} />)}
                 </div>
             </div>
         </main>

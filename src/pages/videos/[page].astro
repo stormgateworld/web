@@ -1,0 +1,42 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Box from "../../components/Box.astro";
+import { CollectionEntry, getCollection } from "astro:content";
+import HypeCard from "../../components/HypeCard.astro";
+import type { PaginateFunction } from "astro";
+import { sortCollectionByDate } from "../../lib/utils";
+import VideoCard from "../../components/VideoCard.astro";
+export async function getStaticPaths({
+    paginate,
+}: {
+    paginate: PaginateFunction;
+}) {
+    // Generate pages from our array of astronauts, with 2 to a page
+    return paginate(
+        (await getCollection("videos")).sort(sortCollectionByDate),
+        {
+            pageSize: 8,
+        }
+    );
+}
+// All paginated data is passed on the "page" prop
+const { page } = Astro.props;
+---
+
+<Layout title="Videos">
+    <section class="container mx-auto px-4 relative">
+        <h1 class="text-4xl font-bold font-display my-6">Videos</h1>
+        <div
+            class="grid p-4 sm:p-0 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+        >
+            {page.data.map((video) => <VideoCard entry={video} />)}
+        </div>
+        <div class="flex justify-between my-6">
+            {page.url.prev ? <a href={page.url.prev}>Previous</a> : <span />}
+            <span class="text-center flex-auto"
+                >Page {page.currentPage} of {page.lastPage}</span
+            >
+            {page.url.next ? <a href={page.url.next}>Next</a> : <span />}
+        </div>
+    </section>
+</Layout>

@@ -1,0 +1,33 @@
+---
+import type { CollectionEntry } from "astro:content";
+import Timeago from "./Timeago.astro";
+
+export interface Props {
+    entry: CollectionEntry<"videos">;
+}
+
+const { data: video, slug } = Astro.props.entry;
+---
+
+<a href={`/videos/${slug}`} class="hover:bg-gray-600 transition-all rounded-xl">
+    <img
+        src={video.thumbnail}
+        alt={video.title}
+        class="aspect-video w-auto rounded-t-xl object-cover"
+    />
+    <div class="p-4 gap-2 flex flex-col">
+        <h4 class="text-lg leading-snug font-bold">{video.title}</h4>
+        <p class="text-gray-300 text-sm">
+            {
+                video.author_avatar_url && (
+                    <img
+                        src={video.author_avatar_url}
+                        alt={video.author}
+                        class="w-4 h-4 rounded-full inline-block mr-1"
+                    />
+                )
+            }
+            <span>{video.author}</span>
+        </p>
+    </div>
+</a>
