@@ -2,6 +2,7 @@
 export const prerender = false;
 
 import Layout from "../../layouts/Layout.astro";
+import MailingListForm from "../../components/MailingListForm.tsx";
 
 const time = new Date().toJSON();
 ---
@@ -9,35 +10,5 @@ const time = new Date().toJSON();
 <Layout title="Home">
   <h1>{time}</h1>
   <h1>Sign Up Now!</h1>
-  <form>
-    <label>
-      Email:
-      <input class="text-black" type="email" name="email" required/>
-    </label>
-    <button data-submit-button>Submit</button>
-  </form>
+  <MailingListForm client:load />
 </Layout>
-
-<script>
-  const emailInput: HTMLInputElement | null = document.querySelector('form [name="email"]')
-  const submitButton = document.querySelector('form [data-submit-button]')
-
-  if (!submitButton || !emailInput) {
-    throw new Error('No submit button found')
-  }
-
-  submitButton.addEventListener('click', (e) => {
-    e.preventDefault()
-
-    const response = fetch("http://127.0.0.1:8788/api/mailing-list-users",
-      {
-        method: 'POST',
-        mode: "cors",
-        // credentials: "include",
-        headers: { 'Content-Type':'application/json' },
-        body: JSON.stringify({
-          email: emailInput.value,
-        }),
-      });
-  })
-</script>
