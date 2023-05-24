@@ -32,6 +32,8 @@ const time = new Date().toJSON();
     const response = fetch("/api/mailing-list-users",
       {
         method: 'POST',
+        mode: "cors",
+        credentials: "same-origin",
         headers: { 'Content-Type':'application/json' },
         body: JSON.stringify({
           email: emailInput.value,

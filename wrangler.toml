@@ -14,3 +14,4 @@ watch_dir = "."
 binding = "DB" # i.e. available in your Worker on env.DB
 database_name = "stormgateworld-web-production"
 database_id = "9cf14703-55aa-483e-be03-2801eab91e4d"
+migrations_dir = "db/migrations"
