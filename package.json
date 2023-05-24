@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "wrangler pages dev -- astro dev",
+    "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
     "preview": "wrangler pages dev ./dist",
@@ -24,7 +24,13 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.9",
+    "@types/better-sqlite3": "^7.6.4",
+    "better-sqlite3": "^8.4.0",
     "drizzle-kit": "^0.18.0",
+    "miniflare": "^3.0.0",
     "wrangler": "^3.0.1"
+  },
+  "prettier": {
+    "printWidth": 120
   }
 }

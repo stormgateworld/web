@@ -1,5 +1,9 @@
 # Web
 
+## Requirements
+- Node v18 or higher
+- Make sure node-gyp is installed globally `npm install -g node-gyp` (this is needed to build better-sqlite3 from source)
+
 ## 🧞 Commands
 
 All commands are run from the root of the project, from a terminal:

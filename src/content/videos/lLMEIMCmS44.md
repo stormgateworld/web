@@ -1,5 +1,5 @@
 ---
-url: https://www.vimeo.com/watch?v=c7InlniCj2I
+url: https://youtube.com/watch?v=c7InlniCj2I
 title: Atlas Artillery mech concept art
 thumbnail: https://i.ytimg.com/vi/c7InlniCj2I/maxresdefault.jpg
 author: Farm Man Official - Stormgate

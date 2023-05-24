@@ -3,12 +3,22 @@ export const prerender = false;
 
 import Layout from "../../layouts/Layout.astro";
 import MailingListForm from "../../components/MailingListForm.tsx";
+import { getDatabase } from "../../db";
+import { mailingListUsers } from "../../../db/schema";
+
 
 const time = new Date().toJSON();
+
+const db = await getDatabase(Astro.request);
+const users = await db.select().from(mailingListUsers); // ?.run() for D1 
+
 ---
 
 <Layout title="Home">
   <h1>{time}</h1>
   <h1>Sign Up Now!</h1>
+  {users.all().map((user) => (
+    <p>{user.email}</p>
+  ))}
   <MailingListForm client:load />
 </Layout>
