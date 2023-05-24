@@ -1,0 +1,41 @@
+---
+export const prerender = false;
+
+import Layout from "../../layouts/Layout.astro";
+
+const time = new Date().toJSON();
+---
+
+<Layout title="Home">
+  <h1>{time}</h1>
+  <h1>Sign Up!</h1>
+  <form>
+    <label>
+      Email:
+      <input type="email" name="email" required/>
+    </label>
+    <button data-submit-button>Submit</button>
+  </form>
+</Layout>
+
+<script>
+  const emailInput: HTMLInputElement | null = document.querySelector('form [name="email"]')
+  const submitButton = document.querySelector('form [data-submit-button]')
+
+  if (!submitButton || !emailInput) {
+    throw new Error('No submit button found')
+  }
+
+  submitButton.addEventListener('click', (e) => {
+    e.preventDefault()
+
+    const response = fetch("/api/mailing-list-users",
+      {
+        method: 'POST',
+        headers: { 'Content-Type':'application/json' },
+        body: JSON.stringify({
+          email: emailInput.value,
+        }),
+      });
+  })
+</script>

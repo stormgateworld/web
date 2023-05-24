@@ -4,3 +4,13 @@ minify = true
 [build]
 command = "pnpm run build"
 watch_dir = "."
+
+# [[d1_databases]]
+# binding = "DB" # i.e. available in your Worker on env.DB
+# database_name = "stormgateworld-web-development"
+# database_id = "01b895e1-7e6d-4a9a-ae08-98fc9b3a6108"
+
+[[d1_databases]]
+binding = "DB" # i.e. available in your Worker on env.DB
+database_name = "stormgateworld-web-production"
+database_id = "9cf14703-55aa-483e-be03-2801eab91e4d"

@@ -5,6 +5,9 @@ functions/
 # generated types
 .astro/
 
+# wrangler state
+.wrangler/
+
 # dependencies
 node_modules/
 
