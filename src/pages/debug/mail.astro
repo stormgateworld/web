@@ -8,11 +8,11 @@ const time = new Date().toJSON();
 
 <Layout title="Home">
   <h1>{time}</h1>
-  <h1>Sign Up!</h1>
+  <h1>Sign Up Now!</h1>
   <form>
     <label>
       Email:
-      <input type="email" name="email" required/>
+      <input class="text-black" type="email" name="email" required/>
     </label>
     <button data-submit-button>Submit</button>
   </form>
@@ -29,11 +29,11 @@ const time = new Date().toJSON();
   submitButton.addEventListener('click', (e) => {
     e.preventDefault()
 
-    const response = fetch("/api/mailing-list-users",
+    const response = fetch("http://127.0.0.1:8788/api/mailing-list-users",
       {
         method: 'POST',
         mode: "cors",
-        credentials: "same-origin",
+        // credentials: "include",
         headers: { 'Content-Type':'application/json' },
         body: JSON.stringify({
           email: emailInput.value,

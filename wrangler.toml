@@ -1,14 +1,20 @@
 compatibility_date = "2023-05-18"
-minify = true
+# minify = true
 
-[build]
-command = "pnpm run build"
-watch_dir = "."
+# [build]
+# command = "pnpm run build"
+# watch_dir = "."
 
 # [[d1_databases]]
 # binding = "DB" # i.e. available in your Worker on env.DB
 # database_name = "stormgateworld-web-development"
 # database_id = "01b895e1-7e6d-4a9a-ae08-98fc9b3a6108"
+
+# [vars]
+# SSR_HOST = ""
+
+# [env.development.vars]
+# SSR_HOST = "http://127.0.0.1:8788/"
 
 [[d1_databases]]
 binding = "DB" # i.e. available in your Worker on env.DB
