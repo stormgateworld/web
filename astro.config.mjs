@@ -16,7 +16,7 @@ export default defineConfig({
   },
   vite: {
     build: {
-      minify: false // makes wrangler debugging possible
-    }
+      minify: false, // makes wrangler debugging possible
+    },
   }
 });

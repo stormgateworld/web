@@ -10,7 +10,8 @@ import { mailingListUsers } from "../../../db/schema";
 const time = new Date().toJSON();
 
 const db = await getDatabase(Astro.request);
-const users = await db.select().from(mailingListUsers); // ?.run() for D1 
+const users = await db.select().from(mailingListUsers); // ?.run() for D1
+const apiHost = import.meta.env.WORKER_HOST || ''
 
 ---
 
@@ -20,5 +21,8 @@ const users = await db.select().from(mailingListUsers); // ?.run() for D1
   {users.all().map((user) => (
     <p>{user.email}</p>
   ))}
-  <MailingListForm client:load />
+  <MailingListForm
+    apiHost={apiHost}
+    client:load
+  />
 </Layout>
