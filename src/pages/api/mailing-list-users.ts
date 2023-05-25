@@ -19,12 +19,7 @@ export const post: APIRoute = async ({ request }) => {
       createdAt: new Date(),
     };
 
-    // const runtime = getRuntime(request) as any;
-    // console.log(runtime.env.DB)
-    const db = getDatabase(request);
-    // drizzle(runtime.env.DB)
-
-    // await db.insert(mailingListUsers).values(newUser).run()
+    const db = await getDatabase(request)
     await db.insert(mailingListUsers).values(newUser).returning().get();
 
     return new Response(
