@@ -5,6 +5,7 @@ import Box from "../components/Box.astro";
 import { getCollection } from "astro:content";
 import { sortCollectionByDate } from "../lib/utils";
 import HypeCard from "../components/HypeCard.astro";
+import SignUpForm from "../components/SignUpForm.astro";
 import hero from "../assets/hero.png";
 import logoWhite from "../assets/stormgate-logo-white.png";
 import VideoCard from "../components/VideoCard.astro";
@@ -28,42 +29,51 @@ const videos = (await getCollection("videos"))
     </div>
     <section class="container mx-auto px-4 relative">
         <main>
-            <div class="py-12 px-2">
-                <img src={logoWhite} class="-ml-2 h-16" />
-                <p class="text-2xl font-bold my-6">
-                    Get ready for the launch of Stormgate!
-                </p>
+            <div class="flex flex-col lg:flex-row gap-8 my-8">
+                <div class="flex-auto">
+                    <div class="py-12 px-2">
+                        <img src={logoWhite} class="-ml-2 h-16" />
+                        <p class="text-2xl font-bold my-6">
+                            Get ready for the launch of Stormgate!
+                        </p>
 
-                <p class="text-lg font-medium max-w-xl my-4 leading-relaxed">
-                    Developed by the talented Blizzard-veterans at FrostGiant
-                    Studios, Stormgate® is a highly anticipated free-to-play RTS
-                    Game coming to PC, with a private beta in mid-2023. Play
-                    solo or co-op in a futuristic settings with The Human
-                    Resistance, The Demonic Invaders and other to be revealed
-                    factions.
-                </p>
+                        <p class="text-lg font-medium max-w-xl my-4 leading-relaxed">
+                            Developed by the talented Blizzard-veterans at FrostGiant
+                            Studios, Stormgate® is a highly anticipated free-to-play RTS
+                            Game coming to PC, with a private beta in mid-2023. Play
+                            solo or co-op in a futuristic settings with The Human
+                            Resistance, The Demonic Invaders and other to be revealed
+                            factions.
+                        </p>
 
-                <p class="text-md font-medium max-w-xl leading-relaxed">
-                    On Stormgate World, you can find recent updates, community
-                    links, and other stuff to get you excited about the game.
-                    This is fan-made website brought to you by the creators of
-                    AoE4 World, the biggest community site for Age of Empires IV
-                    – with great hopes and plans for Stormgate.
-                </p>
+                        <p class="text-md font-medium max-w-xl leading-relaxed">
+                            On Stormgate World, you can find recent updates, community
+                            links, and other stuff to get you excited about the game.
+                            This is fan-made website brought to you by the creators of
+                            AoE4 World, the biggest community site for Age of Empires IV
+                            – with great hopes and plans for Stormgate.
+                        </p>
 
-                <a
-                    href="https://playstormgate.com"
-                    target="_blank"
-                    class="bg-white rounded-full mr-4 px-6 py-2 border text-black my-6 inline-block font-bold border-white hover:bg-gray-100 transition"
-                >
-                    Sign up for beta
-                </a>
-                <a
-                    href="/tldr"
-                    class="bg-transparent text-white border border-white rounded-full px-6 py-2 my-6 inline-block font-bold hover:bg-white/20 transition"
-                >
-                    Learn more
-                </a>
+                        <a
+                            href="https://playstormgate.com"
+                            target="_blank"
+                            class="bg-white rounded-full mr-4 px-6 py-2 border text-black my-6 inline-block font-bold border-white hover:bg-gray-100 transition"
+                        >
+                            Sign up for beta
+                        </a>
+                        <a
+                            href="/tldr"
+                            class="bg-transparent text-white border border-white rounded-full px-6 py-2 my-6 inline-block font-bold hover:bg-white/20 transition"
+                        >
+                            Learn more
+                        </a>
+                    </div>
+                </div>
+                <div class="flex-grow flex-shrink-0 basis-1/3">
+                    <div class="py-12">
+                        <SignUpForm />
+                    </div>
+                </div>
             </div>
 
             <div class="flex flex-col lg:flex-row gap-8 my-8">
