@@ -1,9 +1,15 @@
 # build output
 dist/
-functions/
+functions/\[\[path\]\].js
 
 # generated types
 .astro/
+
+# wrangler state
+.wrangler/
+
+# dev db
+db/sqlite.db
 
 # dependencies
 node_modules/

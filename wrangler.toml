@@ -1,6 +1,13 @@
 compatibility_date = "2023-05-18"
-minify = true
+# minify = false
 
 [build]
 command = "pnpm run build"
 watch_dir = "."
+
+[[d1_databases]]
+binding = "DB" # i.e. available in your Worker on env.DB
+database_name = "stormgateworld-web-production"
+database_id = "9cf14703-55aa-483e-be03-2801eab91e4d"
+preview_database_id = "9cf14703-55aa-483e-be03-2801eab91e4d"
+migrations_dir = "db/migrations"

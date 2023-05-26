@@ -7,18 +7,30 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "wrangler pages dev ./dist",
-    "astro": "astro"
+    "astro": "astro",
+    "generate": "drizzle-kit generate:sqlite --schema=db/schema.ts --out=./db/migrations",
+    "up": "drizzle-kit up:sqlite --schema=db/schema.ts"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^6.3.0",
+    "@astrojs/solid-js": "^2.2.0",
     "@astrojs/tailwind": "^3.1.2",
     "@fontsource-variable/montserrat": "^5.0.1",
     "@fontsource/sen": "^5.0.0",
     "astro": "^2.5.3",
+    "drizzle-orm": "^0.26.0",
+    "solid-js": "^1.4.3",
     "tailwindcss": "^3.3.2"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.9",
+    "@types/better-sqlite3": "^7.6.4",
+    "better-sqlite3": "^8.4.0",
+    "drizzle-kit": "^0.18.0",
+    "miniflare": "^3.0.0",
     "wrangler": "^3.0.1"
+  },
+  "prettier": {
+    "printWidth": 120
   }
 }

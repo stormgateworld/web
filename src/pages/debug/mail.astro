@@ -1,0 +1,23 @@
+---
+export const prerender = false;
+
+import Layout from "../../layouts/Layout.astro";
+import MailingListForm from "../../components/MailingListForm.tsx";
+import { fetchUsers } from "../../services/foo_service";
+
+const time = new Date().toJSON();
+
+const users = await fetchUsers(Astro.request);
+
+---
+
+<Layout title="Home">
+  <h1>{time}</h1>
+  <h1>Sign Up Now!</h1>
+  {users.map((user) => (
+    <p>{user.email}</p>
+  ))}
+  <MailingListForm
+    client:load
+  />
+</Layout>
