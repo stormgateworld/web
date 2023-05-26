@@ -5,12 +5,10 @@ import { createSignal } from "solid-js";
 export default function MailingListForm(props: any) {
   const [email, setEmail] = createSignal("");
 
-  console.log('apiHost', props.apiHost)
-
   const clickHandler = (e: Event) => {
     e.preventDefault();
 
-    const response = fetch(props.apiHost + "/api/mailing-list-users", {
+    const response = fetch("/api/mailing-list-users", {
       method: "POST",
       mode: "cors",
       // credentials: "include",

@@ -6,6 +6,7 @@ import { drizzle } from "drizzle-orm/d1";
 import type { NewMailingListUser } from "../../models";
 import { mailingListUsers } from "../../../db/schema";
 import { getDatabase } from "../../db";
+import { fetchUsers } from "../../services/foo_service";
 
 export const client = (database: any) => drizzle(database);
 
@@ -32,6 +33,19 @@ export const post: APIRoute = async ({ request }) => {
     );
   }
   return new Response(null, { status: 400 });
+};
+
+export const get: APIRoute = async ({ request }) => {
+  const users = await fetchUsers(request);
+
+  return new Response(
+    JSON.stringify({
+      users
+    }),
+    {
+      status: 200,
+    }
+  );
 };
 
 export const put: APIRoute = async ({ request }) => {

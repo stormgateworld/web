@@ -4,7 +4,6 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "dev_wrangler": "WORKER_HOST=http://127.0.0.1:8788 wrangler pages dev -- pnpm run dev",
     "start": "astro dev",
     "build": "astro build",
     "preview": "wrangler pages dev ./dist",

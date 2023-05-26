@@ -5,13 +5,11 @@ import Layout from "../../layouts/Layout.astro";
 import MailingListForm from "../../components/MailingListForm.tsx";
 import { getDatabase } from "../../db";
 import { mailingListUsers } from "../../../db/schema";
-
+import { fetchUsers } from "../../services/foo_service";
 
 const time = new Date().toJSON();
 
-const db = await getDatabase(Astro.request);
-const users = await db.select().from(mailingListUsers); // ?.run() for D1
-const apiHost = import.meta.env.WORKER_HOST || ''
+const users = await fetchUsers(Astro.request);
 
 ---
 
@@ -22,7 +20,6 @@ const apiHost = import.meta.env.WORKER_HOST || ''
     <p>{user.email}</p>
   ))}
   <MailingListForm
-    apiHost={apiHost}
     client:load
   />
 </Layout>
