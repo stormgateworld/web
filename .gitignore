@@ -8,6 +8,9 @@ functions/\[\[path\]\].js
 # wrangler state
 .wrangler/
 
+# dev db
+db/sqlite.db
+
 # dependencies
 node_modules/
 

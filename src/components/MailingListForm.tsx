@@ -10,8 +10,6 @@ export default function MailingListForm(props: any) {
 
     const response = fetch("/api/mailing-list-users", {
       method: "POST",
-      mode: "cors",
-      // credentials: "include",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         email: email(),
