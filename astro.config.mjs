@@ -14,9 +14,10 @@ export default defineConfig({
   experimental: {
     hybridOutput: true
   },
-  vite: {
-    build: {
-      minify: false, // makes wrangler debugging possible
-    },
-  }
+  // makes wrangler debugging possible
+  // vite: {
+  //   build: {
+  //     minify: false,
+  //   },
+  // }
 });

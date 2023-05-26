@@ -1,5 +1,5 @@
 compatibility_date = "2023-05-18"
-minify = false
+# minify = false
 
 [build]
 command = "pnpm run build"

@@ -4,7 +4,6 @@ import { mailingListUsers } from "../../db/schema";
 
 export async function fetchUsers(request: Request) {
   const db = await getDatabase(request)
-  console.log(db)
-  const users = await db.select().from(mailingListUsers).all()
+  const users = db.select().from(mailingListUsers).all()
   return users
 }

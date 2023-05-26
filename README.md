@@ -24,3 +24,10 @@ All commands are run from the root of the project, from a terminal:
 3. Run migrations
     * Locally: `wrangler d1 execute stormgateworld-web-production --local --file db/migrations/0000_uneven_naoko.sql`
     * Production: `wrangler d1 execute stormgateworld-web-production --file db/migrations/0000_uneven_naoko.sql`
+
+## Pruduction Debugging
+
+```
+wrangler d1 execute stormgateworld-web-production --command 'select * from mailing_list_users' --preview
+wrangler pages deployment tail --project-name web --environment preview
+```
