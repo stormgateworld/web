@@ -2,6 +2,8 @@
 import Card from "./Base.astro";
 import { Icon } from "astro-icon";
 import { formatNumber } from "../../lib/utils";
+import unescape from 'lodash/unescape';
+
 export interface Props {
   data: RedditData;
   publishedAt?: string;
@@ -35,6 +37,23 @@ export type RedditData = {
   num_reports?: any;
   over_18: boolean;
   permalink: string;
+  preview: undefined | {
+    images: {
+      source: {
+        url: string;
+        width: number;
+        height: number;
+      };
+      resolutions: {
+        url: string;
+        width: number;
+        height: number;
+      }[];
+      variants: any;
+      id: string;
+    }[];
+    enabled: boolean;
+  };
   quarantine: boolean;
   removal_reason?: any;
   saved: boolean;
@@ -56,6 +75,10 @@ export type RedditData = {
 const { data, publishedAt } = Astro.props;
 
 function guessRedditImageUrl(data: RedditData) {
+  if (data.preview) {
+    return unescape(data.preview.images[0].source.url);
+  }
+
   const { thumbnail, url } = data;
   if (!thumbnail || thumbnail == "self" || thumbnail == "default") {
     return undefined;

@@ -22,6 +22,9 @@ dependencies:
   drizzle-orm:
     specifier: ^0.26.3
     version: 0.26.3(@types/better-sqlite3@7.6.4)(better-sqlite3@8.4.0)
+  lodash:
+    specifier: ^4.17.21
+    version: 4.17.21
   solid-js:
     specifier: ^1.7.6
     version: 1.7.6
@@ -2903,6 +2906,10 @@ packages:
   /lodash.throttle@4.1.1:
     resolution: {integrity: sha512-wIkUCfVKpVsWo3JSZlc+8MB5it+2AN5W8J7YVMST30UrvcQNZ1Okbj+rbVniijTWE6FGYy4XJq/rHkas8qJMLQ==}
     dev: true
+
+  /lodash@4.17.21:
+    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
+    dev: false
 
   /log-symbols@5.1.0:
     resolution: {integrity: sha512-l0x2DvrW294C9uDCoQe1VSU4gf529FkSZ6leBl4TiqZH/e+0R7hSfHQBNut2mNygDgHwvYHfFLn6Oxb3VWj2rA==}
