@@ -1,0 +1,97 @@
+---
+import Card from "./Base.astro";
+import { Icon } from "astro-icon";
+import { formatNumber } from "../../lib/utils";
+export interface Props {
+  data: YoutubeData;
+  publishedAt?: string;
+}
+
+export type YoutubeData = {
+  ageGating?: any;
+  contentDetails?: any;
+  etag: string;
+  fileDetails?: any;
+  id: string;
+  kind: string;
+  liveStreamingDetails?: any;
+  localizations?: any;
+  monetizationDetails?: any;
+  player?: any;
+  processingDetails?: any;
+  projectDetails?: any;
+  recordingDetails?: any;
+  snippet: YoutubeSnippet;
+  statistics: YoutubeStatistics;
+  status?: any;
+  suggestions?: any;
+  topicDetails?: any;
+};
+
+interface YoutubeStatistics {
+  commentCount: string;
+  dislikeCount?: any;
+  favoriteCount: string;
+  likeCount: string;
+  viewCount: string;
+}
+
+interface YoutubeSnippet {
+  categoryId: string;
+  channelId: string;
+  channelTitle: string;
+  defaultAudioLanguage?: string;
+  defaultLanguage?: string;
+  description: string;
+  liveBroadcastContent: string;
+  localized: YoutubeLocalized;
+  publishedAt: string;
+  tags?: string[];
+  thumbnails: YoutubeThumbnails;
+  title: string;
+}
+
+interface YoutubeThumbnails {
+  default: YoutubeThumbnail;
+  high: YoutubeThumbnail;
+  maxres?: YoutubeThumbnail;
+  medium: YoutubeThumbnail;
+  standard: YoutubeThumbnail;
+}
+
+interface YoutubeThumbnail {
+  height: number;
+  url: string;
+  width: number;
+}
+
+interface YoutubeLocalized {
+  description: string;
+  title: string;
+}
+
+const { data, publishedAt } = Astro.props;
+---
+
+<Card
+  title={data.snippet.title}
+  description={data.snippet.description}
+  url={`https://youtube.com/watch?v=${data.id}`}
+  thumbnail={data.snippet.thumbnails.medium.url}
+  publishedAt={publishedAt}
+>
+  <a class="text-orange-400 inline-flex items-center">
+    <Icon name="tabler:thumb-up" class="w-4 mr-1" />
+    {formatNumber(data.statistics.likeCount)}
+  </a>
+  {
+    /*<span class="inline-flex items-center">
+          <Icon name="tabler:eye" class="w-4 mr-1" />
+          {formatNumber(data.statistics.viewCount)}
+        </span>*/
+  }
+  <a class="truncate inline-flex items-center">
+    <img src="/content/websites/youtube.com.png" class="h-3 mr-2" />
+    {data.snippet.channelTitle}
+  </a>
+</Card>

@@ -1,0 +1,58 @@
+---
+import Timeago from "../Timeago.astro";
+
+export interface Props {
+  title: string;
+  url: string;
+  description: string;
+  thumbnail?: string;
+  publishedAt?: string;
+}
+
+const { title, url, description, thumbnail, publishedAt } = Astro.props;
+---
+
+<div
+  class="bg-gray-700 rounded-xl shadow-sm hover:shadow-xl group border-2 border-transparent hover:border-orange-500 transition flex flex-col focus-within:border-orange-500"
+>
+  {
+    thumbnail && (
+      <a
+        href={url}
+        rel="noopener ugc"
+        target="_blank"
+        class="aspect-video relative rounded-t-xl overflow-hidden focus:outline-none"
+      >
+        <img
+          src={thumbnail}
+          class="w-full h-full object-cover group-hover:scale-105 transition-transform group-focus-within:scale-105"
+        />
+      </a>
+    )
+  }
+  <div class="p-6 flex flex-col flex-auto">
+    <a
+      class:list={["font-display font-bold text-md mb-2", thumbnail ? "line-clamp-3" : "line-clamp-5"]}
+      href={url}
+      rel="noopener ugc"
+      target="_blank"
+      tabindex="-1"
+    >
+      {title}
+    </a>
+    <p class:list={["text-gray-100 text-sm line-clamp-2", thumbnail ? "line-clamp-2" : "line-clamp-[7]"]}>
+      {description}
+    </p>
+    <div class="flex-auto"></div>
+    <div class="flex gap-4 mt-4 text-sm">
+      <slot />
+      {
+        publishedAt && (
+          <span class="truncate">
+            <Timeago date={new Date(publishedAt)} format="short" />
+          </span>
+        )
+      }
+    </div>
+  </div>
+</div>

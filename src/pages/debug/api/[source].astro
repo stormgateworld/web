@@ -1,0 +1,62 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import YoutubeCard from "../../../components/cards/Youtube.astro";
+import RedditCard from "../../../components/cards/Reddit.astro";
+import DefaultCard from "../../../components/cards/Base.astro";
+import type { YoutubeData } from "../../../components/cards/Youtube.astro";
+import type { RedditData } from "../../../components/cards/Reddit.astro";
+const time = new Date().toJSON();
+const { source } = Astro.params;
+
+const request = await fetch(
+  `https://api.stormgateworld.com/v0/content?count=100&page=1&order=score&${source != "all" ? `source=` + source : ""}`
+);
+const response = await request.json();
+const content = response.data as Content[];
+
+type SourceData<Source extends string, T> = {
+  id: number;
+  source: Source;
+  source_id: string;
+  data: T;
+  score: number;
+  published_at: string;
+  updated_at: string;
+  created_at: string;
+};
+
+type Content = SourceData<"youtube", YoutubeData> | SourceData<"reddit", RedditData>;
+
+export function getStaticPaths() {
+  return [{ params: { source: "reddit" } }, { params: { source: "youtube" } }, { params: { source: "all" } }];
+}
+---
+
+<Layout title="Home">
+  <section class="container mx-auto px-4 relative">
+    <p class="my-2">{content.length} results</p>
+    <!-- card grid -->
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      {
+        content.map((c) => {
+          switch (c.source) {
+            case "youtube":
+              return <YoutubeCard data={c.data} publishedAt={c.published_at} />;
+            case "reddit":
+              return <RedditCard data={c.data} publishedAt={c.published_at} />;
+            default:
+              return (
+                <DefaultCard
+                  title="Unknown source"
+                  description="Unknown source"
+                  url={""}
+                  publishedAt={c.published_at}
+                />
+              );
+          }
+        })
+      }
+    </div>
+  </section>
+</Layout>
