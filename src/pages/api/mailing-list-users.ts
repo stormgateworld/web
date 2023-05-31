@@ -20,7 +20,7 @@ export const post: APIRoute = async ({ request }) => {
       createdAt: new Date(),
     };
 
-    const db = await getDatabase(request)
+    const db = await getDatabase(request);
     await db.insert(mailingListUsers).values(newUser).returning().get();
 
     return new Response(
@@ -40,7 +40,7 @@ export const get: APIRoute = async ({ request }) => {
 
   return new Response(
     JSON.stringify({
-      users
+      users,
     }),
     {
       status: 200,

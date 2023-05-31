@@ -11,19 +11,20 @@ tags:
   - Impression
   - News
 ---
+
 Frost Giant Studios invited ~100 Content Creators, Casters, Pros, and others deeply embedded into RTS games to get a sneak preview of the June 11 PC Gaming Show Gameplay reveal, and a whole bunch of info about the units the humans will have access to. It's pretty exciting!
 
 Watch the PC Gaming Show Live with me on June 11:
 
 twitch.tv/beomulf
 
-Follow me on things! 
+Follow me on things!
 Twitch➡http://www.twitch.tv/beomulf
 Twitter➡ https://www.twitter.com/beomulf_sc2
 Instagram ➡https://www.instagram.com/beomulf/
 TikTok➡https://www.tiktok.com/@beomulf
 Discord➡https://www.discord.gg/767ppaFhxz
 
-#StarCraft2  #SC2 #RTS
+#StarCraft2 #SC2 #RTS
 
 StarCraft 2 is a military science fiction real-time strategy video game developed and released by Blizzard Entertainment.

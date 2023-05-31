@@ -28,6 +28,7 @@
     "better-sqlite3": "^8.4.0",
     "drizzle-kit": "^0.18.0",
     "miniflare": "^3.0.0",
+    "prettier-plugin-astro": "^0.9.1",
     "wrangler": "^3.0.1"
   },
   "prettier": {

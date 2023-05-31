@@ -1,6 +1,6 @@
 ---
 youtube_id: 1m8Z8iVXfDM
-title: Technology & Art Reveal 
+title: Technology & Art Reveal
 url: https://www.youtube.com/watch?v=1m8Z8iVXfDM
 thumbnail: https://i.ytimg.com/vi/1m8Z8iVXfDM/maxresdefault.jpg
 author: Frost Giant Studios

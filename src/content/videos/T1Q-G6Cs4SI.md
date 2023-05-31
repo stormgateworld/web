@@ -9,10 +9,11 @@ thumbnail: https://img.youtube.com/vi/T1Q-G6Cs4SI/maxresdefault.jpg
 date: 2023-05-29
 tags: []
 ---
+
 The long-awaited Closed Alpha is here! Add Stormgate to your Steam wishlist: https://store.steampowered.com/app/2012510/Stormgate/
 
-Sign up for the Beta here: playstormgate.com
---
+## Sign up for the Beta here: playstormgate.com
+
 🐷 Second Channel for Learning StarCraft 2: https://www.youtube.com/c/PiGRandom
 🐷 Third Channel for Daily Pro Casts: https://www.youtube.com/c/PiGCasts
 --
@@ -20,5 +21,5 @@ Sign up for the Beta here: playstormgate.com
 🐷 Support PiG: https://www.patreon.com/PiGSC2
 🐷 PiG’s Discord: https://discord.gg/SkhbzCM
 🐷 PiG’s Website: https://www.pigstarcraft.com/
- --
+--
 #Starcraft2 #SC2 #PiGStarcraft

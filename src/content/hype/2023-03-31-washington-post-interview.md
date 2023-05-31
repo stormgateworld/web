@@ -6,4 +6,3 @@ date: 2023-03-31
 thumbnail: https://pbs.twimg.com/media/FsliIvTaEAA6ovH?format=jpg&name=medium
 publisher: The Washington Post
 ---
-

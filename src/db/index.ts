@@ -6,7 +6,7 @@ export async function getDatabase(request: Request) {
   const runtime = getRuntime(request) as any;
 
   if (import.meta.env.DEV) {
-    return (await import("./dev")).devDatabase()
+    return (await import("./dev")).devDatabase();
   } else {
     return drizzle(runtime.env.DB);
   }

@@ -5,4 +5,3 @@ description: The team has confirmed the addition of Stormgate heroes in the 3 pl
 date: 2023-02-09
 thumbnail: https://ebomfijtqmy.exactdn.com/wp-content/uploads/2022/12/stormgate-pc-gamer-magazine.jpg?strip=all&lossy=1&ssl=1
 ---
-
