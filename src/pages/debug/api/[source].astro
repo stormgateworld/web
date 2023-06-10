@@ -3,41 +3,12 @@ import Layout from "../../../layouts/Layout.astro";
 import YoutubeCard from "../../../components/cards/Youtube.astro";
 import RedditCard from "../../../components/cards/Reddit.astro";
 import DefaultCard from "../../../components/cards/Base.astro";
-import TwitterCard, { TwitterData } from "../../../components/cards/Twitter.astro";
-import type { YoutubeData } from "../../../components/cards/Youtube.astro";
-import type { RedditData } from "../../../components/cards/Reddit.astro";
+import TwitterCard from "../../../components/cards/Twitter.astro";
+import { fetchContent } from "../../../lib/content";
 const time = new Date().toJSON();
 const { source } = Astro.params;
 
-const request = await fetch(
-  `https://api.stormgateworld.com/v0/content?count=100&page=1&order=score&${source != "all" ? `source=` + source : ""}`
-);
-const response = await request.json();
-const content = response.data as Content[];
-
-export type SourceData<Source extends string, T> = {
-  id: number;
-  source: Source;
-  source_id: string;
-  metadata: T;
-  score: number;
-  title: string;
-  description: string;
-  url: string;
-  image_url: string;
-  author: string;
-  author_url: string;
-  author_image_url: string;
-  published_at: string;
-  updated_at: string;
-  created_at: string;
-};
-
-type Content =
-  | SourceData<"youtube", YoutubeData>
-  | SourceData<"reddit", RedditData>
-  | SourceData<"twitter", TwitterData>
-  | SourceData<"any", any>;
+const content = await fetchContent(source == "all" ? [] : [source]);
 
 export function getStaticPaths() {
   return [
@@ -46,6 +17,7 @@ export function getStaticPaths() {
     { params: { source: "news" } },
     { params: { source: "twitter" } },
     { params: { source: "tiktok" } },
+    { params: { source: "instagram" } },
     { params: { source: "all" } },
   ];
 }
@@ -61,13 +33,13 @@ export function getStaticPaths() {
         content.map((c) => {
           switch (c.source) {
             case "youtube":
-              return <YoutubeCard card={c} />;
+              return <YoutubeCard data={c} />;
             case "reddit":
-              return <RedditCard card={c} />;
+              return <RedditCard data={c} />;
             case "twitter":
-              return <TwitterCard card={c} />;
+              return <TwitterCard data={c} />;
             default:
-              return <DefaultCard card={c} />;
+              return <DefaultCard data={c} />;
           }
         })
       }

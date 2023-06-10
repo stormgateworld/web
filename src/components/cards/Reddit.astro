@@ -3,20 +3,13 @@ import Card from "./Base.astro";
 import { Icon } from "astro-icon";
 import { formatNumber } from "../../lib/utils";
 // import unescape from "lodash/unescape";
-import type { SourceData } from "../../pages/debug/api/[source].astro";
+import type { RedditContent } from "../../lib/content";
 
 export interface Props {
-  card: SourceData<"reddit", RedditData>;
+  data: RedditContent;
 }
 
-export type RedditData = {
-  comments_count: number;
-  downvotes_count: number;
-  upvote_ratio: number;
-  upvotes_count: number;
-};
-
-const { card } = Astro.props;
+const { data } = Astro.props;
 
 // function guessRedditImageUrl(data: RedditData) {
 //   if (data.preview) {
@@ -43,18 +36,18 @@ const { card } = Astro.props;
 // }
 ---
 
-<Card card={card}>
+<Card data={data}>
   <a class="text-orange-400 inline-flex items-center">
     <Icon name="tabler:arrow-up" class="w-4 mr-1" />
-    {formatNumber(card.metadata?.upvotes_count - card.metadata?.downvotes_count)}
+    {formatNumber(data.metadata?.upvotes_count - data.metadata?.downvotes_count)}
   </a>
   <a
     class="truncate inline-flex items-center"
-    href={`https://reddit.com/r/${card.author_url}`}
+    href={`https://reddit.com/r/${data.author_url}`}
     target="_blank"
     rel="noopener ugc"
   >
     <img src="/content/websites/reddit.com.png" class="h-3 mr-2" />
-    r/{card.author}
+    r/{data.author}
   </a>
 </Card>

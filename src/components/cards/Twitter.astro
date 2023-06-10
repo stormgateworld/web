@@ -2,24 +2,18 @@
 import Card from "./Base.astro";
 import { Icon } from "astro-icon";
 import { formatNumber } from "../../lib/utils";
-import type { SourceData } from "../../pages/debug/api/[source].astro";
+import type { TwitterContent } from "../../lib/content";
 export interface Props {
-  card: SourceData<"twitter", TwitterData>;
+  data: TwitterContent;
 }
 
-export type TwitterData = {
-  likes_count: number;
-  retweets_count: number;
-  replies_count: number;
-};
-
-const { card } = Astro.props;
+const { data } = Astro.props;
 ---
 
-<Card card={card}>
+<Card data={data}>
   <a class="text-orange-400 inline-flex items-center">
     <Icon name="tabler:heart" class="w-4 mr-1" />
-    {formatNumber(card.metadata?.likes_count)}
+    {formatNumber(data.metadata?.likes_count)}
   </a>
   {
     /*<span class="inline-flex items-center">
@@ -29,6 +23,6 @@ const { card } = Astro.props;
   }
   <a class="truncate inline-flex items-center">
     <img src="/content/websites/twitter.com.png" class="h-3 mr-2" />
-    {card.author}
+    {data.author}
   </a>
 </Card>

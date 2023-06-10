@@ -1,36 +1,27 @@
 ---
+import type { Content } from "../../lib/content";
 import Timeago from "../Timeago.astro";
 import unescape from "lodash/unescape";
 export interface Props {
-  card: CardData;
+  data: Content;
 }
 
-export type CardData = {
-  title: string;
-  url: string;
-  description: string;
-  image_url?: string;
-  published_at?: string;
-  author?: string;
-  author_url?: string;
-  author_image_url?: string;
-};
-const { card } = Astro.props;
+const { data } = Astro.props;
 ---
 
 <div
   class="bg-gray-700 rounded-xl shadow-sm hover:shadow-xl group border-2 border-transparent hover:border-orange-500 transition flex flex-col focus-within:border-orange-500"
 >
   {
-    card.image_url?.length && (
+    data.image_url?.length && (
       <a
-        href={card.url}
+        href={data.url}
         rel="noopener ugc"
         target="_blank"
         class="aspect-video relative rounded-t-xl overflow-hidden focus:outline-none"
       >
         <img
-          src={unescape(card.image_url)}
+          src={unescape(data.image_url)}
           class="w-full h-full object-cover group-hover:scale-105 transition-transform group-focus-within:scale-105"
         />
       </a>
@@ -38,38 +29,38 @@ const { card } = Astro.props;
   }
   <div class="p-6 flex flex-col flex-auto">
     <a
-      class:list={["font-display font-bold text-md mb-2", card.image_url ? "line-clamp-3" : "line-clamp-5"]}
-      href={card.url}
+      class:list={["font-display font-bold text-md mb-2", data.image_url ? "line-clamp-3" : "line-clamp-5"]}
+      href={data.url}
       rel="noopener ugc"
       target="_blank"
       tabindex="-1"
     >
-      {card.title}
+      {data.title}
     </a>
-    <p class:list={["text-gray-100 text-sm line-clamp-2", card.image_url ? "line-clamp-2" : "line-clamp-[7]"]}>
-      {card.description}
+    <p class:list={["text-gray-100 text-sm line-clamp-2", data.image_url ? "line-clamp-2" : "line-clamp-[7]"]}>
+      {data.description}
     </p>
     <div class="flex-auto"></div>
     <div class="flex gap-4 mt-4 text-sm">
       <slot>
         {
-          card.author_url ? (
+          data.author_url ? (
             <a class="inline-flex items-center">
-              {card.author_image_url && <img src={card.author_image_url} class="h-3 mr-2" />}
-              {card.author}
+              {data.author_image_url && <img src={data.author_image_url} class="h-3 mr-2" />}
+              {data.author}
             </a>
-          ) : card.author ? (
+          ) : data.author ? (
             <span class="truncate">
-              {card.author_image_url && <img src={card.author_image_url} class="h-3 mr-2" />}
-              {card.author}
+              {data.author_image_url && <img src={data.author_image_url} class="h-3 mr-2" />}
+              {data.author}
             </span>
           ) : null
         }
       </slot>
       {
-        card.published_at && (
+        data.published_at && (
           <span class="truncate">
-            <Timeago date={new Date(card.published_at)} format="short" />
+            <Timeago date={new Date(data.published_at)} format="short" />
           </span>
         )
       }
