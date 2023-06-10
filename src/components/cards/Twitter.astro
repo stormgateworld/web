@@ -4,14 +4,13 @@ import { Icon } from "astro-icon";
 import { formatNumber } from "../../lib/utils";
 import type { SourceData } from "../../pages/debug/api/[source].astro";
 export interface Props {
-  card: SourceData<"youtube", YoutubeData>;
+  card: SourceData<"twitter", TwitterData>;
 }
 
-export type YoutubeData = {
-  comments_count: number;
-  duration: number;
+export type TwitterData = {
   likes_count: number;
-  views_count: number;
+  retweets_count: number;
+  replies_count: number;
 };
 
 const { card } = Astro.props;
@@ -19,7 +18,7 @@ const { card } = Astro.props;
 
 <Card card={card}>
   <a class="text-orange-400 inline-flex items-center">
-    <Icon name="tabler:thumb-up" class="w-4 mr-1" />
+    <Icon name="tabler:heart" class="w-4 mr-1" />
     {formatNumber(card.metadata?.likes_count)}
   </a>
   {
@@ -29,7 +28,7 @@ const { card } = Astro.props;
         </span>*/
   }
   <a class="truncate inline-flex items-center">
-    <img src="/content/websites/youtube.com.png" class="h-3 mr-2" />
+    <img src="/content/websites/twitter.com.png" class="h-3 mr-2" />
     {card.author}
   </a>
 </Card>

@@ -3,6 +3,7 @@ import Layout from "../../../layouts/Layout.astro";
 import YoutubeCard from "../../../components/cards/Youtube.astro";
 import RedditCard from "../../../components/cards/Reddit.astro";
 import DefaultCard from "../../../components/cards/Base.astro";
+import TwitterCard, { TwitterData } from "../../../components/cards/Twitter.astro";
 import type { YoutubeData } from "../../../components/cards/Youtube.astro";
 import type { RedditData } from "../../../components/cards/Reddit.astro";
 const time = new Date().toJSON();
@@ -14,21 +15,39 @@ const request = await fetch(
 const response = await request.json();
 const content = response.data as Content[];
 
-type SourceData<Source extends string, T> = {
+export type SourceData<Source extends string, T> = {
   id: number;
   source: Source;
   source_id: string;
-  data: T;
+  metadata: T;
   score: number;
+  title: string;
+  description: string;
+  url: string;
+  image_url: string;
+  author: string;
+  author_url: string;
+  author_image_url: string;
   published_at: string;
   updated_at: string;
   created_at: string;
 };
 
-type Content = SourceData<"youtube", YoutubeData> | SourceData<"reddit", RedditData>;
+type Content =
+  | SourceData<"youtube", YoutubeData>
+  | SourceData<"reddit", RedditData>
+  | SourceData<"twitter", TwitterData>
+  | SourceData<"any", any>;
 
 export function getStaticPaths() {
-  return [{ params: { source: "reddit" } }, { params: { source: "youtube" } }, { params: { source: "all" } }];
+  return [
+    { params: { source: "reddit" } },
+    { params: { source: "youtube" } },
+    { params: { source: "news" } },
+    { params: { source: "twitter" } },
+    { params: { source: "tiktok" } },
+    { params: { source: "all" } },
+  ];
 }
 ---
 
@@ -42,18 +61,13 @@ export function getStaticPaths() {
         content.map((c) => {
           switch (c.source) {
             case "youtube":
-              return <YoutubeCard data={c.data} publishedAt={c.published_at} />;
+              return <YoutubeCard card={c} />;
             case "reddit":
-              return <RedditCard data={c.data} publishedAt={c.published_at} />;
+              return <RedditCard card={c} />;
+            case "twitter":
+              return <TwitterCard card={c} />;
             default:
-              return (
-                <DefaultCard
-                  title="Unknown source"
-                  description="Unknown source"
-                  url={""}
-                  publishedAt={c.published_at}
-                />
-              );
+              return <DefaultCard card={c} />;
           }
         })
       }

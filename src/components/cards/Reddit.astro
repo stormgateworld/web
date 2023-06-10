@@ -2,121 +2,59 @@
 import Card from "./Base.astro";
 import { Icon } from "astro-icon";
 import { formatNumber } from "../../lib/utils";
-import unescape from 'lodash/unescape';
+// import unescape from "lodash/unescape";
+import type { SourceData } from "../../pages/debug/api/[source].astro";
 
 export interface Props {
-  data: RedditData;
-  publishedAt?: string;
+  card: SourceData<"reddit", RedditData>;
 }
 
 export type RedditData = {
-  approved_by?: any;
-  archived: boolean;
-  author: string;
-  author_flair_css_class?: string;
-  author_flair_text?: string;
-  banned_by?: any;
-  clicked: boolean;
-  created: number;
-  created_utc: number;
-  distinguished?: any;
-  domain: string;
-  downs: number;
-  edited: boolean | number;
-  gilded: number;
-  hidden: boolean;
-  hide_score: boolean;
-  id: string;
-  is_self: boolean;
-  likes?: any;
-  link_flair_css_class?: string;
-  link_flair_text?: string;
-  locked: boolean;
-  name: string;
-  num_comments: number;
-  num_reports?: any;
-  over_18: boolean;
-  permalink: string;
-  preview: undefined | {
-    images: {
-      source: {
-        url: string;
-        width: number;
-        height: number;
-      };
-      resolutions: {
-        url: string;
-        width: number;
-        height: number;
-      }[];
-      variants: any;
-      id: string;
-    }[];
-    enabled: boolean;
-  };
-  quarantine: boolean;
-  removal_reason?: any;
-  saved: boolean;
-  score: number;
-  selftext: string;
-  selftext_html?: string;
-  stickied: boolean;
-  subreddit: string;
-  subreddit_id: string;
-  suggested_sort?: any;
-  thumbnail: string;
-  title: string;
-  ups: number;
+  comments_count: number;
+  downvotes_count: number;
   upvote_ratio: number;
-  url: string;
-  visited: boolean;
+  upvotes_count: number;
 };
 
-const { data, publishedAt } = Astro.props;
+const { card } = Astro.props;
 
-function guessRedditImageUrl(data: RedditData) {
-  if (data.preview) {
-    return unescape(data.preview.images[0].source.url);
-  }
+// function guessRedditImageUrl(data: RedditData) {
+//   if (data.preview) {
+//     return unescape(data.preview.images[0].source.url);
+//   }
 
-  const { thumbnail, url } = data;
-  if (!thumbnail || thumbnail == "self" || thumbnail == "default") {
-    return undefined;
-  }
-  if (url.endsWith(".jpg") || url.endsWith(".png") || url.endsWith(".gif")) {
-    return url;
-  }
+//   const { thumbnail, url } = data;
+//   if (!thumbnail || thumbnail == "self" || thumbnail == "default") {
+//     return undefined;
+//   }
+//   if (url.endsWith(".jpg") || url.endsWith(".png") || url.endsWith(".gif")) {
+//     return url;
+//   }
 
-  // if url is youtube.com or youtu.be, return the thumbnail parsed from the url
-  if (url.match(/youtube\.com|youtu\.be/)) {
-    const videoId = url.match(/v=([^&]+)/)?.[1] || url.match(/youtu\.be\/([^&]+)/)?.[1];
-    if (videoId) {
-      return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-    }
-  }
+//   // if url is youtube.com or youtu.be, return the thumbnail parsed from the url
+//   if (url.match(/youtube\.com|youtu\.be/)) {
+//     const videoId = url.match(/v=([^&]+)/)?.[1] || url.match(/youtu\.be\/([^&]+)/)?.[1];
+//     if (videoId) {
+//       return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+//     }
+//   }
 
-  return thumbnail;
-}
+//   return thumbnail;
+// }
 ---
 
-<Card
-  title={data.title}
-  description={data.selftext.slice(0, 500)}
-  url={`https://reddit.com/${data.permalink}`}
-  thumbnail={guessRedditImageUrl(data)}
-  publishedAt={publishedAt}
->
+<Card card={card}>
   <a class="text-orange-400 inline-flex items-center">
     <Icon name="tabler:arrow-up" class="w-4 mr-1" />
-    {formatNumber(data.ups)}
+    {formatNumber(card.metadata?.upvotes_count - card.metadata?.downvotes_count)}
   </a>
   <a
     class="truncate inline-flex items-center"
-    href={`https://reddit.com/r/${data.author}`}
+    href={`https://reddit.com/r/${card.author_url}`}
     target="_blank"
     rel="noopener ugc"
   >
     <img src="/content/websites/reddit.com.png" class="h-3 mr-2" />
-    r/{data.author}
+    r/{card.author}
   </a>
 </Card>
