@@ -7,11 +7,11 @@ import logoWhite from "../assets/stormgate-logo-white.png";
 import { fetchContent } from "../lib/content";
 import Timeago from "../components/Timeago.astro";
 import RedditMeta from "../components/sources/RedditMeta.astro";
-import TwitterMeta from "../components/sources/TwitterMeta.astro";
-import YoutubeMeta from "../components/sources/YoutubeMeta.astro";
 import Card from "../components/Card.astro";
 import unescape from "lodash/unescape";
 import NewsMeta from "../components/sources/NewsMeta.astro";
+
+export const prerender = false;
 
 const news = (await fetchContent(["news", "reddit"], { count: 8 })).sort((a, b) => {
   return new Date(b.published_at).getTime() - new Date(a.published_at).getTime();

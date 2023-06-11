@@ -2,8 +2,8 @@
 import Card from "../../components/Card.astro";
 import Layout from "../../layouts/Layout.astro";
 import { fetchContent } from "../../lib/content";
-const time = new Date().toJSON();
 const { source } = Astro.params;
+export const prerender = false;
 
 const content = await fetchContent(source == "all" || !source ? [] : [source]);
 
