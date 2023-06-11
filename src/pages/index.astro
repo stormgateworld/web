@@ -2,92 +2,62 @@
 import Layout from "../layouts/Layout.astro";
 import Bookmarks from "../components/Bookmarks.astro";
 import Box from "../components/Box.astro";
-import { getCollection } from "astro:content";
-import { sortCollectionByDate } from "../lib/utils";
-import HypeCard from "../components/HypeCard.astro";
 import hero from "../assets/hero.png";
 import logoWhite from "../assets/stormgate-logo-white.png";
-import VideoCard from "../components/VideoCard.astro";
-import YoutubeCard from "../components/cards/Youtube.astro";
 import { fetchContent } from "../lib/content";
 import Timeago from "../components/Timeago.astro";
+import RedditMeta from "../components/sources/RedditMeta.astro";
+import TwitterMeta from "../components/sources/TwitterMeta.astro";
+import YoutubeMeta from "../components/sources/YoutubeMeta.astro";
+import Card from "../components/Card.astro";
 import unescape from "lodash/unescape";
-
-const hype = (await getCollection("hype")).sort(sortCollectionByDate).slice(0, 5);
-
-// const videos = (await getCollection("videos")).sort(sortCollectionByDate).slice(0, 4);
+import NewsMeta from "../components/sources/NewsMeta.astro";
 
 const news = (await fetchContent(["news", "reddit"], { count: 8 })).sort((a, b) => {
   return new Date(b.published_at).getTime() - new Date(a.published_at).getTime();
 });
 
-const videos = await fetchContent(["youtube"], { count: 12 });
+const firehose = await fetchContent([], { count: 24 });
 ---
 
 <Layout title="Home">
   <div class="h-[800px] w-full absolute -z-0 top-0">
-    <img src={hero} class="w-full h-full object-cover absolute" />
+    <img src={hero} class="w-full h-full object-cover absolute opacity-75" />
     <div class="absolute inset-0 bg-gradient-to-b from-transparent to-gray-900"></div>
   </div>
-  <section class="container mx-auto px-4 relative">
+  <section class="max-w-screen-2xl mx-auto px-4 relative">
     <main>
       <div class="py-12 px-2">
         <img src={logoWhite} class="-ml-2 h-16" />
         <p class="text-2xl font-bold my-6">Get ready for the launch of Stormgate!</p>
 
         <p class="text-lg font-medium max-w-xl my-4 leading-relaxed">
-          Developed by the talented Blizzard-veterans at FrostGiant Studios, Stormgate® is a highly anticipated
-          free-to-play RTS Game coming to PC, with a private beta in mid-2023. Play solo or co-op in a futuristic
-          settings with The Human Resistance, The Demonic Invaders and other to be revealed factions.
+          News, gameplay footage, community content and more – all in one place. Stormgate World gathers the best of
+          Reddit, News, YouTube, and other social media for you to enjoy.
         </p>
-
-        <p class="text-md font-medium max-w-xl leading-relaxed">
-          On Stormgate World, you can find recent updates, community links, and other stuff to get you excited about the
-          game. This is fan-made website brought to you by the creators of AoE4 World, the biggest community site for
-          Age of Empires IV – with great hopes and plans for Stormgate.
-        </p>
-
-        <a
-          href="https://playstormgate.com"
-          target="_blank"
-          class="bg-white rounded-full mr-4 px-6 py-2 border text-black my-6 inline-block font-bold border-white hover:bg-gray-100 transition"
-        >
-          Sign up for beta
-        </a>
-        <a
-          href="/tldr"
-          class="bg-transparent text-white border border-white rounded-full px-6 py-2 my-6 inline-block font-bold hover:bg-white/20 transition"
-        >
-          Learn more
-        </a>
       </div>
 
       <div class="flex flex-col lg:flex-row gap-8 my-8">
         <div class="flex-auto">
-          <Box title={"Latest Hype"}>
+          <Box title={"Latest News"}>
             <div class="space-y-6">
               {
                 news.map((data) => {
                   return (
-                    <a
-                      href={data.url}
-                      target="_blank"
-                      rel="noopener"
-                      class="flex flex-col xl:flex-row gap-6 -mx-4 px-4 py-4 hover:bg-gray-600 transition-all rounded-xl"
-                    >
+                    <div class="flex flex-col xl:flex-row gap-6 -mx-4 px-4 py-4 hover:bg-gray-600 transition-all rounded-xl">
                       <div class="space-y-4 flex-auto">
-                        <h2 class="font-bold font-display text-xl">{data.title}</h2>
-                        <p
-                          class="whitespace-pre-wrap max-w-prose text-gray-50 leading-relaxed line-clamp-6"
-                          set:text={data.description}
-                        />
+                        <a href={data.url} target="_blank" rel="noopener">
+                          <h2 class="font-bold max-w-prose  font-display text-xl">{data.title}</h2>
+                        </a>
+                        {data.description?.length ? (
+                          <p
+                            class="max-w-prose text-gray-50 leading-relaxed line-clamp-2"
+                            set:text={data.description}
+                          />
+                        ) : null}
                         <div class="flex flex-wrap text-sm text-gray-300 gap-3">
-                          {data.author && (
-                            <span class="block truncate">
-                              {data.author_image_url && <img src={data.author_image_url} class="h-3 mr-2" />}
-                              {data.author}
-                            </span>
-                          )}
+                          {data.source === "reddit" ? <RedditMeta data={data} /> : <NewsMeta data={data} />}
+
                           {data.published_at && (
                             <span class="block truncate">
                               <Timeago date={new Date(data.published_at)} />
@@ -96,33 +66,98 @@ const videos = await fetchContent(["youtube"], { count: 12 });
                         </div>
                       </div>
                       {data.image_url?.length && (
-                        <img
-                          src={unescape(data.image_url)}
-                          alt={data.title}
-                          class="aspect-video h-40 xl:h-32 rounded-lg object-cover order-first xl:order-last"
-                        />
+                        <a href={data.url} target="_blank" rel="noopener" class="order-first xl:order-last">
+                          <img
+                            src={unescape(data.image_url)}
+                            alt={data.title}
+                            class="aspect-video h-40 xl:h-24 rounded-lg object-cover "
+                          />
+                        </a>
                       )}
-                    </a>
+                    </div>
                   );
                 })
               }
-              <!-- {hype.map((item) => <HypeCard entry={item} />)} -->
             </div>
           </Box>
         </div>
-        <div class="flex-grow flex-shrink-0 basis-1/3">
+        <div class="flex-grow flex-shrink-0 basis-1/3 space-y-8">
+          <Box title="The best in your inbox">
+            <p class="text-md font-medium max-w-xl my-4 leading-relaxed">
+              Sign up for SGW Digest, and we’ll send you the best of the community, straight to your inbox, no more than
+              once a week.
+            </p>
+            <form
+              class="mt-5 sm:max-w-s relative"
+              method="POST"
+              action="https://a23f8f26.sibforms.com/serve/MUIEAN2wfmnNojUs5aYtmc88WmQ5g7Ix9vdfnJ23njOhEAs9WZe4hohlHv2Jb-JcOXZcfkJbre2DvQ_-Z-tg8Y0T1aMQOLAi1qVFc9WdGaUXQ5Npc1VYBBatFK2UbB2wtd0I1q_smM2XhG83g8ibkRldf6dNJPJ1RqPdIX5hfHtpk0VJ_D58mbjkqyrTSCkWkRVuAhEGaSVMg1Xw"
+              target="_blank"
+            >
+              <div class="w-full">
+                <label for="email" class="sr-only">Email</label>
+                <input
+                  type="email"
+                  name="EMAIL"
+                  id="email"
+                  class="bg-transparent block w-full py-3 px-4 pr-40 border-b font-semibold border-white/60 focus:border-white transition-colors placeholder-white/60 focus:outline-none"
+                  placeholder="you@example.com"
+                  required
+                />
+              </div>
+              <input type="text" name="email_address_check" value="" class="hidden" />
+              <input type="hidden" name="locale" value="en" />
+              <input type="hidden" name="html_type" value="simple" />
+              <button
+                type="submit"
+                class="absolute top-0 right-0 w-36 h-10 rounded-full font-semibold text-black bg-gradient-to-b from-[#FF8E00] to-[#FFC100] block focus:outline-none focus:ring-inset focus:ring-2 focus:ring-black/30 transition-colors"
+                >Subscribe</button
+              >
+            </form>
+          </Box>
+          <Box title="About">
+            <p class="text-md font-medium max-w-xl my-4 leading-relaxed">
+              Developed by the talented Blizzard-veterans at FrostGiant Studios, Stormgate® is a highly anticipated
+              free-to-play RTS Game coming to PC, with a private beta in mid-2023. Play solo or co-op in a futuristic
+              settings with The Human Resistance, The Demonic Invaders and other to be revealed factions.
+            </p>
+
+            <p class="text-md font-medium max-w-xl leading-relaxed">
+              On <em>Stormgate World</em>, you can find recent updates, community links, and other stuff to get you
+              excited about the game.
+            </p>
+            <a
+              href="https://playstormgate.com"
+              target="_blank"
+              class="bg-white rounded-full text-sm mr-4 px-6 py-2 border text-black my-6 inline-block font-bold border-white hover:bg-gray-100 transition"
+            >
+              Sign up for beta
+            </a>
+            <a
+              href="/tldr"
+              class="bg-transparent text-sm text-white border border-white rounded-full px-6 py-2 my-6 inline-block font-bold hover:bg-white/20 transition"
+            >
+              Learn more
+            </a>
+
+            <p class="text-sm text-gray-200">
+              This is fan-made website brought to you by the creators of AoE4 World, the biggest community site for Age
+              of Empires IV. We're and not affiliated with Stormgate or Frost Giant Studios.
+            </p>
+          </Box>
           <Box title={"Bookmarks"}>
             <Bookmarks />
           </Box>
         </div>
       </div>
-      <div class="">
-        <h3 class="font-bold font-display text-white/70 text-xl my-4 flex-auto">Featured Videos</h3>
-        <!-- <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {videos.map((video) => <VideoCard entry={video} />)}
-        </div> -->
+      <div class="mt-20">
+        <div class="flex flex-col items-center my-4">
+          <h3 class="font-bold font-display text-white/70 text-4xl flex-auto text-center">
+            The fireh<img src="/portal.svg" class="inline h-[0.7em] opacity-70" aria-hidden="true" alt="o" />se
+          </h3>
+          <p class="max-w-prose text-center my-4 text-lg">Everything everywhere posted about Stormgate, all at once</p>
+        </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {videos.map((c) => <YoutubeCard data={c} />)}
+          {firehose.map((c) => <Card data={c} />)}
         </div>
       </div>
     </main>

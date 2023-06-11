@@ -1,0 +1,120 @@
+---
+import type { Content } from "../lib/content";
+import Timeago from "./Timeago.astro";
+import InstagramMeta from "./sources/InstagramMeta.astro";
+import NewsMeta from "./sources/NewsMeta.astro";
+import RedditMeta from "./sources/RedditMeta.astro";
+import TwitterMeta from "./sources/TwitterMeta.astro";
+import YoutubeMeta from "./sources/YoutubeMeta.astro";
+export interface Props {
+  data: Content;
+}
+
+const { data } = Astro.props;
+
+const isStormgatenexus = data.source == "news" && data.author_url.includes("stormgatenexus.com");
+---
+
+<div
+  class="bg-gray-700 rounded-xl shadow-sm hover:shadow-xl group border-2 border-transparent hover:border-orange-500 transition flex flex-col focus-within:border-orange-500"
+  class:list={[isStormgatenexus && "bg-[#0d1e2a] hover:border-[#ffae14] focus-within:border-[#ffae14]"]}
+>
+  {
+    data.image_url?.length && (
+      <a
+        href={data.url}
+        rel="noopener ugc"
+        target="_blank"
+        class="relative rounded-t-xl overflow-hidden focus:outline-none"
+        class:list={[data.source === "instagram" ? "" : "aspect-video "]}
+      >
+        <img
+          src={`https://api.stormgateworld.com/v0/content/${data.id}/image`}
+          class="w-full h-full object-cover group-hover:scale-105 transition-transform group-focus-within:scale-105 object-"
+          class:list={[data.source === "instagram" && "w-full h-auto max-h-[330px] "]}
+        />
+      </a>
+    )
+  }
+  <div class="p-6 flex flex-col flex-auto">
+    {
+      ["twitter", "instagram"].includes(data.source) ? (
+        <a
+          class:list={[
+            "text-gray-100 whitespace-pre-wrap text-md line-clamp-5",
+            data.image_url ? "line-clamp-4" : "line-clamp-[12]",
+            data.source === "instagram" && "!line-clamp-2 text-sm",
+          ]}
+          href={data.url}
+          rel="noopener ugc"
+          target="_blank"
+          tabindex="-1"
+          set:text={(data.description ?? data.title).trim()}
+        />
+      ) : (
+        <>
+          <a
+            class:list={[
+              "font-display font-bold text-md mb-2",
+              data.image_url ? "line-clamp-3" : "line-clamp-5",
+              isStormgatenexus && "text-[#ffae14]",
+            ]}
+            href={data.url}
+            rel="noopener ugc"
+            target="_blank"
+            tabindex="-1"
+          >
+            {data.title}
+          </a>
+          <p class:list={["text-gray-100 text-sm line-clamp-2", data.image_url ? "line-clamp-2" : "line-clamp-[7]"]}>
+            {data.description}
+          </p>
+        </>
+      )
+    }
+    <div class="flex-auto"></div>
+    <div class="flex gap-4 mt-4 text-sm">
+      {
+        data.source === "reddit" ? (
+          <RedditMeta data={data} />
+        ) : data.source === "twitter" ? (
+          <TwitterMeta data={data} />
+        ) : data.source === "youtube" ? (
+          <YoutubeMeta data={data} />
+        ) : data.source === "instagram" ? (
+          <InstagramMeta data={data} />
+        ) : data.source === "news" ? (
+          <NewsMeta data={data} />
+        ) : (
+          <slot>
+            {data.author_url ? (
+              <a
+                class="inline-flex items-center whitespace-nowrap"
+                href={data.author_url}
+                rel="noopener ugc"
+                target="_blank"
+              >
+                {data.author_image_url && <img src={data.author_image_url} class="h-3 mr-2" />}
+                {data.author}
+              </a>
+            ) : data.author ? (
+              <span class="truncate">
+                {data.author_image_url && <img src={data.author_image_url} class="h-3 mr-2" />}
+                {data.author}
+              </span>
+            ) : null}
+            {/*data.source*/}
+          </slot>
+        )
+      }
+
+      {
+        data.published_at && (
+          <span class="truncate">
+            <Timeago date={new Date(data.published_at)} format="short" />
+          </span>
+        )
+      }
+    </div>
+  </div>
+</div>

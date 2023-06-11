@@ -57,11 +57,16 @@ export type RedditData = {
   upvotes_count: number;
 };
 
+export type InstagramData = {
+  comments_count: number;
+  likes_count: number;
+};
+
 export type YoutubeContent = SourceData<"youtube", YoutubeData>;
 export type TwitterContent = SourceData<"twitter", TwitterData>;
 export type RedditContent = SourceData<"reddit", RedditData>;
 export type NewsContent = SourceData<"news">;
-export type InstagramContent = SourceData<"instagram">;
+export type InstagramContent = SourceData<"instagram", InstagramData>;
 export type TikTokContent = SourceData<"tiktok">;
 export type Content = YoutubeContent | TwitterContent | RedditContent | NewsContent | InstagramContent | TikTokContent;
 
