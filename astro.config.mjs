@@ -9,11 +9,8 @@ export default defineConfig({
   integrations: [solidJs(), tailwind()],
   output: "hybrid",
   adapter: cloudflare({
-    mode: "directory"
+    mode: "directory",
   }),
-  experimental: {
-    hybridOutput: true
-  },
   // makes wrangler debugging possible
   // vite: {
   //   build: {
