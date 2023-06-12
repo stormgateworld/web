@@ -1,0 +1,53 @@
+---
+import Card from "./Base.astro";
+import { formatNumber } from "../../lib/utils";
+// import unescape from "lodash/unescape";
+import type { RedditContent } from "../../lib/content";
+
+export interface Props {
+  data: RedditContent;
+}
+
+const { data } = Astro.props;
+const iconProps = { class: "w-4 mr-1"}
+
+// function guessRedditImageUrl(data: RedditData) {
+//   if (data.preview) {
+//     return unescape(data.preview.images[0].source.url);
+//   }
+
+//   const { thumbnail, url } = data;
+//   if (!thumbnail || thumbnail == "self" || thumbnail == "default") {
+//     return undefined;
+//   }
+//   if (url.endsWith(".jpg") || url.endsWith(".png") || url.endsWith(".gif")) {
+//     return url;
+//   }
+
+//   // if url is youtube.com or youtu.be, return the thumbnail parsed from the url
+//   if (url.match(/youtube\.com|youtu\.be/)) {
+//     const videoId = url.match(/v=([^&]+)/)?.[1] || url.match(/youtu\.be\/([^&]+)/)?.[1];
+//     if (videoId) {
+//       return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+//     }
+//   }
+
+//   return thumbnail;
+// }
+---
+
+<Card data={data}>
+  <a class="text-orange-400 inline-flex items-center">
+    <i class="ti ti-arrow-up w-4 mr-1"></i>
+    {formatNumber(data.metadata?.upvotes_count - data.metadata?.downvotes_count)}
+  </a>
+  <a
+    class="truncate inline-flex items-center"
+    href={`https://reddit.com/r/${data.author_url}`}
+    target="_blank"
+    rel="noopener ugc"
+  >
+    <img src="/content/websites/reddit.com.png" class="h-3 mr-2" />
+    r/{data.author}
+  </a>
+</Card>

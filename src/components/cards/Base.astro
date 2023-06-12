@@ -1,0 +1,69 @@
+---
+import type { Content } from "../../lib/content";
+import Timeago from "../Timeago.astro";
+import unescape from "lodash/unescape";
+export interface Props {
+  data: Content;
+}
+
+const { data } = Astro.props;
+---
+
+<div
+  class="bg-gray-700 rounded-xl shadow-sm hover:shadow-xl group border-2 border-transparent hover:border-orange-500 transition flex flex-col focus-within:border-orange-500"
+>
+  {
+    data.image_url?.length && (
+      <a
+        href={data.url}
+        rel="noopener ugc"
+        target="_blank"
+        class="aspect-video relative rounded-t-xl overflow-hidden focus:outline-none"
+      >
+        <img
+          src={`https://api.stormgateworld.com/v0/content/${data.id}/image`}
+          class="w-full h-full object-cover group-hover:scale-105 transition-transform group-focus-within:scale-105"
+        />
+      </a>
+    )
+  }
+  <div class="p-6 flex flex-col flex-auto">
+    <a
+      class:list={["font-display font-bold text-md mb-2", data.image_url ? "line-clamp-3" : "line-clamp-5"]}
+      href={data.url}
+      rel="noopener ugc"
+      target="_blank"
+      tabindex="-1"
+    >
+      {data.title}
+    </a>
+    <p class:list={["text-gray-100 text-sm line-clamp-2", data.image_url ? "line-clamp-2" : "line-clamp-[7]"]}>
+      {data.description}
+    </p>
+    <div class="flex-auto"></div>
+    <div class="flex gap-4 mt-4 text-sm">
+      <slot>
+        {
+          data.author_url ? (
+            <a class="inline-flex items-center">
+              {data.author_image_url && <img src={data.author_image_url} class="h-3 mr-2" />}
+              {data.author}
+            </a>
+          ) : data.author ? (
+            <span class="truncate">
+              {data.author_image_url && <img src={data.author_image_url} class="h-3 mr-2" />}
+              {data.author}
+            </span>
+          ) : null
+        }
+      </slot>
+      {
+        data.published_at && (
+          <span class="truncate">
+            <Timeago date={new Date(data.published_at)} format="short" />
+          </span>
+        )
+      }
+    </div>
+  </div>
+</div>

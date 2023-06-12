@@ -1,0 +1,24 @@
+---
+import { formatNumber } from "../../lib/utils";
+import type { YoutubeContent } from "../../lib/content";
+export interface Props {
+  data: YoutubeContent;
+}
+
+const { data } = Astro.props;
+---
+
+<a class="text-orange-400 inline-flex items-center">
+  <i class="ti ti-thumb-up w-4 mr-1"></i>
+  {formatNumber(data.metadata?.likes_count)}
+</a>
+{
+  /*<span class="inline-flex items-center">
+          <Icon name="tabler:eye" class="w-4 mr-1" />
+          {formatNumber(data.statistics.viewCount)}
+        </span>*/
+}
+<a class="truncate inline-flex items-center">
+  <img src="/content/websites/youtube.com.png" class="h-3 mr-2" />
+  {data.author}
+</a>

@@ -1,0 +1,48 @@
+---
+import type { Content } from "../../lib/content";
+
+export interface Props {
+  data: Content;
+}
+
+const { data } = Astro.props;
+const isStormgatenexus = data.source == "news" && data.author_url.includes("stormgatenexus.com");
+function prefixUrl(url: string) {
+  if (url.startsWith("http")) {
+    return url;
+  }
+  return `https://${url}`;
+}
+---
+
+{
+  isStormgatenexus ? (
+    <a class="inline-flex items-center" href="https://stormgatenexus.com" rel="noopener ugc" target="_blank">
+      <img src="/content/websites/stormgatenexus.com.png" class="h-4 mr-2" alt="Stormgate Nexus" />
+      <span>Stormgate Nexus</span>
+    </a>
+  ) : (
+    <>
+      <span class="text-orange-400 inline-flex items-center">
+        <i class="ti ti-rss w-4"></i>
+      </span>
+
+      {data.author_url ? (
+        <a
+          class="inline-flex items-center whitespace-nowrap"
+          href={prefixUrl(data.author_url)}
+          rel="noopener ugc"
+          target="_blank"
+        >
+          {data.author_image_url && <img src={data.author_image_url} class="h-3 mr-2" />}
+          {data.author}
+        </a>
+      ) : data.author ? (
+        <span class="truncate">
+          {data.author_image_url && <img src={data.author_image_url} class="h-3 mr-2" />}
+          {data.author}
+        </span>
+      ) : null}
+    </>
+  )
+}

@@ -4,7 +4,7 @@ import "@fontsource/sen/400.css";
 import "@fontsource/sen/700.css";
 
 export interface Props {
-    title: string;
+  title: string;
 }
 
 const { title } = Astro.props;
@@ -12,56 +12,49 @@ const { title } = Astro.props;
 
 <!DOCTYPE html>
 <html lang="en" class="scroll-pt-24">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.png" />
-        <meta name="generator" content={Astro.generator} />
-        <title>
-            {title ? `${title} - Stormgate World` : "Stormgate World"}
-        </title>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-V5SFFY7NM1"></script>
-        <script is:inline>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-V5SFFY7NM1');
-        </script>
-    </head>
-    <body
-        class="antialiased bg-body text-body text-white font-body bg-gray-900 scroll-pt-24"
-    >
-        <div class="relative z-10 w-full border-b border-white/20">
-            <nav
-                class="h-20 flex items-center container mx-auto px-4 gap-4 sm:gap-12 font-display"
-            >
-                <a href="/" class="text-xl font-bold"> Stormgate World</a>
-                <a href="/tldr" class="font-medium">TL;DR:</a>
-                <a href="/hype/1" class="font-medium">News</a>
-                <div class="flex-auto"></div>
-                <a
-                    href="https://playstormgate.com"
-                    target="_blank"
-                    class="bg-white rounded-full px-6 py-2 text-black text-sm font-bold hidden sm:block"
-                >
-                    Sign up for beta
-                </a>
-            </nav>
-        </div>
-        <slot />
-        <footer
-            class="container mx-auto px-4 py-12 text-center text-white/60 text-sm"
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.22.0/tabler-icons.min.css" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.png" />
+    <meta name="generator" content={Astro.generator} />
+    <title>
+      {title ? `${title} - Stormgate World` : "Stormgate World"}
+    </title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V5SFFY7NM1"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-V5SFFY7NM1");
+    </script>
+  </head>
+  <body class="antialiased bg-body text-body text-white font-body bg-gray-900 scroll-pt-24">
+    <div class="relative z-10 w-full border-b border-white/20">
+      <nav class="h-20 flex items-center max-w-screen-2xl mx-auto px-4 gap-4 sm:gap-12 font-display">
+        <a href="/" class="text-xl font-bold"> Stormgate World</a>
+        <a href="/tldr" class="font-medium">TL;DR:</a>
+        <a href="/firehose" class="font-medium">Firehose</a>
+        <div class="flex-auto"></div>
+        <a
+          href="https://playstormgate.com"
+          target="_blank"
+          class="bg-white rounded-full px-6 py-2 text-black text-sm font-bold hidden sm:block"
         >
-            <p>
-                Stormgate World is a fan-made website not affiliated with
-                <a href="https://playstormgate.com/" class="hover:underline"
-                    >Stormgate</a
-                >
-                or
-                <a href="https://frostgiant.com/" class="hover:underline"
-                    >Frost Giant Studios</a
-                >.
-            </p>
-        </footer>
-    </body>
+          Sign up for beta
+        </a>
+      </nav>
+    </div>
+    <slot />
+    <footer class="max-w-screen-2xl mx-auto px-4 py-12 text-center text-white/60 text-sm">
+      <p>
+        Stormgate World is a fan-made website and not affiliated with
+        <a href="https://playstormgate.com/" class="hover:underline">Stormgate</a>
+        or
+        <a href="https://frostgiant.com/" class="hover:underline">Frost Giant Studios</a>.
+      </p>
+    </footer>
+  </body>
 </html>
