@@ -1,5 +1,4 @@
 ---
-import { Icon } from "astro-icon";
 import { formatNumber } from "../../lib/utils";
 import type { InstagramContent, RedditContent } from "../../lib/content";
 
@@ -11,10 +10,10 @@ const { data } = Astro.props;
 ---
 
 <a class="text-orange-400 inline-flex items-center">
-  <Icon name="tabler:heart" class="w-4 mr-1" />
+  <i class="ti ti-heart w-4 mr-1"></i>
   {formatNumber(data.metadata?.likes_count)}
 </a>
 <a class="truncate inline-flex items-center" href={data.author_url} target="_blank" rel="noopener ugc">
-  <Icon name="tabler:brand-instagram" class="w-4 mr-1 text-[#E4405F]" />
+  <i class="ti ti-brand-instagram w-4 mr-1 text-[#E4405F]"></i>
   {data.author}
 </a>

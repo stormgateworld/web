@@ -1,5 +1,4 @@
 ---
-import { Icon } from "astro-icon";
 import type { Content } from "../../lib/content";
 
 export interface Props {
@@ -25,7 +24,7 @@ function prefixUrl(url: string) {
   ) : (
     <>
       <span class="text-orange-400 inline-flex items-center">
-        <Icon name="tabler:rss" class="w-4" />
+        <i class="ti ti-rss w-4"></i>
       </span>
 
       {data.author_url ? (

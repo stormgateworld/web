@@ -16,6 +16,9 @@ dependencies:
   '@fontsource/sen':
     specifier: ^5.0.3
     version: 5.0.3
+  '@tabler/icons':
+    specifier: ^2.22.0
+    version: 2.22.0
   astro:
     specifier: ^2.6.3
     version: 2.6.3
@@ -1006,6 +1009,10 @@ packages:
     dependencies:
       deepmerge: 4.3.1
       escalade: 3.1.1
+    dev: false
+
+  /@tabler/icons@2.22.0:
+    resolution: {integrity: sha512-lOsGHqRPIKNARMWHHFkUUJH78C8ptQmUcDnumFBUI4YLRKFouKa7uAZL3ZfuH0HjDpOhsnWqUYZ7FhMCLcGpAQ==}
     dev: false
 
   /@tailwindcss/typography@0.5.9(tailwindcss@3.3.2):

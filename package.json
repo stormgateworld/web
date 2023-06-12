@@ -26,7 +26,6 @@
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.9",
     "@types/better-sqlite3": "^7.6.4",
-    "astro-icon": "^0.8.1",
     "better-sqlite3": "^8.4.0",
     "drizzle-kit": "^0.18.1",
     "miniflare": "^3.0.1",

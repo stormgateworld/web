@@ -1,6 +1,5 @@
 ---
 import Card from "./Base.astro";
-import { Icon } from "astro-icon";
 import { formatNumber } from "../../lib/utils";
 // import unescape from "lodash/unescape";
 import type { RedditContent } from "../../lib/content";
@@ -10,6 +9,7 @@ export interface Props {
 }
 
 const { data } = Astro.props;
+const iconProps = { class: "w-4 mr-1"}
 
 // function guessRedditImageUrl(data: RedditData) {
 //   if (data.preview) {
@@ -38,7 +38,7 @@ const { data } = Astro.props;
 
 <Card data={data}>
   <a class="text-orange-400 inline-flex items-center">
-    <Icon name="tabler:arrow-up" class="w-4 mr-1" />
+    <i class="ti ti-arrow-up w-4 mr-1"></i>
     {formatNumber(data.metadata?.upvotes_count - data.metadata?.downvotes_count)}
   </a>
   <a

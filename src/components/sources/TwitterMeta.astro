@@ -1,5 +1,4 @@
 ---
-import { Icon } from "astro-icon";
 import { formatNumber } from "../../lib/utils";
 import type { TwitterContent } from "../../lib/content";
 export interface Props {
@@ -10,11 +9,11 @@ const { data } = Astro.props;
 ---
 
 <a class="text-orange-400 inline-flex items-center">
-  <Icon name="tabler:heart" class="w-4 mr-1" />
+  <i class="ti ti-heart w-4 mr-1"></i>
   {formatNumber(data.metadata?.likes_count)}
 </a>
 <a class="text-orange-400 inline-flex items-center">
-  <Icon name="tabler:repeat" class="w-4 mr-1" />
+  <i class="ti ti-repeat w-4 mr-1"></i>
   {formatNumber(data.metadata?.retweets_count)}
 </a>
 <a class="truncate inline-flex items-center">
