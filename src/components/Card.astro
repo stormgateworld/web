@@ -29,7 +29,7 @@ const isStormgatenexus = data.source == "news" && data.author_url.includes("stor
         class:list={[data.source === "instagram" ? "" : "aspect-video "]}
       >
         <img
-          src={`https://api.stormgateworld.com/v0/content/${data.id}/image`}
+          src={data.image_url}
           class="w-full h-full object-cover group-hover:scale-105 transition-transform group-focus-within:scale-105 object-"
           class:list={[data.source === "instagram" && "w-full h-auto max-h-[330px] "]}
         />

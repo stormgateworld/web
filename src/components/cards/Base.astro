@@ -21,7 +21,7 @@ const { data } = Astro.props;
         class="aspect-video relative rounded-t-xl overflow-hidden focus:outline-none"
       >
         <img
-          src={`https://api.stormgateworld.com/v0/content/${data.id}/image`}
+          src={data.image_url}
           class="w-full h-full object-cover group-hover:scale-105 transition-transform group-focus-within:scale-105"
         />
       </a>
