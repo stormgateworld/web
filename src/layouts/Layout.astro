@@ -35,13 +35,14 @@ const { title } = Astro.props;
     <div class="relative z-10 w-full border-b border-white/20">
       <nav class="h-20 flex items-center max-w-screen-2xl mx-auto px-4 gap-4 sm:gap-12 font-display">
         <a href="/" class="text-xl font-bold"> Stormgate World</a>
-        <a href="/tldr" class="font-medium">TL;DR:</a>
+        <a href="/tldr" class="font-medium">TL;DR</a>
         <a href="/firehose" class="font-medium">Firehose</a>
         <div class="flex-auto"></div>
         <a
           href="https://playstormgate.com"
           target="_blank"
-          class="bg-white rounded-full px-6 py-2 text-black text-sm font-bold hidden sm:block"
+          class="bg-white rounded-full px-6 py-2 text-black text-sm font-bold hidden sm:block border-white hover:bg-gray-100 transition"
+          data-class="bg-white rounded-full text-sm mr-4 px-6 py-2 border text-black my-6 inline-block font-bold border-white hover:bg-gray-100 transition"
         >
           Sign up for beta
         </a>
