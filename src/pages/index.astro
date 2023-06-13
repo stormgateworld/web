@@ -13,11 +13,13 @@ import NewsMeta from "../components/sources/NewsMeta.astro";
 
 export const prerender = false;
 
-const news = (await fetchContent(["news", "reddit"], { count: 8 })).sort((a, b) => {
+const newsRequest = fetchContent(["news", "reddit"], { count: 8 });
+const firehose = await fetchContent([], { count: 24 });
+
+const news = (await newsRequest).sort((a, b) => {
   return new Date(b.published_at).getTime() - new Date(a.published_at).getTime();
 });
 
-const firehose = await fetchContent([], { count: 24 });
 ---
 
 <Layout title="Home">
