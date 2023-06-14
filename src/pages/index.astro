@@ -14,7 +14,7 @@ import NewsMeta from "../components/sources/NewsMeta.astro";
 export const prerender = false;
 
 const newsRequest = fetchContent(["news", "reddit"], { count: 8 });
-const firehose = await fetchContent([], { count: 24 });
+const social = await fetchContent([], { count: 24 });
 
 const news = (await newsRequest).sort((a, b) => {
   return new Date(b.published_at).getTime() - new Date(a.published_at).getTime();
@@ -29,7 +29,7 @@ const news = (await newsRequest).sort((a, b) => {
   </div>
   <section class="max-w-screen-2xl mx-auto px-4 relative">
     <main>
-      <div class="py-12 px-2">
+      <div class="pt-12 pb-6 px-2">
         <img src={logoWhite} class="-ml-2 h-16" />
         <p class="text-2xl font-bold my-6">Get ready for the launch of Stormgate!</p>
 
@@ -80,6 +80,11 @@ const news = (await newsRequest).sort((a, b) => {
                   );
                 })
               }
+            </div>
+            <div class="text-center pt-6">
+              <a class="text-white hover:text-gray-100" href="/social">
+                View More News <span aria-hidden="true">→</span>
+              </a>
             </div>
           </Box>
         </div>
@@ -156,12 +161,12 @@ const news = (await newsRequest).sort((a, b) => {
       <div class="mt-20">
         <div class="flex flex-col items-center my-4">
           <h3 class="font-bold font-display text-white/70 text-4xl flex-auto text-center">
-            The fireh<img src="/portal.svg" class="inline h-[0.7em] opacity-70" aria-hidden="true" alt="o" />se
+            S<img src="/portal.svg" class="inline h-[0.7em] opacity-70" aria-hidden="true" alt="o" />cial
           </h3>
           <p class="max-w-prose text-center my-4 text-lg">Everything everywhere posted about Stormgate, all at once</p>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {firehose.map((c) => <Card data={c} />)}
+          {social.map((c) => <Card data={c} />)}
         </div>
         <div class="text-center pt-6">
           <a class="text-white hover:text-gray-100" href="/social">
