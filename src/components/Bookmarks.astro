@@ -4,30 +4,17 @@ const allWebsites = await getCollection("websites");
 ---
 
 <ul class="flex flex-col">
-    {
-        allWebsites.map((website) => (
-            <li class="block border-b border-gray-300/30 last:border-b-0 -mx-4 px-4 py-4 hover:bg-gray-600 transition">
-                <a
-                    href={website.data.url}
-                    class="flex gap-6 items-center rounded "
-                    target="_blank"
-                    rel="noopener"
-                >
-                    <img
-                        src={website.data.icon}
-                        alt={website.data.title}
-                        class="w-8 h-8 object-cover rounded-xs"
-                    />
-                    <div>
-                        <p class="font-bold font-display">
-                            {website.data.title}
-                        </p>
-                        <p class="font-display text-gray-50">
-                            {website.data.subtitle}
-                        </p>
-                    </div>
-                </a>
-            </li>
-        ))
-    }
+  {
+    allWebsites.map((website) => (
+      <li class="-mx-4 block border-b border-gray-300/30 px-4 py-4 transition last:border-b-0 hover:bg-gray-600">
+        <a href={website.data.url} class="flex items-center gap-6 rounded " target="_blank" rel="noopener">
+          <img src={website.data.icon} alt={website.data.title} class="rounded-xs h-8 w-8 object-cover" />
+          <div>
+            <p class="font-display font-bold">{website.data.title}</p>
+            <p class="font-display text-gray-50">{website.data.subtitle}</p>
+          </div>
+        </a>
+      </li>
+    ))
+  }
 </ul>

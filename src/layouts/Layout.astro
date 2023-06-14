@@ -31,9 +31,9 @@ const { title } = Astro.props;
       gtag("config", "G-V5SFFY7NM1");
     </script>
   </head>
-  <body class="antialiased bg-body text-body text-white font-body bg-gray-900 scroll-pt-24">
+  <body class="bg-body text-body font-body scroll-pt-24 bg-gray-900 text-white antialiased">
     <div class="relative z-10 w-full border-b border-white/20">
-      <nav class="h-20 flex items-center max-w-screen-2xl mx-auto px-4 gap-4 sm:gap-12 font-display">
+      <nav class="mx-auto flex h-20 max-w-screen-2xl items-center gap-4 px-4 font-display sm:gap-12">
         <a href="/" class="text-xl font-bold"> Stormgate World</a>
         <a href="/social" class="font-medium hover:underline">Social Feed</a>
         <a href="/tldr" class="font-medium hover:underline">TL;DR</a>
@@ -41,7 +41,7 @@ const { title } = Astro.props;
         <a
           href="https://playstormgate.com"
           target="_blank"
-          class="bg-white rounded-full px-6 py-2 text-black text-sm font-bold hidden sm:block border-white hover:bg-gray-100 transition"
+          class="hidden rounded-full border-white bg-white px-6 py-2 text-sm font-bold text-black transition hover:bg-gray-100 sm:block"
           data-class="bg-white rounded-full text-sm mr-4 px-6 py-2 border text-black my-6 inline-block font-bold border-white hover:bg-gray-100 transition"
         >
           Sign up for beta
@@ -49,7 +49,7 @@ const { title } = Astro.props;
       </nav>
     </div>
     <slot />
-    <footer class="max-w-screen-2xl mx-auto px-4 py-12 text-center text-white/60 text-sm">
+    <footer class="mx-auto max-w-screen-2xl px-4 py-12 text-center text-sm text-white/60">
       <p>
         Stormgate World is a fan-made website and not affiliated with
         <a href="https://playstormgate.com/" class="hover:underline">Stormgate</a>

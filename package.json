@@ -9,7 +9,8 @@
     "preview": "wrangler pages dev ./dist",
     "astro": "astro",
     "generate": "drizzle-kit generate:sqlite --schema=db/schema.ts --out=./db/migrations",
-    "up": "drizzle-kit up:sqlite --schema=db/schema.ts"
+    "up": "drizzle-kit up:sqlite --schema=db/schema.ts",
+    "format": "prettier --write --plugin-search-dir=. ."
   },
   "dependencies": {
     "@astrojs/cloudflare": "^6.4.0",
@@ -29,7 +30,9 @@
     "better-sqlite3": "^8.4.0",
     "drizzle-kit": "^0.18.1",
     "miniflare": "^3.0.1",
+    "prettier": "^2.8.8",
     "prettier-plugin-astro": "^0.9.1",
+    "prettier-plugin-tailwindcss": "^0.3.0",
     "wrangler": "^3.1.0"
   },
   "prettier": {

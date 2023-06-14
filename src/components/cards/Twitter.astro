@@ -10,8 +10,8 @@ const { data } = Astro.props;
 ---
 
 <Card data={data}>
-  <a class="text-orange-400 inline-flex items-center">
-    <i class="ti ti-heart w-4 mr-1"></i>
+  <a class="inline-flex items-center text-orange-400">
+    <i class="ti ti-heart mr-1 w-4"></i>
     {formatNumber(data.metadata?.likes_count)}
   </a>
   {
@@ -20,8 +20,8 @@ const { data } = Astro.props;
           {formatNumber(data.statistics.viewCount)}
         </span>*/
   }
-  <a class="truncate inline-flex items-center">
-    <img src="/content/websites/twitter.com.png" class="h-3 mr-2" />
+  <a class="inline-flex items-center truncate">
+    <img src="/content/websites/twitter.com.png" class="mr-2 h-3" />
     {data.author}
   </a>
 </Card>

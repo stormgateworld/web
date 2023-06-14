@@ -9,7 +9,7 @@ export interface Props {
 }
 
 const { data } = Astro.props;
-const iconProps = { class: "w-4 mr-1"}
+const iconProps = { class: "w-4 mr-1" };
 
 // function guessRedditImageUrl(data: RedditData) {
 //   if (data.preview) {
@@ -37,17 +37,17 @@ const iconProps = { class: "w-4 mr-1"}
 ---
 
 <Card data={data}>
-  <a class="text-orange-400 inline-flex items-center">
-    <i class="ti ti-arrow-up w-4 mr-1"></i>
+  <a class="inline-flex items-center text-orange-400">
+    <i class="ti ti-arrow-up mr-1 w-4"></i>
     {formatNumber(data.metadata?.upvotes_count - data.metadata?.downvotes_count)}
   </a>
   <a
-    class="truncate inline-flex items-center"
+    class="inline-flex items-center truncate"
     href={`https://reddit.com/r/${data.author_url}`}
     target="_blank"
     rel="noopener ugc"
   >
-    <img src="/content/websites/reddit.com.png" class="h-3 mr-2" />
+    <img src="/content/websites/reddit.com.png" class="mr-2 h-3" />
     r/{data.author}
   </a>
 </Card>

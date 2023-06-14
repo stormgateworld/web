@@ -10,7 +10,7 @@ const { data } = Astro.props;
 ---
 
 <div
-  class="bg-gray-700 rounded-xl shadow-sm hover:shadow-xl group border-2 border-transparent hover:border-orange-500 transition flex flex-col focus-within:border-orange-500"
+  class="group flex flex-col rounded-xl border-2 border-transparent bg-gray-700 shadow-sm transition focus-within:border-orange-500 hover:border-orange-500 hover:shadow-xl"
 >
   {
     data.image_url?.length && (
@@ -18,16 +18,16 @@ const { data } = Astro.props;
         href={data.url}
         rel="noopener ugc"
         target="_blank"
-        class="aspect-video relative rounded-t-xl overflow-hidden focus:outline-none"
+        class="relative aspect-video overflow-hidden rounded-t-xl focus:outline-none"
       >
         <img
           src={data.image_url}
-          class="w-full h-full object-cover group-hover:scale-105 transition-transform group-focus-within:scale-105"
+          class="h-full w-full object-cover transition-transform group-focus-within:scale-105 group-hover:scale-105"
         />
       </a>
     )
   }
-  <div class="p-6 flex flex-col flex-auto">
+  <div class="flex flex-auto flex-col p-6">
     <a
       class:list={["font-display font-bold text-md mb-2", data.image_url ? "line-clamp-3" : "line-clamp-5"]}
       href={data.url}
@@ -41,17 +41,17 @@ const { data } = Astro.props;
       {data.description}
     </p>
     <div class="flex-auto"></div>
-    <div class="flex gap-4 mt-4 text-sm">
+    <div class="mt-4 flex gap-4 text-sm">
       <slot>
         {
           data.author_url ? (
             <a class="inline-flex items-center">
-              {data.author_image_url && <img src={data.author_image_url} class="h-3 mr-2" />}
+              {data.author_image_url && <img src={data.author_image_url} class="mr-2 h-3" />}
               {data.author}
             </a>
           ) : data.author ? (
             <span class="truncate">
-              {data.author_image_url && <img src={data.author_image_url} class="h-3 mr-2" />}
+              {data.author_image_url && <img src={data.author_image_url} class="mr-2 h-3" />}
               {data.author}
             </span>
           ) : null

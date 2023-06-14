@@ -18,13 +18,13 @@ function prefixUrl(url: string) {
 {
   isStormgatenexus ? (
     <a class="inline-flex items-center" href="https://stormgatenexus.com" rel="noopener ugc" target="_blank">
-      <img src="/content/websites/stormgatenexus.com.png" class="h-4 mr-2" alt="Stormgate Nexus" />
+      <img src="/content/websites/stormgatenexus.com.png" class="mr-2 h-4" alt="Stormgate Nexus" />
       <span>Stormgate Nexus</span>
     </a>
   ) : (
     <>
-      <span class="text-orange-400 inline-flex items-center">
-        <i class="ti ti-rss w-4"></i>
+      <span class="inline-flex items-center text-orange-400">
+        <i class="ti ti-rss w-4" />
       </span>
 
       {data.author_url ? (
@@ -34,12 +34,12 @@ function prefixUrl(url: string) {
           rel="noopener ugc"
           target="_blank"
         >
-          {data.author_image_url && <img src={data.author_image_url} class="h-3 mr-2" />}
+          {data.author_image_url && <img src={data.author_image_url} class="mr-2 h-3" />}
           {data.author}
         </a>
       ) : data.author ? (
         <span class="truncate">
-          {data.author_image_url && <img src={data.author_image_url} class="h-3 mr-2" />}
+          {data.author_image_url && <img src={data.author_image_url} class="mr-2 h-3" />}
           {data.author}
         </span>
       ) : null}

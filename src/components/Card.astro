@@ -16,7 +16,7 @@ const isStormgatenexus = data.source == "news" && data.author_url.includes("stor
 ---
 
 <div
-  class="bg-gray-700 rounded-xl shadow-sm hover:shadow-xl group border-2 border-transparent hover:border-orange-500 transition flex flex-col focus-within:border-orange-500"
+  class="group flex flex-col rounded-xl border-2 border-transparent bg-gray-700 shadow-sm transition focus-within:border-orange-500 hover:border-orange-500 hover:shadow-xl"
   class:list={[isStormgatenexus && "!bg-[#0d1e2a] hover:!border-[#ffae14] !focus-within:!border-[#ffae14]"]}
 >
   {
@@ -25,18 +25,18 @@ const isStormgatenexus = data.source == "news" && data.author_url.includes("stor
         href={data.url}
         rel="noopener ugc"
         target="_blank"
-        class="relative rounded-t-xl overflow-hidden focus:outline-none"
+        class="relative overflow-hidden rounded-t-xl focus:outline-none"
         class:list={[data.source === "instagram" ? "" : "aspect-video "]}
       >
         <img
           src={data.image_url}
-          class="w-full h-full object-cover group-hover:scale-105 transition-transform group-focus-within:scale-105 object-"
+          class="object- h-full w-full object-cover transition-transform group-focus-within:scale-105 group-hover:scale-105"
           class:list={[data.source === "instagram" && "w-full h-auto max-h-[330px] "]}
         />
       </a>
     )
   }
-  <div class="p-6 flex flex-col flex-auto">
+  <div class="flex flex-auto flex-col p-6">
     {
       ["twitter", "instagram"].includes(data.source) ? (
         <a
@@ -73,7 +73,7 @@ const isStormgatenexus = data.source == "news" && data.author_url.includes("stor
       )
     }
     <div class="flex-auto"></div>
-    <div class="flex gap-4 mt-4 text-sm">
+    <div class="mt-4 flex gap-4 text-sm">
       {
         data.source === "reddit" ? (
           <RedditMeta data={data} />
@@ -94,12 +94,12 @@ const isStormgatenexus = data.source == "news" && data.author_url.includes("stor
                 rel="noopener ugc"
                 target="_blank"
               >
-                {data.author_image_url && <img src={data.author_image_url} class="h-3 mr-2" />}
+                {data.author_image_url && <img src={data.author_image_url} class="mr-2 h-3" />}
                 {data.author}
               </a>
             ) : data.author ? (
               <span class="truncate">
-                {data.author_image_url && <img src={data.author_image_url} class="h-3 mr-2" />}
+                {data.author_image_url && <img src={data.author_image_url} class="mr-2 h-3" />}
                 {data.author}
               </span>
             ) : null}

@@ -3,59 +3,51 @@ import { CollectionEntry, getCollection } from "astro:content";
 import Timeago from "./Timeago.astro";
 
 export interface Props {
-    entry: CollectionEntry<"hype">;
+  entry: CollectionEntry<"hype">;
 }
 
 const { data } = Astro.props.entry;
 const { title, description, url, thumbnail, publisher, date } = data;
 
-const website = (
-    await getCollection("websites", ({ data }) => url?.includes(data.url))
-)[0]?.data;
+const website = (await getCollection("websites", ({ data }) => url?.includes(data.url)))[0]?.data;
 ---
 
 <a
-    href={url}
-    target="_blank"
-    rel="noopener"
-    class="flex flex-col xl:flex-row gap-6 -mx-4 px-4 py-4 hover:bg-gray-600 transition-all rounded-xl"
+  href={url}
+  target="_blank"
+  rel="noopener"
+  class="-mx-4 flex flex-col gap-6 rounded-xl px-4 py-4 transition-all hover:bg-gray-600 xl:flex-row"
 >
-    <div class="space-y-4 flex-auto">
-        <h2 class="font-bold font-display text-xl">{title}</h2>
-        <p
-            class="whitespace-pre-wrap max-w-prose text-gray-50 leading-relaxed"
-            set:text={description}
-        />
-        <div class="flex flex-wrap text-sm text-gray-300 gap-3">
-            {
-                website && (
-                    <p class="inline-flex items-center">
-                        <img
-                            src={website.icon}
-                            class="w-3 h-3 mr-2 object-cover"
-                        />
-                        {website.title}
-                    </p>
-                )
-            }
-            {publisher && <p>{publisher}</p>}
-            { (website || publisher) && date && <span class="px-0">&middot;</span> }
-            {
-                date && (
-                    <p>
-                        <Timeago date={date} />
-                    </p>
-                )
-            }
-        </div>
-    </div>
-    {
-        thumbnail && (
-            <img
-                src={thumbnail}
-                alt={title}
-                class="aspect-video h-40 xl:h-32 rounded-lg object-cover order-first xl:order-last"
-            />
+  <div class="flex-auto space-y-4">
+    <h2 class="font-display text-xl font-bold">{title}</h2>
+    <p class="max-w-prose whitespace-pre-wrap leading-relaxed text-gray-50" set:text={description} />
+    <div class="flex flex-wrap gap-3 text-sm text-gray-300">
+      {
+        website && (
+          <p class="inline-flex items-center">
+            <img src={website.icon} class="mr-2 h-3 w-3 object-cover" />
+            {website.title}
+          </p>
         )
-    }
+      }
+      {publisher && <p>{publisher}</p>}
+      {(website || publisher) && date && <span class="px-0">&middot;</span>}
+      {
+        date && (
+          <p>
+            <Timeago date={date} />
+          </p>
+        )
+      }
+    </div>
+  </div>
+  {
+    thumbnail && (
+      <img
+        src={thumbnail}
+        alt={title}
+        class="order-first aspect-video h-40 rounded-lg object-cover xl:order-last xl:h-32"
+      />
+    )
+  }
 </a>
