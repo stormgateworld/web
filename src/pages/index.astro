@@ -163,6 +163,11 @@ const news = (await newsRequest).sort((a, b) => {
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {firehose.map((c) => <Card data={c} />)}
         </div>
+        <div class="text-center pt-6">
+          <a class="text-white hover:text-gray-100" href="/social">
+            View More <span aria-hidden="true">→</span>
+          </a>
+        </div>
       </div>
     </main>
   </section>
