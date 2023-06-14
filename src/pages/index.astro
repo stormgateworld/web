@@ -14,7 +14,7 @@ import NewsMeta from "../components/sources/NewsMeta.astro";
 export const prerender = false;
 
 const newsRequest = fetchContent(["news", "reddit"], { count: 8 });
-const social = await fetchContent([], { count: 24 });
+const social = await fetchContent([], { count: 12 });
 
 const news = (await newsRequest).sort((a, b) => {
   return new Date(b.published_at).getTime() - new Date(a.published_at).getTime();
@@ -89,9 +89,17 @@ const news = (await newsRequest).sort((a, b) => {
           </Box>
         </div>
         <div class="flex-grow flex-shrink-0 basis-1/3 space-y-8">
-          <Box title="The best in your inbox">
+          <Box title="Stay On Top of the Hype!">
             <p class="text-md font-medium max-w-xl my-4 leading-relaxed">
-              Sign up for SGW Digest, and we’ll send you the best of the community, straight to your inbox, no more than
+              Tired of clicking through dozens of websites and social media accounts to find the latest news about Stormgate?
+            </p>
+
+            <p class="text-md font-medium max-w-xl my-4 leading-relaxed">
+              Our <a href="/social" class="underline font-semibold">Social Feed</a> aggregates everything you see to know in single place.
+            </p>
+
+            <p class="text-md font-medium max-w-xl my-4 leading-relaxed">
+              Or you can even sign up for SGW Digest, and we’ll send you the best of the community, straight to your inbox, no more than
               once a week.
             </p>
             <form
@@ -106,7 +114,7 @@ const news = (await newsRequest).sort((a, b) => {
                   type="email"
                   name="EMAIL"
                   id="email"
-                  class="bg-transparent block w-full py-3 px-4 pr-40 border-b font-semibold border-white/60 focus:border-white transition-colors placeholder-white/60 focus:outline-none"
+                  class="bg-transparent block w-full py-2 px-4 pr-40 border-b font-semibold border-white/60 focus:border-white transition-colors placeholder-white/60 focus:outline-none"
                   placeholder="you@example.com"
                   required
                 />
@@ -116,12 +124,12 @@ const news = (await newsRequest).sort((a, b) => {
               <input type="hidden" name="html_type" value="simple" />
               <button
                 type="submit"
-                class="absolute top-0 right-0 w-36 h-10 rounded-full font-semibold text-black bg-gradient-to-b from-[#FF8E00] to-[#FFC100] block focus:outline-none focus:ring-inset focus:ring-2 focus:ring-black/30 transition-colors"
+                class="absolute top-0 right-0 w-32 h-9 rounded-full font-semibold text-black bg-gradient-to-b from-[#FF8E00] to-[#FFC100] block focus:outline-none focus:ring-inset focus:ring-2 focus:ring-black/30 transition-colors"
                 >Subscribe</button
               >
             </form>
           </Box>
-          <Box title="About">
+          <Box title="About the Game">
             <p class="text-md font-medium max-w-xl my-4 leading-relaxed">
               Developed by the talented Blizzard-veterans at FrostGiant Studios, Stormgate® is a highly anticipated
               free-to-play RTS Game coming to PC, with a private beta in mid-2023. Play solo or co-op in a futuristic
@@ -150,7 +158,6 @@ const news = (await newsRequest).sort((a, b) => {
               This is fan-made website brought to you by the creators of
               <a class="underline" href="https://aoe4world.com" target="_blank">AoE4 World</a>,
               the biggest community site for Age of Empires IV.
-              We're and not affiliated with Stormgate or Frost Giant Studios.
             </p>
           </Box>
           <Box title={"Bookmarks"}>
@@ -161,7 +168,7 @@ const news = (await newsRequest).sort((a, b) => {
       <div class="mt-20">
         <div class="flex flex-col items-center my-4">
           <h3 class="font-bold font-display text-white/70 text-4xl flex-auto text-center">
-            S<img src="/portal.svg" class="inline h-[0.7em] opacity-70" aria-hidden="true" alt="o" />cial
+            S<img src="/portal.svg" class="inline h-[0.7em] opacity-70" aria-hidden="true" alt="o" />cial Feed
           </h3>
           <p class="max-w-prose text-center my-4 text-lg">Everything everywhere posted about Stormgate, all at once</p>
         </div>
