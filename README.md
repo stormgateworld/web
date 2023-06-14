@@ -1,6 +1,7 @@
 # Web
 
 ## Requirements
+
 - Node v18 or higher
 - Make sure node-gyp is installed globally `npm install -g node-gyp` (this is needed to build better-sqlite3 from source)
 
@@ -22,8 +23,8 @@ All commands are run from the root of the project, from a terminal:
 1. Update `db/schema.ts`
 2. Run `pnpm run generate`
 3. Run migrations
-    * Locally: `wrangler d1 execute stormgateworld-web-production --local --file db/migrations/0000_uneven_naoko.sql`
-    * Production: `wrangler d1 execute stormgateworld-web-production --file db/migrations/0000_uneven_naoko.sql`
+   - Locally: `wrangler d1 execute stormgateworld-web-production --local --file db/migrations/0000_uneven_naoko.sql`
+   - Production: `wrangler d1 execute stormgateworld-web-production --file db/migrations/0000_uneven_naoko.sql`
 
 ## Pruduction Debugging
 

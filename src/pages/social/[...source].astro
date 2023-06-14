@@ -32,7 +32,7 @@ const tabs = [
   { name: "Twitter", icon: "/content/websites/twitter.com.png" },
   { name: "Instagram", icon: "/content/websites/instagram.com.png" },
   { name: "Tiktok", icon: "/content/websites/tiktok.com.png" },
-]
+];
 
 function tabPath(tab) {
   if (tab.name == "All") {
@@ -44,34 +44,52 @@ function tabPath(tab) {
 ---
 
 <Layout title="Home">
-  <section class="max-w-screen-2xl mx-auto px-4 relative">
-    <div class="flex flex-col items-center mt-8 mb-2">
-      <h3 class="font-bold font-display text-white text-4xl flex-auto text-center">
+  <section class="relative mx-auto max-w-screen-2xl px-4">
+    <div class="mb-2 mt-8 flex flex-col items-center">
+      <h3 class="flex-auto text-center font-display text-4xl font-bold text-white">
         S<img src="/portal.svg" class="inline h-[0.7em]" aria-hidden="true" alt="o" />cial Feed
       </h3>
-      <p class="max-w-prose text-center my-4 text-lg">Everything everywhere posted about Stormgate, all at once</p>
+      <p class="my-4 max-w-prose text-center text-lg">Everything everywhere posted about Stormgate, all at once</p>
     </div>
     <div>
       <div class="mb-6">
-        <div class="flex border-0 border-gray-200 place-content-center">
-          <nav class="flex sm:space-x-8 space-x-2" aria-label="Tabs">
-            {tabs.map(tab => (
-              tab.name.toLowerCase() == activeTab ?
-                <a href={tabPath(tab)} class="border-gray-100 text-white-700 whitespace-nowrap border-b-2 py-2 px-1 text-sm font-medium" aria-current="page">
-                  {tab.icon ? <img src={tab.icon} class="inline-block h-6 sm:h-3 sm:mr-2" /> : <span class="sm:hidden">{tab.name}</span>}
-                  <span class="hidden sm:inline-block">{tab.name}</span>
-                </a>
-              :
-                <a href={tabPath(tab)} class="border-transparent text-gray-100 hover:border-white hover:text-white whitespace-nowrap border-b-2 py-2 px-1 text-sm font-medium">
-                  {tab.icon ? <img src={tab.icon} class="inline-block h-6 sm:h-3 sm:mr-2" /> : <span class="sm:hidden">{tab.name}</span>}
-                  <span class="hidden sm:inline-block">{tab.name}</span>
-                </a>
-            ))}
+        <div class="flex place-content-center border-0 border-gray-200">
+          <nav class="flex space-x-2 sm:space-x-8" aria-label="Tabs">
+            {
+              tabs.map((tab) =>
+                tab.name.toLowerCase() == activeTab ? (
+                  <a
+                    href={tabPath(tab)}
+                    class="text-white-700 whitespace-nowrap border-b-2 border-gray-100 px-1 py-2 text-sm font-medium"
+                    aria-current="page"
+                  >
+                    {tab.icon ? (
+                      <img src={tab.icon} class="inline-block h-6 sm:mr-2 sm:h-3" />
+                    ) : (
+                      <span class="sm:hidden">{tab.name}</span>
+                    )}
+                    <span class="hidden sm:inline-block">{tab.name}</span>
+                  </a>
+                ) : (
+                  <a
+                    href={tabPath(tab)}
+                    class="whitespace-nowrap border-b-2 border-transparent px-1 py-2 text-sm font-medium text-gray-100 hover:border-white hover:text-white"
+                  >
+                    {tab.icon ? (
+                      <img src={tab.icon} class="inline-block h-6 sm:mr-2 sm:h-3" />
+                    ) : (
+                      <span class="sm:hidden">{tab.name}</span>
+                    )}
+                    <span class="hidden sm:inline-block">{tab.name}</span>
+                  </a>
+                )
+              )
+            }
           </nav>
         </div>
       </div>
     </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {content.map((c) => <Card data={c} />)}
     </div>
   </section>

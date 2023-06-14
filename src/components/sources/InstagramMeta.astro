@@ -9,11 +9,11 @@ export interface Props {
 const { data } = Astro.props;
 ---
 
-<a class="text-orange-400 inline-flex items-center">
-  <i class="ti ti-heart w-4 mr-1"></i>
+<a class="inline-flex items-center text-orange-400">
+  <i class="ti ti-heart mr-1 w-4"></i>
   {formatNumber(data.metadata?.likes_count)}
 </a>
-<a class="truncate inline-flex items-center" href={data.author_url} target="_blank" rel="noopener ugc">
-  <i class="ti ti-brand-instagram w-4 mr-1 text-[#E4405F]"></i>
+<a class="inline-flex items-center truncate" href={data.author_url} target="_blank" rel="noopener ugc">
+  <i class="ti ti-brand-instagram mr-1 w-4 text-[#E4405F]"></i>
   {data.author}
 </a>
