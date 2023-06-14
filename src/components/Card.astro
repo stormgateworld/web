@@ -110,7 +110,7 @@ const isStormgatenexus = data.source == "news" && data.author_url.includes("stor
 
       {
         data.published_at && (
-          <span class="truncate">
+          <span>
             <Timeago date={new Date(data.published_at)} format="short" />
           </span>
         )
