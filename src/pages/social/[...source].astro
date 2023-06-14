@@ -1,0 +1,78 @@
+---
+export const prerender = false;
+
+import Card from "../../components/Card.astro";
+import Layout from "../../layouts/Layout.astro";
+import { fetchContent } from "../../lib/content";
+
+const { source } = Astro.params;
+
+const content = await fetchContent(source == "all" || !source ? [] : [source]);
+
+export function getStaticPaths() {
+  return [
+    { params: { source: "reddit" } },
+    { params: { source: "youtube" } },
+    { params: { source: "news" } },
+    { params: { source: "twitter" } },
+    { params: { source: "tiktok" } },
+    { params: { source: "instagram" } },
+    { params: { source: "all" } },
+    { params: { source: undefined } },
+  ];
+}
+
+const activeTab = source || "all";
+
+const tabs = [
+  { name: "All" },
+  { name: "Reddit", icon: "/content/websites/reddit.com.png" },
+  { name: "Youtube", icon: "/content/websites/youtube.com.png" },
+  { name: "News", icon: "/content/websites/news.png" },
+  { name: "Twitter", icon: "/content/websites/twitter.com.png" },
+  { name: "Tiktok", icon: "/content/websites/tiktok.com.png" },
+  { name: "Instagram", icon: "/content/websites/instagram.com.png" },
+]
+
+function tabPath(tab) {
+  if (tab.name == "All") {
+    return "/social";
+  } else {
+    return `/social/${tab.name.toLowerCase()}`;
+  }
+}
+---
+
+<Layout title="Home">
+  <section class="max-w-screen-2xl mx-auto px-4 relative">
+    <div class="flex flex-col items-center mt-8 mb-2">
+      <h3 class="font-bold font-display text-white text-4xl flex-auto text-center">
+        The fireh<img src="/portal.svg" class="inline h-[0.7em]" aria-hidden="true" alt="o" />se
+      </h3>
+      <p class="max-w-prose text-center my-4 text-lg">Everything everywhere posted about Stormgate, all at once</p>
+    </div>
+    <div>
+      <div class="mb-6">
+        <div class="flex border-0 border-gray-200 place-content-center">
+          <nav class="flex sm:space-x-8 space-x-2" aria-label="Tabs">
+            {tabs.map(tab => (
+              tab.name.toLowerCase() == activeTab ?
+                <a href={tabPath(tab)} class="border-gray-100 text-white-700 whitespace-nowrap border-b-2 py-2 px-1 text-sm font-medium" aria-current="page">
+                  {tab.icon ? <img src={tab.icon} class="inline-block h-6 sm:h-3 sm:mr-2" /> : <span class="sm:hidden">{tab.name}</span>}
+                  <span class="hidden sm:inline-block">{tab.name}</span>
+                </a>
+              :
+                <a href={tabPath(tab)} class="border-transparent text-gray-100 hover:border-white hover:text-white whitespace-nowrap border-b-2 py-2 px-1 text-sm font-medium">
+                  {tab.icon ? <img src={tab.icon} class="inline-block h-6 sm:h-3 sm:mr-2" /> : <span class="sm:hidden">{tab.name}</span>}
+                  <span class="hidden sm:inline-block">{tab.name}</span>
+                </a>
+            ))}
+          </nav>
+        </div>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      {content.map((c) => <Card data={c} />)}
+    </div>
+  </section>
+</Layout>
