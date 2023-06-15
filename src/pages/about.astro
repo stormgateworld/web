@@ -28,6 +28,7 @@ const team: any[] = [
       github: "https://github.com/robertvanhoesel",
       linkedin: "https://www.linkedin.com/in/robertvanhoesel/",
       discord: "https://discord.com/users/836650704671211562",
+      // strava: "https://www.strava.com/athletes/102703142",
     },
   },
 ];
@@ -37,6 +38,7 @@ const linkIconClassMap: any = {
   github: "ti ti-brand-github-filled",
   linkedin: "ti ti-brand-linkedin",
   discord: "ti ti-brand-discord-filled",
+  strava: "ti ti-brand-strava",
 };
 ---
 
@@ -54,7 +56,7 @@ const linkIconClassMap: any = {
       </div>
 
       <div class="mt-16 px-6 sm:mt-24">
-        <h2 class="text-3xl font-bold text-white sm:text-4xl">Vision</h2>
+        <h2 class="text-3xl font-bold text-white">Vision</h2>
         <p class="mt-6 text-lg leading-8 text-gray-100">
           We aspire to build <span class="font-bold">social platform</span> around in-game profiles, esports and learning
           resources to extend the experience of Stormgate players outside of the game. We strongly believe in the
@@ -72,10 +74,7 @@ const linkIconClassMap: any = {
           which is the largest Age of Empires 4 community website and is used monthly by more than 100k players and and its
           API is utilized by many other community projects.
         </p>
-        <ul
-          role="list"
-          class="mx-auto mt-16 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2"
-        >
+        <ul role="list" class="mx-auto mt-16 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-14">
           {
             team.map((member) => (
               <li>
