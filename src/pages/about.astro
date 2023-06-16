@@ -48,7 +48,7 @@ const linkIconClassMap: any = {
     <div class="absolute inset-0 bg-gradient-to-b from-transparent to-gray-900"></div>
   </div>
   <div class="mx-auto max-w-4xl">
-    <main class="relative isolate">
+    <main class="relative">
       <div class="mx-auto pt-16">
         <h2 class="text-center text-4xl font-bold text-white">
           About <span class="hidden sm:inline">Stormgate World</span>
@@ -66,7 +66,7 @@ const linkIconClassMap: any = {
         </p>
       </div>
 
-      <div class="mb-20 mt-16 max-w-7xl px-6">
+      <div class="mb-20 mt-16 px-6">
         <h2 class="text-3xl font-bold text-white">Team</h2>
         <p class="mt-6 text-lg leading-8 text-gray-100">
           We are experienced developers and gamers who are passionate about building great products. We also built
@@ -82,7 +82,7 @@ const linkIconClassMap: any = {
                 <h3 class="mt-6 font-semibold text-white sm:text-lg">{member.name}</h3>
                 <p class="mt-1 text-base text-gray-300">{member.role}</p>
                 <p class="mt-1 text-sm text-gray-200">{member.location}</p>
-                <p class="mt-2 text-xl ">
+                <p class="mt-2 text-xl">
                   {Object.keys(member.links).map((site) => (
                     <a href={member.links[site]} target="_blank" class="text-gray-200 hover:text-white">
                       <i class={linkIconClassMap[site]} />
