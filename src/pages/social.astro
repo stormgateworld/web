@@ -35,7 +35,7 @@ function parseOrder(orderParam: string): FetchContentOrder {
     case "newest":
       return "published_at"
     default:
-      return "score"
+      return "score_popular"
   }
 }
 

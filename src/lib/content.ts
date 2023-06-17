@@ -1,4 +1,4 @@
-export const validOrders = ["score", "published_at"] as readonly string[]
+export const validOrders = ["score_relevant", "score_popular", "published_at"] as readonly string[]
 export const validSources = ["youtube", "twitter", "reddit", "news", "instagram", "tiktok"] as readonly string[]
 
 export type FetchContentOrder = (typeof validOrders)[number]
