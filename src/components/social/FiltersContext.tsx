@@ -2,8 +2,14 @@ import { createSignal, createContext, useContext } from "solid-js";
 
 const FiltersContext = createContext();
 
+interface Options {
+  source?: string;
+  time?: string;
+  order?: string;
+}
+
 interface Props {
-  options?: any;
+  options: Options;
   children: any;
 }
 
