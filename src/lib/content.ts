@@ -1,14 +1,19 @@
-export type FetchContentOrder = "score" | "published_at";
+export const validOrders = ["score", "published_at"] as readonly string[];
+export const validSources = ["youtube", "twitter", "reddit", "news", "instagram", "tiktok"] as readonly string[];
+
+export type FetchContentOrder = (typeof validOrders)[number];
+export type FetchContentSource = (typeof validSources)[number];
 export type FetchContentParams = {
   count?: number;
   page?: number;
   order?: FetchContentOrder;
   since?: string;
-  source?: string;
+  source?: FetchContentSource;
 };
 
 export async function fetchContent<S extends Content["source"][] = []>(sources: S, params: FetchContentParams = {}) {
   const urlParams = new URLSearchParams({
+    source: params.source || "",
     count: params.count?.toString() || "100",
     page: params.page?.toString() || "1",
     order: params.order || "score",

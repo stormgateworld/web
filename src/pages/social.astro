@@ -3,7 +3,7 @@ export const prerender = false;
 
 import Card from "../components/Card.astro";
 import Layout from "../layouts/Layout.astro";
-import { fetchContent, FetchContentOrder } from "../lib/content";
+import { validSources, fetchContent, FetchContentOrder } from "../lib/content";
 import SocialFilters from "../components/social/Filters";
 
 const params = Astro.url.searchParams;
@@ -39,8 +39,14 @@ function parseOrder(orderParam: string): FetchContentOrder {
   }
 }
 
+function parseSource(sourceParam: string) {
+  if (validSources.includes(sourceParam)) {
+    return sourceParam;
+  }
+}
+
 const fetchParams = {
-  source: source,
+  source: parseSource(source),
   since: parseTime(time),
   order: parseOrder(order),
   limit: 100,

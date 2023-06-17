@@ -12,11 +12,9 @@ interface Context {
 }
 
 export function FiltersProvider(props: Props) {
-  console.log(props.options);
   const [options, setOptions] = createSignal(props.options || {});
   const state: Context = {
     setFilter(name: string, value: string) {
-      console.log(name, value);
       setOptions({ ...options(), [name]: value });
 
       let urlParams: any = {};
