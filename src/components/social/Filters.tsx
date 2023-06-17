@@ -39,7 +39,7 @@ interface Props {
 
 export default function Filters(props: any) {
   return (
-    <FiltersProvider options={props}>
+    <FiltersProvider options={{ source: props.source, time: props.time, order: props.order }}>
       <div class="mb-6 grid grid-cols-6 justify-items-center">
         <div class="place-self-start"></div>
         <div class="col-span-4 flex place-content-center place-self-center border-0 border-gray-200">

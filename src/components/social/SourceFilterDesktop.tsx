@@ -26,10 +26,10 @@ interface Props {
 }
 
 export default function SourceFilterDesktop(props: Props) {
-  const [currentToggle, setCurrentToggle, { setOption }] = useFilters();
+  const { setFilter } = useFilters();
 
   const chooseOption = (tabName: string) => {
-    setOption("source", tabName.toLocaleLowerCase());
+    setFilter("source", tabName.toLocaleLowerCase());
   };
 
   return (

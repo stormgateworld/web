@@ -1,4 +1,4 @@
-import { createSignal, Show, For, createEffect } from "solid-js";
+import { createSignal, onCleanup, Show, For, createEffect } from "solid-js";
 
 import { useFilters } from "./FiltersContext";
 
@@ -15,22 +15,21 @@ interface Props {
   class?: string;
 }
 
+function clickOutside(el: any, accessor: any) {
+  const onClick = (e) => !el.contains(e.target) && accessor()?.();
+  document.body.addEventListener("click", onClick);
+
+  onCleanup(() => document.body.removeEventListener("click", onClick));
+}
+
 export default function Filter(props: Props) {
-  const [currentToggle, setCurrentToggle, { setOption }] = useFilters();
+  const { setFilter } = useFilters();
 
   const [dropdown, setDropdown] = createSignal(false);
 
   const toggleDropdown = () => {
     setDropdown(!dropdown());
-    if (dropdown()) {
-      setCurrentToggle(props.name);
-    }
   };
-  createEffect(() => {
-    if (currentToggle() !== props.name) {
-      setDropdown(false);
-    }
-  });
   const [options, setOptions] = createSignal(props.options.filter((option) => option.value !== props.default));
   const [currentOption, setCurrentOption] = createSignal(
     props.options.find((option) => option.value === props.default)
@@ -41,13 +40,13 @@ export default function Filter(props: Props) {
     setCurrentOption(option);
     setDropdown(false);
     setOptions(props.options.filter((option) => option.value !== optionValue));
-    setOption(props.name, optionValue);
+    setFilter(props.name, optionValue);
   };
 
   const wrapperClass = `relative ml-6 ${props.class || ""}`;
 
   return (
-    <div class={wrapperClass}>
+    <div class={wrapperClass} use:clickOutside={() => setDropdown(false)}>
       <div class="py-2 text-sm">
         <button
           onClick={toggleDropdown}
@@ -71,7 +70,7 @@ export default function Filter(props: Props) {
         </button>
       </div>
 
-      <Show when={dropdown() && currentToggle() === props.name}>
+      <Show when={dropdown()}>
         <div
           class="absolute right-0 z-10 mt-2 w-36 origin-top-right rounded-md bg-black shadow-2xl ring-1 ring-white ring-opacity-20 focus:outline-none"
           role="menu"
