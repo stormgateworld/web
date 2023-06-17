@@ -1,15 +1,21 @@
 import Filter from "./Filter";
 import SourceFilterDesktop from "./SourceFilterDesktop";
 import { FiltersProvider } from "./FiltersContext";
+import redditIcon from "../../assets/social/reddit.svg";
+import youtubeIcon from "../../assets/social/youtube.svg";
+import newsIcon from "../../assets/social/news.svg";
+import twitterIcon from "../../assets/social/twitter.svg";
+import instagramIcon from "../../assets/social/instagram.svg";
+import tiktokIcon from "../../assets/social/tiktok.svg";
 
 const sources = [
   { name: "All Sources", value: "all" },
-  { name: "Reddit", value: "reddit", iconSrc: "/content/websites/reddit.com.png" },
-  { name: "Youtube", value: "youtube", iconSrc: "/content/websites/youtube.com.png" },
-  { name: "News", value: "news", iconSrc: "/content/websites/news.png" },
-  { name: "Twitter", value: "twitter", iconSrc: "/content/websites/twitter.com.png" },
-  { name: "Instagram", value: "instagram", iconSrc: "/content/websites/instagram.com.png" },
-  { name: "TiktTok", value: "tiktok", iconSrc: "/content/websites/tiktok.com.png" },
+  { name: "Reddit", value: "reddit", iconSrc: redditIcon },
+  { name: "Youtube", value: "youtube", iconSrc: youtubeIcon },
+  { name: "News", value: "news", iconSrc: newsIcon },
+  { name: "Twitter", value: "twitter", iconSrc: twitterIcon },
+  { name: "Instagram", value: "instagram", iconSrc: instagramIcon },
+  { name: "TikTok", value: "tiktok", iconSrc: tiktokIcon },
 ];
 
 const orders = [

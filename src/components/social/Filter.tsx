@@ -44,7 +44,7 @@ export default function Filter(props: Props) {
     setOption(props.name, optionValue);
   };
 
-  const wrapperClass = `relative ml-3 ${props.class}`;
+  const wrapperClass = `relative ml-6 ${props.class || ""}`;
 
   return (
     <div class={wrapperClass}>
@@ -58,7 +58,7 @@ export default function Filter(props: Props) {
           aria-haspopup="true"
         >
           <Show when={currentOption()}>
-            {currentOption()?.iconSrc && <img src={currentOption()?.iconSrc} class="mr-2 inline-block w-3" />}
+            {currentOption()?.iconSrc && <img src={currentOption()?.iconSrc} class="mr-2 inline-block h-4" />}
             {currentOption()?.name}
           </Show>
           <svg class="ml-0 h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -83,14 +83,18 @@ export default function Filter(props: Props) {
             <For each={options()}>
               {(option, i) => (
                 <span class="block whitespace-nowrap px-4 py-2 hover:bg-gray-700">
-                  {option.iconSrc && <img src={option.iconSrc} class="mr-2 inline-block w-3" />}
+                  {option.iconSrc ? (
+                    <img src={option.iconSrc} class="mr-2 inline-block h-4" />
+                  ) : (
+                    <div class="mr-2 inline-block h-4 w-4"></div>
+                  )}
                   <a
                     onClick={(e) => {
                       e.preventDefault();
                       chooseOption(option.value);
                     }}
                     href="#"
-                    class="inline-blocktext-sm	whitespace-nowrap font-medium text-gray-100"
+                    class="inline-block whitespace-nowrap text-sm font-medium text-gray-100"
                     role="menuitem"
                     tabindex="-1"
                     id="mobile-menu-item-2"

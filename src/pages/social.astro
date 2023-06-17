@@ -6,7 +6,6 @@ import Layout from "../layouts/Layout.astro";
 import { fetchContent, FetchContentOrder } from "../lib/content";
 import SocialFilters from "../components/social/Filters";
 
-// const { source, time, order } = Astro.params;
 const params = Astro.url.searchParams;
 const source = params.get("s") || "all";
 const time = params.get("t") || "7d";
@@ -51,11 +50,13 @@ const fetchParams = {
 const content = await fetchContent([], fetchParams);
 ---
 
-<Layout title="Home">
+<Layout title="Social Feed">
   <section class="relative mx-auto max-w-screen-2xl px-4">
     <div class="mb-2 mt-8 flex flex-col items-center">
       <h3 class="flex-auto text-center font-display text-4xl font-bold text-white">
-        S<img src="/portal.svg" class="inline h-[0.7em]" aria-hidden="true" alt="o" />cial Feed
+        <a href="/social">
+          S<img src="/portal.svg" class="inline h-[0.7em]" aria-hidden="true" alt="o" />cial Feed
+        </a>
       </h3>
       <p class="my-4 max-w-prose text-center text-lg">Everything everywhere posted about Stormgate, all at once</p>
     </div>

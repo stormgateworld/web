@@ -1,4 +1,10 @@
 import { useFilters } from "./FiltersContext";
+import redditIcon from "../../assets/social/reddit.svg";
+import youtubeIcon from "../../assets/social/youtube.svg";
+import newsIcon from "../../assets/social/news.svg";
+import twitterIcon from "../../assets/social/twitter.svg";
+import instagramIcon from "../../assets/social/instagram.svg";
+import tiktokIcon from "../../assets/social/tiktok.svg";
 
 interface Tab {
   name: string;
@@ -7,12 +13,12 @@ interface Tab {
 
 const tabs: Tab[] = [
   { name: "All" },
-  { name: "Reddit", icon: "/content/websites/reddit.com.png" },
-  { name: "Youtube", icon: "/content/websites/youtube.com.png" },
-  { name: "News", icon: "/content/websites/news.png" },
-  { name: "Twitter", icon: "/content/websites/twitter.com.png" },
-  { name: "Instagram", icon: "/content/websites/instagram.com.png" },
-  { name: "Tiktok", icon: "/content/websites/tiktok.com.png" },
+  { name: "Reddit", icon: redditIcon },
+  { name: "Youtube", icon: youtubeIcon },
+  { name: "News", icon: newsIcon },
+  { name: "Twitter", icon: twitterIcon },
+  { name: "Instagram", icon: instagramIcon },
+  { name: "Tiktok", icon: tiktokIcon },
 ];
 
 interface Props {
@@ -27,7 +33,7 @@ export default function SourceFilterDesktop(props: Props) {
   };
 
   return (
-    <nav class="hidden space-x-8 xl:flex" aria-label="Tabs">
+    <nav class="hidden space-x-7 xl:flex" aria-label="Tabs">
       {tabs.map((tab) =>
         tab.name.toLowerCase() == props.default ? (
           <a
