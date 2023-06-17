@@ -41,7 +41,7 @@ export default function Filters(props: any) {
         </div>
         <div class="relative place-self-end">
           <div class="flex">
-            <Filter name="source" options={sources} default={props.source} class="block xl:hidden" />
+            <Filter name="source" options={sources} default={props.source} class="block lg:hidden" />
             <Filter name="order" options={orders} default={props.order} />
             <Filter name="time" options={times} default={props.time} />
           </div>

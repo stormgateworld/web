@@ -27,7 +27,7 @@ export default function SourceFilterDesktop(props: Props) {
   };
 
   return (
-    <nav class="hidden space-x-2 sm:space-x-8 xl:flex" aria-label="Tabs">
+    <nav class="hidden space-x-2 lg:flex xl:space-x-8" aria-label="Tabs">
       {tabs.map((tab) =>
         tab.name.toLowerCase() == props.default ? (
           <a
@@ -40,11 +40,11 @@ export default function SourceFilterDesktop(props: Props) {
             aria-current="page"
           >
             {tab.icon ? (
-              <img src={tab.icon} class="inline-block h-6 sm:mr-2 sm:h-3" />
+              <img src={tab.icon} class="inline-block h-6 xl:mr-2 xl:h-3" />
             ) : (
-              <span class="sm:hidden">{tab.name}</span>
+              <span class="xl:hidden">{tab.name}</span>
             )}
-            <span class="hidden sm:inline-block">{tab.name}</span>
+            <span class="hidden xl:inline-block">{tab.name}</span>
           </a>
         ) : (
           <a
@@ -56,11 +56,11 @@ export default function SourceFilterDesktop(props: Props) {
             class="whitespace-nowrap border-b-2 border-transparent px-1 py-2 text-sm font-medium text-gray-100 hover:border-white hover:text-white"
           >
             {tab.icon ? (
-              <img src={tab.icon} class="inline-block h-6 sm:mr-2 sm:h-3" />
+              <img src={tab.icon} class="inline-block h-6 xl:mr-2 xl:h-3" />
             ) : (
-              <span class="sm:hidden">{tab.name}</span>
+              <span class="xl:hidden">{tab.name}</span>
             )}
-            <span class="hidden sm:inline-block">{tab.name}</span>
+            <span class="hidden xl:inline-block">{tab.name}</span>
           </a>
         )
       )}
