@@ -20,7 +20,7 @@ const sources = [
 
 const orders = [
   { name: "Relevant", value: "relevant" },
-  // { name: "Popular", value: "popular" },
+  { name: "Popular", value: "popular" },
   { name: "Newest", value: "newest" },
 ]
 

@@ -9,7 +9,7 @@ import SocialFilters from "../components/social/Filters"
 const params = Astro.url.searchParams
 const source = params.get("s") || "all"
 const time = params.get("t") || "7d"
-const order = params.get("o") || "relevant"
+const order = params.get("o") || "popular"
 
 function parseTime(timeParam: string) {
   switch (timeParam) {
@@ -29,9 +29,9 @@ function parseTime(timeParam: string) {
 function parseOrder(orderParam: string): FetchContentOrder {
   switch (orderParam) {
     case "relevant":
-      return "score"
-    // case "popular":
-    //   return "score";
+      return "score_relevant"
+    case "popular":
+      return "score_popular";
     case "newest":
       return "published_at"
     default:
