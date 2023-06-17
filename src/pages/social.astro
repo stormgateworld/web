@@ -1,47 +1,47 @@
 ---
-export const prerender = false;
+export const prerender = false
 
-import Card from "../components/Card.astro";
-import Layout from "../layouts/Layout.astro";
-import { validSources, fetchContent, FetchContentOrder } from "../lib/content";
-import SocialFilters from "../components/social/Filters";
+import Card from "../components/Card.astro"
+import Layout from "../layouts/Layout.astro"
+import { validSources, fetchContent, FetchContentOrder } from "../lib/content"
+import SocialFilters from "../components/social/Filters"
 
-const params = Astro.url.searchParams;
-const source = params.get("s") || "all";
-const time = params.get("t") || "7d";
-const order = params.get("o") || "relevant";
+const params = Astro.url.searchParams
+const source = params.get("s") || "all"
+const time = params.get("t") || "7d"
+const order = params.get("o") || "relevant"
 
 function parseTime(timeParam: string) {
   switch (timeParam) {
     case "1d":
-      return "1d ago";
+      return "1d ago"
     case "3d":
-      return "3d ago";
+      return "3d ago"
     case "7d":
-      return "7d ago";
+      return "7d ago"
     case "30d":
-      return "30d ago";
+      return "30d ago"
     default:
-      return undefined;
+      return undefined
   }
 }
 
 function parseOrder(orderParam: string): FetchContentOrder {
   switch (orderParam) {
     case "relevant":
-      return "score";
+      return "score"
     // case "popular":
     //   return "score";
     case "newest":
-      return "published_at";
+      return "published_at"
     default:
-      return "score";
+      return "score"
   }
 }
 
 function parseSource(sourceParam: string) {
   if (validSources.includes(sourceParam)) {
-    return sourceParam;
+    return sourceParam
   }
 }
 
@@ -51,9 +51,9 @@ const fetchParams = {
   order: parseOrder(order),
   limit: 100,
   offset: 0,
-};
+}
 
-const content = await fetchContent([], fetchParams);
+const content = await fetchContent([], fetchParams)
 ---
 
 <Layout title="Social Feed">

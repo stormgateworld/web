@@ -1,15 +1,15 @@
 ---
-import { CollectionEntry, getCollection } from "astro:content";
-import Timeago from "./Timeago.astro";
+import { CollectionEntry, getCollection } from "astro:content"
+import Timeago from "./Timeago.astro"
 
 export interface Props {
-  entry: CollectionEntry<"hype">;
+  entry: CollectionEntry<"hype">
 }
 
-const { data } = Astro.props.entry;
-const { title, description, url, thumbnail, publisher, date } = data;
+const { data } = Astro.props.entry
+const { title, description, url, thumbnail, publisher, date } = data
 
-const website = (await getCollection("websites", ({ data }) => url?.includes(data.url)))[0]?.data;
+const website = (await getCollection("websites", ({ data }) => url?.includes(data.url)))[0]?.data
 ---
 
 <a

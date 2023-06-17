@@ -1,10 +1,10 @@
 ---
 export interface Props {
-  date?: Date;
-  format?: "short" | "medium";
+  date?: Date
+  format?: "short" | "medium"
 }
 
-const { date, format } = Astro.props;
+const { date, format } = Astro.props
 ---
 
 <astro-timeago data-date={date} format={format ?? "medium"}>
@@ -13,34 +13,34 @@ const { date, format } = Astro.props;
 <script>
   class TimeAgo extends HTMLElement {
     constructor() {
-      super();
+      super()
       if (this.dataset.date) {
-        const date = new Date(this.dataset.date);
-        this.setAttribute("title", this.innerText);
-        this.textContent = this.formatDateRelative(date);
+        const date = new Date(this.dataset.date)
+        this.setAttribute("title", this.innerText)
+        this.textContent = this.formatDateRelative(date)
       }
     }
 
     formatDateRelative = (date: Date) => {
-      const format = this.getAttribute("format");
-      const now = new Date();
-      const diff = now.getTime() - date.getTime();
-      const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 30 * 12));
-      const months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30));
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const format = this.getAttribute("format")
+      const now = new Date()
+      const diff = now.getTime() - date.getTime()
+      const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 30 * 12))
+      const months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30))
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24))
+      const hours = Math.floor(diff / (1000 * 60 * 60))
       if (format == "short") {
-        if (years > 0) return `${years}y`;
-        else if (months > 0) return `${months}mo`;
-        else if (days > 0) return `${days}d`;
-        else return `${hours}h`;
+        if (years > 0) return `${years}y`
+        else if (months > 0) return `${months}mo`
+        else if (days > 0) return `${days}d`
+        else return `${hours}h`
       }
-      if (years > 0) return `${years} year${years > 1 ? "s" : ""} ago`;
-      else if (months > 0) return `${months} month${months > 1 ? "s" : ""} ago`;
-      else if (days > 0) return `${days} day${days > 1 ? "s" : ""} ago`;
-      else return "today";
-    };
+      if (years > 0) return `${years} year${years > 1 ? "s" : ""} ago`
+      else if (months > 0) return `${months} month${months > 1 ? "s" : ""} ago`
+      else if (days > 0) return `${days} day${days > 1 ? "s" : ""} ago`
+      else return "today"
+    }
   }
 
-  customElements.define("astro-timeago", TimeAgo);
+  customElements.define("astro-timeago", TimeAgo)
 </script>

@@ -1,49 +1,47 @@
-import { createSignal, onCleanup, Show, For, createEffect } from "solid-js";
+import { createSignal, onCleanup, Show, For, createEffect } from "solid-js"
 
-import { useFilters } from "./FiltersContext";
+import { useFilters } from "./FiltersContext"
 
 interface Option {
-  name: string;
-  value: string;
-  iconSrc?: string;
+  name: string
+  value: string
+  iconSrc?: string
 }
 
 interface Props {
-  name: string;
-  options: Option[];
-  default: string;
-  class?: string;
+  name: string
+  options: Option[]
+  default: string
+  class?: string
 }
 
 function clickOutside(el: any, accessor: any) {
-  const onClick = (e) => !el.contains(e.target) && accessor()?.();
-  document.body.addEventListener("click", onClick);
+  const onClick = (e) => !el.contains(e.target) && accessor()?.()
+  document.body.addEventListener("click", onClick)
 
-  onCleanup(() => document.body.removeEventListener("click", onClick));
+  onCleanup(() => document.body.removeEventListener("click", onClick))
 }
 
 export default function Filter(props: Props) {
-  const { setFilter } = useFilters();
+  const { setFilter } = useFilters()
 
-  const [dropdown, setDropdown] = createSignal(false);
+  const [dropdown, setDropdown] = createSignal(false)
 
   const toggleDropdown = () => {
-    setDropdown(!dropdown());
-  };
-  const [options, setOptions] = createSignal(props.options.filter((option) => option.value !== props.default));
-  const [currentOption, setCurrentOption] = createSignal(
-    props.options.find((option) => option.value === props.default)
-  );
+    setDropdown(!dropdown())
+  }
+  const [options, setOptions] = createSignal(props.options.filter((option) => option.value !== props.default))
+  const [currentOption, setCurrentOption] = createSignal(props.options.find((option) => option.value === props.default))
 
   const chooseOption = (optionValue: string) => {
-    const option = props.options.find((option) => option.value === optionValue);
-    setCurrentOption(option);
-    setDropdown(false);
-    setOptions(props.options.filter((option) => option.value !== optionValue));
-    setFilter(props.name, optionValue);
-  };
+    const option = props.options.find((option) => option.value === optionValue)
+    setCurrentOption(option)
+    setDropdown(false)
+    setOptions(props.options.filter((option) => option.value !== optionValue))
+    setFilter(props.name, optionValue)
+  }
 
-  const wrapperClass = `relative ml-6 ${props.class || ""}`;
+  const wrapperClass = `relative ml-6 ${props.class || ""}`
 
   return (
     <div class={wrapperClass} use:clickOutside={() => setDropdown(false)}>
@@ -89,8 +87,8 @@ export default function Filter(props: Props) {
                   )}
                   <a
                     onClick={(e) => {
-                      e.preventDefault();
-                      chooseOption(option.value);
+                      e.preventDefault()
+                      chooseOption(option.value)
                     }}
                     href="#"
                     class="inline-block whitespace-nowrap text-sm font-medium text-gray-100"
@@ -107,5 +105,5 @@ export default function Filter(props: Props) {
         </div>
       </Show>
     </div>
-  );
+  )
 }

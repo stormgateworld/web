@@ -1,12 +1,12 @@
 // export const prerender = false;
 
-import { createSignal } from "solid-js";
+import { createSignal } from "solid-js"
 
 export default function MailingListForm(props: any) {
-  const [email, setEmail] = createSignal("");
+  const [email, setEmail] = createSignal("")
 
   const clickHandler = (e: Event) => {
-    e.preventDefault();
+    e.preventDefault()
 
     const response = fetch("/api/mailing-list-users", {
       method: "POST",
@@ -14,8 +14,8 @@ export default function MailingListForm(props: any) {
       body: JSON.stringify({
         email: email(),
       }),
-    });
-  };
+    })
+  }
 
   return (
     <div>
@@ -31,5 +31,5 @@ export default function MailingListForm(props: any) {
       <button onClick={(e) => clickHandler(e)}>Submit X</button>
       <span>{email()}</span>
     </div>
-  );
+  )
 }

@@ -1,13 +1,13 @@
 ---
-export const prerender = false;
+export const prerender = false
 
-import Layout from "../../layouts/Layout.astro";
-import MailingListForm from "../../components/MailingListForm.tsx";
-import { fetchUsers } from "../../services/foo_service";
+import Layout from "../../layouts/Layout.astro"
+import MailingListForm from "../../components/MailingListForm.tsx"
+import { fetchUsers } from "../../services/foo_service"
 
-const time = new Date().toJSON();
+const time = new Date().toJSON()
 
-const users = await fetchUsers(Astro.request);
+const users = await fetchUsers(Astro.request)
 ---
 
 <Layout title="Home">

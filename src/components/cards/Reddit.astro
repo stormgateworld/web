@@ -1,15 +1,15 @@
 ---
-import Card from "./Base.astro";
-import { formatNumber } from "../../lib/utils";
+import Card from "./Base.astro"
+import { formatNumber } from "../../lib/utils"
 // import unescape from "lodash/unescape";
-import type { RedditContent } from "../../lib/content";
+import type { RedditContent } from "../../lib/content"
 
 export interface Props {
-  data: RedditContent;
+  data: RedditContent
 }
 
-const { data } = Astro.props;
-const iconProps = { class: "w-4 mr-1" };
+const { data } = Astro.props
+const iconProps = { class: "w-4 mr-1" }
 
 // function guessRedditImageUrl(data: RedditData) {
 //   if (data.preview) {

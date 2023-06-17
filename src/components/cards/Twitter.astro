@@ -1,12 +1,12 @@
 ---
-import Card from "./Base.astro";
-import { formatNumber } from "../../lib/utils";
-import type { TwitterContent } from "../../lib/content";
+import Card from "./Base.astro"
+import { formatNumber } from "../../lib/utils"
+import type { TwitterContent } from "../../lib/content"
 export interface Props {
-  data: TwitterContent;
+  data: TwitterContent
 }
 
-const { data } = Astro.props;
+const { data } = Astro.props
 ---
 
 <Card data={data}>

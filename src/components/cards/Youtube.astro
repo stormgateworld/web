@@ -1,12 +1,12 @@
 ---
-import Card from "./Base.astro";
-import { formatNumber } from "../../lib/utils";
-import type { YoutubeContent } from "../../lib/content";
+import Card from "./Base.astro"
+import { formatNumber } from "../../lib/utils"
+import type { YoutubeContent } from "../../lib/content"
 export interface Props {
-  data: YoutubeContent;
+  data: YoutubeContent
 }
 
-const { data } = Astro.props;
+const { data } = Astro.props
 ---
 
 <Card data={data}>

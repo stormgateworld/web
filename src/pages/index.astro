@@ -1,24 +1,24 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Bookmarks from "../components/Bookmarks.astro";
-import Box from "../components/Box.astro";
-import hero from "../assets/hero.png";
-import logoWhite from "../assets/stormgate-logo-white.png";
-import { fetchContent } from "../lib/content";
-import Timeago from "../components/Timeago.astro";
-import RedditMeta from "../components/sources/RedditMeta.astro";
-import Card from "../components/Card.astro";
-import unescape from "lodash/unescape";
-import NewsMeta from "../components/sources/NewsMeta.astro";
+import Layout from "../layouts/Layout.astro"
+import Bookmarks from "../components/Bookmarks.astro"
+import Box from "../components/Box.astro"
+import hero from "../assets/hero.png"
+import logoWhite from "../assets/stormgate-logo-white.png"
+import { fetchContent } from "../lib/content"
+import Timeago from "../components/Timeago.astro"
+import RedditMeta from "../components/sources/RedditMeta.astro"
+import Card from "../components/Card.astro"
+import unescape from "lodash/unescape"
+import NewsMeta from "../components/sources/NewsMeta.astro"
 
-export const prerender = false;
+export const prerender = false
 
-const newsRequest = fetchContent(["news", "reddit"], { count: 8 });
-const social = await fetchContent([], { count: 12 });
+const newsRequest = fetchContent(["news", "reddit"], { count: 8 })
+const social = await fetchContent([], { count: 12 })
 
 const news = (await newsRequest).sort((a, b) => {
-  return new Date(b.published_at).getTime() - new Date(a.published_at).getTime();
-});
+  return new Date(b.published_at).getTime() - new Date(a.published_at).getTime()
+})
 ---
 
 <Layout title="Home">
@@ -76,7 +76,7 @@ const news = (await newsRequest).sort((a, b) => {
                         </a>
                       )}
                     </div>
-                  );
+                  )
                 })
               }
             </div>

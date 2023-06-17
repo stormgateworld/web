@@ -1,19 +1,19 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-import Box from "../../components/Box.astro";
-import { CollectionEntry, getCollection } from "astro:content";
-import HypeCard from "../../components/HypeCard.astro";
-import type { PaginateFunction } from "astro";
-import { sortCollectionByDate } from "../../lib/utils";
-import VideoCard from "../../components/VideoCard.astro";
+import Layout from "../../layouts/Layout.astro"
+import Box from "../../components/Box.astro"
+import { CollectionEntry, getCollection } from "astro:content"
+import HypeCard from "../../components/HypeCard.astro"
+import type { PaginateFunction } from "astro"
+import { sortCollectionByDate } from "../../lib/utils"
+import VideoCard from "../../components/VideoCard.astro"
 export async function getStaticPaths({ paginate }: { paginate: PaginateFunction }) {
   // Generate pages from our array of astronauts, with 2 to a page
   return paginate((await getCollection("videos")).sort(sortCollectionByDate), {
     pageSize: 8,
-  });
+  })
 }
 // All paginated data is passed on the "page" prop
-const { page } = Astro.props;
+const { page } = Astro.props
 ---
 
 <Layout title="Videos">

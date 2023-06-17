@@ -1,17 +1,17 @@
 ---
-import type { Content } from "../../lib/content";
+import type { Content } from "../../lib/content"
 
 export interface Props {
-  data: Content;
+  data: Content
 }
 
-const { data } = Astro.props;
-const isStormgatenexus = data.source == "news" && data.author_url.includes("stormgatenexus.com");
+const { data } = Astro.props
+const isStormgatenexus = data.source == "news" && data.author_url.includes("stormgatenexus.com")
 function prefixUrl(url: string) {
   if (url.startsWith("http")) {
-    return url;
+    return url
   }
-  return `https://${url}`;
+  return `https://${url}`
 }
 ---
 

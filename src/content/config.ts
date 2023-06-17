@@ -1,4 +1,4 @@
-import { z, defineCollection } from "astro:content";
+import { z, defineCollection } from "astro:content"
 const hypeCollection = defineCollection({
   schema: z.object({
     title: z.string(),
@@ -8,7 +8,7 @@ const hypeCollection = defineCollection({
     publisher: z.string().optional(),
     date: z.date(),
   }),
-});
+})
 
 const websitesCollection = defineCollection({
   schema: z.object({
@@ -17,7 +17,7 @@ const websitesCollection = defineCollection({
     icon: z.string(),
     url: z.string(),
   }),
-});
+})
 
 const videosCollection = defineCollection({
   schema: z.object({
@@ -31,10 +31,10 @@ const videosCollection = defineCollection({
     tags: z.array(z.string()),
     youtube_id: z.string(),
   }),
-});
+})
 
 export const collections = {
   hype: hypeCollection,
   websites: websitesCollection,
   videos: videosCollection,
-};
+}

@@ -1,23 +1,23 @@
 ---
-import VideoCard from "../../components/VideoCard.astro";
-import Layout from "../../layouts/Layout.astro";
-import { CollectionEntry, getCollection } from "astro:content";
-import { sortCollectionByDate } from "../../lib/utils";
-import Timeago from "../../components/Timeago.astro";
+import VideoCard from "../../components/VideoCard.astro"
+import Layout from "../../layouts/Layout.astro"
+import { CollectionEntry, getCollection } from "astro:content"
+import { sortCollectionByDate } from "../../lib/utils"
+import Timeago from "../../components/Timeago.astro"
 
 export async function getStaticPaths() {
-  const posts = await getCollection("videos");
+  const posts = await getCollection("videos")
   return posts.map((post) => ({
     params: { slug: post.slug },
     props: post,
-  }));
+  }))
 }
-type Props = CollectionEntry<"videos">;
+type Props = CollectionEntry<"videos">
 
-const video = Astro.props;
-const { title, youtube_id, author, author_url, author_avatar_url } = video.data;
+const video = Astro.props
+const { title, youtube_id, author, author_url, author_avatar_url } = video.data
 
-const videos = (await getCollection("videos")).sort(sortCollectionByDate).slice(0, 8);
+const videos = (await getCollection("videos")).sort(sortCollectionByDate).slice(0, 8)
 ---
 
 <Layout title={title}>

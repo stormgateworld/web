@@ -1,12 +1,12 @@
 ---
-import type { CollectionEntry } from "astro:content";
-import Timeago from "./Timeago.astro";
+import type { CollectionEntry } from "astro:content"
+import Timeago from "./Timeago.astro"
 
 export interface Props {
-  entry: CollectionEntry<"videos">;
+  entry: CollectionEntry<"videos">
 }
 
-const { data: video, slug } = Astro.props.entry;
+const { data: video, slug } = Astro.props.entry
 ---
 
 <a href={`/videos/${slug}`} class="rounded-xl transition-all hover:bg-gray-600">
