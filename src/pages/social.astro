@@ -1,0 +1,67 @@
+---
+export const prerender = false;
+
+import Card from "../components/Card.astro";
+import Layout from "../layouts/Layout.astro";
+import { fetchContent, FetchContentOrder } from "../lib/content";
+import SocialFilters from "../components/social/Filters";
+
+// const { source, time, order } = Astro.params;
+const params = Astro.url.searchParams;
+const source = params.get("s") || "all";
+const time = params.get("t") || "7d";
+const order = params.get("o") || "relevant";
+
+function parseTime(timeParam: string) {
+  switch (timeParam) {
+    case "1d":
+      return "1d ago";
+    case "3d":
+      return "3d ago";
+    case "7d":
+      return "7d ago";
+    case "30d":
+      return "30d ago";
+    default:
+      return undefined;
+  }
+}
+
+function parseOrder(orderParam: string): FetchContentOrder {
+  switch (orderParam) {
+    case "relevant":
+      return "score";
+    // case "popular":
+    //   return "score";
+    case "newest":
+      return "published_at";
+    default:
+      return "score";
+  }
+}
+
+const fetchParams = {
+  source: source,
+  since: parseTime(time),
+  order: parseOrder(order),
+  limit: 100,
+  offset: 0,
+};
+
+const content = await fetchContent([], fetchParams);
+---
+
+<Layout title="Home">
+  <section class="relative mx-auto max-w-screen-2xl px-4">
+    <div class="mb-2 mt-8 flex flex-col items-center">
+      <h3 class="flex-auto text-center font-display text-4xl font-bold text-white">
+        S<img src="/portal.svg" class="inline h-[0.7em]" aria-hidden="true" alt="o" />cial Feed
+      </h3>
+      <p class="my-4 max-w-prose text-center text-lg">Everything everywhere posted about Stormgate, all at once</p>
+    </div>
+    <SocialFilters client:load source={source} time={time} order={order} />
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      {content.map((c) => <Card data={c} />)}
+    </div>
+  </section>
+</Layout>

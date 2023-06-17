@@ -16,7 +16,6 @@ interface Props {
 }
 
 export default function Filter(props: Props) {
-  console.log(props.default);
   const [currentToggle, setCurrentToggle, { setOption }] = useFilters();
 
   const [dropdown, setDropdown] = createSignal(false);
@@ -86,7 +85,10 @@ export default function Filter(props: Props) {
                 <span class="block whitespace-nowrap px-4 py-2 hover:bg-gray-700">
                   {option.iconSrc && <img src={option.iconSrc} class="mr-2 inline-block w-3" />}
                   <a
-                    onClick={() => chooseOption(option.value)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      chooseOption(option.value);
+                    }}
                     href="#"
                     class="inline-blocktext-sm	whitespace-nowrap font-medium text-gray-100"
                     role="menuitem"

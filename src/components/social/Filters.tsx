@@ -39,7 +39,7 @@ const sources = [
 
 const orders = [
   { name: "Relevant", value: "relevant" },
-  { name: "Popular", value: "popular" },
+  // { name: "Popular", value: "popular" },
   { name: "Newest", value: "newest" },
 ];
 
@@ -51,9 +51,9 @@ const times = [
 ];
 
 interface Props {
-  source?: string;
-  time?: string;
-  order?: string;
+  source: string;
+  time: string;
+  order: string;
 }
 
 export default function Filters(props: any) {
@@ -96,10 +96,10 @@ export default function Filters(props: any) {
       </div>
       <div class="relative place-self-end">
         <div class="flex">
-          <FiltersProvider>
-            <Filter name="source" options={sources} default={props.source || "all"} class="block xl:hidden" />
-            <Filter name="order" options={orders} default={props.order || "relevant"} />
-            <Filter name="time" options={times} default={props.time || "7d"} />
+          <FiltersProvider options={props}>
+            <Filter name="source" options={sources} default={props.source} class="block xl:hidden" />
+            <Filter name="order" options={orders} default={props.order} />
+            <Filter name="time" options={times} default={props.time} />
           </FiltersProvider>
         </div>
       </div>

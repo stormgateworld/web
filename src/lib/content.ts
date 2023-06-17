@@ -1,17 +1,23 @@
-type fetchContentParams = {
+export type FetchContentOrder = "score" | "published_at";
+export type FetchContentParams = {
   count?: number;
   page?: number;
-  order?: "score" | "published_at";
+  order?: FetchContentOrder;
+  since?: string;
+  source?: string;
 };
 
-export async function fetchContent<S extends Content["source"][] = []>(sources: S, params: fetchContentParams = {}) {
+export async function fetchContent<S extends Content["source"][] = []>(sources: S, params: FetchContentParams = {}) {
   const urlParams = new URLSearchParams({
     count: params.count?.toString() || "100",
     page: params.page?.toString() || "1",
     order: params.order || "score",
+    since: params.since || "",
   });
 
-  sources.forEach((s) => urlParams.append("sources[]", s));
+  if (sources.length > 0) {
+    sources.forEach((s) => urlParams.append("sources[]", s));
+  }
 
   const request = await fetch(`https://api.stormgateworld.com/v0/content?${urlParams.toString()}`);
   const response = await request.json();
