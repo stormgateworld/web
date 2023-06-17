@@ -26,6 +26,7 @@ const orders = [
 
 const times = [
   { name: "All Time", value: "all" },
+  { name: "Last Day", value: "1d" },
   { name: "Last 3 Days", value: "3d" },
   { name: "Last 7 Days", value: "7d" },
   { name: "Last 30 Days", value: "30d" },
