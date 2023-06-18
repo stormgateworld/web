@@ -11,6 +11,13 @@ export type FetchContentParams = {
   source?: FetchContentSource
 }
 
+export async function fetchCreators() {
+  const request = await fetch(`http://localhost:4000/v0/creators`)
+  // const request = await fetch(`https://api.stormgateworld.com/v0/creators`)
+  const response = await request.json()
+  return response.data
+}
+
 export async function fetchContent<S extends Content["source"][] = []>(sources: S, params: FetchContentParams = {}) {
   const urlParams = new URLSearchParams({
     source: params.source || "",

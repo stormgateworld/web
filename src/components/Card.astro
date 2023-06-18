@@ -66,8 +66,8 @@ const isStormgatenexus = data.source == "news" && data.author_url.includes("stor
           >
             {data.title}
           </a>
-          <p class:list={["text-gray-100 text-sm line-clamp-2", data.image_url ? "line-clamp-2" : "line-clamp-[7]"]}>
-            {data.description}
+          <p style="word-break: break-word;" class:list={["text-gray-100 text-sm line-clamp-2", data.image_url ? "line-clamp-2" : "line-clamp-[7]"]}>
+            {data.description.trim()}
           </p>
         </>
       )
