@@ -18,9 +18,11 @@ const { data } = Astro.props
           {formatNumber(data.statistics.viewCount)}
         </span>*/
 }
-{data.author && (
-  <a class="inline-flex items-center truncate">
-    <img src="/content/websites/youtube.com.png" class="mr-2 h-3" />
-    {data.author}
-  </a>
-)}
+{
+  data.author && (
+    <a class="inline-flex items-center truncate">
+      <img src="/content/websites/youtube.com.png" class="mr-2 h-3" />
+      {data.author}
+    </a>
+  )
+}
