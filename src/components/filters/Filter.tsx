@@ -9,6 +9,7 @@ interface Option {
 }
 
 interface Props {
+  icon?: boolean
   name: string
   options: Option[]
   default: string
@@ -83,7 +84,7 @@ export default function Filter(props: Props) {
                   {option.iconSrc ? (
                     <img src={option.iconSrc} class="mr-2 inline-block h-4" />
                   ) : (
-                    <div class="mr-2 inline-block h-4 w-4"></div>
+                    <div class={props.icon ? "mr-2 inline-block h-4 w-4" : ""}></div>
                   )}
                   <a
                     onClick={(e) => {

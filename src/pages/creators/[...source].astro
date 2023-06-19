@@ -1,6 +1,7 @@
 ---
 export const prerender = false
 
+import CreatorsFilters from "../../components/creators/Filters"
 import Card from "../../components/Card.astro"
 import Layout from "../../layouts/Layout.astro"
 import { fetchCreators } from "../../lib/content"
@@ -21,6 +22,9 @@ export function getStaticPaths() {
 }
 
 const { source } = Astro.params
+const params = Astro.url.searchParams
+const time = params.get("t") || "3months"
+const order = params.get("o") || "popular"
 
 const iconsMap = {
   reddit: redditIcon,
@@ -29,7 +33,7 @@ const iconsMap = {
   instagram: instagramIcon,
 }
 
-const creatorsMap = await fetchCreators({ count: source ? 100 : 3, time: "3 months", source })
+const creatorsMap = await fetchCreators({ count: source ? 100 : 3, time, order, source })
 delete creatorsMap.tiktok
 delete creatorsMap.news
 
@@ -44,10 +48,11 @@ const sources = source ? [source] : ["youtube", "twitter", "reddit", "instagram"
       </h3>
       <p class="my-4 max-w-prose text-center text-lg">The pillars of every gaming community</p>
     </div>
+    <CreatorsFilters client:load path={Astro.url.pathname} time={time} order={order} />
     {
       sources.map((source) => (
         <>
-          <div class="mb-12 pt-6 text-center">
+          <div class="mb-12 text-center">
             <a href={`/creators/${source}`}>
               <h4 class="text-3xl font-bold capitalize text-white">
                 <img src={iconsMap[source]} class="mr-2 inline-block h-10" />
@@ -77,9 +82,9 @@ const sources = source ? [source] : ["youtube", "twitter", "reddit", "instagram"
             ))}
           </div>
           {sources.length > 1 && (
-            <div class="mb-6 pt-6 text-center">
+            <div class="mb-12 pt-6 text-center">
               <a class="text-white hover:text-gray-100" href={`/creators/${source}`}>
-                View More <span aria-hidden="true">→</span>
+                More <span class="capitalize">{source}</span> creators <span aria-hidden="true">→</span>
               </a>
             </div>
           )}

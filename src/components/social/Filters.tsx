@@ -1,6 +1,6 @@
-import Filter from "./Filter"
-import SourceFilterDesktop from "./SourceFilterDesktop"
-import { FiltersProvider } from "./FiltersContext"
+import Filter from "../filters/Filter"
+import SourceFilterDesktop from "../filters/SourceFilterDesktop"
+import { FiltersProvider } from "../filters/FiltersContext"
 import redditIcon from "../../assets/social/reddit.svg"
 import youtubeIcon from "../../assets/social/youtube.svg"
 import newsIcon from "../../assets/social/news.svg"
@@ -33,14 +33,15 @@ const times = [
 ]
 
 interface Props {
+  path: string
   source: string
   time: string
   order: string
 }
 
-export default function Filters(props: any) {
+export default function SocialFilters(props: any) {
   return (
-    <FiltersProvider options={{ source: props.source, time: props.time, order: props.order }}>
+    <FiltersProvider path={props.path} options={{ source: props.source, time: props.time, order: props.order }}>
       <div class="mb-6 grid grid-cols-6 justify-items-center">
         <div class="place-self-start"></div>
         <div class="col-span-4 flex place-content-center place-self-center border-0 border-gray-200">
@@ -48,7 +49,7 @@ export default function Filters(props: any) {
         </div>
         <div class="relative place-self-end">
           <div class="flex">
-            <Filter name="source" options={sources} default={props.source} class="block xl:hidden" />
+            <Filter name="source" icon={true} options={sources} default={props.source} class="block xl:hidden" />
             <Filter name="order" options={orders} default={props.order} />
             <Filter name="time" options={times} default={props.time} />
           </div>

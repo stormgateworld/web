@@ -2,14 +2,9 @@ import { createSignal, createContext, useContext } from "solid-js"
 
 const FiltersContext = createContext()
 
-interface Options {
-  source?: string
-  time?: string
-  order?: string
-}
-
 interface Props {
-  options: Options
+  path: string
+  options: any
   children: any
 }
 
@@ -28,7 +23,7 @@ export function FiltersProvider(props: Props) {
         urlParams[key.slice(0, 1)] = value
       }
       const params = new URLSearchParams(urlParams).toString()
-      window.location.href = `/social?${params}`
+      window.location.href = `${props.path}?${params}`
     },
   }
 

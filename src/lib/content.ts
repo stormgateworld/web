@@ -1,7 +1,8 @@
-export const validOrders = ["score_relevant", "score_popular", "published_at"] as readonly string[]
+export const validContentOrders = ["score_relevant", "score_popular", "published_at"] as readonly string[]
+export const validCreatorsOrders = ["popular", "active"] as readonly string[]
 export const validSources = ["youtube", "twitter", "reddit", "news", "instagram", "tiktok"] as readonly string[]
 
-export type FetchContentOrder = (typeof validOrders)[number]
+export type FetchContentOrder = (typeof validContentOrders)[number]
 export type FetchContentSource = (typeof validSources)[number]
 export type FetchContentParams = {
   count?: number
@@ -11,9 +12,11 @@ export type FetchContentParams = {
   source?: FetchContentSource
 }
 
+export type FetchCreatorsOrder = (typeof validCreatorsOrders)[number]
 export type FetchCreatorsParams = {
   count?: number
   time?: string
+  order?: FetchCreatorsOrder
   source?: FetchContentSource
 }
 
@@ -21,6 +24,7 @@ export async function fetchCreators(params: FetchCreatorsParams) {
   const urlParams = new URLSearchParams({
     source: params.source || "",
     count: params.count?.toString() || "3",
+    order: params.order || "popular",
     time: params.time || "3 months",
   })
 
