@@ -11,10 +11,23 @@ export type FetchContentParams = {
   source?: FetchContentSource
 }
 
-export async function fetchCreators() {
-  const request = await fetch(`https://api.stormgateworld.com/v0/creators`)
-  const response = await request.json()
-  return response.data
+export type FetchCreatorsParams = {
+  count?: number
+  time?: string
+  source?: FetchContentSource
+}
+
+export async function fetchCreators(params: FetchCreatorsParams) {
+  const urlParams = new URLSearchParams({
+    source: params.source || "",
+    count: params.count?.toString() || "3",
+    time: params.time || "3 months",
+  })
+
+  const response = await fetch(`https://api.stormgateworld.com/v0/creators?${urlParams.toString()}`)
+  if (response.status !== 200) throw new Error(await response.text())
+  const json = await response.json()
+  return json.data
 }
 
 export async function fetchContent<S extends Content["source"][] = []>(sources: S, params: FetchContentParams = {}) {
@@ -30,9 +43,10 @@ export async function fetchContent<S extends Content["source"][] = []>(sources: 
     sources.forEach((s) => urlParams.append("sources[]", s))
   }
 
-  const request = await fetch(`https://api.stormgateworld.com/v0/content?${urlParams.toString()}`)
-  const response = await request.json()
-  const content = response.data as FilteredContentType<S[number]>[]
+  const response = await fetch(`https://api.stormgateworld.com/v0/content?${urlParams.toString()}`)
+  if (response.status !== 200) throw new Error(await response.text())
+  const json = await response.json()
+  const content = json.data as FilteredContentType<S[number]>[]
   return content
 }
 

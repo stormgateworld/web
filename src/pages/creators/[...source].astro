@@ -1,0 +1,90 @@
+---
+export const prerender = false
+
+import Card from "../../components/Card.astro"
+import Layout from "../../layouts/Layout.astro"
+import { fetchCreators } from "../../lib/content"
+
+import redditIcon from "../../assets/social/reddit.svg"
+import youtubeIcon from "../../assets/social/youtube.svg"
+import twitterIcon from "../../assets/social/twitter.svg"
+import instagramIcon from "../../assets/social/instagram.svg"
+
+export function getStaticPaths() {
+  return [
+    { params: { source: "reddit" } },
+    { params: { source: "youtube" } },
+    { params: { source: "twitter" } },
+    { params: { source: "instagram" } },
+    { params: { source: undefined } },
+  ]
+}
+
+const { source } = Astro.params
+
+const iconsMap = {
+  reddit: redditIcon,
+  youtube: youtubeIcon,
+  twitter: twitterIcon,
+  instagram: instagramIcon,
+}
+
+const creatorsMap = await fetchCreators({ count: source ? 100 : 3, time: "3 months", source })
+delete creatorsMap.tiktok
+delete creatorsMap.news
+
+const sources = source ? [source] : ["youtube", "twitter", "reddit", "instagram"]
+---
+
+<Layout title="Creators">
+  <section class="relative mx-auto max-w-screen-2xl px-4">
+    <div class="mt-8 flex flex-col items-center">
+      <h3 class="flex-auto text-center font-display text-4xl font-bold text-white">
+        <a href="/creators"> Creators</a>
+      </h3>
+      <p class="my-4 max-w-prose text-center text-lg">The pillars of every gaming community</p>
+    </div>
+    {
+      sources.map((source) => (
+        <>
+          <div class="mb-12 pt-6 text-center">
+            <a href={`/creators/${source}`}>
+              <h4 class="text-3xl font-bold capitalize text-white">
+                <img src={iconsMap[source]} class="mr-2 inline-block h-10" />
+                {source}
+              </h4>
+            </a>
+          </div>
+          <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+            {creatorsMap[source].map((creator) => (
+              <div class="flex">
+                <div class="mr-4 flex-shrink-0">
+                  <a href={creator.url} target="_blank">
+                    <img class="h-16 w-16 rounded-full" src={creator.image_url} />
+                  </a>
+                </div>
+                <div class="flex flex-col">
+                  <a href={creator.author_url} target="_blank">
+                    <h4 class="text-lg font-bold">{creator.name}</h4>
+                  </a>
+                  <p class="mt-1 text-gray-100">Amet ut nobis explicabo numquam expedita quia omnis voluptatem.</p>
+
+                  <div class="mt-4 flex flex-grow">
+                    <Card data={creator.last_content} />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          {sources.length > 1 && (
+            <div class="mb-6 pt-6 text-center">
+              <a class="text-white hover:text-gray-100" href={`/creators/${source}`}>
+                View More <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          )}
+        </>
+      ))
+    }
+  </section>
+</Layout>
