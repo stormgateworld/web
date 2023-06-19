@@ -16,7 +16,7 @@ export async function fetchContent<S extends Content["source"][] = []>(sources: 
     source: params.source || "",
     count: params.count?.toString() || "100",
     page: params.page?.toString() || "1",
-    order: params.order || "score",
+    order: params.order || "score_relevant",
     since: params.since || "",
   })
 
