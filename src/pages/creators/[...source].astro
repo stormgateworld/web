@@ -10,6 +10,8 @@ import redditIcon from "../../assets/social/reddit.svg"
 import youtubeIcon from "../../assets/social/youtube.svg"
 import twitterIcon from "../../assets/social/twitter.svg"
 import instagramIcon from "../../assets/social/instagram.svg"
+import redditAvatarDefault from "../../assets/avatars/reddit-default.webp"
+import avatarDefault from "../../assets/avatars/default.jpg"
 
 export function getStaticPaths() {
   return [
@@ -20,6 +22,17 @@ export function getStaticPaths() {
     { params: { source: undefined } },
   ]
 }
+
+function defaultAvatar(source: string) {
+  switch (source) {
+    case "reddit":
+      return redditAvatarDefault
+    default:
+      return avatarDefault
+  }
+}
+
+const numberFormatter = Intl.NumberFormat("en", { notation: "compact" })
 
 const { source } = Astro.params
 const params = Astro.url.searchParams
@@ -60,19 +73,36 @@ const sources = source ? [source] : ["youtube", "twitter", "reddit", "instagram"
               </h4>
             </a>
           </div>
-          <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+          <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
             {creatorsMap[source].map((creator) => (
               <div class="flex">
                 <div class="mr-4 flex-shrink-0">
                   <a href={creator.url} target="_blank">
-                    <img class="h-16 w-16 rounded-full" src={creator.image_url} />
+                    <img class="h-16 w-16 rounded-full" src={creator.image_url || defaultAvatar(source)} />
                   </a>
                 </div>
                 <div class="flex flex-col">
                   <a href={creator.author_url} target="_blank">
                     <h4 class="text-lg font-bold">{creator.name}</h4>
                   </a>
-                  {creator.description && <p class="mt-1 text-gray-100 line-clamp-2" style="word-break: break-word;">{creator.description}</p>}
+
+                  {source === "youtube" ? (
+                    <>
+                      {creator.metadata && (
+                        <p class="my-1 text-gray-300">
+                          {numberFormatter.format(creator.metadata.subscribers_count)} subscribers •{" "}
+                          {numberFormatter.format(creator.metadata.videos_count)} videos
+                        </p>
+                      )}
+                    </>
+                  ) : (
+                    <> </>
+                  )}
+                  {creator.description && (
+                    <p class="mt-1 line-clamp-2 text-gray-100" style="word-break: break-word;">
+                      {creator.description}
+                    </p>
+                  )}
 
                   <div class="mt-4 flex flex-grow">
                     <Card data={creator.last_content} />
