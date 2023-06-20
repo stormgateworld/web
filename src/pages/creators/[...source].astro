@@ -72,7 +72,7 @@ const sources = source ? [source] : ["youtube", "twitter", "reddit", "instagram"
                   <a href={creator.author_url} target="_blank">
                     <h4 class="text-lg font-bold">{creator.name}</h4>
                   </a>
-                  <p class="mt-1 text-gray-100">Amet ut nobis explicabo numquam expedita quia omnis voluptatem.</p>
+                  {creator.description && <p class="mt-1 text-gray-100 line-clamp-2" style="word-break: break-word;">{creator.description}</p>}
 
                   <div class="mt-4 flex flex-grow">
                     <Card data={creator.last_content} />
