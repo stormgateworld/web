@@ -95,6 +95,15 @@ const sources = source ? [source] : ["youtube", "twitter", "reddit", "instagram"
                         </p>
                       )}
                     </>
+                  ) : source === "twitter" ? (
+                    <>
+                      {creator.metadata && (
+                        <p class="my-1 text-gray-300">
+                          {numberFormatter.format(creator.metadata.followers_count)} followers •{" "}
+                          {numberFormatter.format(creator.metadata.tweets_count)} tweets
+                        </p>
+                      )}
+                    </>
                   ) : (
                     <> </>
                   )}
