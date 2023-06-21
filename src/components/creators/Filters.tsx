@@ -27,7 +27,7 @@ export default function CreatorsFilters(props: any) {
         <div class="place-self-start"></div>
         <div class="col-span-4 flex place-content-center place-self-center border-0 border-gray-200"></div>
         <div class="relative place-self-end">
-          <div class="flex">
+          <div class="flex items-center">
             <Filter name="order" options={orders} default={props.order} />
             <Filter name="time" options={times} default={props.time} />
           </div>

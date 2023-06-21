@@ -73,7 +73,7 @@ const iconsMap = {
 }
 
 const creatorsMap = await fetchCreators({
-  count: source ? 100 : 3,
+  count: source ? 100 : 8,
   time: parseTime(time),
   order: parseOrder(order),
   source,
@@ -90,12 +90,14 @@ const sources = source ? [source] : ["youtube", "twitter", "reddit", "instagram"
       <h3 class="flex-auto text-center font-display text-4xl font-bold text-white">
         <a href="/creators"> Creators</a>
       </h3>
-      <p class="my-4 max-w-prose text-center text-lg">The pillars of every gaming community</p>
+      <p class="my-4 max-w-prose text-center text-lg text-gray-200">
+        Discover new content creators that are publishing gameplay,<br /> opinions and more about Stormgate
+      </p>
     </div>
     <CreatorsFilters client:load path={Astro.url.pathname} time={time} order={order} />
     {
       sources.map((source) => (
-        <>
+        <div class="mb-12">
           <div class="mb-12 text-center">
             <a href={`/creators/${source}`}>
               <h4 class="text-3xl font-bold capitalize text-white">
@@ -104,62 +106,68 @@ const sources = source ? [source] : ["youtube", "twitter", "reddit", "instagram"
               </h4>
             </a>
           </div>
-          <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
+          <div class="grid grid-cols-1 gap-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
             {creatorsMap[source].map((creator) => (
-              <div class="flex flex-col">
-                <div class="flex">
-                  <div class="mb-4 mr-4 flex-shrink-0">
-                    <a href={creator.url} target="_blank">
-                      <img class="h-16 w-16 rounded-full" src={creator.image_url || defaultAvatar(source)} />
-                    </a>
-                  </div>
-                  <div>
-                    <a href={creator.url} target="_blank">
-                      <h4 class="text-lg font-bold">{creator.name}</h4>
-                    </a>
-
-                    {source === "youtube" ? (
-                      <>
-                        {creator.metadata && (
-                          <p class="my-1 text-gray-300">
+              <div class="flex gap-4 flex-col">
+                <div class="flex-autsdo">
+                  <div class="flex mb-4 gap-4">
+                    <div class="flex-none">
+                      <a href={creator.url} target="_blank">
+                        <img class="h-12 w-12 rounded-full" src={creator.image_url || defaultAvatar(source)} />
+                      </a>
+                    </div>
+                    <div class="flex flex-col justify-evenly ">
+                      <a href={creator.url} target="_blank" class="text-white hover:text-orange-400 transition">
+                        <h4 class="text-lg font-bold">{creator.name}</h4>
+                      </a>
+                      {creator.metadata &&
+                        (source === "youtube" ? (
+                          <p class=" text-gray-300">
                             {numberFormatter.format(creator.metadata.subscribers_count)} subscribers •{" "}
                             {numberFormatter.format(creator.metadata.videos_count)} videos
                           </p>
-                        )}
-                      </>
-                    ) : source === "twitter" ? (
-                      <>
-                        {creator.metadata && (
-                          <p class="my-1 text-gray-300">
+                        ) : source === "twitter" ? (
+                          <p class="text-gray-300">
                             {numberFormatter.format(creator.metadata.followers_count)} followers •{" "}
                             {numberFormatter.format(creator.metadata.tweets_count)} tweets
                           </p>
-                        )}
-                      </>
-                    ) : (
-                      <> </>
-                    )}
-                    {creator.description && (
-                      <p class="mt-1 line-clamp-2 text-gray-100" style="word-break: break-word;">
+                        ) : (
+                          <> </>
+                        ))}
+                    </div>
+                  </div>
+
+                  {creator.description && (
+                    <div class="h-16">
+                      <p class="line-clamp-3 text-gray-100 text-sm" style="word-break: break-word;">
                         {creator.description}
                       </p>
-                    )}
-                  </div>
+                    </div>
+                  )}
                 </div>
-                <div class="mt-4 flex flex-grow">
+                <div class="basis-3/4 shrink-0 grow flex items-stretch">
                   <Card data={creator.last_content} />
                 </div>
               </div>
             ))}
           </div>
           {sources.length > 1 && (
-            <div class="mb-12 pt-6 text-center">
-              <a class="text-white hover:text-gray-100" href={`/creators/${source}`}>
-                More <span class="capitalize">{source}</span> creators <span aria-hidden="true">→</span>
+            <div class="py-12  text-center">
+              <a
+                class="text-orange-400 py-4 px-8 rounded-full bg-orange-500/10 hover:text-orange-100 hover:bg-orange-500/20 transition group"
+                href={`/creators/${source}`}
+              >
+                More <span class="capitalize">{source}</span> creators{" "}
+                <span
+                  aria-hidden="true"
+                  class="inline-block text-lg ml-2 mr-0 group-hover:ml-3 group-hover:-mr-1 transition"
+                >
+                  →
+                </span>
               </a>
             </div>
           )}
-        </>
+        </div>
       ))
     }
   </section>

@@ -58,13 +58,15 @@ const content = await fetchContent([], fetchParams)
 
 <Layout title="Social Feed">
   <section class="relative mx-auto max-w-screen-2xl px-4">
-    <div class="mb-2 mt-8 flex flex-col items-center">
+    <div class="mb-8 mt-8 flex flex-col items-center">
       <h3 class="flex-auto text-center font-display text-4xl font-bold text-white">
         <a href="/social">
           S<img src="/portal.svg" class="inline h-[0.7em]" aria-hidden="true" alt="o" />cial Feed
         </a>
       </h3>
-      <p class="my-4 max-w-prose text-center text-lg">Everything everywhere posted about Stormgate, all at once</p>
+      <p class="my-4 max-w-prose text-center text-lg text-gray-200">
+        Everything everywhere posted about Stormgate, all at once
+      </p>
     </div>
     <SocialFilters path={Astro.url.pathname} client:load source={source} time={time} order={order} />
     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
