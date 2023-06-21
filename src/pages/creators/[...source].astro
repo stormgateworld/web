@@ -36,8 +36,34 @@ const numberFormatter = Intl.NumberFormat("en", { notation: "compact" })
 
 const { source } = Astro.params
 const params = Astro.url.searchParams
-const time = params.get("t") || "3months"
+const time = params.get("t") || "3m"
 const order = params.get("o") || "popular"
+
+function parseTime(timeParam: string) {
+  switch (timeParam) {
+    case "1m":
+      return "1 month"
+    case "3m":
+      return "3 months"
+    case "6m":
+      return "6 months"
+    case "1y":
+      return "12 months"
+    default:
+      return "3 months"
+  }
+}
+
+function parseOrder(orderParam: string) {
+  switch (orderParam) {
+    case "active":
+      return "active"
+    case "recent":
+      return "recent"
+    default:
+      return "popular"
+  }
+}
 
 const iconsMap = {
   reddit: redditIcon,
@@ -46,7 +72,7 @@ const iconsMap = {
   instagram: instagramIcon,
 }
 
-const creatorsMap = await fetchCreators({ count: source ? 100 : 3, time, order, source })
+const creatorsMap = await fetchCreators({ count: source ? 100 : 3, time: parseTime(time), order: parseOrder(order), source })
 delete creatorsMap.tiktok
 delete creatorsMap.news
 

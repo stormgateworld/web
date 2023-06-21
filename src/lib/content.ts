@@ -1,3 +1,5 @@
+import { debugLog } from "./utils"
+
 export const validContentOrders = ["score_relevant", "score_popular", "published_at"] as readonly string[]
 export const validCreatorsOrders = ["popular", "active"] as readonly string[]
 export const validSources = ["youtube", "twitter", "reddit", "news", "instagram", "tiktok"] as readonly string[]
@@ -28,7 +30,9 @@ export async function fetchCreators(params: FetchCreatorsParams) {
     time: params.time || "3 months",
   })
 
-  const response = await fetch(`https://api.stormgateworld.com/v0/creators?${urlParams.toString()}`)
+  const url = `https://api.stormgateworld.com/v0/creators?${urlParams.toString()}`
+  const response = await fetch(url)
+  debugLog(`GET ${response.status} ${url}`)
   if (response.status !== 200) throw new Error(await response.text())
   const json = await response.json()
   return json.data
@@ -47,7 +51,9 @@ export async function fetchContent<S extends Content["source"][] = []>(sources: 
     sources.forEach((s) => urlParams.append("sources[]", s))
   }
 
-  const response = await fetch(`https://api.stormgateworld.com/v0/content?${urlParams.toString()}`)
+  const url = `https://api.stormgateworld.com/v0/content?${urlParams.toString()}`
+  const response = await fetch(url)
+  debugLog(`GET ${response.status} ${url}`)
   if (response.status !== 200) throw new Error(await response.text())
   const json = await response.json()
   const content = json.data as FilteredContentType<S[number]>[]

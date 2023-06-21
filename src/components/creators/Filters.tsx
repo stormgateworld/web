@@ -4,13 +4,14 @@ import { FiltersProvider } from "../filters/FiltersContext"
 const orders = [
   { name: "Popular", value: "popular" },
   { name: "Most Content", value: "active" },
+  { name: "Recent Content", value: "recent" },
 ]
 
 const times = [
-  { name: "Last Month", value: "month" },
-  { name: "Last 3 Months", value: "3months" },
-  { name: "Last 6 Months", value: "6months" },
-  { name: "Last Year", value: "12months" },
+  { name: "Last Month", value: "1m" },
+  { name: "Last 3 Months", value: "3m" },
+  { name: "Last 6 Months", value: "6m" },
+  { name: "Last Year", value: "1y" },
 ]
 
 interface Props {

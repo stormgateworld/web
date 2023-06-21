@@ -16,3 +16,7 @@ export function formatNumber(num: number | string) {
     return num.toString()
   }
 }
+
+export function debugLog(log: string) {
+  console.log(`\x1b[37m${new Date().toLocaleTimeString()} \x1b[96m[debug] \x1b[97m${log}\x1b[0m\n`)
+}
