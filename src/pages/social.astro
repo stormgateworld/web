@@ -14,13 +14,13 @@ const order = params.get("o") || "popular"
 function parseTime(timeParam: string) {
   switch (timeParam) {
     case "1d":
-      return "1d ago"
+      return "2d ago"
     case "3d":
-      return "3d ago"
+      return "4d ago"
     case "7d":
-      return "7d ago"
+      return "8d ago"
     case "30d":
-      return "30d ago"
+      return "31d ago"
     default:
       return undefined
   }
