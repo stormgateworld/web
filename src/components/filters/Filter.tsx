@@ -51,7 +51,7 @@ export default function Filter(props: Props) {
         <button
           onClick={toggleDropdown}
           type="button"
-          class="group inline-flex justify-center whitespace-nowrap font-medium text-gray-100 hover:text-white bg-white/10 hover:bg-white/20 transtion py-3 px-6 rounded-full"
+          class="transtion group inline-flex justify-center whitespace-nowrap rounded-full bg-white/10 px-6 py-3 font-medium text-gray-100 hover:bg-white/20 hover:text-white"
           id="mobile-menu-button"
           aria-expanded="false"
           aria-haspopup="true"
@@ -88,7 +88,7 @@ export default function Filter(props: Props) {
                     chooseOption(option.value)
                   }}
                   href="#"
-                  class="flex items-center text-gray-100  whitespace-nowrap px-4 py-4 hover:bg-gray-700"
+                  class="flex items-center whitespace-nowrap  px-4 py-4 text-gray-100 hover:bg-gray-700"
                   role="menuitem"
                   tabindex="-1"
                   id="mobile-menu-item-2"

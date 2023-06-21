@@ -108,17 +108,17 @@ const sources = source ? [source] : ["youtube", "twitter", "reddit", "instagram"
           </div>
           <div class="grid grid-cols-1 gap-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
             {creatorsMap[source].map((creator) => (
-              <div class="flex gap-4 flex-col">
+              <div class="flex flex-col gap-4">
                 <div class="flex-autsdo">
-                  <div class="flex mb-4 gap-4 overflow-hidden">
+                  <div class="mb-4 flex gap-4 overflow-hidden">
                     <div class="flex-none">
                       <a href={creator.url} target="_blank">
                         <img class="h-12 w-12 rounded-full" src={creator.image_url || defaultAvatar(source)} />
                       </a>
                     </div>
                     <div class="flex flex-col justify-evenly">
-                      <a href={creator.url} target="_blank" class="text-white hover:text-orange-400 transition">
-                        <h4 class="text-lg font-bold truncate">{creator.name}</h4>
+                      <a href={creator.url} target="_blank" class="text-white transition hover:text-orange-400">
+                        <h4 class="truncate text-lg font-bold">{creator.name}</h4>
                       </a>
                       {creator.metadata &&
                         (source === "youtube" ? (
@@ -139,13 +139,13 @@ const sources = source ? [source] : ["youtube", "twitter", "reddit", "instagram"
 
                   {source !== "reddit" && creator.description && (
                     <div class="h-16">
-                      <p class="line-clamp-3 text-gray-100 text-sm" style="word-break: break-word;">
+                      <p class="line-clamp-3 text-sm text-gray-100" style="word-break: break-word;">
                         {creator.description}
                       </p>
                     </div>
                   )}
                 </div>
-                <div class="basis-3/4 shrink-0 grow flex items-stretch">
+                <div class="flex shrink-0 grow basis-3/4 items-stretch">
                   <Card data={creator.last_content} />
                 </div>
               </div>
@@ -154,13 +154,13 @@ const sources = source ? [source] : ["youtube", "twitter", "reddit", "instagram"
           {sources.length > 1 && (
             <div class="py-12  text-center">
               <a
-                class="text-orange-400 py-4 px-8 rounded-full bg-orange-500/10 hover:text-orange-100 hover:bg-orange-500/20 transition group"
+                class="group rounded-full bg-orange-500/10 px-8 py-4 text-orange-400 transition hover:bg-orange-500/20 hover:text-orange-100"
                 href={`/creators/${source}`}
               >
                 More <span class="capitalize">{source}</span> creators{" "}
                 <span
                   aria-hidden="true"
-                  class="inline-block text-lg ml-2 mr-0 group-hover:ml-3 group-hover:-mr-1 transition"
+                  class="ml-2 mr-0 inline-block text-lg transition group-hover:-mr-1 group-hover:ml-3"
                 >
                   →
                 </span>
