@@ -3,7 +3,7 @@ import { FiltersProvider } from "../filters/FiltersContext"
 
 const orders = [
   { name: "Popular", value: "popular" },
-  { name: "Active", value: "active" },
+  { name: "Most Content", value: "active" },
 ]
 
 const times = [

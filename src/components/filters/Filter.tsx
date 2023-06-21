@@ -11,6 +11,7 @@ interface Option {
 interface Props {
   icon?: boolean
   name: string
+  label?: string
   options: Option[]
   default: string
   class?: string
@@ -77,7 +78,8 @@ export default function Filter(props: Props) {
           aria-labelledby="mobile-menu-button"
           tabindex="-1"
         >
-          <div class="py-1" role="none">
+          <div class="py-1  text-sm font-medium" role="none">
+            <span class="block whitespace-nowrap px-3 py-2 capitalize text-gray-300">{props.label || props.name}:</span>
             <For each={options()}>
               {(option, i) => (
                 <span class="block whitespace-nowrap px-4 py-2 hover:bg-gray-700">
@@ -92,7 +94,7 @@ export default function Filter(props: Props) {
                       chooseOption(option.value)
                     }}
                     href="#"
-                    class="inline-block whitespace-nowrap text-sm font-medium text-gray-100"
+                    class="inline-block whitespace-nowrap text-gray-100"
                     role="menuitem"
                     tabindex="-1"
                     id="mobile-menu-item-2"
