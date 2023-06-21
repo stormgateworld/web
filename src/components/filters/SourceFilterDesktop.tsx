@@ -42,7 +42,7 @@ export default function SourceFilterDesktop(props: Props) {
               chooseOption(tab.name)
             }}
             href="#"
-            class="text-white-700 whitespace-nowrap border-b-2 border-gray-100 px-1 py-2 text-sm font-medium"
+            class="text-white-700 flex items-center whitespace-nowrap border-b-2 border-gray-100 px-1 py-2 text-sm font-medium"
             aria-current="page"
           >
             {tab.icon && <img src={tab.icon} class="mr-2 inline-block h-3" />}

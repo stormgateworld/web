@@ -9,7 +9,9 @@ interface Option {
 }
 
 interface Props {
+  icon?: boolean
   name: string
+  label?: string
   options: Option[]
   default: string
   class?: string
@@ -45,11 +47,11 @@ export default function Filter(props: Props) {
 
   return (
     <div class={wrapperClass} use:clickOutside={() => setDropdown(false)}>
-      <div class="py-2 text-sm">
+      <div class="text-sm">
         <button
           onClick={toggleDropdown}
           type="button"
-          class="group inline-flex justify-center whitespace-nowrap font-medium text-gray-100 hover:text-white"
+          class="transtion group inline-flex justify-center whitespace-nowrap rounded-full bg-white/10 px-6 py-3 font-medium text-gray-100 hover:bg-white/20 hover:text-white"
           id="mobile-menu-button"
           aria-expanded="false"
           aria-haspopup="true"
@@ -76,29 +78,29 @@ export default function Filter(props: Props) {
           aria-labelledby="mobile-menu-button"
           tabindex="-1"
         >
-          <div class="py-1" role="none">
+          <div class="py-1  text-sm font-medium" role="none">
+            <span class="block whitespace-nowrap px-4 py-2 capitalize text-gray-300">{props.label || props.name}</span>
             <For each={options()}>
               {(option, i) => (
-                <span class="block whitespace-nowrap px-4 py-2 hover:bg-gray-700">
+                <a
+                  onClick={(e) => {
+                    e.preventDefault()
+                    chooseOption(option.value)
+                  }}
+                  href="#"
+                  class="flex items-center whitespace-nowrap  px-4 py-4 text-gray-100 hover:bg-gray-700"
+                  role="menuitem"
+                  tabindex="-1"
+                  id="mobile-menu-item-2"
+                >
                   {option.iconSrc ? (
                     <img src={option.iconSrc} class="mr-2 inline-block h-4" />
                   ) : (
-                    <div class="mr-2 inline-block h-4 w-4"></div>
+                    <div class={props.icon ? "mr-2 inline-block h-4 w-4" : ""}></div>
                   )}
-                  <a
-                    onClick={(e) => {
-                      e.preventDefault()
-                      chooseOption(option.value)
-                    }}
-                    href="#"
-                    class="inline-block whitespace-nowrap text-sm font-medium text-gray-100"
-                    role="menuitem"
-                    tabindex="-1"
-                    id="mobile-menu-item-2"
-                  >
-                    {option.name}
-                  </a>
-                </span>
+
+                  {option.name}
+                </a>
               )}
             </For>
           </div>

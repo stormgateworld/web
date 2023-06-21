@@ -45,6 +45,7 @@ const isStormgatenexus = data.source == "news" && data.author_url.includes("stor
             data.image_url ? "line-clamp-4" : "line-clamp-[12]",
             data.source === "instagram" && "!line-clamp-2 text-sm",
           ]}
+          style="word-break: break-word;"
           href={data.url}
           rel="noopener ugc"
           target="_blank"
@@ -66,7 +67,10 @@ const isStormgatenexus = data.source == "news" && data.author_url.includes("stor
           >
             {data.title}
           </a>
-          <p class:list={["text-gray-100 text-sm line-clamp-2", data.image_url ? "line-clamp-2" : "line-clamp-[7]"]}>
+          <p
+            style="word-break: break-word;"
+            class:list={["text-gray-100 text-sm line-clamp-2", data.image_url ? "line-clamp-2" : "line-clamp-[7]"]}
+          >
             {data.description}
           </p>
         </>

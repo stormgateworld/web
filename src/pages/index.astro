@@ -43,41 +43,36 @@ const news = (await newsRequest).sort((a, b) => {
           <Box title={"Latest News"}>
             <div class="space-y-6">
               {
-                news.map((data) => {
-                  return (
-                    <div class="-mx-4 flex flex-col gap-6 rounded-xl px-4 py-4 transition-all hover:bg-gray-600 xl:flex-row">
-                      <div class="flex-auto space-y-4">
-                        <a href={data.url} target="_blank" rel="noopener">
-                          <h2 class="max-w-prose font-display  text-xl font-bold">{data.title}</h2>
-                        </a>
-                        {data.description?.length ? (
-                          <p
-                            class="line-clamp-2 max-w-prose leading-relaxed text-gray-50"
-                            set:text={data.description}
-                          />
-                        ) : null}
-                        <div class="flex flex-wrap gap-3 text-sm text-gray-300">
-                          {data.source === "reddit" ? <RedditMeta data={data} /> : <NewsMeta data={data} />}
+                news.map((data) => (
+                  <div class="-mx-4 flex flex-col gap-6 rounded-xl px-4 py-4 transition-all hover:bg-gray-600 xl:flex-row">
+                    <div class="flex-auto space-y-4">
+                      <a href={data.url} target="_blank" rel="noopener">
+                        <h2 class="max-w-prose font-display  text-xl font-bold">{data.title}</h2>
+                      </a>
+                      {data.description?.length ? (
+                        <p class="line-clamp-2 max-w-prose leading-relaxed text-gray-50" set:text={data.description} />
+                      ) : null}
+                      <div class="flex flex-wrap gap-3 text-sm text-gray-300">
+                        {data.source === "reddit" ? <RedditMeta data={data} /> : <NewsMeta data={data} />}
 
-                          {data.published_at && (
-                            <span class="block truncate">
-                              <Timeago date={new Date(data.published_at)} />
-                            </span>
-                          )}
-                        </div>
+                        {data.published_at && (
+                          <span class="block truncate">
+                            <Timeago date={new Date(data.published_at)} />
+                          </span>
+                        )}
                       </div>
-                      {data.image_url?.length && (
-                        <a href={data.url} target="_blank" rel="noopener" class="order-first xl:order-last">
-                          <img
-                            src={unescape(data.image_url)}
-                            alt={data.title}
-                            class="aspect-video h-40 rounded-lg object-cover xl:h-24 "
-                          />
-                        </a>
-                      )}
                     </div>
-                  )
-                })
+                    {data.image_url?.length && (
+                      <a href={data.url} target="_blank" rel="noopener" class="order-first xl:order-last">
+                        <img
+                          src={unescape(data.image_url)}
+                          alt={data.title}
+                          class="aspect-video h-40 rounded-lg object-cover xl:h-24 "
+                        />
+                      </a>
+                    )}
+                  </div>
+                ))
               }
             </div>
             <div class="pt-6 text-center">

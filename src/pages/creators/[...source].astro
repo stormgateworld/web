@@ -1,0 +1,174 @@
+---
+export const prerender = false
+
+import CreatorsFilters from "../../components/creators/Filters"
+import Card from "../../components/Card.astro"
+import Layout from "../../layouts/Layout.astro"
+import { fetchCreators } from "../../lib/content"
+
+import redditIcon from "../../assets/social/reddit.svg"
+import youtubeIcon from "../../assets/social/youtube.svg"
+import twitterIcon from "../../assets/social/twitter.svg"
+import instagramIcon from "../../assets/social/instagram.svg"
+import redditAvatarDefault from "../../assets/avatars/reddit-default.webp"
+import avatarDefault from "../../assets/avatars/default.jpg"
+
+export function getStaticPaths() {
+  return [
+    { params: { source: "reddit" } },
+    { params: { source: "youtube" } },
+    { params: { source: "twitter" } },
+    { params: { source: "instagram" } },
+    { params: { source: undefined } },
+  ]
+}
+
+function defaultAvatar(source: string) {
+  switch (source) {
+    case "reddit":
+      return redditAvatarDefault
+    default:
+      return avatarDefault
+  }
+}
+
+const numberFormatter = Intl.NumberFormat("en", { notation: "compact" })
+
+const { source } = Astro.params
+const params = Astro.url.searchParams
+const time = params.get("t") || "3m"
+const order = params.get("o") || "active"
+
+function parseTime(timeParam: string) {
+  switch (timeParam) {
+    case "1m":
+      return "1 month"
+    case "3m":
+      return "3 months"
+    case "6m":
+      return "6 months"
+    case "1y":
+      return "12 months"
+    default:
+      return "3 months"
+  }
+}
+
+function parseOrder(orderParam: string) {
+  switch (orderParam) {
+    case "popular":
+      return "popular"
+    case "popular":
+      return "recent"
+    default:
+      return "active"
+  }
+}
+
+const iconsMap = {
+  reddit: redditIcon,
+  youtube: youtubeIcon,
+  twitter: twitterIcon,
+  instagram: instagramIcon,
+}
+
+const creatorsMap = await fetchCreators({
+  count: source ? 100 : 8,
+  time: parseTime(time),
+  order: parseOrder(order),
+  source,
+})
+delete creatorsMap.tiktok
+delete creatorsMap.news
+
+const sources = source ? [source] : ["youtube", "twitter", "reddit", "instagram"]
+---
+
+<Layout title="Creators">
+  <section class="relative mx-auto max-w-screen-2xl px-4">
+    <div class="mt-8 flex flex-col items-center">
+      <h3 class="flex-auto text-center font-display text-4xl font-bold text-white">
+        <a href="/creators"> Creat<img src="/portal.svg" class="inline h-[0.7em]" aria-hidden="true" alt="o" />rs</a>
+      </h3>
+      <p class="my-4 max-w-prose text-center text-lg text-gray-200">
+        Discover new content creators that are publishing gameplay,<br /> opinions and more about Stormgate
+      </p>
+    </div>
+    <CreatorsFilters client:load path={Astro.url.pathname} time={time} order={order} />
+    {
+      sources.map((source) => (
+        <div class="mb-12">
+          <div class="mb-12 text-center">
+            <a href={`/creators/${source}`}>
+              <h4 class="text-3xl font-bold capitalize text-white">
+                <img src={iconsMap[source]} class="mr-2 inline-block h-10" />
+                {source}
+              </h4>
+            </a>
+          </div>
+          <div class="grid grid-cols-1 gap-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+            {creatorsMap[source].map((creator) => (
+              <div class="flex flex-col gap-4">
+                <div class="flex-autsdo">
+                  <div class="mb-4 flex gap-4 overflow-hidden">
+                    <div class="flex-none">
+                      <a href={creator.url} target="_blank">
+                        <img class="h-12 w-12 rounded-full" src={creator.image_url || defaultAvatar(source)} />
+                      </a>
+                    </div>
+                    <div class="flex flex-col justify-evenly">
+                      <a href={creator.url} target="_blank" class="text-white transition hover:text-orange-400">
+                        <h4 class="truncate text-lg font-bold">{creator.name}</h4>
+                      </a>
+                      {creator.metadata &&
+                        (source === "youtube" ? (
+                          <p class=" text-gray-300">
+                            {numberFormatter.format(creator.metadata.subscribers_count)} subs •{" "}
+                            {numberFormatter.format(creator.metadata.videos_count)} videos
+                          </p>
+                        ) : source === "twitter" ? (
+                          <p class="text-gray-300">
+                            {numberFormatter.format(creator.metadata.followers_count)} followers •{" "}
+                            {numberFormatter.format(creator.metadata.tweets_count)} tweets
+                          </p>
+                        ) : (
+                          <> </>
+                        ))}
+                    </div>
+                  </div>
+
+                  {source !== "reddit" && creator.description && (
+                    <div class="h-16">
+                      <p class="line-clamp-3 text-sm text-gray-100" style="word-break: break-word;">
+                        {creator.description}
+                      </p>
+                    </div>
+                  )}
+                </div>
+                <div class="flex shrink-0 grow basis-3/4 items-stretch">
+                  <Card data={creator.last_content} />
+                </div>
+              </div>
+            ))}
+          </div>
+          {sources.length > 1 && (
+            <div class="py-12  text-center">
+              <a
+                class="group rounded-full bg-orange-500/10 px-8 py-4 text-orange-400 transition hover:bg-orange-500/20 hover:text-orange-100"
+                href={`/creators/${source}`}
+              >
+                More <span class="capitalize">{source}</span> creators{" "}
+                <span
+                  aria-hidden="true"
+                  class="ml-2 mr-0 inline-block text-lg transition group-hover:-mr-1 group-hover:ml-3"
+                >
+                  →
+                </span>
+              </a>
+            </div>
+          )}
+        </div>
+      ))
+    }
+  </section>
+</Layout>
