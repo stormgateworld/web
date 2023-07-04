@@ -9,15 +9,15 @@ const { data } = Astro.props
 ---
 
 <a class="inline-flex items-center text-orange-400">
+  <i class="ti ti-eye mr-1 w-4"></i>
+  {formatNumber(data.metadata?.views_count)}
+</a>
+<!--
+<a class="inline-flex items-center text-orange-400">
   <i class="ti ti-thumb-up mr-1 w-4"></i>
   {formatNumber(data.metadata?.likes_count)}
 </a>
-{
-  /*<span class="inline-flex items-center">
-          <Icon name="tabler:eye" class="w-4 mr-1" />
-          {formatNumber(data.statistics.viewCount)}
-        </span>*/
-}
+-->
 {
   data.author && (
     <a class="inline-flex items-center truncate">

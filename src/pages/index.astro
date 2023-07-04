@@ -13,7 +13,7 @@ import NewsMeta from "../components/sources/NewsMeta.astro"
 
 export const prerender = false
 
-const newsRequest = fetchContent(["news", "reddit"], { count: 8 })
+const newsRequest = fetchContent(["news", "reddit"], { count: 8, order: "score_popular", since: "15d ago" })
 const social = await fetchContent([], { count: 12 })
 
 const news = (await newsRequest).sort((a, b) => {
