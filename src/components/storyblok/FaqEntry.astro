@@ -1,0 +1,14 @@
+---
+import { renderRichText } from "@storyblok/astro"
+
+const { blok } = Astro.props
+const answer = renderRichText(blok.answer)
+---
+
+<!-- nicely styled tailwind article -->
+<article class="prose prose-lg mt-8">
+  <h3 class="text-lg text-gray-100">{blok.question}</h3>
+  <div class="text-gray-200">
+    <Fragment set:html={answer} />
+  </div>
+</article>

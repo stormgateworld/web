@@ -19,6 +19,7 @@ export default defineConfig({
         "blog-post": "components/storyblok/Article",
         "article-page": "components/storyblok/Article",
         "article-overview-page": "components/storyblok/ArticleOverview",
+        "faq-entry": "components/storyblok/FaqEntry",
       },
       apiOptions: {
         region: "eu",
