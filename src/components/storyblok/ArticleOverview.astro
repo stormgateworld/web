@@ -5,13 +5,14 @@ import { useStoryblokApi } from "@storyblok/astro"
 const storyblokApi = useStoryblokApi()
 
 const { data } = await storyblokApi.get("cdn/stories/", {
-  version: import.meta.env.DEV ? "draft" : "published",
-  content_type: "article-page",
+  // version: import.meta.env.DEV ? "draft" : "published",
+  version: "draft",
+  content_type: "blog-post",
 })
 
 const articles = data.stories.map((story: any) => {
   return {
-    headline: story.content.headline,
+    name: story.name,
     slug: `/debug/storyblok/${story.full_slug}`,
   }
 })
@@ -23,7 +24,7 @@ const { blok } = Astro.props
   {
     articles.map((article: any) => (
       <li>
-        <a href={article.slug}>{article.headline}</a>
+        <a href={article.slug}>{article.name}</a>
       </li>
     ))
   }

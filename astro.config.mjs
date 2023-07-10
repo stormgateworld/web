@@ -3,7 +3,7 @@ import cloudflare from "@astrojs/cloudflare"
 import tailwind from "@astrojs/tailwind"
 import { loadEnv } from "vite"
 import storyblok from "@storyblok/astro"
-
+import basicSsl from '@vitejs/plugin-basic-ssl'
 import solidJs from "@astrojs/solid-js"
 
 const env = loadEnv("", process.cwd(), "STORYBLOK")
@@ -16,6 +16,7 @@ export default defineConfig({
     storyblok({
       accessToken: env.STORYBLOK_TOKEN,
       components: {
+        "blog-post": "components/storyblok/Article",
         "article-page": "components/storyblok/Article",
         "article-overview-page": "components/storyblok/ArticleOverview",
       },
@@ -34,4 +35,10 @@ export default defineConfig({
   //     minify: false,
   //   },
   // }
+  vite: {
+    plugins: [basicSsl()],
+    server: {
+      https: true,
+    },
+  },
 })

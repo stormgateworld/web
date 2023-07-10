@@ -1,4 +1,6 @@
 ---
+// export const prerender = false
+
 import { useStoryblokApi } from "@storyblok/astro"
 import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro"
 
@@ -8,9 +10,11 @@ export async function getStaticPaths() {
   const sbApi = useStoryblokApi()
 
   const { data } = await sbApi.get("cdn/stories", {
-    content_type: "article-page",
+    content_type: "blog-post",
     version: import.meta.env.DEV ? "draft" : "published",
   })
+
+  console.log(data)
 
   const stories = Object.values(data.stories)
 
