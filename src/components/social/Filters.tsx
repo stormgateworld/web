@@ -49,11 +49,15 @@ export default function SocialFilters(props: any) {
         <div class="flex flex-auto">
           <SourceFilterDesktop default={props.source} />
         </div>
-        <div class="flex items-end">
-          <Filter name="language" icon={true} options={languages} default={props.language} class="block xl:hidden" />
-          <Filter name="source" icon={true} options={sources} default={props.source} class="block xl:hidden" />
-          <Filter name="order" options={orders} default={props.order} />
-          <Filter name="time" options={times} default={props.time} />
+        <div class="flex flex-col items-end sm:flex-row">
+          <div class="mb-3 flex sm:mb-0">
+            <Filter name="language" icon={true} options={languages} default={props.language} />
+            <Filter name="source" icon={true} options={sources} default={props.source} class="block xl:hidden" />
+          </div>
+          <div class="flex">
+            <Filter name="order" options={orders} default={props.order} />
+            <Filter name="time" options={times} default={props.time} />
+          </div>
         </div>
       </div>
     </FiltersProvider>

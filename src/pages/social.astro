@@ -78,7 +78,14 @@ const content = await fetchContent([], fetchParams)
         Everything everywhere posted about Stormgate, all at once
       </p>
     </div>
-    <SocialFilters path={Astro.url.pathname} client:load language={language} source={source} time={time} order={order} />
+    <SocialFilters
+      path={Astro.url.pathname}
+      client:load
+      language={language}
+      source={source}
+      time={time}
+      order={order}
+    />
     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {content.map((c) => <Card data={c} />)}
     </div>
