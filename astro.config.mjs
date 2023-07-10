@@ -6,7 +6,7 @@ import storyblok from "@storyblok/astro"
 import basicSsl from "@vitejs/plugin-basic-ssl"
 import solidJs from "@astrojs/solid-js"
 
-const env = loadEnv("", process.cwd(), "STORYBLOK")
+const env = loadEnv("", process.cwd(), "")
 
 // https://astro.build/config
 export default defineConfig({
@@ -36,10 +36,13 @@ export default defineConfig({
   //     minify: false,
   //   },
   // }
-  vite: {
-    plugins: [basicSsl()],
-    server: {
-      https: true,
-    },
-  },
+  vite:
+    env.HTTPS == "true"
+      ? {
+          plugins: [basicSsl()],
+          server: {
+            https: true,
+          },
+        }
+      : {},
 })
