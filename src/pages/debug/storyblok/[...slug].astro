@@ -11,7 +11,7 @@ export async function getStaticPaths() {
 
   const { data } = await sbApi.get("cdn/stories", {
     content_type: "blog-post",
-    version: import.meta.env.DEV ? "draft" : "published",
+    version: "draft",
   })
 
   console.log(data)
