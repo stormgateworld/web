@@ -5,7 +5,7 @@ import { useStoryblokApi } from "@storyblok/astro"
 import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro"
 
 import Layout from "../../../layouts/Layout.astro"
-import ArticleOverview from "../../../components/storyblok/ArticleOverview.astro"
+import BlogPostList from "../../../components/storyblok/BlogPostList.astro"
 
 // export async function getStaticPaths() {
 //   const sbApi = useStoryblokApi()
@@ -49,7 +49,12 @@ if (slug) {
         <StoryblokComponent blok={story.content} />
       </>
     ) : (
-      <ArticleOverview />
+      <>
+        <h1 class="text-4xl font-bold">
+          <a href="/debug/storyblok/faq">FAQ</a>
+        </h1>
+        <BlogPostList />
+      </>
     )
   }
 </Layout>

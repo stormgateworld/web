@@ -16,9 +16,7 @@ export default defineConfig({
     storyblok({
       accessToken: env.STORYBLOK_TOKEN,
       components: {
-        "blog-post": "components/storyblok/Article",
-        "article-page": "components/storyblok/Article",
-        "article-overview-page": "components/storyblok/ArticleOverview",
+        "blog-post": "components/storyblok/BlogPost",
         "faq-entry": "components/storyblok/FaqEntry",
       },
       apiOptions: {
