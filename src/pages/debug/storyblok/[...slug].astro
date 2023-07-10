@@ -5,37 +5,51 @@ import { useStoryblokApi } from "@storyblok/astro"
 import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro"
 
 import Layout from "../../../layouts/Layout.astro"
+import ArticleOverview from "../../../components/storyblok/ArticleOverview.astro"
 
-export async function getStaticPaths() {
+// export async function getStaticPaths() {
+//   const sbApi = useStoryblokApi()
+
+//   const { data } = await sbApi.get("cdn/stories", {
+//     content_type: "blog-post",
+//     version: "draft",
+//   })
+
+//   // console.log(data)
+
+//   const stories = Object.values(data.stories)
+
+//   return stories.map((story: any) => {
+//     return {
+//       params: { slug: story.full_slug },
+//     }
+//   })
+// }
+
+const { slug } = Astro.params
+let story
+
+if (slug) {
   const sbApi = useStoryblokApi()
-
-  const { data } = await sbApi.get("cdn/stories", {
-    content_type: "blog-post",
+  console.log(slug)
+  const { data } = await sbApi.get(`cdn/stories/${slug}`, {
     version: "draft",
   })
 
-  console.log(data)
-
-  const stories = Object.values(data.stories)
-
-  return stories.map((story: any) => {
-    return {
-      params: { slug: story.full_slug },
-    }
-  })
+  story = data.story
 }
-
-const sbApi = useStoryblokApi()
-const { slug } = Astro.params
-const { data } = await sbApi.get(`cdn/stories/${slug}`, {
-  version: "draft",
-})
-
-const story = data.story
 ---
 
-<Layout title={story.content.title}>
-  <a href="/debug/storyblok">Back</a>
+<Layout title={"foo"}>
+  {
+    story ? (
+      <>
+        <a href="/debug/storyblok">Back</a>
 
-  <StoryblokComponent blok={story.content} />
+        <StoryblokComponent blok={story.content} />
+      </>
+    ) : (
+      <ArticleOverview />
+    )
+  }
 </Layout>

@@ -3,7 +3,7 @@ import cloudflare from "@astrojs/cloudflare"
 import tailwind from "@astrojs/tailwind"
 import { loadEnv } from "vite"
 import storyblok from "@storyblok/astro"
-import basicSsl from '@vitejs/plugin-basic-ssl'
+import basicSsl from "@vitejs/plugin-basic-ssl"
 import solidJs from "@astrojs/solid-js"
 
 const env = loadEnv("", process.cwd(), "STORYBLOK")

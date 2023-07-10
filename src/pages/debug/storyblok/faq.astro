@@ -6,7 +6,6 @@ import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro"
 
 import Layout from "../../../layouts/Layout.astro"
 
-
 const sbApi = useStoryblokApi()
 const { slug } = Astro.params
 const { data } = await sbApi.get(`cdn/stories/faq`, {
@@ -17,13 +16,8 @@ const story = data.story
 const page = story.content
 const faqCollection = page.body[0]
 const faqEntries = faqCollection.entries
-
 ---
 
 <Layout title={"foo"}>
-  {
-    faqEntries.map((faqEntry: any) => (
-      <StoryblokComponent blok={faqEntry} />
-    ))
-  }
+  {faqEntries.map((faqEntry: any) => <StoryblokComponent blok={faqEntry} />)}
 </Layout>
