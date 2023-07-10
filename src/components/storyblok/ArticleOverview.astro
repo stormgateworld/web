@@ -17,10 +17,9 @@ const articles = data.stories.map((story: any) => {
   }
 })
 
-const { blok } = Astro.props
 ---
 
-<ul {...storyblokEditable(blok)}>
+<ul>
   {
     articles.map((article: any) => (
       <li>
