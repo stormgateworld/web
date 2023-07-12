@@ -1,5 +1,6 @@
 import Filter from "../filters/Filter"
 import { FiltersProvider } from "../filters/FiltersContext"
+import { languages } from "../filters/Common"
 
 const orders = [
   { name: "Popular", value: "popular" },
@@ -16,6 +17,7 @@ const times = [
 
 interface Props {
   path: string
+  language: string
   time: string
   order: string
 }
@@ -27,9 +29,14 @@ export default function CreatorsFilters(props: any) {
         <div class="place-self-start"></div>
         <div class="col-span-4 flex place-content-center place-self-center border-0 border-gray-200"></div>
         <div class="relative place-self-end">
-          <div class="flex items-center">
-            <Filter name="order" options={orders} default={props.order} />
-            <Filter name="time" options={times} default={props.time} />
+          <div class="flex flex-col items-end sm:flex-row">
+            <div class="mb-3 flex sm:mb-0">
+              <Filter name="language" options={languages} default={props.language} />
+            </div>
+            <div class="flex">
+              <Filter name="order" options={orders} default={props.order} />
+              <Filter name="time" options={times} default={props.time} />
+            </div>
           </div>
         </div>
       </div>

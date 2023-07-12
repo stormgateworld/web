@@ -1,6 +1,8 @@
 import Filter from "../filters/Filter"
 import SourceFilterDesktop from "../filters/SourceFilterDesktop"
 import { FiltersProvider } from "../filters/FiltersContext"
+import { languages } from "../filters/Common"
+
 import redditIcon from "../../assets/social/reddit.svg"
 import youtubeIcon from "../../assets/social/youtube.svg"
 import newsIcon from "../../assets/social/news.svg"
@@ -34,6 +36,7 @@ const times = [
 
 interface Props {
   path: string
+  language: string
   source: string
   time: string
   order: string
@@ -46,10 +49,15 @@ export default function SocialFilters(props: any) {
         <div class="flex flex-auto">
           <SourceFilterDesktop default={props.source} />
         </div>
-        <div class="flex items-end">
-          <Filter name="source" icon={true} options={sources} default={props.source} class="block xl:hidden" />
-          <Filter name="order" options={orders} default={props.order} />
-          <Filter name="time" options={times} default={props.time} />
+        <div class="flex flex-col items-end sm:flex-row">
+          <div class="mb-3 flex sm:mb-0">
+            <Filter name="language" icon={true} options={languages} default={props.language} />
+            <Filter name="source" icon={true} options={sources} default={props.source} class="block xl:hidden" />
+          </div>
+          <div class="flex">
+            <Filter name="order" options={orders} default={props.order} />
+            <Filter name="time" options={times} default={props.time} />
+          </div>
         </div>
       </div>
     </FiltersProvider>

@@ -4,7 +4,7 @@ export const prerender = false
 import CreatorsFilters from "../../components/creators/Filters"
 import Card from "../../components/Card.astro"
 import Layout from "../../layouts/Layout.astro"
-import { fetchCreators } from "../../lib/content"
+import { fetchCreators, validLanguages } from "../../lib/content"
 
 import redditIcon from "../../assets/social/reddit.svg"
 import youtubeIcon from "../../assets/social/youtube.svg"
@@ -36,6 +36,7 @@ const numberFormatter = Intl.NumberFormat("en", { notation: "compact" })
 
 const { source } = Astro.params
 const params = Astro.url.searchParams
+const language = params.get("l") || "any"
 const time = params.get("t") || "3m"
 const order = params.get("o") || "active"
 
@@ -65,6 +66,14 @@ function parseOrder(orderParam: string) {
   }
 }
 
+function parseLanguage(languageParam: string) {
+  if (validLanguages.includes(languageParam)) {
+    return languageParam
+  } else {
+    return "any"
+  }
+}
+
 const iconsMap = {
   reddit: redditIcon,
   youtube: youtubeIcon,
@@ -74,6 +83,7 @@ const iconsMap = {
 
 const creatorsMap = await fetchCreators({
   count: source ? 100 : 8,
+  language: parseLanguage(language),
   time: parseTime(time),
   order: parseOrder(order),
   source,
@@ -81,7 +91,13 @@ const creatorsMap = await fetchCreators({
 delete creatorsMap.tiktok
 delete creatorsMap.news
 
-const sources = source ? [source] : ["youtube", "twitter", "reddit", "instagram"]
+for (const source of Object.keys(creatorsMap)) {
+  creatorsMap[source] = creatorsMap[source].filter((creator) => creator.last_content)
+}
+
+const sources = (source ? [source] : ["youtube", "twitter", "reddit", "instagram"]).filter(
+  (source) => creatorsMap[source] && creatorsMap[source].length > 0
+)
 ---
 
 <Layout title="Creators">
@@ -94,7 +110,7 @@ const sources = source ? [source] : ["youtube", "twitter", "reddit", "instagram"
         Discover new content creators that are publishing gameplay,<br /> opinions and more about Stormgate
       </p>
     </div>
-    <CreatorsFilters client:load path={Astro.url.pathname} time={time} order={order} />
+    <CreatorsFilters client:load path={Astro.url.pathname} language={language} time={time} order={order} />
     {
       sources.map((source) => (
         <div class="mb-12">

@@ -3,10 +3,11 @@ export const prerender = false
 
 import Card from "../components/Card.astro"
 import Layout from "../layouts/Layout.astro"
-import { validSources, fetchContent, FetchContentOrder } from "../lib/content"
+import { validSources, validLanguages, fetchContent, FetchContentOrder } from "../lib/content"
 import SocialFilters from "../components/social/Filters"
 
 const params = Astro.url.searchParams
+const language = params.get("l") || "any"
 const source = params.get("s") || "all"
 const time = params.get("t") || "7d"
 const order = params.get("o") || "popular"
@@ -45,7 +46,16 @@ function parseSource(sourceParam: string) {
   }
 }
 
+function parseLanguage(languageParam: string) {
+  if (validLanguages.includes(languageParam)) {
+    return languageParam
+  } else {
+    return "any"
+  }
+}
+
 const fetchParams = {
+  language: parseLanguage(language),
   source: parseSource(source),
   since: parseTime(time),
   order: parseOrder(order),
@@ -68,7 +78,14 @@ const content = await fetchContent([], fetchParams)
         Everything everywhere posted about Stormgate, all at once
       </p>
     </div>
-    <SocialFilters path={Astro.url.pathname} client:load source={source} time={time} order={order} />
+    <SocialFilters
+      path={Astro.url.pathname}
+      client:load
+      language={language}
+      source={source}
+      time={time}
+      order={order}
+    />
     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {content.map((c) => <Card data={c} />)}
     </div>

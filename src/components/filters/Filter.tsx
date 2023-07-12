@@ -43,7 +43,7 @@ export default function Filter(props: Props) {
     setFilter(props.name, optionValue)
   }
 
-  const wrapperClass = `relative ml-6 ${props.class || ""}`
+  const wrapperClass = `relative ml-5 ${props.class || ""}`
 
   return (
     <div class={wrapperClass} use:clickOutside={() => setDropdown(false)}>
@@ -51,7 +51,7 @@ export default function Filter(props: Props) {
         <button
           onClick={toggleDropdown}
           type="button"
-          class="transtion group inline-flex justify-center whitespace-nowrap rounded-full bg-white/10 px-6 py-3 font-medium text-gray-100 hover:bg-white/20 hover:text-white"
+          class="transtion group inline-flex justify-center whitespace-nowrap rounded-full bg-white/10 px-5 py-2 font-medium text-gray-100 hover:bg-white/20 hover:text-white sm:py-3 md:px-6"
           id="mobile-menu-button"
           aria-expanded="false"
           aria-haspopup="true"
