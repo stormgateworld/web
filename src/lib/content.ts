@@ -2,7 +2,7 @@ import { debugLog } from "./utils"
 
 export const validContentOrders = ["score_relevant", "score_popular", "published_at"] as readonly string[]
 export const validCreatorsOrders = ["popular", "active"] as readonly string[]
-export const validSources = ["youtube", "twitter", "reddit", "news", "instagram", "tiktok"] as readonly string[]
+export const validSources = ["youtube", "twitter", "reddit", "news", "instagram", "tiktok", "substack"] as readonly string[]
 export const validLanguages = ["any", "en", "es", "fr", "de", "it", "pt", "ru", "zh"] as readonly string[]
 
 export type FetchContentOrder = (typeof validContentOrders)[number]

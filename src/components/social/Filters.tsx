@@ -9,6 +9,7 @@ import newsIcon from "../../assets/social/news.svg"
 import twitterIcon from "../../assets/social/twitter.svg"
 import instagramIcon from "../../assets/social/instagram.svg"
 import tiktokIcon from "../../assets/social/tiktok.svg"
+import substackIcon from "../../assets/social/substack.svg"
 
 const sources = [
   { name: "All Sources", value: "all" },
@@ -16,6 +17,7 @@ const sources = [
   { name: "Youtube", value: "youtube", iconSrc: youtubeIcon },
   { name: "News", value: "news", iconSrc: newsIcon },
   { name: "Twitter", value: "twitter", iconSrc: twitterIcon },
+  { name: "Substack", value: "substack", iconSrc: substackIcon },
   { name: "Instagram", value: "instagram", iconSrc: instagramIcon },
   { name: "TikTok", value: "tiktok", iconSrc: tiktokIcon },
 ]

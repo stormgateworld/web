@@ -5,6 +5,7 @@ import newsIcon from "../../assets/social/news.svg"
 import twitterIcon from "../../assets/social/twitter.svg"
 import instagramIcon from "../../assets/social/instagram.svg"
 import tiktokIcon from "../../assets/social/tiktok.svg"
+import substackIcon from "../../assets/social/substack.svg"
 
 interface Tab {
   name: string
@@ -17,6 +18,7 @@ const tabs: Tab[] = [
   { name: "Youtube", icon: youtubeIcon },
   { name: "News", icon: newsIcon },
   { name: "Twitter", icon: twitterIcon },
+  { name: "Substack", icon: substackIcon },
   { name: "Instagram", icon: instagramIcon },
   { name: "Tiktok", icon: tiktokIcon },
 ]
@@ -33,7 +35,7 @@ export default function SourceFilterDesktop(props: Props) {
   }
 
   return (
-    <nav class="hidden space-x-7 xl:flex" aria-label="Tabs">
+    <nav class="hidden space-x-5 xl:flex" aria-label="Tabs">
       {tabs.map((tab) =>
         tab.name.toLowerCase() == props.default ? (
           <a
