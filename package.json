@@ -13,12 +13,12 @@
     "format": "prettier --write --plugin-search-dir=. ."
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^6.4.0",
-    "@astrojs/solid-js": "^2.2.0",
-    "@astrojs/tailwind": "^3.1.3",
+    "@astrojs/node": "^7.0.4",
+    "@astrojs/solid-js": "^4.0.1",
+    "@astrojs/tailwind": "^5.1.0",
     "@fontsource-variable/montserrat": "^5.0.4",
     "@fontsource/sen": "^5.0.3",
-    "astro": "^2.6.3",
+    "astro": "^4.1.3",
     "drizzle-orm": "^0.26.5",
     "lodash": "^4.17.21",
     "solid-js": "^1.7.6",
