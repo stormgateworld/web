@@ -13,13 +13,13 @@ import substackIcon from "../../assets/social/substack.svg"
 
 const sources = [
   { name: "All Sources", value: "all" },
-  { name: "Reddit", value: "reddit", iconSrc: redditIcon },
-  { name: "Youtube", value: "youtube", iconSrc: youtubeIcon },
-  { name: "News", value: "news", iconSrc: newsIcon },
-  { name: "Twitter", value: "twitter", iconSrc: twitterIcon },
-  { name: "Substack", value: "substack", iconSrc: substackIcon },
-  { name: "Instagram", value: "instagram", iconSrc: instagramIcon },
-  { name: "TikTok", value: "tiktok", iconSrc: tiktokIcon },
+  { name: "Reddit", value: "reddit", iconSrc: redditIcon.src },
+  { name: "Youtube", value: "youtube", iconSrc: youtubeIcon.src },
+  { name: "News", value: "news", iconSrc: newsIcon.src },
+  { name: "Twitter", value: "twitter", iconSrc: twitterIcon.src },
+  { name: "Substack", value: "substack", iconSrc: substackIcon.src },
+  { name: "Instagram", value: "instagram", iconSrc: instagramIcon.src },
+  { name: "TikTok", value: "tiktok", iconSrc: tiktokIcon.src },
 ]
 
 const orders = [
@@ -43,6 +43,8 @@ interface Props {
   time: string
   order: string
 }
+
+console.log(redditIcon.src)
 
 export default function SocialFilters(props: any) {
   return (

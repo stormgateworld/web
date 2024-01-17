@@ -14,13 +14,13 @@ interface Tab {
 
 const tabs: Tab[] = [
   { name: "All" },
-  { name: "Reddit", icon: redditIcon },
-  { name: "Youtube", icon: youtubeIcon },
-  { name: "News", icon: newsIcon },
-  { name: "Twitter", icon: twitterIcon },
-  { name: "Substack", icon: substackIcon },
-  { name: "Instagram", icon: instagramIcon },
-  { name: "Tiktok", icon: tiktokIcon },
+  { name: "Reddit", icon: redditIcon.src },
+  { name: "Youtube", icon: youtubeIcon.src },
+  { name: "News", icon: newsIcon.src },
+  { name: "Twitter", icon: twitterIcon.src },
+  { name: "Substack", icon: substackIcon.src },
+  { name: "Instagram", icon: instagramIcon.src },
+  { name: "Tiktok", icon: tiktokIcon.src },
 ]
 
 interface Props {

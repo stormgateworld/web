@@ -26,9 +26,9 @@ export function getStaticPaths() {
 function defaultAvatar(source: string) {
   switch (source) {
     case "reddit":
-      return redditAvatarDefault
+      return redditAvatarDefault.src
     default:
-      return avatarDefault
+      return avatarDefault.src
   }
 }
 
@@ -75,10 +75,10 @@ function parseLanguage(languageParam: string) {
 }
 
 const iconsMap = {
-  reddit: redditIcon,
-  youtube: youtubeIcon,
-  twitter: twitterIcon,
-  instagram: instagramIcon,
+  reddit: redditIcon.src,
+  youtube: youtubeIcon.src,
+  twitter: twitterIcon.src,
+  instagram: instagramIcon.src,
 }
 
 const creatorsMap = await fetchCreators({
