@@ -3,32 +3,10 @@ export const prerender = false
 import Layout from "../../layouts/Layout.astro"
 import Widget from "../../components/Widget.astro"
 import hero from "../../assets/game/vanguard-base-hero.jpg"
-import infernals from "../../assets/game/factions/infernals-small.png"
-import vanguard from "../../assets/game/factions/vanguard-small.png"
+import { getLeaderboard } from "../../lib/api"
 import { Image } from "astro:assets"
-const mode = Astro.params.mode
-
-const url = `https://api.stormgateworld.com/v0/leaderboards/${mode}`
-
-const leaderboard = await fetch(url).then((res) => res.json() as Promise<Leaderboard>)
-
-interface Leaderboard {
-  count: number
-  page: number
-  entries: Entry[]
-}
-
-interface Entry {
-  id: number
-  nickname: string
-  nickname_discriminator: string
-  steam_id: string
-  race: string
-  mmr: number
-  wins: number
-  losses: number
-  win_rate: number
-}
+import Leaderboard from "../../components/widgets/Leaderboard.astro"
+const leaderboard = await getLeaderboard(Astro.params.mode!)
 
 const perFaction = leaderboard.entries.reduce((factions, entry) => {
   factions[entry.race] ??= 0
@@ -38,43 +16,13 @@ const perFaction = leaderboard.entries.reduce((factions, entry) => {
 ---
 
 <Layout title="Leaderboard">
-  <div class="absolute top-0 -z-0 h-[800px] w-full">
+  <div class="fixed top-0 -z-0 h-[max(800px,90vh)] w-full">
     <Image src={hero} alt="" class="absolute h-full w-full object-cover" />
     <div class="absolute inset-0 bg-gradient-to-b from-transparent to-gray-950"></div>
   </div>
   <section class="relative mx-auto max-w-screen-md px-4 py-8">
     <Widget title="Global Leaderboard" label="Closed Beta Ranked">
-      <table class="table-auto mx-auto w-full text-left md:text-lg whitespace-nowrap">
-        <!-- <thead>
-          <th class="px-2 border-b border-white">Nickname</th>
-          <th class="px-2 border-b border-white">Faction</th>
-          <th class="px-2 border-b border-white">MMR</th>
-          <th class="px-2 border-b border-white">Wins</th>
-        </thead> -->
-        <tbody>
-          {
-            leaderboard.entries.map((entry, i) => (
-              <tr>
-                <td class="pr-2 py-1 text-right text-gray-50 font-extrabold text-lg md:text-xl">{i + 1}.</td>
-                <td class="pr-2">
-                  <Image src={entry.race === "infernals" ? infernals : vanguard} alt={entry.race} class="w-6 h-6" />
-                </td>
-                <td class="pr-2 text-white font-bold">{entry.nickname}</td>
-                <td class="pr-2 font-bold text-right text-gray-100">{Math.round(entry.mmr)}</td>
-                <td class="pr-0.5 text-gray-100 text-right">
-                  {entry.wins}
-                  <span class="text-green-400">W</span>
-                </td>
-                <td class="pr-0.5 text-gray-100 text-right">
-                  {entry.losses}
-                  <span class="text-red-400">L</span>
-                </td>
-                <td class="pr-2 text-right text-gray-100">{Math.round(entry.win_rate)}%</td>
-              </tr>
-            ))
-          }
-        </tbody>
-      </table>
+      <Leaderboard entries={leaderboard.entries} />
     </Widget>
   </section>
 </Layout>

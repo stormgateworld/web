@@ -1,0 +1,104 @@
+---
+export const prerender = false
+import Layout from "../../layouts/Layout.astro"
+import Widget from "../../components/Widget.astro"
+import hero from "../../assets/game/vanguard-base-hero.jpg"
+import { Image } from "astro:assets"
+import { getPlayer, getPlayerMatches } from "../../lib/api"
+import Box from "../../components/Box.astro"
+import Leaderboard from "../../components/widgets/Leaderboard.astro"
+import infernals from "../../assets/game/factions/infernals-small.png"
+import vanguard from "../../assets/game/factions/vanguard-small.png"
+import { formatDuration } from "../../lib/utils"
+
+const playerId = +Astro.params.id!
+const player = (await getPlayer(playerId))!
+---
+
+<Layout title={player.nickname}>
+  <div class="fixed top-0 -z-0 h-[max(800px,90vh)] w-full">
+    <Image src={hero} alt="" class="absolute h-full w-full object-cover" />
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-gray-950"></div>
+  </div>
+  <section class="relative mx-auto max-w-screen-md px-4 py-8">
+    <Box title={player.nickname}>
+      <Leaderboard entries={player.leaderboardEntries} />
+    </Box>
+    <br /><br />
+    <Widget title="Matches" label="Closed Beta Ranked">
+      <table class="table-auto mx-auto w-full text-left md:text-lg whitespace-nowrap">
+        <!-- <thead>
+                <th class="px-2 border-b border-white">Nickname</th>
+                <th class="px-2 border-b border-white">Faction</th>
+                <th class="px-2 border-b border-white">MMR</th>
+                <th class="px-2 border-b border-white">Wins</th>
+              </thead> -->
+        <tbody>
+          {
+            player.matches.map((match) => {
+              const result = match.players.find((p) => p.player_id === playerId)!.result
+              const duration = new Date(match.ended_at).valueOf() - new Date(match.created_at).valueOf()
+              return (
+                <tr>
+                  <td
+                    class:list={[
+                      "pr-2 py-1 text-right font-extrabold text-md",
+                      result === "win" ? "text-green-400" : result === "loss" ? "text-red-400" : "text-gray-500",
+                    ]}
+                  >
+                    {result === "win" ? "W" : result === "loss" ? "L" : "-"}
+                  </td>
+                  {match.players
+                    .sort((e) => (e.player_id == playerId ? -1 : 1))
+                    .map((entry, i) => (
+                      <td class="px-2 py-1">
+                        <div class:list={["flex items-center gap-2", i == 0 ? "flex-row-reverse" : ""]}>
+                          <Image
+                            src={entry.race === "infernals" ? infernals : vanguard}
+                            alt={entry.race}
+                            class="w-6 h-6"
+                          />
+                          <a
+                            href={`/players/${entry.player_id}-${encodeURIComponent(entry.nickname)}`}
+                            class="hover:underline"
+                          >
+                            {entry.nickname ?? <em class="text-gray-300">Uknown</em>}
+                          </a>
+                          <div class="text-sm">
+                            <span class="text-gray-500">{Math.round(entry.rating)}</span>
+                            {/* <span
+                              class={
+                                entry.rating_diff > 0
+                                  ? "text-green-400"
+                                  : entry.rating_diff < 0
+                                  ? "text-red-400"
+                                  : "text-gray-500"
+                              }
+                            >
+                              {entry.rating_diff > 0 ? "↑" : "↓"}
+                              {Math.abs(Math.round(entry.rating_diff))}
+                            </span>*/}
+                          </div>
+                        </div>
+                      </td>
+                    ))}
+                  <td class="text-right text-sm text-gray-200">{formatDuration(duration)}</td>
+                  <td class="text-right text-sm text-gray-200">
+                    {new Date(match.created_at).toLocaleString("en", {
+                      year: "numeric",
+                      month: "numeric",
+                      day: "numeric",
+                      hour: "numeric",
+                      minute: "numeric",
+                      hour12: false,
+                    })}
+                  </td>
+                </tr>
+              )
+            })
+          }
+        </tbody>
+      </table>
+    </Widget>
+  </section>
+</Layout>

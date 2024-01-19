@@ -1,0 +1,44 @@
+---
+import infernals from "../../assets/game/factions/infernals-small.png"
+import vanguard from "../../assets/game/factions/vanguard-small.png"
+import { Image } from "astro:assets"
+
+interface Props {
+  entries: Awaited<ReturnType<typeof import("../../lib/api").getLeaderboard>>["entries"]
+}
+const entries = Astro.props.entries
+---
+
+<table class="table-auto mx-auto w-full text-left md:text-lg whitespace-nowrap">
+  <!-- <thead>
+      <th class="px-2 border-b border-white">Nickname</th>
+      <th class="px-2 border-b border-white">Faction</th>
+      <th class="px-2 border-b border-white">MMR</th>
+      <th class="px-2 border-b border-white">Wins</th>
+    </thead> -->
+  <tbody>
+    {
+      entries.map((entry) => (
+        <tr>
+          <td class="pr-2 py-1 text-right text-gray-50 font-extrabold text-lg md:text-xl">{entry.rank}.</td>
+          <td class="pr-2">
+            <Image src={entry.race === "infernals" ? infernals : vanguard} alt={entry.race} class="w-6 h-6" />
+          </td>
+          <td class="pr-2 text-white font-bold">
+            <a href={`/players/${entry.id}-${encodeURIComponent(entry.nickname)}`}>{entry.nickname}</a>
+          </td>
+          <td class="pr-2 font-bold text-right text-gray-100">{Math.round(entry.mmr)}</td>
+          <td class="pr-0.5 text-gray-100 text-right">
+            {entry.wins}
+            <span class="text-green-400">W</span>
+          </td>
+          <td class="pr-0.5 text-gray-100 text-right">
+            {entry.losses}
+            <span class="text-red-400">L</span>
+          </td>
+          <td class="pr-2 text-right text-gray-100">{Math.round(entry.win_rate)}%</td>
+        </tr>
+      ))
+    }
+  </tbody>
+</table>
