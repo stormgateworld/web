@@ -1,7 +1,5 @@
 ---
-import "@fontsource-variable/montserrat"
-import "@fontsource/sen/400.css"
-import "@fontsource/sen/700.css"
+import "@fontsource-variable/nunito-sans"
 
 import Footer from "../components/Footer.astro"
 
@@ -10,6 +8,13 @@ export interface Props {
 }
 
 const { title } = Astro.props
+const currentRoute = new URL(Astro.request.url).pathname
+
+const navLinks = [
+  { href: "/social", text: "Social Feed" },
+  { href: "/leaderboards/ranked_1v1", text: "Leaderboard" },
+  { href: "/creators", text: "Creators" },
+]
 ---
 
 <!DOCTYPE html>
@@ -33,19 +38,30 @@ const { title } = Astro.props
       gtag("config", "G-V5SFFY7NM1")
     </script>
   </head>
-  <body class="bg-body text-body font-body scroll-pt-24 bg-gray-900 text-white antialiased">
-    <div class="relative z-10 w-full border-b border-white/20">
-      <nav class="mx-auto flex h-20 max-w-screen-2xl items-center gap-4 px-4 font-display sm:gap-12">
-        <a href="/" class="whitespace-nowrap text-xl font-bold"> Stormgate World</a>
-        <a href="/social" class="whitespace-nowrap font-medium hover:underline"
-          >Social<span class="hidden md:inline"> Feed</span></a
-        >
-        <a href="/creators" class="font-medium hover:underline">Creators</a>
+  <body class="bg-body text-body font-body scroll-pt-24 bg-gray-950 text-white antialiased">
+    <div class="relative z-10 w-full bg-gray-800/80 border-b border-gray-700/50 backdrop-blur-md">
+      <nav class="mx-auto flex h-16 max-w-screen-2xl items-center gap-0 px-4 font-display md:gap-4">
+        <a href="/" class="whitespace-nowrap text-xl font-extrabold text-gray-200"> Stormgate World</a>
+
+        {
+          navLinks.map(({ href, text }) => (
+            <a
+              href={href}
+              class:list={[
+                "font-bold rounded px-3 py-1.5",
+                currentRoute === href ? "bg-white/5 text-gray-50" : "hover:bg-white/5 text-gray-200 ",
+              ]}
+            >
+              {text}
+            </a>
+          ))
+        }
+
         <div class="flex-auto"></div>
         <a
           href="https://playstormgate.com"
           target="_blank"
-          class="hidden whitespace-nowrap rounded-full border-white bg-white px-6 py-2 text-sm font-bold text-black transition hover:bg-gray-100 sm:block"
+          class="hidden whitespace-nowrap rounded-md border-white/20 bg-gray-100/20 px-6 py-2 text-sm font-bold text-gray-100 font-bold transition hover:bg-gray-100 sm:block"
           data-class="bg-white rounded-full text-sm mr-4 px-6 py-2 border text-black my-6 inline-block font-bold border-white hover:bg-gray-100 transition"
         >
           Sign up for beta
