@@ -20,11 +20,11 @@ const entries = Astro.props.entries
     {
       entries.map((entry) => (
         <tr>
-          <td class="pr-2 py-1 text-right text-gray-50 font-extrabold text-lg md:text-xl">{entry.rank}.</td>
-          <td class="pr-2">
+          <td class="md:pr-2 py-1 text-right text-gray-50 font-extrabold text-lg md:text-xl">{entry.rank}.</td>
+          <td class="pr-0.5 md:pr-2">
             <Image src={entry.race === "infernals" ? infernals : vanguard} alt={entry.race} class="w-6 h-6" />
           </td>
-          <td class="pr-2 text-white font-bold">
+          <td class="truncate max-w-20 md:max-w-auto pr-2 text-white font-bold">
             <a href={`/players/${entry.id}-${encodeURIComponent(entry.nickname)}`}>{entry.nickname}</a>
           </td>
           <td class="pr-2 font-bold text-right text-gray-100">{Math.round(entry.mmr)}</td>
