@@ -4,7 +4,7 @@ import vanguard from "../../assets/game/factions/vanguard-small.png"
 import { Image } from "astro:assets"
 
 interface Props {
-  entries: Awaited<ReturnType<typeof import("../../lib/api").getLeaderboard>>["entries"]
+  entries: Awaited<ReturnType<typeof import("../../lib/_api").getLeaderboard>>["entries"]
 }
 const entries = Astro.props.entries
 ---

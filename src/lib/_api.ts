@@ -37,7 +37,7 @@ interface LeaderboardEntry {
     nickname: string
     nickname_discriminator: string
     steam_id: string
-    race: string
+    race: 'infernals' | 'vanguard'
     mmr: number
     wins: number
     losses: number

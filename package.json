@@ -6,10 +6,8 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "preview": "wrangler pages dev ./dist",
     "astro": "astro",
-    "generate": "drizzle-kit generate:sqlite --schema=db/schema.ts --out=./db/migrations",
-    "up": "drizzle-kit up:sqlite --schema=db/schema.ts",
+    "build-api": "openapi --input https://api.stormgateworld.com/api-docs/openapi.json --output ./src/lib/api --postfixServices Api --useOptions",
     "format": "prettier --write --plugin-search-dir=. ."
   },
   "dependencies": {
@@ -25,6 +23,7 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
+    "openapi-typescript-codegen": "^0.27.0",
     "prettier": "^2.8.8",
     "prettier-plugin-astro": "^0.9.1",
     "prettier-plugin-tailwindcss": "^0.3.0"
