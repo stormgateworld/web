@@ -1,0 +1,107 @@
+---
+import type { PlayerMatchesResponseMatch } from "../../lib/api"
+import { Image } from "astro:assets"
+import infernals from "../../assets/game/factions/infernals-small.png"
+import vanguard from "../../assets/game/factions/vanguard-small.png"
+import { formatDuration } from "../../lib/utils"
+interface Props {
+  match: PlayerMatchesResponseMatch
+  mainPlayerId: number
+}
+const { match, mainPlayerId } = Astro.props
+const mainPlayer = match.players.find((player) => player.player_id === mainPlayerId)!
+const duration = new Date(match.ended_at!).valueOf() - new Date(match.created_at).valueOf()
+
+function tryParseStats(pos: number) {
+  try {
+    const scores = JSON.parse((match.players[0] as any)._raw?.data?.resultData)?.playerResults?.[pos]?.scores as any[]
+    return {
+      unitKills: scores?.find((s) => s.scoreId === "units_killed")?.value,
+      structureKills: scores?.find((s) => s.scoreId === "structures_killed")?.value,
+      resourcesMinded: scores?.find((s) => s.scoreId === "resources_mined")?.value,
+      creepResources: scores?.find((s) => s.scoreId === "creep_resources_collected")?.value,
+      xp: scores?.find((s) => s.scoreId === "xp")?.value,
+    }
+  } catch {
+    return {
+      unitKills: 0,
+      structureKills: 0,
+      resourcesMinded: 0,
+      creepResources: 0,
+      xp: 0,
+    }
+  }
+}
+
+const scores = match.players.map((_, pos) => tryParseStats(pos))
+---
+
+<div class="flex items-center gap-4 border-b border-gray-700/50 px-3 sm:px-4 py-2.5">
+  <div
+    class:list={[
+      "size-6 text-sm ml-1 flex justify-center items-center rounded text-gray-800 font-extrabold uppercase",
+      mainPlayer.result === "win" ? "bg-green-500" : mainPlayer.result === "loss" ? "bg-red-500" : "bg-gray-500",
+    ]}
+  >
+    {mainPlayer.result === "win" ? "W" : mainPlayer.result === "loss" ? "L" : "-"}
+  </div>
+  <div class="size-8 rounded bg-gray-600/50 border border-gray-500/60"></div>
+  <div class="flex-auto">
+    {
+      match.players.map((player, pos) => (
+        <div class="flex items-center gap-3">
+          <span
+            class:list={[
+              "w-8 flex-none text-xs whitespace-nowrap text-right",
+              player.rating_diff! > 0 ? "text-green-500" : player.rating_diff! < 0 ? "text-red-500" : "text-gray-500",
+            ]}
+          >
+            {player.rating_diff! > 0 ? "↑" : "↓"}
+            {Math.abs(Math.round(player.rating_diff!))}
+          </span>
+          <Image
+            src={player.race === "infernals" ? infernals : vanguard}
+            alt={player.race}
+            class="flex-none object-contain size-7"
+          />
+          <div class:list={["flex flex-auto items-center gap-2 py-1.5", pos > 0 && "border-t border-gray-600/50"]}>
+            <a
+              href={`/players/${player.player_id}-${encodeURIComponent(player.nickname!)}`}
+              class="truncate font-semibold text-gray-50 hover:underline"
+            >
+              {player.nickname ?? <em class="text-gray-300">Uknown</em>}
+            </a>
+            <div class="hidden md:block text-sm">
+              <span class="text-gray-500">#00 {Math.round(player.rating)}</span>
+            </div>
+            <div class="justify-end flex-auto text-sm text-gray-100 font-bold gap-1.5 hidden xs:flex">
+              <span title="units killed">{scores[pos].unitKills}</span>
+              <span class="text-gray-600">/</span>
+              <span title="structures destroyed">{scores[pos].structureKills}</span>
+              <span class="text-gray-600">/</span>
+              <span title="resources mined">{Math.round(scores[pos].resourcesMinded / 100) / 10}k</span>
+              <span class="text-gray-600">/</span>
+              <span title="creep resources collected">{scores[pos].creepResources}</span>
+            </div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+  <div class="text-xs text-gray-400 text-right basis-1/6 hidden sm:block">
+    <p>{formatDuration(duration)}</p>
+    <p>
+      {
+        new Date(match.created_at).toLocaleString("en", {
+          year: "2-digit",
+          month: "numeric",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          hour12: false,
+        })
+      }
+    </p>
+    <p>{match.server.replaceAll("_", " ")}</p>
+  </div>
+</div>
