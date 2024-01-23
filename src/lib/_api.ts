@@ -1,3 +1,4 @@
+import type { PlayerResponse } from "./api"
 
 export async function getLeaderboard(mode: string) {
     const result = await fetch(`https://api.stormgateworld.com/v0/leaderboards/${mode}`).then((res) => res.json() as Promise<Leaderboard>)
@@ -10,19 +11,18 @@ export async function getLeaderboard(mode: string) {
     }
 }
 
-export async function getPlayerMatches(playerId: number) {
+export async function getPlayerMatches(playerId: string) {
     return fetch(`https://api.stormgateworld.com/v0/players/${playerId}/matches`).then((res) => res.json() as Promise<Matches>)
 }
 
-export async function getPlayer(playerId: number) {
+
+export async function getPlayer(playerId: string) {
+    const player = await fetch(`https://api.stormgateworld.com/v0/players/${playerId}`).then((res) => res.json() as Promise<PlayerResponse>)
     const matches = await getPlayerMatches(playerId)
-    const leaderboard = await getLeaderboard("ranked_1v1")
-    const leaderboardEntries = leaderboard.entries.filter((entry) => entry.id === playerId)
-    const player = leaderboardEntries[0]
     return {
         ...player,
         matches: matches.matches,
-        leaderboardEntries
+        leaderboardEntries: player.leaderboard_entries
     }
 }
 

@@ -28,7 +28,7 @@ const themes = {
 } as const
 type Theme = keyof typeof themes
 
-const playerId = +Astro.params.id!
+const playerId = Astro.params.id!
 const player = (await getPlayer(playerId))!
 ---
 
