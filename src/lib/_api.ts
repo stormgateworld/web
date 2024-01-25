@@ -33,7 +33,7 @@ interface Leaderboard {
 }
 
 interface LeaderboardEntry {
-    id: number
+    player_id: number
     nickname: string
     nickname_discriminator: string
     steam_id: string
@@ -51,12 +51,14 @@ interface Matches {
 }
 
 interface Match {
-    id: number;
+    match_id: number;
     leaderboard: string;
     server: string;
     players: Player[];
     created_at: string;
     ended_at: string;
+    scores: Map<string, number>;
+    ping: number;
 }
 
 interface Player {

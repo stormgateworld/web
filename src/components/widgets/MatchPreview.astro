@@ -1,39 +1,15 @@
 ---
-import type { PlayerMatchesResponseMatch } from "../../lib/api"
+import type { MatchResponse, PlayerMatchResponse } from "../../lib/api"
 import { Image } from "astro:assets"
 import infernals from "../../assets/game/factions/infernals-small.png"
 import vanguard from "../../assets/game/factions/vanguard-small.png"
 import { formatDuration } from "../../lib/utils"
 interface Props {
-  match: PlayerMatchesResponseMatch
-  mainPlayerId: number
+  match: MatchResponse
+  mainPlayerId: string
 }
 const { match, mainPlayerId } = Astro.props
 const mainPlayer = match.players.find((player) => player.player_id === mainPlayerId)!
-const duration = new Date(match.ended_at!).valueOf() - new Date(match.created_at).valueOf()
-
-function tryParseStats(pos: number) {
-  try {
-    const scores = JSON.parse((match.players[0] as any)._raw?.data?.resultData)?.playerResults?.[pos]?.scores as any[]
-    return {
-      unitKills: scores?.find((s) => s.scoreId === "units_killed")?.value,
-      structureKills: scores?.find((s) => s.scoreId === "structures_killed")?.value,
-      resourcesMinded: scores?.find((s) => s.scoreId === "resources_mined")?.value,
-      creepResources: scores?.find((s) => s.scoreId === "creep_resources_collected")?.value,
-      xp: scores?.find((s) => s.scoreId === "xp")?.value,
-    }
-  } catch {
-    return {
-      unitKills: 0,
-      structureKills: 0,
-      resourcesMinded: 0,
-      creepResources: 0,
-      xp: 0,
-    }
-  }
-}
-
-const scores = match.players.map((_, pos) => tryParseStats(pos))
 ---
 
 <div class="flex items-center gap-4 border-b border-gray-700/50 px-3 sm:px-4 py-2.5">
@@ -75,13 +51,13 @@ const scores = match.players.map((_, pos) => tryParseStats(pos))
               <span class="text-gray-500">#00 {Math.round(player.rating)}</span>
             </div>
             <div class="justify-end flex-auto text-sm text-gray-100 font-bold gap-1.5 hidden xs:flex">
-              <span title="units killed">{scores[pos].unitKills}</span>
+              <span title="units killed">{player.scores?.units_killed}</span>
               <span class="text-gray-600">/</span>
-              <span title="structures destroyed">{scores[pos].structureKills}</span>
+              <span title="structures destroyed">{player.scores?.structures_killed}</span>
               <span class="text-gray-600">/</span>
-              <span title="resources mined">{Math.round(scores[pos].resourcesMinded / 100) / 10}k</span>
+              <span title="resources mined">{Math.round(player.scores?.resources_mined / 100) / 10}k</span>
               <span class="text-gray-600">/</span>
-              <span title="creep resources collected">{scores[pos].creepResources}</span>
+              <span title="creep resources collected">{player.scores?.creep_resources_collected}</span>
             </div>
           </div>
         </div>
@@ -89,7 +65,7 @@ const scores = match.players.map((_, pos) => tryParseStats(pos))
     }
   </div>
   <div class="text-xs text-gray-400 text-right basis-1/6 hidden sm:block">
-    <p>{formatDuration(duration)}</p>
+    <p>{formatDuration(match.duration)}</p>
     <p>
       {
         new Date(match.created_at).toLocaleString("en", {
