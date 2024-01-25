@@ -2,35 +2,34 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { PlayerResponse } from '../models/PlayerResponse';
+import type { LeaderboardResponse } from '../models/LeaderboardResponse';
 import type { QueryParamsRace } from '../models/QueryParamsRace';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-export class LeaderboardsApi {
+export class LeaderboardsService {
     /**
-     * @returns PlayerResponse Player found successfully
+     * @param race
+     * @param page
+     * @param count
+     * @param query
+     * @returns LeaderboardResponse Leaderboard
      * @throws ApiError
      */
-    public static call({
-        race,
-        page,
-        count,
-    }: {
-        race: QueryParamsRace | null,
-        page: number | null,
-        count: number | null,
-    }): CancelablePromise<PlayerResponse> {
+    public static getLeaderboard(
+        race?: QueryParamsRace | null,
+        page?: number | null,
+        count?: number | null,
+        query?: string | null,
+    ): CancelablePromise<LeaderboardResponse> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/v0/leaderboards/ranked_1v1',
-            path: {
+            query: {
                 'race': race,
                 'page': page,
                 'count': count,
-            },
-            errors: {
-                404: `Player was not found`,
+                'query': query,
             },
         });
     }

@@ -2,10 +2,10 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { LeaderboardResponseEntry } from './LeaderboardResponseEntry';
+import type { LeaderboardEntryResponse } from './LeaderboardEntryResponse';
 export type LeaderboardResponse = {
-    count: number;
-    entries: Array<LeaderboardResponseEntry>;
     page: number;
+    count: number;
+    entries: Array<LeaderboardEntryResponse>;
 };
 

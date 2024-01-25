@@ -2,17 +2,19 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type PlayerMatchesResponseMatchPlayer = {
+export type PlayerMatchResponse = {
+    player_id?: string | null;
     nickname?: string | null;
     nickname_discriminator?: string | null;
-    party: number;
-    player_id?: number | null;
-    race: string;
-    rating: number;
-    rating_diff?: number | null;
-    rating_updated?: number | null;
-    result?: string | null;
     steam_id?: string | null;
+    race: string;
     team: number;
+    party: number;
+    rating: number;
+    rating_updated?: number | null;
+    rating_diff?: number | null;
+    result?: string | null;
+    ping?: number | null;
+    scores?: any;
 };
 

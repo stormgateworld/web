@@ -7,14 +7,13 @@ export { CancelablePromise, CancelError } from './core/CancelablePromise';
 export { OpenAPI } from './core/OpenAPI';
 export type { OpenAPIConfig } from './core/OpenAPI';
 
+export type { LeaderboardEntryResponse } from './models/LeaderboardEntryResponse';
 export type { LeaderboardResponse } from './models/LeaderboardResponse';
-export type { LeaderboardResponseEntry } from './models/LeaderboardResponseEntry';
+export type { MatchResponse } from './models/MatchResponse';
 export type { PlayerMatchesResponse } from './models/PlayerMatchesResponse';
-export type { PlayerMatchesResponseMatch } from './models/PlayerMatchesResponseMatch';
-export type { PlayerMatchesResponseMatchPlayer } from './models/PlayerMatchesResponseMatchPlayer';
+export type { PlayerMatchResponse } from './models/PlayerMatchResponse';
 export type { PlayerResponse } from './models/PlayerResponse';
-export type { PlayerResponseLeaderboardEntry } from './models/PlayerResponseLeaderboardEntry';
 export { QueryParamsRace } from './models/QueryParamsRace';
 
-export { LeaderboardsApi } from './services/LeaderboardsApi';
-export { PlayersApi } from './services/PlayersApi';
+export { LeaderboardsService } from './services/LeaderboardsService';
+export { PlayersService } from './services/PlayersService';

@@ -7,19 +7,15 @@ import type { PlayerResponse } from '../models/PlayerResponse';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-export class PlayersApi {
+export class PlayersService {
     /**
+     * @param playerId Player database id
      * @returns PlayerResponse Player found successfully
      * @throws ApiError
      */
-    public static call({
-        playerId,
-    }: {
-        /**
-         * Player database id
-         */
-        playerId: number,
-    }): CancelablePromise<PlayerResponse> {
+    public static getPlayer(
+        playerId: string,
+    ): CancelablePromise<PlayerResponse> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/v0/players/{player_id}',
@@ -32,17 +28,13 @@ export class PlayersApi {
         });
     }
     /**
+     * @param playerId Player database id
      * @returns PlayerMatchesResponse Player found successfully
      * @throws ApiError
      */
-    public static call1({
-        playerId,
-    }: {
-        /**
-         * Player database id
-         */
-        playerId: number,
-    }): CancelablePromise<PlayerMatchesResponse> {
+    public static getPlayerMatches(
+        playerId: string,
+    ): CancelablePromise<PlayerMatchesResponse> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/v0/players/{player_id}/matches',

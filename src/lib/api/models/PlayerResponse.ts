@@ -2,12 +2,12 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { PlayerResponseLeaderboardEntry } from './PlayerResponseLeaderboardEntry';
+import type { LeaderboardEntryResponse } from './LeaderboardEntryResponse';
 export type PlayerResponse = {
-    id: number;
-    leaderboard_entries: Array<PlayerResponseLeaderboardEntry>;
+    id: string;
     nickname: string;
     nickname_discriminator: string;
     steam_id: string;
+    leaderboard_entries: Array<LeaderboardEntryResponse>;
 };
 

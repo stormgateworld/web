@@ -2,10 +2,10 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { PlayerMatchesResponseMatch } from './PlayerMatchesResponseMatch';
+import type { MatchResponse } from './MatchResponse';
 export type PlayerMatchesResponse = {
     count: number;
-    matches: Array<PlayerMatchesResponseMatch>;
     page: number;
+    matches: Array<MatchResponse>;
 };
 
