@@ -3,7 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { LeaderboardResponse } from '../models/LeaderboardResponse';
-import type { QueryParamsRace } from '../models/QueryParamsRace';
+import type { Race } from '../models/Race';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
@@ -17,7 +17,7 @@ export class LeaderboardsService {
      * @throws ApiError
      */
     public static getLeaderboard(
-        race?: QueryParamsRace | null,
+        race?: Race | null,
         page?: number | null,
         count?: number | null,
         query?: string | null,

@@ -45,7 +45,7 @@ const mainPlayer = match.players.find((player) => player.player_id === mainPlaye
               href={`/players/${player.player_id}-${encodeURIComponent(player.nickname!)}`}
               class="truncate font-semibold text-gray-50 hover:underline"
             >
-              {player.nickname ?? <em class="text-gray-300">Uknown</em>}
+              {player.nickname ?? <em class="text-gray-300">Unknown</em>}
             </a>
             <div class="hidden md:block text-sm">
               <span class="text-gray-500">#00 {Math.round(player.rating)}</span>

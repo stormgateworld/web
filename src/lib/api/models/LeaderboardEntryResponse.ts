@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { MatchResponse } from './MatchResponse';
+import type { Race } from './Race';
 export type LeaderboardEntryResponse = {
     player_id?: string | null;
     nickname?: string | null;
@@ -10,7 +11,7 @@ export type LeaderboardEntryResponse = {
     steam_id?: string | null;
     rank?: number | null;
     mmr: number;
-    race: string;
+    race: Race;
     wins: number;
     losses?: number | null;
     matches?: number | null;
