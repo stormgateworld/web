@@ -7,21 +7,22 @@ import type { Race } from '../models/Race';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-export class LeaderboardsService {
+export class LeaderboardsApi {
     /**
-     * @param race
-     * @param page
-     * @param count
-     * @param query
      * @returns LeaderboardResponse Leaderboard
      * @throws ApiError
      */
-    public static getLeaderboard(
+    public static getLeaderboard({
+        race,
+        page,
+        count,
+        query,
+    }: {
         race?: Race | null,
         page?: number | null,
         count?: number | null,
         query?: string | null,
-    ): CancelablePromise<LeaderboardResponse> {
+    }): CancelablePromise<LeaderboardResponse> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/v0/leaderboards/ranked_1v1',

@@ -3,9 +3,10 @@ import infernals from "../../assets/game/factions/infernals-small.png"
 import vanguard from "../../assets/game/factions/vanguard-small.png"
 import { Image } from "astro:assets"
 import { urlencode } from "../../lib/utils"
+import type { LeaderboardResponse } from "../../lib/api"
 
 interface Props {
-  entries: Awaited<ReturnType<typeof import("../../lib/_api").getLeaderboard>>["entries"]
+  entries: LeaderboardResponse["entries"]
 }
 const entries = Astro.props.entries
 ---
@@ -26,7 +27,7 @@ const entries = Astro.props.entries
             <Image src={entry.race === "infernals" ? infernals : vanguard} alt={entry.race} class="w-6 h-6" />
           </td>
           <td class="truncate max-w-20 md:max-w-none pr-2 text-white font-bold">
-            <a href={`/players/${entry.player_id}-${urlencode(entry.nickname)}`}>{entry.nickname}</a>
+            <a href={`/players/${entry.player_id}-${urlencode(entry.nickname!)}`}>{entry.nickname}</a>
           </td>
           <td class="pr-2 font-bold text-right text-gray-100">{Math.round(entry.mmr)}</td>
           <td class="pr-0.5 text-gray-100 text-right">
@@ -37,7 +38,7 @@ const entries = Astro.props.entries
             {entry.losses}
             <span class="text-red-400">L</span>
           </td>
-          <td class="pr-2 text-right text-gray-100">{Math.round(entry.win_rate)}%</td>
+          <td class="pr-2 text-right text-gray-100">{Math.round(entry.win_rate ?? 0)}%</td>
         </tr>
       ))
     }

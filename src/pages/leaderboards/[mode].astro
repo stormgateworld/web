@@ -3,16 +3,16 @@ export const prerender = false
 import Layout from "../../layouts/Layout.astro"
 import Widget from "../../components/Widget.astro"
 import hero from "../../assets/game/vanguard-base-hero.jpg"
-import { getLeaderboard } from "../../lib/_api"
 import { Image } from "astro:assets"
 import Leaderboard from "../../components/widgets/Leaderboard.astro"
-const leaderboard = await getLeaderboard(Astro.params.mode!)
+import { LeaderboardsApi } from "../../lib/api"
 
-const perFaction = leaderboard.entries.reduce((factions, entry) => {
-  factions[entry.race] ??= 0
-  factions[entry.race]++
-  return factions
-}, {} as Record<string, number>)
+const mode = Astro.params.mode
+const perPage = 100
+// todo, mode as query param
+const { page, query } = Object.fromEntries(new URL(Astro.request.url).searchParams.entries())
+const leaderboard = await LeaderboardsApi.getLeaderboard({ count: perPage, page: page ? +page : undefined, query })
+const totalPages = 10 //Math.ceil(leaderboard.count / perPage)
 ---
 
 <Layout title="Leaderboard">
@@ -24,5 +24,19 @@ const perFaction = leaderboard.entries.reduce((factions, entry) => {
     <Widget title="Global Leaderboard" label="Closed Beta Ranked">
       <Leaderboard entries={leaderboard.entries} />
     </Widget>
+    <div class="my-2 flex justify-center gap-2">
+      {
+        Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+          <a
+            href={`?page=${page}`}
+            class={`px-2 py-1 rounded-md text-sm font-medium ${
+              page === +page ? "bg-gray-900 text-white" : "bg-gray-800 text-gray-300"
+            }`}
+          >
+            {page}
+          </a>
+        ))
+      }
+    </div>
   </section>
 </Layout>

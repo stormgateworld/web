@@ -1,5 +1,5 @@
 ---
-import type { MatchResponse, PlayerMatchResponse } from "../../lib/api"
+import type { MatchResponse } from "../../lib/api"
 import { Image } from "astro:assets"
 import infernals from "../../assets/game/factions/infernals-small.png"
 import vanguard from "../../assets/game/factions/vanguard-small.png"
@@ -41,12 +41,16 @@ const mainPlayer = match.players.find((player) => player.player_id === mainPlaye
             class="flex-none object-contain size-7"
           />
           <div class:list={["flex flex-auto items-center gap-2 py-1.5", pos > 0 && "border-t border-gray-600/50"]}>
-            <a
-              href={`/players/${player.player_id}-${encodeURIComponent(player.nickname!)}`}
-              class="truncate font-semibold text-gray-50 hover:underline"
-            >
-              {player.nickname ?? <em class="text-gray-300">Unknown</em>}
-            </a>
+            {player.nickname ? (
+              <a
+                href={`/players/${player.player_id}-${encodeURIComponent(player.nickname!)}`}
+                class="truncate font-semibold text-gray-50 hover:underline"
+              >
+                {player.nickname}
+              </a>
+            ) : (
+              <em class="text-gray-300">Unknown</em>
+            )}
             <div class="hidden md:block text-sm">
               <span class="text-gray-500">#00 {Math.round(player.rating)}</span>
             </div>

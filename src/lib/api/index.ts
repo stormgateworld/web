@@ -17,5 +17,5 @@ export type { PlayerMatchResponse } from './models/PlayerMatchResponse';
 export type { PlayerResponse } from './models/PlayerResponse';
 export { Race } from './models/Race';
 
-export { LeaderboardsService } from './services/LeaderboardsService';
-export { PlayersService } from './services/PlayersService';
+export { LeaderboardsApi } from './services/LeaderboardsApi';
+export { PlayersApi } from './services/PlayersApi';

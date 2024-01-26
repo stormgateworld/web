@@ -2,15 +2,11 @@
 export const prerender = false
 import Layout from "../../layouts/Layout.astro"
 import Widget from "../../components/Widget.astro"
-import hero from "../../assets/game/vanguard-base-hero.jpg"
 import { Image } from "astro:assets"
-import { getPlayer, getPlayerMatches } from "../../lib/_api"
-import Box from "../../components/Box.astro"
-import Leaderboard from "../../components/widgets/Leaderboard.astro"
 import infernals from "../../assets/game/factions/infernals-small.png"
 import vanguard from "../../assets/game/factions/vanguard-small.png"
-import { formatDuration } from "../../lib/utils"
 import MatchPreview from "../../components/widgets/MatchPreview.astro"
+import { PlayersApi } from "../../lib/api"
 
 const themes = {
   infernals: {
@@ -29,7 +25,8 @@ const themes = {
 type Theme = keyof typeof themes
 
 const playerId = Astro.params.id!
-const player = (await getPlayer(playerId))!
+const player = await PlayersApi.getPlayer({ playerId })
+const playerMatches = await PlayersApi.getPlayerMatches({ playerId })
 ---
 
 <Layout title={player.nickname}>
@@ -39,7 +36,7 @@ const player = (await getPlayer(playerId))!
 
       <div class="flex flex-wrap gap-4">
         {
-          player.leaderboardEntries.map((entry) => (
+          player.leaderboard_entries.map((entry) => (
             <div
               class:list={[
                 "border rounded-lg px-4 py-2 flex items-center gap-3 text-sm sm:text-base",
@@ -68,7 +65,7 @@ const player = (await getPlayer(playerId))!
   <section class="relative mx-auto max-w-screen-md px-4 py-8">
     <Widget title="Recent Matches" label="Closed Beta Ranked">
       <div class="-mx-3 sm:-mx-4">
-        {player.matches.map((match) => <MatchPreview match={match} mainPlayerId={playerId} />)}
+        {playerMatches.matches.map((match) => <MatchPreview match={match} mainPlayerId={playerId} />)}
       </div>
     </Widget>
   </section>
