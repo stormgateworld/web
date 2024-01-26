@@ -2,16 +2,33 @@
 export const prerender = false
 import Layout from "../../layouts/Layout.astro"
 import Widget from "../../components/Widget.astro"
+import { Pagination } from "../../components/ui/Pagination.tsx"
+import { SelectButton } from "../../components/ui/SelectButton.tsx"
 import hero from "../../assets/game/vanguard-base-hero.jpg"
 import { Image } from "astro:assets"
 import Leaderboard from "../../components/widgets/Leaderboard.astro"
-import { LeaderboardsApi } from "../../lib/api"
+import { LeaderboardsApi, Race } from "../../lib/api"
+import { styles } from "../../lib/theme"
 
 const mode = Astro.params.mode
 const perPage = 100
 // todo, mode as query param
-const { page, query } = Object.fromEntries(new URL(Astro.request.url).searchParams.entries())
-const leaderboard = await LeaderboardsApi.getLeaderboard({ count: perPage, page: page ? +page : undefined, query })
+const { page = 1, query, faction } = Object.fromEntries(new URL(Astro.request.url).searchParams.entries())
+
+const factionOptions = [
+  { label: "All Factions", value: null },
+  { label: "Infernals", value: Race.INFERNALS },
+  { label: "Vanguard", value: Race.VANGUARD },
+]
+
+const selectedRace = factionOptions.find((o) => o.value === faction) ?? factionOptions[0]
+
+const leaderboard = await LeaderboardsApi.getLeaderboard({
+  count: perPage,
+  page: page ? +page : undefined,
+  query: null, // broken in api
+  race: selectedRace.value,
+})
 const totalPages = 10 //Math.ceil(leaderboard.count / perPage)
 ---
 
@@ -21,22 +38,36 @@ const totalPages = 10 //Math.ceil(leaderboard.count / perPage)
     <div class="absolute inset-0 bg-gradient-to-b from-transparent to-gray-950"></div>
   </div>
   <section class="relative mx-auto max-w-screen-md px-4 py-8">
+    <div class="flex justify-between py-4 flex-wrap gap-4">
+      <SelectButton
+        options={factionOptions}
+        value={selectedRace}
+        navigateOnChange={{ queryParam: "faction", url: Astro.request.url, reset: ["page"] }}
+        client:idle
+      />
+      <form method="get">
+        <div class:list={[styles.button.set]}>
+          <input
+            class:list={[styles.button.sm, "bg-transparent outline-none text-white"]}
+            type="text"
+            name="query"
+            placeholder="Search"
+            value={query}
+          />
+          <button class:list={[styles.button.sm, styles.button.control]} type="submit"> 🔍</button>
+        </div>
+      </form>
+    </div>
     <Widget title="Global Leaderboard" label="Closed Beta Ranked">
       <Leaderboard entries={leaderboard.entries} />
     </Widget>
-    <div class="my-2 flex justify-center gap-2">
-      {
-        Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-          <a
-            href={`?page=${page}`}
-            class={`px-2 py-1 rounded-md text-sm font-medium ${
-              page === +page ? "bg-gray-900 text-white" : "bg-gray-800 text-gray-300"
-            }`}
-          >
-            {page}
-          </a>
-        ))
-      }
+    <div class="flex justify-center py-4">
+      <Pagination
+        page={+page}
+        totalPages={totalPages}
+        navigateOnChange={{ queryParam: "page", url: Astro.request.url }}
+        client:idle
+      />
     </div>
   </section>
 </Layout>
