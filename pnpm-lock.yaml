@@ -25,6 +25,12 @@ dependencies:
   lodash:
     specifier: ^4.17.21
     version: 4.17.21
+  lucide-solid:
+    specifier: ^0.319.0
+    version: 0.319.0(solid-js@1.8.12)
+  lucide-static:
+    specifier: ^0.319.0
+    version: 0.319.0
   sharp:
     specifier: ^0.32.6
     version: 0.32.6
@@ -2325,6 +2331,18 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       yallist: 4.0.0
+    dev: false
+
+  /lucide-solid@0.319.0(solid-js@1.8.12):
+    resolution: {integrity: sha512-n4JeqdkcC+xJAG1R1WjUaUgpi/UaufRMbOTZmNjpPAVc39XMtSczn5IRNqQYsRUX9NysR/Ctlx3K9J037tLz8g==}
+    peerDependencies:
+      solid-js: ^1.4.7
+    dependencies:
+      solid-js: 1.8.12
+    dev: false
+
+  /lucide-static@0.319.0:
+    resolution: {integrity: sha512-Lm8ZRrmTwnOXR+5mOF8PypwDemcaQYF7Pt7hYrtHtcQ/Oqansy8CsKqmDRM8mwb73uH1XPqKwROZSrwrcQgZdg==}
     dev: false
 
   /magic-string@0.30.5:

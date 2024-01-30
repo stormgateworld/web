@@ -2,14 +2,14 @@ import { Pagination as KPagination } from "@kobalte/core"
 import { type Accessor } from "solid-js"
 import { classes, styles } from "../../lib/theme"
 
-export function Pagination(props: { page: Accessor<number>; setPage: (page: number) => void; totalPages: number }) {
+export function Pagination(props: { page: number; setPage: (page: number) => void; totalPages: number }) {
   return (
     <KPagination.Root
       class="[&>ul]:inline-flex [&>ul]:justify-center [&>ul]:gap-2 [&>ul]:items-center"
       count={props.totalPages}
-      page={props.page()}
+      page={props.page}
       onPageChange={props.setPage}
-      fixedItems
+      fixedItems={props.totalPages > 5}
       siblingCount={1}
       itemComponent={(p) => (
         <KPagination.Item

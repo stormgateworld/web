@@ -11,12 +11,15 @@ export type LeaderboardEntryResponse = {
     nickname_discriminator?: string | null;
     steam_id?: string | null;
     rank?: number | null;
+    league: string;
     mmr: number;
+    points: number;
     race: Race;
     wins: number;
-    losses?: number | null;
-    matches?: number | null;
-    win_rate?: number | null;
+    losses: number;
+    ties: number;
+    matches: number;
+    win_rate: number;
     last_match?: MatchResponse | null;
 };
 

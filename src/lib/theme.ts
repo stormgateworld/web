@@ -25,7 +25,7 @@ export const styles = {
         wrapper: `bg-gray-800/85 border border-gray-700 backdrop-blur-sm`,
         list: `overflow-y-auto max-h-60 p-1`,
         item: `px-2 py-1.5 flex text-sm text-gray-50 rounded-sm
-            hover:bg-gray-500/50 ui-highlighted:bg-gray-500/30  ui-highlighted:!ring-0
+            hover:bg-gray-500/50 ui-highlighted:bg-gray-600/20 ui-highlighted:!ring-0
             outline-none focus-visible:ring-2 focus-visible:ring-gray-300 focus-visible:ring-opacity-50
             `,
     }

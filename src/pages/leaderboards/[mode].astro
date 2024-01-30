@@ -4,9 +4,9 @@ import Layout from "../../layouts/Layout.astro"
 import hero from "../../assets/game/vanguard-base-hero.jpg"
 import { Image } from "astro:assets"
 import { Leaderboard } from "../../components/views/Leaderboard.tsx"
+import type { Race } from "../../lib/api"
 
 const mode = Astro.params.mode
-const perPage = 100
 // todo, mode as query param
 const { page = 1, query, faction } = Object.fromEntries(new URL(Astro.request.url).searchParams.entries())
 ---
@@ -14,9 +14,9 @@ const { page = 1, query, faction } = Object.fromEntries(new URL(Astro.request.ur
 <Layout title="Leaderboard">
   <div class="fixed top-0 -z-0 h-[max(800px,90vh)] w-full">
     <Image src={hero} alt="" class="absolute h-full w-full object-cover" />
-    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-gray-950"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-gray-950/80 to-gray-950"></div>
   </div>
   <section class="relative mx-auto max-w-screen-md px-4 py-8">
-    <Leaderboard mode={mode} client:load />
+    <Leaderboard mode={mode} query={query} faction={faction as Race} client:load />
   </section>
 </Layout>

@@ -10,6 +10,7 @@ export type { OpenAPIConfig } from './core/OpenAPI';
 export { Leaderboard } from './models/Leaderboard';
 export type { LeaderboardEntryResponse } from './models/LeaderboardEntryResponse';
 export type { LeaderboardResponse } from './models/LeaderboardResponse';
+export type { MatchesResponse } from './models/MatchesResponse';
 export type { MatchResponse } from './models/MatchResponse';
 export { MatchResult } from './models/MatchResult';
 export type { PlayerMatchesResponse } from './models/PlayerMatchesResponse';
@@ -20,4 +21,5 @@ export { ProfilePrivacy } from './models/ProfilePrivacy';
 export { Race } from './models/Race';
 
 export { LeaderboardsApi } from './services/LeaderboardsApi';
+export { MatchesApi } from './services/MatchesApi';
 export { PlayersApi } from './services/PlayersApi';

@@ -9,7 +9,7 @@ interface Props {
   mainPlayerId: string
 }
 const { match, mainPlayerId } = Astro.props
-const mainPlayer = match.players.find((player) => player.player_id === mainPlayerId)!
+const mainPlayer = match.players.find((player) => player.player_id === mainPlayerId) ?? { result: "unknown" }
 ---
 
 <div class="flex items-center gap-4 border-b border-gray-700/50 px-3 sm:px-4 py-2.5">
@@ -21,7 +21,7 @@ const mainPlayer = match.players.find((player) => player.player_id === mainPlaye
   >
     {mainPlayer.result === "win" ? "W" : mainPlayer.result === "loss" ? "L" : "-"}
   </div>
-  <div class="size-8 rounded bg-gray-600/50 border border-gray-500/60"></div>
+  <!-- <div class="size-8 rounded bg-gray-600/50 border border-gray-500/60"></div> -->
   <div class="flex-auto">
     {
       match.players.map((player, pos) => (
@@ -54,15 +54,17 @@ const mainPlayer = match.players.find((player) => player.player_id === mainPlaye
             <div class="hidden md:block text-sm">
               <span class="text-gray-500">#00 {Math.round(player.rating)}</span>
             </div>
-            <div class="justify-end flex-auto text-sm text-gray-100 font-bold gap-1.5 hidden xs:flex">
-              <span title="units killed">{player.scores?.units_killed}</span>
-              <span class="text-gray-600">/</span>
-              <span title="structures destroyed">{player.scores?.structures_killed}</span>
-              <span class="text-gray-600">/</span>
-              <span title="resources mined">{Math.round(player.scores?.resources_mined / 100) / 10}k</span>
-              <span class="text-gray-600">/</span>
-              <span title="creep resources collected">{player.scores?.creep_resources_collected}</span>
-            </div>
+            {player.scores?.resources_mined > 0 && (
+              <div class="justify-end flex-auto text-sm text-gray-100 font-bold gap-1.5 hidden xs:flex">
+                <span title="units killed">{player.scores?.units_killed}</span>
+                <span class="text-gray-600">/</span>
+                <span title="structures destroyed">{player.scores?.structures_killed}</span>
+                <span class="text-gray-600">/</span>
+                <span title="resources mined">{Math.round(player.scores?.resources_mined / 100) / 10}k</span>
+                <span class="text-gray-600">/</span>
+                <span title="creep resources collected">{player.scores?.creep_resources_collected}</span>
+              </div>
+            )}
           </div>
         </div>
       ))

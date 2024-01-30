@@ -7,7 +7,7 @@ import infernals from "../../assets/game/factions/infernals-small.png"
 import vanguard from "../../assets/game/factions/vanguard-small.png"
 import MatchPreview from "../../components/widgets/MatchPreview.astro"
 import { PlayersApi } from "../../lib/api"
-
+import { leagues } from "../../assets/game/leagues/leagues"
 const themes = {
   infernals: {
     badge: "bg-red-800/20 border-red-500/50",
@@ -51,6 +51,17 @@ const playerMatches = await PlayersApi.getPlayerMatches({ playerId })
               <div>
                 <span class:list={["text-xs", themes[entry.race as Theme].badgeLabel]}>Rank</span>
                 <p>#{entry.rank}</p>
+              </div>
+              <div>
+                <span class:list={["text-xs", themes[entry.race as Theme].badgeLabel]}>Points</span>
+                <p>
+                  {Math.round(entry.points)}
+                  <Image
+                    src={leagues[(entry.league + "1") as keyof typeof leagues] as ImageMetadata}
+                    alt={entry.league}
+                    class="h-4 w-auto inline-block"
+                  />{" "}
+                </p>
               </div>
               <div>
                 <span class:list={["text-xs", themes[entry.race as Theme].badgeLabel]}>MMR</span>
