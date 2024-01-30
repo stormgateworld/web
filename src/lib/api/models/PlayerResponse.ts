@@ -5,9 +5,10 @@
 import type { LeaderboardEntryResponse } from './LeaderboardEntryResponse';
 export type PlayerResponse = {
     id: string;
-    nickname: string;
-    nickname_discriminator: string;
-    steam_id: string;
+    anonymous: boolean;
+    nickname?: string | null;
+    nickname_discriminator?: string | null;
+    steam_id?: string | null;
     leaderboard_entries: Array<LeaderboardEntryResponse>;
 };
 

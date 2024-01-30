@@ -1,27 +1,18 @@
 import { Select } from "@kobalte/core"
-import { createUrl, type SetUrlConfig } from "./utils"
 import { classes, styles } from "../../lib/theme"
-import { createEffect, createSignal } from "solid-js"
+import { type Accessor, type Setter } from "solid-js"
 
 // Todo probably also support string[] for options
 export type SelectButtonOption = { label: string; value: string | null }
 export function SelectButton(props: {
   options: SelectButtonOption[]
-  value: SelectButtonOption
-  navigateOnChange?: SetUrlConfig
+  value: Accessor<SelectButtonOption>
+  setValue: Setter<SelectButtonOption>
 }) {
-  const [value, setValue] = createSignal<SelectButtonOption | null>(props.value)
-  createEffect(() => {
-    if (value() == null) setValue(props.options.find((option) => option.value == null) || null)
-  })
-  if (props.navigateOnChange)
-    createEffect(() => {
-      if (value() != props.value) window.location.href = createUrl(props.navigateOnChange!, value()?.value)
-    })
   return (
     <Select.Root
-      value={value()}
-      onChange={setValue}
+      value={props.value()}
+      onChange={props.setValue}
       options={props.options}
       optionValue="value"
       optionTextValue="label"
@@ -32,7 +23,7 @@ export function SelectButton(props: {
       )}
     >
       <Select.Trigger class={styles.button.base}>
-        <Select.Value<string> class={styles.button.sm}>{value()?.label}</Select.Value>
+        <Select.Value<string> class={styles.button.sm}>{props.value()?.label}</Select.Value>
         <Select.Icon class={classes(styles.button.sm, styles.button.trigger)}>↓</Select.Icon>
       </Select.Trigger>
       <Select.Portal>

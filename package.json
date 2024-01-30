@@ -7,7 +7,7 @@
     "start": "astro dev",
     "build": "astro build",
     "astro": "astro",
-    "build-api": "openapi --input ./openapi.json --output ./src/lib/api --postfixServices Api --useOptions",
+    "build-api": "openapi --input https://api.stormgateworld.com/api-docs/openapi.json --output ./src/lib/api --postfixServices Api --useOptions",
     "format": "prettier --write --plugin-search-dir=. ."
   },
   "dependencies": {

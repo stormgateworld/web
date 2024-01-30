@@ -1,22 +1,14 @@
-import { As, Pagination as KPagination } from "@kobalte/core"
-import { createEffect, createSignal } from "solid-js"
+import { Pagination as KPagination } from "@kobalte/core"
+import { type Accessor } from "solid-js"
 import { classes, styles } from "../../lib/theme"
-import { type SetUrlConfig, createUrl } from "./utils"
-import { style } from "solid-js/web"
 
-export function Pagination(props: { page: number; totalPages: number; navigateOnChange?: SetUrlConfig }) {
-  const useUrl = !!props.navigateOnChange
-  const [page, setPage] = createSignal(props.page)
-  if (useUrl)
-    createEffect(() => {
-      if (page() != props.page) window.location.href = createUrl(props.navigateOnChange!, page())
-    })
+export function Pagination(props: { page: Accessor<number>; setPage: (page: number) => void; totalPages: number }) {
   return (
     <KPagination.Root
       class="[&>ul]:inline-flex [&>ul]:justify-center [&>ul]:gap-2 [&>ul]:items-center"
       count={props.totalPages}
-      page={page()}
-      onPageChange={setPage}
+      page={props.page()}
+      onPageChange={props.setPage}
       fixedItems
       siblingCount={1}
       itemComponent={(p) => (
@@ -28,15 +20,8 @@ export function Pagination(props: { page: number; totalPages: number; navigateOn
             "hidden sm:inline-flex ui-current:inline-flex"
           )}
           page={p.page}
-          asChild={useUrl}
         >
-          {useUrl ? (
-            <As component="a" href={createUrl(props.navigateOnChange!, p.page)}>
-              {p.page}
-            </As>
-          ) : (
-            p.page
-          )}
+          {p.page}
         </KPagination.Item>
       )}
       ellipsisComponent={() => (

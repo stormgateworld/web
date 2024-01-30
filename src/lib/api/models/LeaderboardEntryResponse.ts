@@ -6,6 +6,7 @@ import type { MatchResponse } from './MatchResponse';
 import type { Race } from './Race';
 export type LeaderboardEntryResponse = {
     player_id?: string | null;
+    anynymous: boolean;
     nickname?: string | null;
     nickname_discriminator?: string | null;
     steam_id?: string | null;

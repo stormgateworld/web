@@ -14,7 +14,9 @@ export type { MatchResponse } from './models/MatchResponse';
 export { MatchResult } from './models/MatchResult';
 export type { PlayerMatchesResponse } from './models/PlayerMatchesResponse';
 export type { PlayerMatchResponse } from './models/PlayerMatchResponse';
+export type { PlayerPreferences } from './models/PlayerPreferences';
 export type { PlayerResponse } from './models/PlayerResponse';
+export { ProfilePrivacy } from './models/ProfilePrivacy';
 export { Race } from './models/Race';
 
 export { LeaderboardsApi } from './services/LeaderboardsApi';

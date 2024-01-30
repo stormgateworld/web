@@ -6,6 +6,7 @@ import type { LeaderboardEntryResponse } from './LeaderboardEntryResponse';
 export type LeaderboardResponse = {
     page: number;
     count: number;
+    total: number;
     entries: Array<LeaderboardEntryResponse>;
 };
 
