@@ -2,13 +2,13 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { MatchParticipantPlayerLeaderboardEntryResponse } from './MatchParticipantPlayerLeaderboardEntryResponse';
+import type { MatchParticipantPlayerResponse } from './MatchParticipantPlayerResponse';
 import type { MatchResult } from './MatchResult';
 import type { Race } from './Race';
-export type PlayerMatchResponse = {
-    player_id?: string | null;
-    nickname?: string | null;
-    nickname_discriminator?: string | null;
-    steam_id?: string | null;
+export type MatchParticipantResponse = {
+    player?: MatchParticipantPlayerResponse | null;
+    player_leaderboard_entry?: MatchParticipantPlayerLeaderboardEntryResponse | null;
     race: Race;
     team: number;
     party: number;

@@ -63,11 +63,8 @@ const highestLeague = player.leaderboard_entries.reduce(
                 <span class:list={["text-xs", themes[entry.race as Theme].badgeLabel]}>Points</span>
                 <p>
                   {Math.round(entry.points)}
-                  <Image
-                    src={leagues[(entry.league + "1") as keyof typeof leagues] as ImageMetadata}
-                    alt={entry.league}
-                    class="h-4 w-auto inline-block"
-                  />{" "}
+
+                  <RankedBadge entry={entry} class="w-4 inline-block" client:load />
                 </p>
               </div>
               <div>

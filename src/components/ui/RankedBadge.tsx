@@ -1,13 +1,16 @@
 import { type JSX, createResource, splitProps, Suspense } from "solid-js"
 import { leagues } from "../../assets/game/leagues/leagues"
-import type { LeaderboardEntryResponse } from "../../lib/api"
+import type { LeaderboardEntryResponse, MatchParticipantPlayerLeaderboardEntryResponse } from "../../lib/api"
 import { getImage } from "astro:assets"
 import { Tooltip } from "./Tooltip"
 
 const sizes = { s: 32, m: 64, l: 128, xl: 256 }
 
 export function RankedBadge(
-  props: { entry: LeaderboardEntryResponse; size?: keyof typeof sizes } & JSX.ImgHTMLAttributes<HTMLImageElement>
+  props: {
+    entry: MatchParticipantPlayerLeaderboardEntryResponse | LeaderboardEntryResponse
+    size?: keyof typeof sizes
+  } & JSX.ImgHTMLAttributes<HTMLImageElement>
 ) {
   const [local, rest] = splitProps(props, ["entry", "size"])
   const src = leagues[(local.entry.league + local.entry.tier) as keyof typeof leagues] ?? leagues.unranked
