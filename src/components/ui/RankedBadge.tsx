@@ -1,4 +1,4 @@
-import { type JSX, createResource, splitProps } from "solid-js"
+import { type JSX, createResource, splitProps, Suspense } from "solid-js"
 import { leagues } from "../../assets/game/leagues/leagues"
 import type { LeaderboardEntryResponse } from "../../lib/api"
 import { getImage } from "astro:assets"
@@ -10,7 +10,7 @@ export function RankedBadge(
   props: { entry: LeaderboardEntryResponse; size?: keyof typeof sizes } & JSX.ImgHTMLAttributes<HTMLImageElement>
 ) {
   const [local, rest] = splitProps(props, ["entry", "size"])
-  const src = leagues[(local.entry.league + local.entry.tier) as keyof typeof leagues] ?? leagues["unranked"]
+  const src = leagues[(local.entry.league + local.entry.tier) as keyof typeof leagues] ?? leagues.unranked
   const size = sizes[local.size ?? "m"]
   const [image] = createResource(src, () => getImage({ src, sizes: [32, 64, 128, 256] }))
 
@@ -18,8 +18,10 @@ export function RankedBadge(
     `${local.entry.league.charAt(0).toUpperCase() + local.entry.league.substring(1)} ${local.entry.tier}`
 
   return (
-    <Tooltip content={label()}>
-      <img alt={label()} src={image()?.src} srcSet={image()?.srcSet.attribute} {...rest} {...image()?.attributes} />
-    </Tooltip>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Tooltip content={label()}>
+        <img alt={label()} src={image()?.src} srcSet={image()?.srcSet.attribute} {...rest} {...image()?.attributes} />
+      </Tooltip>
+    </Suspense>
   )
 }

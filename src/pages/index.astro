@@ -11,6 +11,8 @@ import Card from "../components/Card.astro"
 import unescape from "lodash/unescape"
 import NewsMeta from "../components/sources/NewsMeta.astro"
 import { Image } from "astro:assets"
+import { Leaderboard } from "../components/views/Leaderboard"
+import { styles } from "../lib/theme"
 
 export const prerender = false
 
@@ -84,6 +86,14 @@ const news = (await newsRequest).sort((a, b) => {
           </Box>
         </div>
         <div class="flex-shrink-0 flex-grow basis-1/3 space-y-8">
+          <div>
+            <Leaderboard limit={15} client:idle hideUi />
+            <div class="flex justify-end mt-4">
+              <a href="/leaderboards/ranked_1v1" class:list={[styles.button.base, styles.button.md]}
+                >View full Leaderboard →</a
+              >
+            </div>
+          </div>
           <Box title="Stay On Top of the Hype!">
             <p class="text-md my-4 max-w-xl font-medium leading-relaxed">
               Tired of clicking through dozens of websites and social media accounts to find the latest news about
@@ -95,7 +105,7 @@ const news = (await newsRequest).sort((a, b) => {
               in single place.
             </p>
           </Box>
-          <Box title="About the Game">
+          <!-- <Box title="About the Game">
             <p class="text-md my-4 max-w-xl font-medium leading-relaxed">
               Developed by the talented Blizzard-veterans at FrostGiant Studios, Stormgate® is a highly anticipated
               free-to-play RTS Game coming to PC, with a private beta in mid-2023. Play solo or co-op in a futuristic
@@ -125,7 +135,7 @@ const news = (await newsRequest).sort((a, b) => {
               <a class="underline" href="https://aoe4world.com" target="_blank">AoE4 World</a>, the biggest community
               site for Age of Empires IV.
             </p>
-          </Box>
+          </Box> -->
           <Box title={"Bookmarks"}>
             <Bookmarks />
           </Box>

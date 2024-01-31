@@ -14,6 +14,8 @@ interface Props {
   faction?: Race
   query?: string
   page?: number
+  limit?: number
+  hideUi?: boolean
 }
 const perPage = 100
 
@@ -31,7 +33,7 @@ const getFactionOption = (value: string | undefined) =>
   factionOptions.find((option) => option.value === value) || factionOptions[0]
 
 export function Leaderboard(props: Props) {
-  const [count, setCount] = createSignal(perPage)
+  const [count, setCount] = createSignal(props.limit ?? 100)
   const [query, setQuery] = createSignal(props.query || undefined)
   const [page, setPage] = createSignal(props.page || 1)
   const [mode, setMode] = createSignal(props.mode ?? "ranked_1v1")
@@ -42,7 +44,7 @@ export function Leaderboard(props: Props) {
   const getOptions = () => ({ count: count(), page: page(), mode: mode(), race: faction(), query: query() })
   const [data] = createResource(getOptions, LeaderboardsApi.getLeaderboard)
   const [selectedFaction, setSelectedFaction] = createSignal(getFactionOption(props.faction))
-  const totalPages = () => Math.ceil((data()?.total ?? 1000) / perPage)
+  const totalPages = () => Math.ceil((data()?.total ?? 1000) / count())
 
   createEffect(
     on([selectedFaction, query], () =>
@@ -54,6 +56,7 @@ export function Leaderboard(props: Props) {
   )
 
   function updateHistory(options: ReturnType<typeof getOptions>, replace: boolean = false) {
+    if (props.hideUi) return
     const searchParams = new URLSearchParams(window?.location.search)
     const { page, query, race: faction } = options
     if (faction) searchParams.set("faction", faction)
@@ -100,22 +103,29 @@ export function Leaderboard(props: Props) {
 
   return (
     <div>
-      <div class="flex justify-between py-4 flex-wrap gap-4">
-        <SelectButton options={factionOptions} value={selectedFaction} setValue={setSelectedFaction} />
-        <div class={classes(styles.button.set)}>
-          <input
-            type="text"
-            value={query()}
-            class={classes(styles.button.sm, "outline-none bg-transparent text-white")}
-            placeholder="Search"
-            ref={searchInput}
-            onKeyDown={(e) => e.key === "Enter" && setQuery(searchInput?.value)}
-          />
-          <button class={classes(styles.button.sm, styles.button.control)} onClick={() => setQuery(searchInput?.value)}>
-            <span innerHTML={searchIcon} class="*:w-4 text-gray-200" />
-          </button>
+      {props.hideUi ? (
+        <></>
+      ) : (
+        <div class="flex justify-between py-4 flex-wrap gap-4">
+          <SelectButton options={factionOptions} value={selectedFaction} setValue={setSelectedFaction} />
+          <div class={classes(styles.button.set)}>
+            <input
+              type="text"
+              value={query()}
+              class={classes(styles.button.sm, "outline-none bg-transparent text-white")}
+              placeholder="Search"
+              ref={searchInput}
+              onKeyDown={(e) => e.key === "Enter" && setQuery(searchInput?.value)}
+            />
+            <button
+              class={classes(styles.button.sm, styles.button.control)}
+              onClick={() => setQuery(searchInput?.value)}
+            >
+              <span innerHTML={searchIcon} class="*:w-4 text-gray-200" />
+            </button>
+          </div>
         </div>
-      </div>
+      )}
       <Widget title="Leaderboard" label="Ranked Beta">
         <Suspense fallback={<div>Loading...</div>}>
           {data()?.total == 0 && <div class="text-center my-6 text-gray-400">No results found</div>}
@@ -171,15 +181,19 @@ export function Leaderboard(props: Props) {
           </div>
         </Suspense>
       </Widget>
-      <div class="py-2 flex justify-center">
-        {totalPages() > 0 && (
-          <Pagination
-            page={Math.min(totalPages(), page())}
-            totalPages={totalPages()}
-            setPage={(p: number) => start(() => setPage(p))}
-          />
-        )}
-      </div>
+      {props.hideUi ? (
+        <></>
+      ) : (
+        <div class="py-2 flex justify-center">
+          {totalPages() > 0 && (
+            <Pagination
+              page={Math.min(totalPages(), page())}
+              totalPages={totalPages()}
+              setPage={(p: number) => start(() => setPage(p))}
+            />
+          )}
+        </div>
+      )}
     </div>
   )
 }
