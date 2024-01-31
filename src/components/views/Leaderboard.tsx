@@ -126,10 +126,10 @@ export function Leaderboard(props: Props) {
           </div>
         </div>
       )}
-      <Widget title="Leaderboard" label="Ranked Beta">
+      <Widget title="Leaderboard" label="Ranked Beta" class="-mx-4 md:mx-0 rounded-none md:rounded-xl">
         <Suspense fallback={<div>Loading...</div>}>
           {data()?.total == 0 && <div class="text-center my-6 text-gray-400">No results found</div>}
-          <div class="-mx-3 sm:-mx-4">
+          <div class="-mx-3 sm:-mx-4 -mb-3.5">
             <table
               class={classes(
                 "table-auto mx-auto w-full text-left md:text-lg whitespace-nowrap transition-opacity",
@@ -139,7 +139,7 @@ export function Leaderboard(props: Props) {
               <tbody>
                 {data()?.entries.map((entry) => (
                   <tr>
-                    <td class="pr-0.5 md:pr-2 py-1 md:py-2 text-right text-gray-400 font-extrabold text-md md:text-lg border-b border-gray-700/50">
+                    <td class="pr-0.5 md:pr-2 py-2 text-right text-gray-400 font-extrabold text-md md:text-lg border-b border-gray-700/50">
                       {entry.rank}.
                     </td>
                     <td class="pr-0.5 md:pr-2 border-b border-gray-700/50">
