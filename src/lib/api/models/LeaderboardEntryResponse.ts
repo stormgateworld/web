@@ -11,10 +11,11 @@ export type LeaderboardEntryResponse = {
     nickname_discriminator?: string | null;
     steam_id?: string | null;
     rank?: number | null;
+    race: Race;
     league: string;
+    tier: number;
     mmr: number;
     points: number;
-    race: Race;
     wins: number;
     losses: number;
     ties: number;

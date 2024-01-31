@@ -13,6 +13,7 @@ export type { LeaderboardResponse } from './models/LeaderboardResponse';
 export type { MatchesResponse } from './models/MatchesResponse';
 export type { MatchResponse } from './models/MatchResponse';
 export { MatchResult } from './models/MatchResult';
+export { MatchState } from './models/MatchState';
 export type { PlayerMatchesResponse } from './models/PlayerMatchesResponse';
 export type { PlayerMatchResponse } from './models/PlayerMatchResponse';
 export type { PlayerPreferences } from './models/PlayerPreferences';

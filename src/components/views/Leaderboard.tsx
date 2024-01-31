@@ -8,6 +8,7 @@ import { SelectButton, type SelectButtonOption } from "../ui/SelectButton"
 import { classes, styles } from "../../lib/theme"
 import { Pagination } from "../ui/Pagination"
 import searchIcon from "lucide-static/icons/search.svg?raw"
+import { RankedBadge } from "../ui/RankedBadge"
 interface Props {
   mode?: string
   faction?: Race
@@ -128,7 +129,7 @@ export function Leaderboard(props: Props) {
               <tbody>
                 {data()?.entries.map((entry) => (
                   <tr>
-                    <td class="pr-0.5 md:pr-2 py-1 text-right text-gray-50 font-extrabold text-md md:text-lg border-b border-gray-700/50">
+                    <td class="pr-0.5 md:pr-2 py-1 md:py-2 text-right text-gray-400 font-extrabold text-md md:text-lg border-b border-gray-700/50">
                       {entry.rank}.
                     </td>
                     <td class="pr-0.5 md:pr-2 border-b border-gray-700/50">
@@ -138,11 +139,19 @@ export function Leaderboard(props: Props) {
                         class="w-6 h-6"
                       />
                     </td>
-                    <td class="truncate max-w-20 md:max-w-none pr-2 text-white font-bold  border-b border-gray-700/50">
-                      <a href={`/players/${entry.player_id}-${urlencode(entry.nickname!)}`}>{entry.nickname}</a>
+                    <td class="truncate max-w-20 md:max-w-none pr-2 text-gray-50 font-bold  border-b border-gray-700/50">
+                      <a
+                        href={`/players/${entry.player_id}-${urlencode(entry.nickname!)}`}
+                        class="outline-none hover:text-white focus:text-white"
+                      >
+                        {entry.nickname}
+                      </a>
                     </td>
-                    <td class="pr-2 font-bold text-right text-sm text-gray-100  border-b border-gray-700/50">
-                      {Math.round(entry.points)}
+                    <td class="pr-1 font-bold text-right text-sm text-gray-100  border-b border-gray-700/50">
+                      <div class="flex items-center justify-end gap-1">
+                        <span>{Math.round(entry.points)}</span>
+                        <RankedBadge entry={entry} class="w-4 md:w-8" />
+                      </div>
                     </td>
                     <td class="pr-0.5 text-gray-100 text-right text-sm border-b border-gray-700/50">
                       {entry.wins}
