@@ -20,3 +20,16 @@ export function formatNumber(num: number | string) {
 export function debugLog(log: string) {
   console.log(`\x1b[37m${new Date().toLocaleTimeString()} \x1b[96m[debug] \x1b[97m${log}\x1b[0m\n`)
 }
+
+export function formatDuration(seconds?: number | null) {
+  if (!seconds) return "";
+
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = Math.round(seconds % 60);
+  return `${h > 0 ? `${h}h ` : ""}${h && m < 10 ? `0${m}` : m}m ${s < 10 ? `0${s}` : s}s`;
+}
+
+export function urlencode(str: string) {
+  return encodeURIComponent(str).replace(/%20/g, "-")
+}

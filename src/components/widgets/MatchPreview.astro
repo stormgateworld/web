@@ -1,0 +1,112 @@
+---
+import type { MatchResponse } from "../../lib/api"
+import { Image } from "astro:assets"
+import infernals from "../../assets/game/factions/infernals-small.png"
+import vanguard from "../../assets/game/factions/vanguard-small.png"
+import { formatDuration } from "../../lib/utils"
+import { Tooltip } from "../ui/Tooltip"
+import { RankedBadge } from "../ui/RankedBadge"
+interface Props {
+  match: MatchResponse
+  mainPlayerId: string
+}
+const { match, mainPlayerId } = Astro.props
+const mainPlayer = match.players.find((player) => player.player?.player_id === mainPlayerId) ?? { result: "unknown" }
+---
+
+<div class="flex items-center gap-4 border-b border-gray-700/50 px-3 sm:px-4 py-2.5">
+  <div
+    class:list={[
+      "size-6 text-sm ml-1 flex justify-center items-center rounded text-gray-800 font-extrabold uppercase",
+      mainPlayer.result === "win" ? "bg-green-500" : mainPlayer.result === "loss" ? "bg-red-500" : "bg-gray-500",
+    ]}
+  >
+    {mainPlayer.result === "win" ? "W" : mainPlayer.result === "loss" ? "L" : "-"}
+  </div>
+  <!-- <div class="size-8 rounded bg-gray-600/50 border border-gray-500/60"></div> -->
+  <div class="flex-auto">
+    {
+      match.players.map((player, pos) => (
+        <div class="flex items-center gap-3">
+          <span
+            class:list={[
+              "w-8 flex-none text-xs whitespace-nowrap text-right",
+              player.rating_diff! > 0 ? "text-green-500" : player.rating_diff! < 0 ? "text-red-500" : "text-gray-500",
+            ]}
+          >
+            {player.rating_diff! > 0 ? "↑" : "↓"}
+            {Math.abs(Math.round(player.rating_diff!))}
+          </span>
+          <Tooltip content={player.race} client:idle>
+            <Image
+              src={player.race === "infernals" ? infernals : vanguard}
+              alt={player.race}
+              class="flex-none object-contain size-7"
+            />
+          </Tooltip>
+          <div class:list={["flex flex-auto items-center gap-2 py-1.5", pos > 0 && "border-t border-gray-600/50"]}>
+            {player.player?.nickname ? (
+              <a
+                href={`/players/${player.player.player_id}-${encodeURIComponent(player.player.nickname!)}`}
+                class="truncate font-semibold text-gray-50 hover:underline"
+              >
+                {player.player.nickname}
+              </a>
+            ) : (
+              <em class="text-gray-300">Unknown</em>
+            )}
+            <div class="hidden md:block text-sm">
+              <span class="text-gray-500 inline-flex items-center">
+                {player.player_leaderboard_entry ? (
+                  <>
+                    <RankedBadge entry={player.player_leaderboard_entry!} class="w-4 mr-1" client:idle />
+                    {`#${Math.round(player.player_leaderboard_entry?.rank!)} `} {Math.round(player.rating)}
+                  </>
+                ) : (
+                  <>
+                    <RankedBadge unranked class="w-4 mr-1" client:idle /> {Math.round(player.rating)}
+                  </>
+                )}
+              </span>
+            </div>
+            {player.scores?.resources_mined > 0 && (
+              <div class="justify-end flex-auto text-sm text-gray-100 font-bold gap-1.5 hidden xs:flex">
+                <Tooltip client:idle content="Total Units killed">
+                  {player.scores?.units_killed}
+                </Tooltip>
+                <span class="text-gray-600">/</span>
+                <Tooltip client:idle content="Total Structures Destroyed">
+                  {player.scores?.structures_killed}
+                </Tooltip>
+                <span class="text-gray-600">/</span>
+                <Tooltip client:idle content="Total Resources Mined">
+                  {Math.round(player.scores?.resources_mined / 100) / 10}k
+                </Tooltip>
+                <span class="text-gray-600">/</span>
+                <Tooltip client:idle content="Total Creep Resources Collected">
+                  {player.scores?.creep_resources_collected}
+                </Tooltip>
+              </div>
+            )}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+  <div class="text-xs text-gray-400 text-right basis-1/6 hidden sm:block">
+    <p>{formatDuration(match.duration)}</p>
+    <p>
+      {
+        new Date(match.created_at).toLocaleString("en", {
+          year: "2-digit",
+          month: "numeric",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          hour12: false,
+        })
+      }
+    </p>
+    <p>{match.server.replaceAll("_", " ")}</p>
+  </div>
+</div>

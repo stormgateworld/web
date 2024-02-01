@@ -44,8 +44,6 @@ interface Props {
   order: string
 }
 
-console.log(redditIcon.src)
-
 export default function SocialFilters(props: any) {
   return (
     <FiltersProvider path={props.path} options={{ source: props.source, time: props.time, order: props.order }}>

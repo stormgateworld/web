@@ -80,7 +80,7 @@ const content = await fetchContent([], fetchParams)
     </div>
     <SocialFilters
       path={Astro.url.pathname}
-      client:load
+      client:only
       language={language}
       source={source}
       time={time}

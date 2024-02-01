@@ -5,25 +5,32 @@ module.exports = {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
     extend: {
+      screens: {
+        'xs': '475px'
+      },
       fontFamily: {
-        sans: ["Montserrat Variable", "Montserrat", ...defaultTheme.fontFamily.sans],
-        display: ["Sen", "Montserrat Variable", "Montserrat", ...defaultTheme.fontFamily.sans],
+        sans: ["Nunito Sans", ...defaultTheme.fontFamily.sans],
       },
       colors: {
         gray: {
-          50: "#E9E9EA",
-          100: "#D3D3D4",
-          200: "#A8A8AA",
-          300: "#7C7C7F",
-          400: "#515155",
-          500: "#25252A",
-          600: "#1E1E22",
-          700: "#161619",
-          800: "#0F0F11",
-          900: "#070708",
+          50: '#D8D8DA',
+          100: '#CBCBCD',
+          200: '#B1B1B4',
+          300: '#97979B',
+          400: '#7D7D82',
+          500: '#646468',
+          600: '#4B4B4E',
+          700: '#323234',
+          800: '#19191A',
+          900: '#0A0A0A',
+          950: '#030303'
         },
       },
     },
   },
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [
+    require("@tailwindcss/typography"),
+    require("tailwindcss-animate"),
+    require("@kobalte/tailwindcss"),
+  ],
 }
