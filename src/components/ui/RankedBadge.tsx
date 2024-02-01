@@ -8,17 +8,23 @@ const sizes = { s: 32, m: 64, l: 128, xl: 256 }
 
 export function RankedBadge(
   props: {
-    entry: MatchParticipantPlayerLeaderboardEntryResponse | LeaderboardEntryResponse
+    entry?: MatchParticipantPlayerLeaderboardEntryResponse | LeaderboardEntryResponse
+    unranked?: boolean
     size?: keyof typeof sizes
   } & JSX.ImgHTMLAttributes<HTMLImageElement>
 ) {
-  const [local, rest] = splitProps(props, ["entry", "size"])
-  const src = leagues[(local.entry.league + local.entry.tier) as keyof typeof leagues] ?? leagues.unranked
+  const [local, rest] = splitProps(props, ["entry", "unranked", "size"])
+  const src =
+    local.unranked || !local.entry
+      ? leagues.unranked
+      : leagues[(local.entry.league + local.entry.tier) as keyof typeof leagues] ?? leagues.unranked
   const size = sizes[local.size ?? "m"]
   const [image] = createResource(src, () => getImage({ src, sizes: [32, 64, 128, 256] }))
 
   const label = () =>
-    `${local.entry.league.charAt(0).toUpperCase() + local.entry.league.substring(1)} ${local.entry.tier}`
+    local.unranked || !local.entry
+      ? "Unranked"
+      : `${local.entry.league.charAt(0).toUpperCase() + local.entry.league.substring(1)} ${local.entry.tier}`
 
   return (
     <Suspense fallback={<div>Loading...</div>}>

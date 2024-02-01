@@ -57,8 +57,16 @@ const mainPlayer = match.players.find((player) => player.player?.player_id === m
             )}
             <div class="hidden md:block text-sm">
               <span class="text-gray-500 inline-flex items-center">
-                <RankedBadge entry={player.player_leaderboard_entry!} class="w-4 mr-1" client:idle />
-                {`#${Math.round(player.player_leaderboard_entry?.rank!)}`} {Math.round(player.rating)}
+                {player.player_leaderboard_entry ? (
+                  <>
+                    <RankedBadge entry={player.player_leaderboard_entry!} class="w-4 mr-1" client:idle />
+                    {`#${Math.round(player.player_leaderboard_entry?.rank!)} `} {Math.round(player.rating)}
+                  </>
+                ) : (
+                  <>
+                    <RankedBadge unranked class="w-4 mr-1" client:idle /> {Math.round(player.rating)}
+                  </>
+                )}
               </span>
             </div>
             {player.scores?.resources_mined > 0 && (
