@@ -1,9 +1,10 @@
 ---
+import Svg from "@jasikpark/astro-svg-loader"
 ---
 
-<footer class="mt-8 border-t border-white/10 py-6">
+<footer class="mt-8 border-t border-white/10 p-4 md:p-6">
   <div class="mx-auto">
-    <nav class="flex columns-2 justify-center space-x-10 sm:space-x-12 pb-6" aria-label="Footer">
+    <nav class="flex columns-2 justify-center gap-x-8 gap-y-2 sm:space-x-12 pb-6 flex-wrap" aria-label="Footer">
       <a href="/api" class="text-sm leading-6 text-gray-100 hover:text-white">API</a>
       <a href="/privacy" class="text-sm leading-6 text-gray-100 hover:text-white">Privacy</a>
       <a href="/about" class="text-sm leading-6 text-gray-100 hover:text-white">About</a>
@@ -20,14 +21,23 @@
         RSS Feed
       </a>
     </nav>
-    <p class="mt-2 px-4 text-center text-sm leading-5 text-gray-300">
+  </div>
+  <div class="flex flex-col items-center gap-4">
+    <p class="text-sm text-center leading-5 text-gray-400">
       Stormgate World is a fan-made website and not affiliated with
       <a href="https://playstormgate.com/" class="hover:underline">Stormgate</a>
       or
       <a href="https://frostgiant.com/" class="hover:underline">Frost Giant Studios</a>.
     </p>
+    <div class="whitespace-nowrap flex flex-auto lg:flex-none justify-center lg:justify-end text-gray-600">
+      <span>Made by</span>
+      <a href="https://casuals.co" class="text-gray-500 hover:text-gray-300" target="_blank" rel="noopener">
+        <Svg src={import("../assets/thecasuals.svg?raw")} class="inline-block h-4 fill-current ml-1 -mt-1" />
+      </a>
+    </div>
   </div>
 </footer>
+
 <div
   class="fixed opacity-100 animate-in slide-in-from-bottom-full fade-in duration-300 hidden flex-col md:flex-row bottom-2 lg:bottom-4 lg:left-4 left-2 right-2 z-40 bg-gray-900/70 backdrop-blur-xl border border-gray-700 rounded-lg max-w-2xl shadow-2xl"
   id="consent-banner"

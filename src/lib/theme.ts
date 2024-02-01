@@ -32,6 +32,6 @@ export const styles = {
     }
 }
 
-export function classes(...args: string[]) {
+export function classes(...args: (string | undefined | number)[]) {
     return args.join(" ")
 }

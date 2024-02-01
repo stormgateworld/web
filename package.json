@@ -27,6 +27,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@jasikpark/astro-svg-loader": "^0.2.0",
     "@tailwindcss/typography": "^0.5.10",
     "openapi-typescript-codegen": "^0.27.0",
     "prettier": "^2.8.8",

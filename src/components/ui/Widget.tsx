@@ -2,7 +2,7 @@ import type { ParentComponent } from "solid-js"
 
 export const Widget: ParentComponent<{ title?: string; label?: string; class?: string }> = (props) => (
   <div
-    class={`rounded-xl bg-gray-900/70 border border-gray-500/40 p-3 sm:p-4 relative backdrop-blur-md overflow-auto ${props.class}`}
+    class={`rounded sm:rounded-xl bg-gray-900/70 border border-gray-500/40 p-3 sm:p-4 relative backdrop-blur-md overflow-x-auto ${props.class}`}
   >
     <div class="flex items-center flex-wrap gap-x-5 gap-y-1 sticky top-0 left-0">
       <h3 class="flex-auto font-display text-xl font-bold text-gray-200">{props.title}</h3>

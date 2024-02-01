@@ -10,5 +10,8 @@ export default defineConfig({
   output: "hybrid",
   adapter: node({
     mode: "standalone"
-  })
+  }),
+  markdown: {
+    shikiConfig: { theme: "aurora-x" }
+  }
 });

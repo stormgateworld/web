@@ -12,6 +12,7 @@ export function SelectButton(props: {
   options: SelectButtonOption[]
   value: Accessor<SelectButtonOption>
   setValue: Setter<SelectButtonOption>
+  class?: string
 }) {
   const anyIcon = props.options.some((option) => option.icon)
 
@@ -22,6 +23,7 @@ export function SelectButton(props: {
       options={props.options}
       optionValue="value"
       optionTextValue="label"
+      class={props.class}
       itemComponent={(props) => (
         <Select.Item item={props.item} class={styles.dropdown.item}>
           <Select.ItemLabel class="flex items-center font-semibold">
@@ -37,13 +39,13 @@ export function SelectButton(props: {
         </Select.Item>
       )}
     >
-      <Select.Trigger class={styles.button.base}>
-        <Select.Value<string> class={classes(styles.button.sm, "inline-flex items-center font-semibold")}>
+      <Select.Trigger class={classes(styles.button.base, "w-full")}>
+        <Select.Value<string> class={classes(styles.button.sm, "inline-flex items-center font-semibold flex-auto")}>
           {props.value()?.icon && <img src={props.value()?.icon} class="mr-2 w-4 object-contain" />}
           {props.value()?.label}
         </Select.Value>
-        <Select.Icon class={classes(styles.button.sm, styles.button.trigger)}>
-          <span class="*:w-4 text-gray-300 *:-mx-1" innerHTML={chevronDown} />
+        <Select.Icon class={classes(styles.button.sm, styles.button.trigger, "flex-none")}>
+          <span class="*:w-4 text-gray-300 sm:*:-mx-1" innerHTML={chevronDown} />
         </Select.Icon>
       </Select.Trigger>
       <Select.Portal>

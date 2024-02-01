@@ -212,4 +212,4 @@ GET https://api.stormgateworld.com/v0/matches
 
 ## Contact
 
-Discord Link
+If you have any questions, feedback, bugs or other issues to discuss, please join the [#stormgateworld-api](https://discord.com/channels/1101590942076653660/1202677262478999612) Discord Channel on the Official Playtest Discord Server (invite may be required).

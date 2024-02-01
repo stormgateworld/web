@@ -107,12 +107,17 @@ export function Leaderboard(props: Props) {
         <></>
       ) : (
         <div class="flex justify-between py-4 flex-wrap gap-4">
-          <SelectButton options={factionOptions} value={selectedFaction} setValue={setSelectedFaction} />
-          <div class={classes(styles.button.set)}>
+          <SelectButton
+            options={factionOptions}
+            value={selectedFaction}
+            setValue={setSelectedFaction}
+            class="flex-auto sm:flex-none"
+          />
+          <div class={classes(styles.button.set, "flex-auto md:flex-none")}>
             <input
               type="text"
-              value={query()}
-              class={classes(styles.button.sm, "outline-none bg-transparent text-white")}
+              value={query() ?? ""}
+              class={classes(styles.button.sm, "outline-none bg-transparent text-white flex-auto")}
               placeholder="Search"
               ref={searchInput}
               onKeyDown={(e) => e.key === "Enter" && setQuery(searchInput?.value)}
@@ -126,10 +131,10 @@ export function Leaderboard(props: Props) {
           </div>
         </div>
       )}
-      <Widget title="Leaderboard" label="Ranked Beta" class="-mx-4 md:mx-0 rounded-none md:rounded-xl">
+      <Widget title="Leaderboard" label="Ranked Beta" class="-mx-3 sm:mx-0">
         <Suspense fallback={<div>Loading...</div>}>
           {data()?.total == 0 && <div class="text-center my-6 text-gray-400">No results found</div>}
-          <div class="-mx-3 sm:-mx-4 -mb-3.5">
+          <div class="-mx-3 sm:-mx-4 -mb-3">
             <table
               class={classes(
                 "table-auto mx-auto w-full text-left md:text-lg whitespace-nowrap transition-opacity",
@@ -184,7 +189,7 @@ export function Leaderboard(props: Props) {
       {props.hideUi ? (
         <></>
       ) : (
-        <div class="py-2 flex justify-center">
+        <div class="py-4 flex justify-center">
           {totalPages() > 0 && (
             <Pagination
               page={Math.min(totalPages(), page())}
