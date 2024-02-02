@@ -3,7 +3,7 @@ import type { MatchResponse } from "../../lib/api"
 import { Image } from "astro:assets"
 import infernals from "../../assets/game/factions/infernals-small.png"
 import vanguard from "../../assets/game/factions/vanguard-small.png"
-import { formatDuration } from "../../lib/utils"
+import { formatDuration, urlencode } from "../../lib/utils"
 import { Tooltip } from "../ui/Tooltip"
 import { RankedBadge } from "../ui/RankedBadge"
 interface Props {
@@ -47,7 +47,7 @@ const mainPlayer = match.players.find((player) => player.player?.player_id === m
           <div class:list={["flex flex-auto items-center gap-2 py-1.5", pos > 0 && "border-t border-gray-600/50"]}>
             {player.player?.nickname ? (
               <a
-                href={`/players/${player.player.player_id}-${encodeURIComponent(player.player.nickname!)}`}
+                href={`/players/${player.player.player_id}-${urlencode(player.player.nickname!)}`}
                 class="truncate font-semibold text-gray-50 hover:underline"
               >
                 {player.player.nickname}
