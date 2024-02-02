@@ -1,5 +1,5 @@
-import infernals from "../../assets/game/factions/infernals-small.png"
-import vanguard from "../../assets/game/factions/vanguard-small.png"
+import infernals from "../../assets/game/factions/infernals-small-glow.png"
+import vanguard from "../../assets/game/factions/vanguard-small-glow.png"
 import { urlencode } from "../../lib/utils"
 import { LeaderboardsApi, Race } from "../../lib/api"
 import { Suspense, createEffect, createResource, createSignal, on, onMount, useTransition } from "solid-js"
