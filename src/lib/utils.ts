@@ -31,5 +31,5 @@ export function formatDuration(seconds?: number | null) {
 }
 
 export function urlencode(str: string) {
-  return encodeURIComponent(str).replace(/%20/g, "-")
+  return encodeURIComponent(str).replace(/%20/g, '-').replace('%2F', '-')
 }
