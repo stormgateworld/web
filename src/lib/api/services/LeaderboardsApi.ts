@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { LeaderboardDumpResponse } from '../models/LeaderboardDumpResponse';
 import type { LeaderboardResponse } from '../models/LeaderboardResponse';
 import type { Race } from '../models/Race';
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -32,6 +33,16 @@ export class LeaderboardsApi {
                 'count': count,
                 'query': query,
             },
+        });
+    }
+    /**
+     * @returns LeaderboardDumpResponse Leaderboard
+     * @throws ApiError
+     */
+    public static getLeaderboardDump(): CancelablePromise<LeaderboardDumpResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/v0/leaderboards/ranked_1v1/dump',
         });
     }
 }

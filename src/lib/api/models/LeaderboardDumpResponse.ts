@@ -3,11 +3,9 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { LeaderboardEntryResponse } from './LeaderboardEntryResponse';
-export type PlayerResponse = {
-    id: string;
-    anonymous: boolean;
-    nickname?: string | null;
-    nickname_discriminator?: string | null;
-    leaderboard_entries: Array<LeaderboardEntryResponse>;
+export type LeaderboardDumpResponse = {
+    count: number;
+    updated_at: string;
+    entries: Array<LeaderboardEntryResponse>;
 };
 

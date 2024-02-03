@@ -2,25 +2,26 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { MatchResponse } from './MatchResponse';
+import type { Leaderboard } from './Leaderboard';
 import type { Race } from './Race';
 export type LeaderboardEntryResponse = {
+    leaderboard_entry_id: string;
+    leaderboard: Leaderboard;
     player_id?: string | null;
     anynymous: boolean;
     nickname?: string | null;
     nickname_discriminator?: string | null;
-    steam_id?: string | null;
     rank?: number | null;
     race: Race;
     league: string;
     tier: number;
     mmr: number;
+    max_confirmed_mmr: number;
     points: number;
     wins: number;
     losses: number;
     ties: number;
     matches: number;
     win_rate: number;
-    last_match?: MatchResponse | null;
 };
 

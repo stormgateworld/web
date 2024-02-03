@@ -6,6 +6,5 @@ export type MatchParticipantPlayerResponse = {
     player_id: string;
     nickname: string;
     nickname_discriminator: string;
-    steam_id: string;
 };
 

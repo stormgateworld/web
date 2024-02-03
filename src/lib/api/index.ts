@@ -8,6 +8,7 @@ export { OpenAPI } from './core/OpenAPI';
 export type { OpenAPIConfig } from './core/OpenAPI';
 
 export { Leaderboard } from './models/Leaderboard';
+export type { LeaderboardDumpResponse } from './models/LeaderboardDumpResponse';
 export type { LeaderboardEntryResponse } from './models/LeaderboardEntryResponse';
 export type { LeaderboardResponse } from './models/LeaderboardResponse';
 export type { MatchesResponse } from './models/MatchesResponse';

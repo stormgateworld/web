@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { MatchResponse } from '../models/MatchResponse';
 import type { PlayerMatchesResponse } from '../models/PlayerMatchesResponse';
 import type { PlayerPreferences } from '../models/PlayerPreferences';
 import type { PlayerResponse } from '../models/PlayerResponse';
@@ -47,6 +48,29 @@ export class PlayersApi {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/v0/players/{player_id}/matches',
+            path: {
+                'player_id': playerId,
+            },
+            errors: {
+                404: `Player was not found`,
+            },
+        });
+    }
+    /**
+     * @returns MatchResponse Player found successfully
+     * @throws ApiError
+     */
+    public static getPlayerLastMatch({
+        playerId,
+    }: {
+        /**
+         * Player ID
+         */
+        playerId: string,
+    }): CancelablePromise<MatchResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/v0/players/{player_id}/matches/last',
             path: {
                 'player_id': playerId,
             },
