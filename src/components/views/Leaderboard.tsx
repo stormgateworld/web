@@ -9,6 +9,10 @@ import { classes, styles } from "../../lib/theme"
 import { Pagination } from "../ui/Pagination"
 import searchIcon from "lucide-static/icons/search.svg?raw"
 import { RankedBadge } from "../ui/RankedBadge"
+import { Tooltip } from "../ui/Tooltip"
+
+import EsoIcon from "../promos/eso.png?url"
+
 interface Props {
   mode?: string
   faction?: Race
@@ -155,12 +159,21 @@ export function Leaderboard(props: Props) {
                       />
                     </td>
                     <td class="truncate max-w-20 md:max-w-none pr-2 text-gray-50 font-bold  border-b border-gray-700/50">
-                      <a
-                        href={`/players/${entry.player_id}-${urlencode(entry.nickname!)}`}
-                        class="outline-none hover:text-white focus:text-white"
-                      >
-                        {entry.nickname}
-                      </a>
+                      <div class="flex items-center gap-2">
+                        <a
+                          href={`/players/${entry.player_id}-${urlencode(entry.nickname!)}`}
+                          class="outline-none hover:text-white focus:text-white"
+                        >
+                          {entry.nickname}
+                        </a>
+                        {entry.rank && entry.rank <= 4 ? (
+                          <Tooltip content="Top 4 Qualify for EGC Open Tournament" class="text-xs text-gray-400">
+                            <img src={EsoIcon} class="w-6" />
+                          </Tooltip>
+                        ) : (
+                          <></>
+                        )}
+                      </div>
                     </td>
                     <td class="pr-1 font-bold text-right text-sm text-gray-100  border-b border-gray-700/50">
                       <div class="flex items-center justify-end gap-1">
