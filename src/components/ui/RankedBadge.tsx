@@ -22,7 +22,7 @@ export function RankedBadge(
   const [image] = createResource(src, () => getImage({ src, sizes: [32, 64, 128, 256] }))
 
   const label = () =>
-    local.unranked || !local.entry
+    local.unranked || !local.entry?.league
       ? "Unranked"
       : `${local.entry.league.charAt(0).toUpperCase() + local.entry.league.substring(1)} ${local.entry.tier}`
 
