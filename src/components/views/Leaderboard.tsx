@@ -177,7 +177,7 @@ export function Leaderboard(props: Props) {
                       <span class="text-red-400"> L</span>
                     </td>
                     <td class="pr-2 text-right text-gray-100 text-sm border-b border-gray-700/50">
-                      {Math.round(entry.win_rate ?? 0)}%
+                      {Math.round((entry.win_rate <= 1 ? entry.win_rate * 100 : entry.win_rate) ?? 0)}%
                     </td>
                   </tr>
                 ))}
