@@ -7,19 +7,19 @@ import type { MatchParticipantPlayerResponse } from './MatchParticipantPlayerRes
 import type { MatchResult } from './MatchResult';
 import type { Race } from './Race';
 export type MatchParticipantResponse = {
-    player?: MatchParticipantPlayerResponse | null;
-    player_leaderboard_entry?: MatchParticipantPlayerLeaderboardEntryResponse | null;
-    race: Race;
-    team: number;
-    party: number;
-    rating: number;
-    rating_updated?: number | null;
-    mmr: number;
-    mmr_updated?: number | null;
-    mmr_diff?: number | null;
-    rating_diff?: number | null;
-    result?: MatchResult | null;
-    ping?: number | null;
-    scores?: any;
+  player?: MatchParticipantPlayerResponse | null;
+  player_leaderboard_entry?: MatchParticipantPlayerLeaderboardEntryResponse | null;
+  race: Race;
+  team: number;
+  party: number;
+  rating: number;
+  rating_updated?: number | null;
+  mmr: number;
+  mmr_updated?: number | null;
+  mmr_diff?: number | null;
+  rating_diff?: number | null;
+  result?: MatchResult | null;
+  ping?: number | null;
+  scores?: any;
 };
 

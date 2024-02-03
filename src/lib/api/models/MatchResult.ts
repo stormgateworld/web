@@ -3,7 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export enum MatchResult {
-    WIN = 'win',
-    LOSS = 'loss',
-    UNDECIDED = 'undecided',
+  WIN = 'win',
+  LOSS = 'loss',
+  UNDECIDED = 'undecided',
 }

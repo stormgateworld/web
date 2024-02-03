@@ -3,8 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 export type MatchParticipantPlayerResponse = {
-    player_id: string;
-    nickname: string;
-    nickname_discriminator: string;
+  player_id: string;
+  nickname: string;
+  nickname_discriminator: string;
 };
 

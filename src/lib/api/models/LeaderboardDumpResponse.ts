@@ -4,8 +4,8 @@
 /* eslint-disable */
 import type { LeaderboardEntryResponse } from './LeaderboardEntryResponse';
 export type LeaderboardDumpResponse = {
-    count: number;
-    updated_at: string;
-    entries: Array<LeaderboardEntryResponse>;
+  count: number;
+  updated_at: string;
+  entries: Array<LeaderboardEntryResponse>;
 };
 
