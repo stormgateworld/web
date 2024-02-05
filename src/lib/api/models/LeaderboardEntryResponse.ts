@@ -8,7 +8,7 @@ export type LeaderboardEntryResponse = {
   leaderboard_entry_id: string;
   leaderboard: Leaderboard;
   player_id?: string | null;
-  anynymous: boolean;
+  anonymous: boolean;
   nickname?: string | null;
   nickname_discriminator?: string | null;
   rank?: number | null;
