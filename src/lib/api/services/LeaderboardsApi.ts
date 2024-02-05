@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { LeaderboardDumpResponse } from '../models/LeaderboardDumpResponse';
+import type { LeaderboardOrder } from '../models/LeaderboardOrder';
 import type { LeaderboardResponse } from '../models/LeaderboardResponse';
 import type { Race } from '../models/Race';
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -17,11 +18,13 @@ export class LeaderboardsApi {
     race,
     page,
     count,
+    order,
     query,
   }: {
     race?: Race | null,
     page?: number | null,
     count?: number | null,
+    order?: LeaderboardOrder | null,
     query?: string | null,
   }): CancelablePromise<LeaderboardResponse> {
     return __request(OpenAPI, {
@@ -31,6 +34,7 @@ export class LeaderboardsApi {
         'race': race,
         'page': page,
         'count': count,
+        'order': order,
         'query': query,
       },
     });

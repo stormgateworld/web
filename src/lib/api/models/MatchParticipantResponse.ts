@@ -12,12 +12,9 @@ export type MatchParticipantResponse = {
   race: Race;
   team: number;
   party: number;
-  rating: number;
-  rating_updated?: number | null;
   mmr: number;
   mmr_updated?: number | null;
   mmr_diff?: number | null;
-  rating_diff?: number | null;
   result?: MatchResult | null;
   ping?: number | null;
   scores?: any;

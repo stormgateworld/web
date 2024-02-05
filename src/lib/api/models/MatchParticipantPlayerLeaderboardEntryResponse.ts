@@ -3,8 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 export type MatchParticipantPlayerLeaderboardEntryResponse = {
-  league: string;
-  tier: number;
+  league?: string | null;
+  tier?: number | null;
   rank?: number | null;
 };
 
