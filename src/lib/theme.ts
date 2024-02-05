@@ -12,7 +12,7 @@ export const styles = {
         md: `px-4 py-2 text-base`,
         highlighted: `bg-gray-700/80 border-gray-500`,
         trigger: `border-l border-[inherit]`,
-        control: `border-l border-[inherit] hover:bg-gray-700/95 hover:border-gray-600
+        control: `border-[inherit] hover:bg-gray-700/95 hover:border-gray-600
         active:bg-gray-700/80 active:border-gray-500
         disabled:bg-gray-800/50 disabled:border-gray-800/50 disabled:text-gray-500
         outline-none focus-visible:ring-2 focus-visible:ring-gray-300 focus-visible:ring-opacity-50

@@ -34,9 +34,6 @@ const factionOptions: SelectButtonOption[] = [
   { label: "Vanguard", value: Race.VANGUARD, icon: vanguard.src },
 ]
 
-const orderButtonHighlighedClasses = classes(styles.button.base, styles.button.highlighted, "px-3 py-1.5")
-const orderButtonClasses = classes(styles.button.base, "px-3 py-1.5")
-
 const getFactionOption = (value: string | undefined) =>
   factionOptions.find((option) => option.value === value) || factionOptions[0]
 
@@ -124,9 +121,9 @@ export function Leaderboard(props: Props) {
             setValue={setSelectedFaction}
             class="flex-auto sm:flex-none"
           />
-          <div class={classes("btn-group")}>
-            <button class={order() !== LeaderboardOrder.MMR ? orderButtonHighlighedClasses : orderButtonClasses} onClick={() => setOrder(LeaderboardOrder.POINTS)}>Points</button>
-            <button class={order() === LeaderboardOrder.MMR ? orderButtonHighlighedClasses : orderButtonClasses} onClick={() => setOrder(LeaderboardOrder.MMR)}>MMR</button>
+          <div class={classes(styles.button.set)}>
+            <button class={classes(styles.button.sm, styles.button.control, 'h-full', order() !== LeaderboardOrder.MMR ? styles.button.highlighted : "")} onClick={() => setOrder(LeaderboardOrder.POINTS)}>Points</button>
+            <button class={classes(styles.button.sm, styles.button.control, 'h-full', order() === LeaderboardOrder.MMR ? styles.button.highlighted : "")} onClick={() => setOrder(LeaderboardOrder.MMR)}>MMR</button>
           </div>
           <div class={classes(styles.button.set, "flex-auto md:flex-none")}>
             <input
@@ -138,7 +135,7 @@ export function Leaderboard(props: Props) {
               onKeyDown={(e) => e.key === "Enter" && setQuery(searchInput?.value)}
             />
             <button
-              class={classes(styles.button.sm, styles.button.control)}
+              class={classes(styles.button.sm, styles.button.control, styles.button.trigger)}
               onClick={() => setQuery(searchInput?.value)}
             >
               <span innerHTML={searchIcon} class="*:w-4 text-gray-200" />
