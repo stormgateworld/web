@@ -115,15 +115,17 @@ export function Leaderboard(props: Props) {
         <></>
       ) : (
         <div class="flex justify-between py-4 flex-wrap gap-4">
-          <SelectButton
-            options={factionOptions}
-            value={selectedFaction}
-            setValue={setSelectedFaction}
-            class="flex-auto sm:flex-none"
-          />
-          <div class={classes(styles.button.set)}>
-            <button class={classes(styles.button.sm, styles.button.control, 'h-full', order() !== LeaderboardOrder.MMR ? styles.button.highlighted : "")} onClick={() => setOrder(LeaderboardOrder.POINTS)}>Points</button>
-            <button class={classes(styles.button.sm, styles.button.control, 'h-full', order() === LeaderboardOrder.MMR ? styles.button.highlighted : "")} onClick={() => setOrder(LeaderboardOrder.MMR)}>MMR</button>
+          <div class="flex justify-between flex-wrap gap-4">
+            <SelectButton
+              options={factionOptions}
+              value={selectedFaction}
+              setValue={setSelectedFaction}
+              class="flex-auto sm:flex-none"
+            />
+            <div class={classes(styles.button.set)}>
+              <button class={classes(styles.button.sm, styles.button.control, 'h-full', order() !== LeaderboardOrder.MMR ? styles.button.highlighted : "")} onClick={() => setOrder(LeaderboardOrder.POINTS)}>Points</button>
+              <button class={classes(styles.button.sm, styles.button.control, 'h-full', order() === LeaderboardOrder.MMR ? styles.button.highlighted : "")} onClick={() => setOrder(LeaderboardOrder.MMR)}>MMR</button>
+            </div>
           </div>
           <div class={classes(styles.button.set, "flex-auto md:flex-none")}>
             <input
