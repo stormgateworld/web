@@ -7,7 +7,7 @@ import hero from "../assets/hero.png"
 const team: any[] = [
   {
     name: "René Klačan",
-    avatar: reneAvatar,
+    avatar: reneAvatar.src,
     role: "Co-Founder",
     location: "Bratislava, Slovakia",
     links: {
@@ -21,7 +21,7 @@ const team: any[] = [
   },
   {
     name: "Robert van Hoesel",
-    avatar: robertAvatar,
+    avatar: robertAvatar.src,
     role: "Co-Founder",
     location: "Amsterdam, Netherlands",
     links: {
@@ -47,7 +47,7 @@ const linkIconClassMap: any = {
 
 <Layout title="About">
   <div class="absolute top-0 -z-0 h-[800px] w-full">
-    <img src={hero} class="absolute h-full w-full object-cover opacity-75" />
+    <img src={hero.src} class="absolute h-full w-full object-cover opacity-75" />
     <div class="absolute inset-0 bg-gradient-to-b from-transparent to-gray-900"></div>
   </div>
   <div class="mx-auto max-w-4xl">
