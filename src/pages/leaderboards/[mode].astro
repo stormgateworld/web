@@ -4,11 +4,11 @@ import Layout from "../../layouts/Layout.astro"
 import hero from "../../assets/game/vanguard-base-hero.jpg"
 import { Image } from "astro:assets"
 import { Leaderboard } from "../../components/views/Leaderboard.tsx"
-import type { Race } from "../../lib/api"
+import type { LeaderboardOrder, Race } from "../../lib/api"
 import EsoPromo from "../../components/promos/EsoPromo.astro"
 const mode = Astro.params.mode
 // todo, mode as query param
-const { page = 1, query, faction } = Object.fromEntries(new URL(Astro.request.url).searchParams.entries())
+const { page = 1, query, faction, order } = Object.fromEntries(new URL(Astro.request.url).searchParams.entries())
 ---
 
 <Layout title="Leaderboard">
@@ -17,7 +17,7 @@ const { page = 1, query, faction } = Object.fromEntries(new URL(Astro.request.ur
     <div class="absolute inset-0 bg-gradient-to-b from-gray-950/60 to-gray-950"></div>
   </div>
   <section class="relative mx-auto max-w-screen-md px-4 py-0 space-y-4">
-    <Leaderboard mode={mode} query={query} faction={faction as Race} client:load />
+    <Leaderboard mode={mode} query={query} faction={faction as Race} order={order as LeaderboardOrder} client:load />
     <EsoPromo />
   </section>
 </Layout>

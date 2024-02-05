@@ -10,6 +10,7 @@ export const styles = {
             transition duration-200`,
         sm: `px-3 py-1.5 text-sm`,
         md: `px-4 py-2 text-base`,
+        highlighted: `bg-gray-700/80 border-gray-500`,
         trigger: `border-l border-[inherit]`,
         control: `border-l border-[inherit] hover:bg-gray-700/95 hover:border-gray-600
         active:bg-gray-700/80 active:border-gray-500
