@@ -1,7 +1,7 @@
 import infernals from "../../assets/game/factions/infernals-small-glow.png"
 import vanguard from "../../assets/game/factions/vanguard-small-glow.png"
 import { urlencode } from "../../lib/utils"
-import { LeaderboardsApi, Race } from "../../lib/api"
+import { LeaderboardsApi, Race, LeaderboardOrder } from "../../lib/api"
 import { Suspense, createEffect, createResource, createSignal, on, onMount, useTransition } from "solid-js"
 import { Widget } from "../ui/Widget"
 import { SelectButton, type SelectButtonOption } from "../ui/SelectButton"
@@ -20,6 +20,7 @@ interface Props {
   page?: number
   limit?: number
   hideUi?: boolean
+  order?: LeaderboardOrder
 }
 const perPage = 100
 
@@ -41,11 +42,12 @@ export function Leaderboard(props: Props) {
   const [query, setQuery] = createSignal(props.query || undefined)
   const [page, setPage] = createSignal(props.page || 1)
   const [mode, setMode] = createSignal(props.mode ?? "ranked_1v1")
+  const [order, setOrder] =  createSignal(props.order ?? undefined)
   const [faction, setFaction] = createSignal(props.faction ?? undefined)
   const [isPending, start] = useTransition()
   const [isBrowserNavigation, setIsBrowserNavigation] = createSignal(true)
 
-  const getOptions = () => ({ count: count(), page: page(), mode: mode(), race: faction(), query: query() })
+  const getOptions = () => ({ count: count(), page: page(), mode: mode(), race: faction(), order: order(), query: query() })
   const [data] = createResource(getOptions, LeaderboardsApi.getLeaderboard)
   const [selectedFaction, setSelectedFaction] = createSignal(getFactionOption(props.faction))
   const totalPages = () => Math.ceil((data()?.total ?? 1000) / count())
@@ -62,7 +64,9 @@ export function Leaderboard(props: Props) {
   function updateHistory(options: ReturnType<typeof getOptions>, replace: boolean = false) {
     if (props.hideUi) return
     const searchParams = new URLSearchParams(window?.location.search)
-    const { page, query, race: faction } = options
+    const { page, query, race: faction, order } = options
+    if (order) searchParams.set("order", order)
+    else searchParams.delete("order")
     if (faction) searchParams.set("faction", faction)
     else searchParams.delete("faction")
     if (page > 1) searchParams.set("page", page.toString())
@@ -111,12 +115,18 @@ export function Leaderboard(props: Props) {
         <></>
       ) : (
         <div class="flex justify-between py-4 flex-wrap gap-4">
-          <SelectButton
-            options={factionOptions}
-            value={selectedFaction}
-            setValue={setSelectedFaction}
-            class="flex-auto sm:flex-none"
-          />
+          <div class="flex justify-between flex-wrap gap-4">
+            <SelectButton
+              options={factionOptions}
+              value={selectedFaction}
+              setValue={setSelectedFaction}
+              class="flex-auto sm:flex-none"
+            />
+            <div class={classes(styles.button.set)}>
+              <button class={classes(styles.button.sm, styles.button.control, 'h-full', order() !== LeaderboardOrder.MMR ? styles.button.highlighted : "")} onClick={() => setOrder(LeaderboardOrder.POINTS)}>Points</button>
+              <button class={classes(styles.button.sm, styles.button.control, 'h-full', order() === LeaderboardOrder.MMR ? styles.button.highlighted : "")} onClick={() => setOrder(LeaderboardOrder.MMR)}>MMR</button>
+            </div>
+          </div>
           <div class={classes(styles.button.set, "flex-auto md:flex-none")}>
             <input
               type="text"
@@ -127,7 +137,7 @@ export function Leaderboard(props: Props) {
               onKeyDown={(e) => e.key === "Enter" && setQuery(searchInput?.value)}
             />
             <button
-              class={classes(styles.button.sm, styles.button.control)}
+              class={classes(styles.button.sm, styles.button.control, styles.button.trigger)}
               onClick={() => setQuery(searchInput?.value)}
             >
               <span innerHTML={searchIcon} class="*:w-4 text-gray-200" />
@@ -177,8 +187,8 @@ export function Leaderboard(props: Props) {
                     </td>
                     <td class="pr-1 font-bold text-right text-sm text-gray-100  border-b border-gray-700/50">
                       <div class="flex items-center justify-end gap-1">
-                        <span>{Math.round(entry.points)}</span>
-                        <RankedBadge entry={entry} class="w-4 md:w-8" />
+                        <span>{order() !== LeaderboardOrder.MMR ? Math.round(entry.points || 0) : Math.round(entry.mmr)}</span>
+                        {order() !== LeaderboardOrder.MMR ? <RankedBadge entry={entry} class="w-4 md:w-8" /> : "MMR"}
                       </div>
                     </td>
                     <td class="pr-0.5 text-gray-100 text-right text-sm border-b border-gray-700/50">
