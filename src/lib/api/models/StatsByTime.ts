@@ -5,6 +5,7 @@
 import type { StatsByTimeEntry } from './StatsByTimeEntry';
 import type { StatsByTimeMatchLength } from './StatsByTimeMatchLength';
 export type StatsByTime = {
+  updated_at: string;
   period: string;
   count: number;
   league?: string | null;

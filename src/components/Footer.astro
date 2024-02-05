@@ -112,7 +112,8 @@ import Svg from "@jasikpark/astro-svg-loader"
   // Define dataLayer and the gtag function.
   window.dataLayer = window.dataLayer || []
   function gtag() {
-    dataLayer.push(arguments)
+    window.dataLayer = window.dataLayer || []
+    window.dataLayer.push(arguments)
   }
 
   // Set default consent to 'denied' as a placeholder

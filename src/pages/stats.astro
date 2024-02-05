@@ -1,0 +1,116 @@
+---
+import { Image } from "astro:assets"
+import { WinrateChart } from "../components/widgets/WinrateChart"
+import Layout from "../layouts/Layout.astro"
+import { Race, type StatsByTimeEntry } from "../lib/api"
+import { StatisticsApi } from "../lib/api/services/StatisticsApi"
+import { formatNumber } from "../lib/utils"
+import Timeago from "../components/Timeago.astro"
+
+const { races, updated_at } = await StatisticsApi.getStatistics({})
+const durationLabels = ["0-300", "301-600", "601-900", "901-1200", "1201+"]
+const durationPrettyLabels = ["0-5m", "5-10m", "10-15m", "15-20m", "20m+"]
+
+function mapFactionWinrate(race: StatsByTimeEntry) {
+  const round = (value: number) => Math.round(value * 10) / 10
+  const winrate = round(race.aggregated.win_rate!)
+  const pickrate = round(race.aggregated.pick_rate!)
+  const labels: string[] = []
+  const data: number[] = []
+  for (const entry of race.history) {
+    labels.push(new Date(entry.date!).toLocaleDateString("en-US", { month: "short", day: "numeric" }))
+    data.push(round(entry.win_rate!))
+  }
+  const duration = {
+    labels: [],
+    data: [],
+  } as { labels: string[]; data: number[] }
+
+  durationLabels.forEach((label, index) => {
+    duration.labels.push(durationPrettyLabels[index])
+    duration.data.push(round(race.aggregated.win_rate_by_match_length[label]!))
+  })
+  return {
+    winrate,
+    pickrate,
+    matches: {
+      count: race.aggregated.matches_count,
+      mirrors: race.aggregated.matches_count_with_mirror! - race.aggregated.matches_count!,
+    },
+    history: {
+      labels,
+      data,
+    },
+    duration,
+  }
+}
+
+const factions = [
+  {
+    name: "Vanguard",
+    icon: import("../assets/game/factions/vanguard-small.png"),
+    stats: mapFactionWinrate(races.find((x) => x.race === Race.VANGUARD)!),
+  },
+  {
+    name: "Infernals",
+    icon: import("../assets/game/factions/infernals-small.png"),
+    stats: mapFactionWinrate(races.find((x) => x.race === Race.INFERNALS)!),
+  },
+]
+---
+
+<Layout title="Statistics">
+  <div class="w-full bg-gray-800/50 backdrop-blur-lg border-b border-gray-700/50">
+    <div class="mx-auto max-w-screen-md px-4 md:px-0 py-8 gap-4 flex items-center flex-wrap justify-between">
+      <div>
+        <p class="font-bold text-gray-500">Game</p>
+        <h1 class="text-2xl text-white font-bold flex-auto">Statistics</h1>
+      </div>
+      <p class="text-gray-500 text-xs">
+        Last updated <Timeago date={new Date(updated_at)} />
+      </p>
+    </div>
+  </div>
+  <div class="max-w-screen-md mx-auto w-full py-4 md:py-8">
+    <div class="px-4 md:px-0 py-4">
+      <h2 class="text-2xl text-white font-bold flex-auto">Factions</h2>
+      <p class="text-gray-400">Excludes Mirrors</p>
+    </div>
+    <div class="flex gap-4 w-full flex-wrap sm:flex-nowrap">
+      {
+        factions.map((faction) => (
+          <div class="min-w-0 flex-auto bg-gray-900 border border-gray-800 rounded-xl p-4">
+            <h2 class="text-xl font-black mb-4">{faction.name}</h2>
+            <div class="flex gap-2 xs:gap-4">
+              <Image src={faction.icon} alt="Vanguard" class="size-12 xs:size-16" />
+              <div class="flex flex-col">
+                <span class="text-sm font-bold text-gray-300">Win Rate</span>
+                <span
+                  class:list={[
+                    "text-xl xs:text-3xl font-black",
+                    faction.stats.winrate >= 50 ? "text-lime-500" : "text-red-500",
+                  ]}
+                >
+                  {faction.stats.winrate}%
+                </span>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-sm font-bold text-gray-300">Pick Rate</span>
+                <span class="text-xl xs:text-3xl font-black">{faction.stats.pickrate}%</span>
+              </div>
+            </div>
+            <WinrateChart data={faction.stats.history.data} labels={faction.stats.history.labels} client:idle />
+            {/*<WinrateChart data={faction.stats.duration.data} labels={faction.stats.duration.labels} client:idle />*/}
+            <p class="text-gray-500 pl-1 text-xs leading-snug mt-2">
+              Based on {formatNumber(faction.stats.matches.count!)} matches in the past 7 days, excl.{" "}
+              {formatNumber(faction.stats.matches.mirrors!)} mirrors
+            </p>
+          </div>
+        ))
+      }
+    </div>
+    <div class="min-w-0 flex-auto bg-gray-900 border border-gray-800 rounded-xl p-6 mt-4">
+      <h2 class="text-2xl text-center text-gray-600 font-bold flex-auto">More stats soon</h2>
+    </div>
+  </div>
+</Layout>

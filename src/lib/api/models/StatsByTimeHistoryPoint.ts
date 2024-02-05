@@ -9,6 +9,8 @@ export type StatsByTimeHistoryPoint = {
   pick_rate?: number | null;
   players_count?: number | null;
   matches_count?: number | null;
-  matches_count_without_mirror?: number | null;
+  wins_count?: number | null;
+  losses_count?: number | null;
+  matches_count_with_mirror?: number | null;
 };
 
