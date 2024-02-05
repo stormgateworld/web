@@ -1,7 +1,6 @@
 ---
 import type { Content } from "../lib/content"
 import Timeago from "./Timeago.astro"
-import InstagramMeta from "./sources/InstagramMeta.astro"
 import NewsMeta from "./sources/NewsMeta.astro"
 import RedditMeta from "./sources/RedditMeta.astro"
 import TwitterMeta from "./sources/TwitterMeta.astro"
@@ -26,12 +25,10 @@ const isStormgatenexus = data.source == "news" && data.author_url.includes("stor
         rel="noopener ugc"
         target="_blank"
         class="relative overflow-hidden rounded-t-xl focus:outline-none"
-        class:list={[data.source === "instagram" ? "" : "aspect-video "]}
       >
         <img
           src={data.image_url}
           class="object- h-full w-full object-cover transition-transform group-focus-within:scale-105 group-hover:scale-105"
-          class:list={[data.source === "instagram" && "w-full h-auto max-h-[330px] "]}
         />
       </a>
     )
@@ -46,12 +43,11 @@ const isStormgatenexus = data.source == "news" && data.author_url.includes("stor
   }
   <div class="flex flex-auto flex-col p-6">
     {
-      ["twitter", "instagram"].includes(data.source) ? (
+      ["twitter"].includes(data.source) ? (
         <a
           class:list={[
             "text-gray-100 whitespace-pre-wrap text-md line-clamp-5",
             data.image_url ? "line-clamp-4" : "line-clamp-[12]",
-            data.source === "instagram" && "!line-clamp-2 text-sm",
           ]}
           style="word-break: break-word;"
           href={data.url}
@@ -93,29 +89,10 @@ const isStormgatenexus = data.source == "news" && data.author_url.includes("stor
           <TwitterMeta data={data} />
         ) : data.source === "youtube" ? (
           <YoutubeMeta data={data} />
-        ) : data.source === "instagram" ? (
-          <InstagramMeta data={data} />
         ) : data.source === "news" ? (
           <NewsMeta data={data} />
         ) : (
           <slot>
-            {data.author_url ? (
-              <a
-                class="inline-flex items-center whitespace-nowrap"
-                href={data.author_url}
-                rel="noopener ugc"
-                target="_blank"
-              >
-                {data.author_image_url && <img src={data.author_image_url} class="mr-2 h-3" />}
-                {data.author}
-              </a>
-            ) : data.author ? (
-              <span class="truncate">
-                {data.author_image_url && <img src={data.author_image_url} class="mr-2 h-3" />}
-                {data.author}
-              </span>
-            ) : null}
-            {/*data.source*/}
           </slot>
         )
       }

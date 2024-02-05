@@ -2,7 +2,7 @@ import { debugLog } from "./utils"
 
 export const validContentOrders = ["score_relevant", "score_popular", "published_at"] as readonly string[]
 export const validCreatorsOrders = ["popular", "active"] as readonly string[]
-export const validSources = ["youtube", "twitter", "reddit", "news", "instagram", "tiktok", "substack"] as readonly string[]
+export const validSources = ["youtube", "twitter", "reddit", "news"] as readonly string[]
 export const validLanguages = ["any", "en", "es", "fr", "de", "it", "pt", "ru", "zh"] as readonly string[]
 
 export type FetchContentOrder = (typeof validContentOrders)[number]
@@ -103,17 +103,11 @@ export type RedditData = {
   upvotes_count: number
 }
 
-export type InstagramData = {
-  comments_count: number
-  likes_count: number
-}
 
 export type YoutubeContent = SourceData<"youtube", YoutubeData>
 export type TwitterContent = SourceData<"twitter", TwitterData>
 export type RedditContent = SourceData<"reddit", RedditData>
 export type NewsContent = SourceData<"news">
-export type InstagramContent = SourceData<"instagram", InstagramData>
-export type TikTokContent = SourceData<"tiktok">
-export type Content = YoutubeContent | TwitterContent | RedditContent | NewsContent | InstagramContent | TikTokContent
+export type Content = YoutubeContent | TwitterContent | RedditContent | NewsContent
 
 type FilteredContentType<T extends Content["source"]> = Extract<Content, { source: T }>

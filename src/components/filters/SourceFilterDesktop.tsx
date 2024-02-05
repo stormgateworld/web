@@ -3,9 +3,6 @@ import redditIcon from "../../assets/social/reddit.svg"
 import youtubeIcon from "../../assets/social/youtube.svg"
 import newsIcon from "../../assets/social/news.svg"
 import twitterIcon from "../../assets/social/twitter.svg"
-import instagramIcon from "../../assets/social/instagram.svg"
-import tiktokIcon from "../../assets/social/tiktok.svg"
-import substackIcon from "../../assets/social/substack.svg"
 
 interface Tab {
   name: string
@@ -14,13 +11,10 @@ interface Tab {
 
 const tabs: Tab[] = [
   { name: "All" },
-  { name: "Reddit", icon: redditIcon.src },
   { name: "Youtube", icon: youtubeIcon.src },
   { name: "News", icon: newsIcon.src },
+  { name: "Reddit", icon: redditIcon.src },
   { name: "Twitter", icon: twitterIcon.src },
-  { name: "Substack", icon: substackIcon.src },
-  { name: "Instagram", icon: instagramIcon.src },
-  { name: "Tiktok", icon: tiktokIcon.src },
 ]
 
 interface Props {

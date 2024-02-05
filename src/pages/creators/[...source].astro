@@ -9,7 +9,6 @@ import { fetchCreators, validLanguages } from "../../lib/content"
 import redditIcon from "../../assets/social/reddit.svg"
 import youtubeIcon from "../../assets/social/youtube.svg"
 import twitterIcon from "../../assets/social/twitter.svg"
-import instagramIcon from "../../assets/social/instagram.svg"
 import redditAvatarDefault from "../../assets/avatars/reddit-default.webp"
 import avatarDefault from "../../assets/avatars/default.jpg"
 
@@ -18,7 +17,6 @@ export function getStaticPaths() {
     { params: { source: "reddit" } },
     { params: { source: "youtube" } },
     { params: { source: "twitter" } },
-    { params: { source: "instagram" } },
     { params: { source: undefined } },
   ]
 }
@@ -74,11 +72,10 @@ function parseLanguage(languageParam: string) {
   }
 }
 
-const iconsMap = {
+const iconsMap: Record<string, string> = {
   reddit: redditIcon.src,
   youtube: youtubeIcon.src,
   twitter: twitterIcon.src,
-  instagram: instagramIcon.src,
 }
 
 const creatorsMap = await fetchCreators({
@@ -88,11 +85,13 @@ const creatorsMap = await fetchCreators({
   order: parseOrder(order),
   source,
 })
+delete creatorsMap.substack
+delete creatorsMap.instagram
 delete creatorsMap.tiktok
 delete creatorsMap.news
 
 for (const source of Object.keys(creatorsMap)) {
-  creatorsMap[source] = creatorsMap[source].filter((creator) => creator.last_content)
+  creatorsMap[source] = creatorsMap[source].filter((creator: any) => creator.last_content)
 }
 
 const sources = (source ? [source] : ["youtube", "twitter", "reddit", "instagram"]).filter(
@@ -117,13 +116,13 @@ const sources = (source ? [source] : ["youtube", "twitter", "reddit", "instagram
           <div class="mb-12 text-center">
             <a href={`/creators/${source}`}>
               <h4 class="text-3xl font-bold capitalize text-white">
-                <img src={iconsMap[source]} class="mr-2 inline-block h-10" />
+                <img src={iconsMap[source] as any} class="mr-2 inline-block h-10" />
                 {source}
               </h4>
             </a>
           </div>
           <div class="grid grid-cols-1 gap-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
-            {creatorsMap[source].map((creator) => (
+            {creatorsMap[source].map((creator: any) => (
               <div class="flex flex-col gap-4">
                 <div class="flex-autsdo">
                   <div class="mb-4 flex gap-4 overflow-hidden">

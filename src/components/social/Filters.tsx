@@ -7,19 +7,13 @@ import redditIcon from "../../assets/social/reddit.svg"
 import youtubeIcon from "../../assets/social/youtube.svg"
 import newsIcon from "../../assets/social/news.svg"
 import twitterIcon from "../../assets/social/twitter.svg"
-import instagramIcon from "../../assets/social/instagram.svg"
-import tiktokIcon from "../../assets/social/tiktok.svg"
-import substackIcon from "../../assets/social/substack.svg"
 
 const sources = [
   { name: "All Sources", value: "all" },
-  { name: "Reddit", value: "reddit", iconSrc: redditIcon.src },
   { name: "Youtube", value: "youtube", iconSrc: youtubeIcon.src },
   { name: "News", value: "news", iconSrc: newsIcon.src },
+  { name: "Reddit", value: "reddit", iconSrc: redditIcon.src },
   { name: "Twitter", value: "twitter", iconSrc: twitterIcon.src },
-  { name: "Substack", value: "substack", iconSrc: substackIcon.src },
-  { name: "Instagram", value: "instagram", iconSrc: instagramIcon.src },
-  { name: "TikTok", value: "tiktok", iconSrc: tiktokIcon.src },
 ]
 
 const orders = [
