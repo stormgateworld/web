@@ -21,6 +21,7 @@ function mapFactionWinrate(race: StatsByTimeEntry) {
   const pickrate = round(race.aggregated.pick_rate!)
   const labels: string[] = []
   const data: number[] = []
+  if(!race.history.at(-1)?.matches_count) race.history.pop()
   for (const entry of race.history) {
     labels.push(new Date(entry.date!).toLocaleDateString("en-US", { month: "short", day: "numeric" }))
     data.push(round(entry.win_rate!))
