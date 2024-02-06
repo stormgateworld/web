@@ -103,12 +103,15 @@ export type RedditData = {
   upvotes_count: number
 }
 
+export type ToolData = {
+  tags: string[]
+}
 
 export type YoutubeContent = SourceData<"youtube", YoutubeData>
 export type TwitterContent = SourceData<"twitter", TwitterData>
 export type RedditContent = SourceData<"reddit", RedditData>
 export type NewsContent = SourceData<"news">
-export type ToolContent = SourceData<"tool">
-export type Content = YoutubeContent | TwitterContent | RedditContent | NewsContent
+export type ToolContent = SourceData<"tool", ToolData>
+export type Content = YoutubeContent | TwitterContent | RedditContent | NewsContent | ToolContent
 
 type FilteredContentType<T extends Content["source"]> = Extract<Content, { source: T }>

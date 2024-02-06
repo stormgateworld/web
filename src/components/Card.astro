@@ -5,6 +5,7 @@ import NewsMeta from "./sources/NewsMeta.astro"
 import RedditMeta from "./sources/RedditMeta.astro"
 import TwitterMeta from "./sources/TwitterMeta.astro"
 import YoutubeMeta from "./sources/YoutubeMeta.astro"
+import ToolMeta from "./sources/ToolMeta.astro"
 export interface Props {
   data: Content
 }
@@ -91,6 +92,8 @@ const isStormgatenexus = data.source == "news" && data.author_url?.includes("sto
           <YoutubeMeta data={data} />
         ) : data.source === "news" ? (
           <NewsMeta data={data} />
+        ) : data.source === "tool" ? (
+          <ToolMeta data={data} />
         ) : (
           <slot>
           </slot>
