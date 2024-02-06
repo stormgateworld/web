@@ -203,7 +203,7 @@ export function Leaderboard(props: Props) {
                         >
                           {entry.nickname}
                         </a>
-                        {entry.rank && entry.rank <= 4 ? (
+                        {order() !== LeaderboardOrder.MMR && entry.rank && entry.rank <= 4 ? (
                           <Tooltip content="Top 4 Qualify for EGC Open Tournament" class="text-xs text-gray-400">
                             <img src={EsoIcon} class="w-6 flex-none" />
                           </Tooltip>
