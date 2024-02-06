@@ -11,7 +11,7 @@ export interface Props {
 
 const { data } = Astro.props
 
-const isStormgatenexus = data.source == "news" && data.author_url.includes("stormgatenexus.com")
+const isStormgatenexus = data.source == "news" && data.author_url?.includes("stormgatenexus.com")
 ---
 
 <div
@@ -43,7 +43,7 @@ const isStormgatenexus = data.source == "news" && data.author_url.includes("stor
   }
   <div class="flex flex-auto flex-col p-6">
     {
-      ["twitter"].includes(data.source) ? (
+      data.source && ["twitter"].includes(data.source) ? (
         <a
           class:list={[
             "text-gray-100 whitespace-pre-wrap text-md line-clamp-5",
