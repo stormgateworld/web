@@ -25,7 +25,6 @@ interface Props {
 const perPage = 100
 
 const factionOptions: SelectButtonOption[] = [
-  { label: "All Factions", value: "all" },
   {
     label: "Infernals",
     value: Race.INFERNALS,
@@ -63,7 +62,7 @@ export function Leaderboard(props: Props) {
     on([selectedFaction, query], () =>
       start(() => {
         setPage(1)
-        setFaction(((f) => (f === "all" ? undefined : f))(selectedFaction()?.value as Race | "all"))
+        setFaction(selectedFaction()?.value as Race)
       })
     )
   )
@@ -128,6 +127,7 @@ export function Leaderboard(props: Props) {
               value={selectedFaction}
               setValue={setSelectedFaction}
               class="flex-auto sm:flex-none"
+              placeholder="All Factions"
             />
             <div class={styles.button.set}>
               <button

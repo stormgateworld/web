@@ -12,6 +12,7 @@ export function SelectButton(props: {
   options: SelectButtonOption[]
   value: Accessor<SelectButtonOption>
   setValue: Setter<SelectButtonOption>
+  placeholder: string
   class?: string
 }) {
   const anyIcon = props.options.some((option) => option.icon)
@@ -24,6 +25,7 @@ export function SelectButton(props: {
       optionValue="value"
       optionTextValue="label"
       class={props.class}
+      placeholder={props.placeholder}
       itemComponent={(props) => (
         <Select.Item item={props.item} class={styles.dropdown.item}>
           <Select.ItemLabel class="flex items-center font-semibold">
@@ -35,6 +37,9 @@ export function SelectButton(props: {
               <></>
             )}
             {props.item.rawValue?.label}
+            <Select.ItemIndicator>
+              <span class="pl-4">✓</span>
+            </Select.ItemIndicator>
           </Select.ItemLabel>
         </Select.Item>
       )}
