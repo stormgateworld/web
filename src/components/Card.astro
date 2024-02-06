@@ -36,7 +36,7 @@ const isStormgatenexus = data.source == "news" && data.author_url?.includes("sto
   {
     data.image_url?.length && (
       <div
-        class="absolute inset-0 blur-xl opacity-15 bg-center bg-cover"
+        class="absolute inset-0 blur-xl opacity-15 bg-center bg-cover pointer-events-none"
         style={{ backgroundImage: `url(${data.image_url})` }}
       />
     )
