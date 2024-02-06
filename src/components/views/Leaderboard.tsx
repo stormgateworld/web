@@ -185,17 +185,17 @@ export function Leaderboard(props: Props) {
               <tbody>
                 {data()?.entries.map((entry) => (
                   <tr>
-                    <td class="pr-0.5 md:pr-2 py-2 text-right text-gray-400 font-extrabold text-md md:text-lg border-b border-gray-700/50">
+                    <td class="px-4 md:pr-2 py-2 text-right text-gray-400 font-extrabold text-md md:text-lg border-b border-gray-700/50">
                       {entry.rank}.
                     </td>
-                    <td class="pr-0.5 md:pr-2 border-b border-gray-700/50">
+                    <td class="min-w-8 border-b border-gray-700/50">
                       <img
                         src={entry.race === "infernals" ? infernals.src : vanguard.src}
                         alt={entry.race}
                         class="w-6 h-6"
                       />
                     </td>
-                    <td class="truncate max-w-20 md:max-w-none pr-2 text-gray-50 font-bold  border-b border-gray-700/50">
+                    <td class="px-4 w-full truncate max-w-20 md:max-w-none pr-2 text-gray-50 font-bold  border-b border-gray-700/50">
                       <div class="flex items-center gap-2">
                         <a
                           href={`/players/${entry.player_id}-${urlencode(entry.nickname!)}`}
@@ -212,23 +212,23 @@ export function Leaderboard(props: Props) {
                         )}
                       </div>
                     </td>
-                    <td class="pr-1 font-bold text-right text-sm text-gray-100  border-b border-gray-700/50">
+                    <td class="pr-4 font-bold text-right text-sm text-gray-100  border-b border-gray-700/50">
                       <div class="flex items-center justify-end gap-1">
                         <span>
                           {order() !== LeaderboardOrder.MMR ? Math.round(entry.points || 0) : Math.round(entry.mmr)}
                         </span>
-                        {order() !== LeaderboardOrder.MMR ? <RankedBadge entry={entry} class="w-4 md:w-8" /> : "MMR"}
+                        {order() !== LeaderboardOrder.MMR ? <RankedBadge entry={entry} class="min-w-8 w-4 md:w-8" /> : "MMR"}
                       </div>
                     </td>
-                    <td class="pr-0.5 text-gray-100 text-right text-sm border-b border-gray-700/50">
+                    <td class="pr-4 text-gray-100 text-right text-sm border-b border-gray-700/50">
                       {entry.wins}
                       <span class="text-green-400"> W</span>
                     </td>
-                    <td class="pr-0.5 text-gray-100 text-right text-sm border-b border-gray-700/50">
+                    <td class="pr-4 text-gray-100 text-right text-sm border-b border-gray-700/50">
                       {entry.losses}
                       <span class="text-red-400"> L</span>
                     </td>
-                    <td class="pr-2 text-right text-gray-100 text-sm border-b border-gray-700/50">
+                    <td class="pr-4 text-right text-gray-100 text-sm border-b border-gray-700/50">
                       {Math.round((entry.win_rate <= 1 ? entry.win_rate * 100 : entry.win_rate) ?? 0)}%
                     </td>
                   </tr>
