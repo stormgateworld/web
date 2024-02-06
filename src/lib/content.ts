@@ -67,7 +67,7 @@ export async function fetchContent<S extends Content["source"][] = []>(sources: 
 
 export type SourceData<Source extends string, T = undefined> = {
   id?: number
-  source?: Source
+  source: Source
   source_id?: string
   metadata?: T
   score?: number
