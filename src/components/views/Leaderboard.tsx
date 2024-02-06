@@ -195,11 +195,11 @@ export function Leaderboard(props: Props) {
                         class="w-6 h-6"
                       />
                     </td>
-                    <td class="pr-2 md:pr-4 w-full truncate max-w-20 md:max-w-none text-gray-50 font-bold  border-b border-gray-700/50">
+                    <td class="pr-2 md:pr-4 w-full max-w-20 md:max-w-none text-gray-50 font-bold  border-b border-gray-700/50">
                       <div class="flex items-center gap-2">
                         <a
                           href={`/players/${entry.player_id}-${urlencode(entry.nickname!)}`}
-                          class="outline-none hover:text-white focus:text-white"
+                          class="outline-none truncate hover:text-white focus:text-white"
                         >
                           {entry.nickname}
                         </a>
@@ -217,7 +217,11 @@ export function Leaderboard(props: Props) {
                         <span>
                           {order() !== LeaderboardOrder.MMR ? Math.round(entry.points || 0) : Math.round(entry.mmr)}
                         </span>
-                        {order() !== LeaderboardOrder.MMR ? <RankedBadge entry={entry} class="min-w-8 w-4 md:w-8" /> : "MMR"}
+                        {order() !== LeaderboardOrder.MMR ? (
+                          <RankedBadge entry={entry} class="min-w-8 w-4 md:w-8" />
+                        ) : (
+                          "MMR"
+                        )}
                       </div>
                     </td>
                     <td class="pr-2 md:pr-4 text-gray-100 text-right text-sm border-b border-gray-700/50">
