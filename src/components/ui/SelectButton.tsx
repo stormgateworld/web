@@ -24,6 +24,7 @@ export function SelectButton(props: {
       optionValue="value"
       optionTextValue="label"
       class={props.class}
+      disallowEmptySelection
       itemComponent={(props) => (
         <Select.Item item={props.item} class={styles.dropdown.item}>
           <Select.ItemLabel class="flex items-center font-semibold">
