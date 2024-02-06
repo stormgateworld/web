@@ -42,12 +42,19 @@ export function Leaderboard(props: Props) {
   const [query, setQuery] = createSignal(props.query || undefined)
   const [page, setPage] = createSignal(props.page || 1)
   const [mode, setMode] = createSignal(props.mode ?? "ranked_1v1")
-  const [order, setOrder] =  createSignal(props.order ?? undefined)
+  const [order, setOrder] = createSignal(props.order ?? undefined)
   const [faction, setFaction] = createSignal(props.faction ?? undefined)
   const [isPending, start] = useTransition()
   const [isBrowserNavigation, setIsBrowserNavigation] = createSignal(true)
 
-  const getOptions = () => ({ count: count(), page: page(), mode: mode(), race: faction(), order: order(), query: query() })
+  const getOptions = () => ({
+    count: count(),
+    page: page(),
+    mode: mode(),
+    race: faction(),
+    order: order(),
+    query: query(),
+  })
   const [data] = createResource(getOptions, LeaderboardsApi.getLeaderboard)
   const [selectedFaction, setSelectedFaction] = createSignal(getFactionOption(props.faction))
   const totalPages = () => Math.ceil((data()?.total ?? 1000) / count())
@@ -115,16 +122,36 @@ export function Leaderboard(props: Props) {
         <></>
       ) : (
         <div class="flex justify-between py-4 flex-wrap gap-4">
-          <div class="flex justify-between flex-wrap gap-4">
+          <div class="flex justify-between flex-wrap gap-2">
             <SelectButton
               options={factionOptions}
               value={selectedFaction}
               setValue={setSelectedFaction}
               class="flex-auto sm:flex-none"
             />
-            <div class={classes(styles.button.set)}>
-              <button class={classes(styles.button.sm, styles.button.control, 'h-full', order() !== LeaderboardOrder.MMR ? styles.button.highlighted : "")} onClick={() => setOrder(LeaderboardOrder.POINTS)}>Points</button>
-              <button class={classes(styles.button.sm, styles.button.control, 'h-full', order() === LeaderboardOrder.MMR ? styles.button.highlighted : "")} onClick={() => setOrder(LeaderboardOrder.MMR)}>MMR</button>
+            <div class={styles.button.set}>
+              <button
+                class={classes(
+                  styles.button.sm,
+                  styles.button.control,
+                  "h-full",
+                  order() !== LeaderboardOrder.MMR ? styles.button.highlighted : "text-gray-400"
+                )}
+                onClick={() => start(() => setOrder(LeaderboardOrder.POINTS))}
+              >
+                RP
+              </button>
+              <button
+                class={classes(
+                  styles.button.sm,
+                  styles.button.control,
+                  "h-full",
+                  order() === LeaderboardOrder.MMR ? styles.button.highlighted : "text-gray-400 bg-gray-800"
+                )}
+                onClick={() => start(() => setOrder(LeaderboardOrder.MMR))}
+              >
+                MMR
+              </button>
             </div>
           </div>
           <div class={classes(styles.button.set, "flex-auto md:flex-none")}>
@@ -178,7 +205,7 @@ export function Leaderboard(props: Props) {
                         </a>
                         {entry.rank && entry.rank <= 4 ? (
                           <Tooltip content="Top 4 Qualify for EGC Open Tournament" class="text-xs text-gray-400">
-                            <img src={EsoIcon} class="w-6" />
+                            <img src={EsoIcon} class="w-6 flex-none" />
                           </Tooltip>
                         ) : (
                           <></>
@@ -187,7 +214,9 @@ export function Leaderboard(props: Props) {
                     </td>
                     <td class="pr-1 font-bold text-right text-sm text-gray-100  border-b border-gray-700/50">
                       <div class="flex items-center justify-end gap-1">
-                        <span>{order() !== LeaderboardOrder.MMR ? Math.round(entry.points || 0) : Math.round(entry.mmr)}</span>
+                        <span>
+                          {order() !== LeaderboardOrder.MMR ? Math.round(entry.points || 0) : Math.round(entry.mmr)}
+                        </span>
                         {order() !== LeaderboardOrder.MMR ? <RankedBadge entry={entry} class="w-4 md:w-8" /> : "MMR"}
                       </div>
                     </td>
