@@ -7,8 +7,6 @@ export interface Props {
 }
 
 const { data } = Astro.props
-
-console.log(data)
 ---
 
 {data.metadata?.tags.map((tag) => <div class={styles.tag.base}>{tag}</div>)}
