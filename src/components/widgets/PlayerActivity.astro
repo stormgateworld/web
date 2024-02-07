@@ -25,9 +25,6 @@ function getDaySize(dayMatches: number, medianMatches: number) {
   const maxSize = 100
   const size = (dayMatches / medianMatches) * 100
 
-  console.log(dayMatches, medianMatches)
-  console.log(size)
-
   return Math.max(minSize, Math.min(size, maxSize))
 }
 
