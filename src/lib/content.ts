@@ -1,9 +1,9 @@
 import { debugLog } from "./utils"
 
-export const validContentOrders = ["score_relevant", "score_popular", "published_at"] as readonly string[]
-export const validCreatorsOrders = ["popular", "active"] as readonly string[]
-export const validSources = ["youtube", "twitter", "reddit", "news", "tool"] as readonly string[]
-export const validLanguages = ["any", "en", "es", "fr", "de", "it", "pt", "ru", "zh"] as readonly string[]
+export const validContentOrders = ["score_relevant", "score_popular", "published_at"] as const
+export const validCreatorsOrders = ["popular", "active"] as const
+export const validSources = ["youtube", "twitter", "reddit", "news", "tool"] as const
+export const validLanguages = ["any", "en", "es", "fr", "de", "it", "pt", "ru", "zh"] as const
 
 export type FetchContentOrder = (typeof validContentOrders)[number]
 export type FetchContentSource = (typeof validSources)[number]
