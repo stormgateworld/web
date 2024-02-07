@@ -3,17 +3,24 @@ import { Image } from "astro:assets"
 import logo from "./eso.png"
 ---
 
-<div class="bg-gray-950 border border-gray-600/50 rounded-xl relative overflow-hidden">
-  <Image src={logo} alt="Eso Logo" widths={[200, 400]} class="inset-0 absolute w-full h-full object-cover blur-xl"/>
-  <div class="p-4 relative bg-black/70 flex flex-col sm:flex-row items-center gap-4">
-    <Image src={logo} alt="Eso Logo" widths={[200, 400]} class="w-40"/>
-    <div class="text-center sm:text-left ">
+<div class="relative overflow-hidden rounded-xl border border-gray-600/50 bg-gray-950">
+  <Image src={logo} alt="Eso Logo" widths={[200, 400]} class="absolute inset-0 h-full w-full object-cover blur-xl" />
+  <div class="relative flex flex-col items-center gap-4 bg-black/70 p-4 sm:flex-row">
+    <Image src={logo} alt="Eso Logo" widths={[200, 400]} class="w-40" />
+    <div class="text-center sm:text-left">
       <p class="text-orange-600">February 10-11 and 17-18</p>
-      <h3 class="font-bold text-lg">EGCTV Stormgate Open</h3>
-      <p class="my-1 text-sm leading-snug text-balance">Get ready to compete in Stormgate's First Major Tournament with open qualifiers and a $10k prize pool!</p>
-      <div class="flex items-center gap-4 mt-4 flex-wrap justify-center sm:justify-start">
-        <a href="https://discord.gg/upYNfphHcD" target="_blank" class="inline-flex whitespace-nowrap px-4 py-2 font-bold bg-red-900 hover:bg-red-800 text-white rounded-lg">Learn More</a>
-        <p class="text-white/50 text-xs">Will open EGCTV's Discord</p>
+      <h3 class="text-lg font-bold">EGCTV Stormgate Open</h3>
+      <p class="my-1 text-balance text-sm leading-snug">
+        Get ready to compete in Stormgate's First Major Tournament with open qualifiers and a $10k prize pool!
+      </p>
+      <div class="mt-4 flex flex-wrap items-center justify-center gap-4 sm:justify-start">
+        <a
+          href="https://discord.gg/upYNfphHcD"
+          target="_blank"
+          class="inline-flex whitespace-nowrap rounded-lg bg-red-900 px-4 py-2 font-bold text-white hover:bg-red-800"
+          >Learn More</a
+        >
+        <p class="text-xs text-white/50">Will open EGCTV's Discord</p>
       </div>
     </div>
   </div>

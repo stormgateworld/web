@@ -3,6 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export enum LeaderboardOrder {
-  POINTS = 'points',
-  MMR = 'mmr',
+  POINTS = "points",
+  MMR = "mmr",
 }

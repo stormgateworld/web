@@ -36,10 +36,10 @@ const highestLeague = player.leaderboard_entries.reduce(
 ---
 
 <Layout title={player.nickname}>
-  <div class="w-full bg-gray-800/50 backdrop-blur-lg border-b border-gray-700/50">
-    <div class="mx-auto max-w-screen-md px-4 py-4 gap-4 flex items-center flex-wrap">
+  <div class="w-full border-b border-gray-700/50 bg-gray-800/50 backdrop-blur-lg">
+    <div class="mx-auto flex max-w-screen-md flex-wrap items-center gap-4 px-4 py-4">
       <RankedBadge entry={highestLeague} class="w-20" client:load />
-      <h1 class="text-2xl text-gray-50 font-bold flex-auto">{player.nickname}</h1>
+      <h1 class="flex-auto text-2xl font-bold text-gray-50">{player.nickname}</h1>
 
       <div class="flex flex-wrap gap-4">
         {
@@ -64,7 +64,7 @@ const highestLeague = player.leaderboard_entries.reduce(
                 <p>
                   {Math.round(entry.points)}
 
-                  <RankedBadge entry={entry} class="w-4 inline-block" client:load />
+                  <RankedBadge entry={entry} class="inline-block w-4" client:load />
                 </p>
               </div>
               <div>

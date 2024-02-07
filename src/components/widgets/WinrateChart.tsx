@@ -80,7 +80,7 @@ export function WinrateChart(props: WinrateChartProps) {
   }
 
   return (
-    <div class="w-full relative overflow-hidden">
+    <div class="relative w-full overflow-hidden">
       <Line data={chartData} options={chartOptions} height={100} width={300} ref={(c) => (canvas = c)} />
     </div>
   )

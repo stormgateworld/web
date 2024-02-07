@@ -41,12 +41,12 @@ export function SelectButton(props: {
       )}
     >
       <Select.Trigger class={classes(styles.button.base, "w-full")}>
-        <Select.Value<string> class={classes(styles.button.sm, "inline-flex items-center font-semibold flex-auto")}>
+        <Select.Value<string> class={classes(styles.button.sm, "inline-flex flex-auto items-center font-semibold")}>
           {props.value()?.icon && <img src={props.value()?.icon} class="mr-2 w-4 object-contain" />}
           {props.value()?.label}
         </Select.Value>
         <Select.Icon class={classes(styles.button.sm, styles.button.trigger, "flex-none")}>
-          <span class="*:w-4 text-gray-300 sm:*:-mx-1" innerHTML={chevronDown} />
+          <span class="text-gray-300 *:w-4 sm:*:-mx-1" innerHTML={chevronDown} />
         </Select.Icon>
       </Select.Trigger>
       <Select.Portal>

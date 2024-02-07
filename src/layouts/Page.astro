@@ -9,25 +9,28 @@ const { title } = Astro.props.frontmatter
 ---
 
 <Layout title={title}>
-  <section class="max-w-screen-lg relative mx-auto my-12 px-4 flex flex-wrap md:flex-nowrap gap-12">
-    <div >
+  <section class="relative mx-auto my-12 flex max-w-screen-lg flex-wrap gap-12 px-4 md:flex-nowrap">
+    <div>
       <ul class="sticky top-20 min-w-48">
-        <li class="text-white text-2xl font-bold mb-4">Contents</li>
+        <li class="mb-4 text-2xl font-bold text-white">Contents</li>
         {
           Astro.props.headings.map((heading) => {
-            return heading.depth > 1 && heading.depth < 4 ? (
-              <li>
-                <a
-                  href={`#${heading.slug}`}
-                  class:list={[
-                    "block text-gray-100 hover:text-white transition-colors duration-200 my-2",
-                    heading.depth === 3 && "ml-4",
-                  ]}
-                >
-                  {heading.text}
-                </a>
-              </li>
-            ) : <></>
+            return (
+              heading.depth > 1 &&
+              heading.depth < 4 && (
+                <li>
+                  <a
+                    href={`#${heading.slug}`}
+                    class:list={[
+                      "block text-gray-100 hover:text-white transition-colors duration-200 my-2",
+                      heading.depth === 3 && "ml-4",
+                    ]}
+                  >
+                    {heading.text}
+                  </a>
+                </li>
+              )
+            )
           })
         }
       </ul>
@@ -35,6 +38,5 @@ const { title } = Astro.props.frontmatter
     <div class="prose prose-invert max-w-prose text-white prose-headings:font-bold prose-h1:font-extrabold">
       <slot />
     </div>
-    
   </section>
 </Layout>

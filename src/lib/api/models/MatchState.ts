@@ -3,6 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export enum MatchState {
-  ONGOING = 'ongoing',
-  FINISHED = 'finished',
+  ONGOING = "ongoing",
+  FINISHED = "finished",
 }
