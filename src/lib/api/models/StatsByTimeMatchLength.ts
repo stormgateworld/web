@@ -2,8 +2,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { StatsByTimeMatchLengthEntry } from "./StatsByTimeMatchLengthEntry"
+import type { StatsByTimeMatchLengthEntry } from './StatsByTimeMatchLengthEntry';
 export type StatsByTimeMatchLength = {
-  aggregated: StatsByTimeMatchLengthEntry
-  history: Array<StatsByTimeMatchLengthEntry>
-}
+  aggregated: StatsByTimeMatchLengthEntry;
+  history: Array<StatsByTimeMatchLengthEntry>;
+};
+

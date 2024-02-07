@@ -4,11 +4,9 @@ title: "API"
 ---
 
 # Community API
-
-Stormgate World provides a public API for the community to use. The API, just like the game, is currently in beta and may change without notice. The API is currently read-only and does not require authentication.
+Stormgate World provides a public API for the community to use. The API, just like the game, is currently in beta and may change without notice. The API is currently read-only and does not require authentication. 
 
 ## Usage Guidelines
-
 Feel free to use the API for your own projects, but please be considerate of the server load. Specifically, please do not crawl the API to make a full copy of data. If you need a full copy of the data please contact us and we can provide a dump.
 
 If you made something cool with the API, please let us know! We'd love to feature it on our website.
@@ -16,25 +14,20 @@ If you made something cool with the API, please let us know! We'd love to featur
 > The API is currently in beta and may change, however we will try to maintain backwards compatibility as much as possible. Follow the Discord Channel for updates.
 
 ## Privacy
-
 The API exposes player nicknames, Steam IDs, and match results following the [Privacy Policy](https://playstormgate.com/legal/privacy-policy) of Frost Giant Studios. Our backend includes features that will add control the visibility of player profiles (i.e. opt-out/private profiles) – which may mean that some data is not available via the API. Please refer to our own [privacy policy](/privacy) for more information.
 
 ## OpenAPI Spec & Docs
-
 The API is documented using the OpenAPI 3.1 specification. You can view the [auto-generated documentation](https://api.stormgateworld.com/swagger-ui/#/Leaderboards/getLeaderboard) and the specification in [openapi.json](https://api.stormgateworld.com/api-docs/openapi.json).
 
 ## Endpoints
 
 ### Leaderboard
-
 ```
 GET https://api.stormgateworld.com/v0/leaderboards/ranked_1v1
 ```
-
 [View Live](https://api.stormgateworld.com/v0/leaderboards/ranked_1v1) | [Docs](https://api.stormgateworld.com/swagger-ui/#/Leaderboards/getLeaderboard)
 
 #### Example Response
-
 ```json
 {
   "page": 1,
@@ -61,22 +54,19 @@ GET https://api.stormgateworld.com/v0/leaderboards/ranked_1v1
       "win_rate": 89.65517241379311
     },
     {
-      "etc...": "etc..."
+        "etc...": "etc..."
     }
   ]
 }
 ```
 
 ### Player
-
 ```
 GET https://api.stormgateworld.com/v0/players/{player_id}
 ```
-
 [View Live](https://api.stormgateworld.com/v0/players/PlXLrT) | [Docs](https://api.stormgateworld.com/swagger-ui/#/Players/getPlayer)
 
 #### Example Response
-
 ```json
 {
   "id": "9qgUTN",
@@ -122,11 +112,9 @@ GET https://api.stormgateworld.com/v0/players/{player_id}
 ```
 
 ### Player Matches
-
 ```
 GET https://api.stormgateworld.com/v0/players/{player_id}/matches
 ```
-
 [View Live](https://api.stormgateworld.com/v0/players/OwJyEu/matches) | [Docs](https://api.stormgateworld.com/swagger-ui/#/Players/getPlayerMatches)
 
 #### Example Response
@@ -142,14 +130,13 @@ GET https://api.stormgateworld.com/v0/matches
 [View Live](https://api.stormgateworld.com/v0/matches) | [Docs](https://api.stormgateworld.com/swagger-ui/#/Matches/getMatches)
 
 #### Example Response
-
 ```json
 {
   "count": 1,
   "page": 1,
   "total": 5317,
   "matches": [
-    {
+     {
       "match_id": "U5Z5q0",
       "state": "ongoing",
       "leaderboard": "ranked_1v1",
@@ -203,20 +190,25 @@ GET https://api.stormgateworld.com/v0/matches
       "duration": null
     },
     {
-      "etc...": "etc..."
+        "etc...": "etc..."
     }
   ]
 }
 ```
 
+
 ## FAQ
 
-- **How did you get the data?**
-  In collaboration with Frost Giant Studios we have created a system that fetches data from the game servers and stores it in normalized form. The API is a read-only interface to that data meant for community usage.
+- **How did you get the data?** 
+    
+    In collaboration with Frost Giant Studios we have created a system that fetches data from the game servers and stores it in normalized form. The API is a read-only interface to that data meant for community usage. 
 - **Where is the official API?**
-  There is no official API yet. We're a fan made project trying to help the community by offering an API while the developers at Frost Giant Studios are busy building the game.
+    
+    There is no official API yet. We're a fan made project trying to help the community by offering an API while the developers at Frost Giant Studios are busy building the game.
 - **How often is the data updated?**
-  The data is updated every 5 minutes.
+    
+    The data is updated every 5 minutes.
+    
 
 ## Contact
 

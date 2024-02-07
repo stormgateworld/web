@@ -2,7 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { ProfilePrivacy } from "./ProfilePrivacy"
+import type { ProfilePrivacy } from './ProfilePrivacy';
 export type PlayerPreferences = {
-  privacy_profile?: ProfilePrivacy | null
-}
+  privacy_profile?: ProfilePrivacy | null;
+};
+

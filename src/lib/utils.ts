@@ -22,14 +22,14 @@ export function debugLog(log: string) {
 }
 
 export function formatDuration(seconds?: number | null) {
-  if (!seconds) return ""
+  if (!seconds) return "";
 
-  const h = Math.floor(seconds / 3600)
-  const m = Math.floor((seconds % 3600) / 60)
-  const s = Math.round(seconds % 60)
-  return `${h > 0 ? `${h}h ` : ""}${h && m < 10 ? `0${m}` : m}m ${s < 10 ? `0${s}` : s}s`
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = Math.round(seconds % 60);
+  return `${h > 0 ? `${h}h ` : ""}${h && m < 10 ? `0${m}` : m}m ${s < 10 ? `0${s}` : s}s`;
 }
 
 export function urlencode(str: string) {
-  return encodeURIComponent(str).replace(/%20/g, "-").replace(/%2F/g, "-")
+  return encodeURIComponent(str).replace(/%20/g, '-').replace(/%2F/g, '-')
 }

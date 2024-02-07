@@ -121,8 +121,8 @@ export function Leaderboard(props: Props) {
       {props.hideUi ? (
         <></>
       ) : (
-        <div class="flex flex-wrap justify-between gap-4 py-4">
-          <div class="flex flex-wrap justify-between gap-2">
+        <div class="flex justify-between py-4 flex-wrap gap-4">
+          <div class="flex justify-between flex-wrap gap-2">
             <SelectButton
               options={factionOptions}
               value={selectedFaction}
@@ -146,7 +146,7 @@ export function Leaderboard(props: Props) {
                   styles.button.sm,
                   styles.button.control,
                   "h-full",
-                  order() === LeaderboardOrder.MMR ? styles.button.highlighted : "bg-gray-800 text-gray-400"
+                  order() === LeaderboardOrder.MMR ? styles.button.highlighted : "text-gray-400 bg-gray-800"
                 )}
                 onClick={() => start(() => setOrder(LeaderboardOrder.MMR))}
               >
@@ -158,7 +158,7 @@ export function Leaderboard(props: Props) {
             <input
               type="text"
               value={query() ?? ""}
-              class={classes(styles.button.sm, "flex-auto bg-transparent text-white outline-none")}
+              class={classes(styles.button.sm, "outline-none bg-transparent text-white flex-auto")}
               placeholder="Search"
               ref={searchInput}
               onKeyDown={(e) => e.key === "Enter" && setQuery(searchInput?.value)}
@@ -167,39 +167,39 @@ export function Leaderboard(props: Props) {
               class={classes(styles.button.sm, styles.button.control, styles.button.trigger)}
               onClick={() => setQuery(searchInput?.value)}
             >
-              <span innerHTML={searchIcon} class="text-gray-200 *:w-4" />
+              <span innerHTML={searchIcon} class="*:w-4 text-gray-200" />
             </button>
           </div>
         </div>
       )}
       <Widget title="Leaderboard" label="Ranked Beta" class="-mx-3 sm:mx-0">
         <Suspense fallback={<div>Loading...</div>}>
-          {data()?.total == 0 && <div class="my-6 text-center text-gray-400">No results found</div>}
-          <div class="-mx-3 -mb-3 sm:-mx-4">
+          {data()?.total == 0 && <div class="text-center my-6 text-gray-400">No results found</div>}
+          <div class="-mx-3 sm:-mx-4 -mb-3">
             <table
               class={classes(
-                "mx-auto w-full table-auto whitespace-nowrap text-left transition-opacity md:text-lg",
+                "table-auto mx-auto w-full text-left md:text-lg whitespace-nowrap transition-opacity",
                 isPending() ? "opacity-70" : ""
               )}
             >
               <tbody>
                 {data()?.entries.map((entry) => (
                   <tr>
-                    <td class="text-md border-b border-gray-700/50 py-2 pr-0.5 text-right font-extrabold text-gray-400 md:pr-2 md:text-lg">
+                    <td class="px-1 md:px-4 py-2 text-right text-gray-400 font-extrabold text-md md:text-lg border-b border-gray-700/50">
                       {entry.rank}.
                     </td>
-                    <td class="border-b border-gray-700/50 pr-0.5 md:pr-2">
+                    <td class="pr-2 md:pr-4 min-w-10 border-b border-gray-700/50">
                       <img
                         src={entry.race === "infernals" ? infernals.src : vanguard.src}
                         alt={entry.race}
-                        class="h-6 w-6"
+                        class="w-6 h-6"
                       />
                     </td>
-                    <td class="max-w-20 truncate border-b border-gray-700/50 pr-2 font-bold  text-gray-50 md:max-w-none">
+                    <td class="pr-2 md:pr-4 w-full max-w-20 md:max-w-none text-gray-50 font-bold  border-b border-gray-700/50">
                       <div class="flex items-center gap-2">
                         <a
                           href={`/players/${entry.player_id}-${urlencode(entry.nickname!)}`}
-                          class="truncate outline-none hover:text-white focus:text-white"
+                          class="outline-none truncate hover:text-white focus:text-white"
                         >
                           {entry.nickname}
                         </a>
@@ -212,27 +212,27 @@ export function Leaderboard(props: Props) {
                         )}
                       </div>
                     </td>
-                    <td class="border-b border-gray-700/50 pr-1 text-right text-sm  font-bold text-gray-100">
+                    <td class="pr-2 md:pr-4 font-bold text-right text-sm text-gray-100  border-b border-gray-700/50">
                       <div class="flex items-center justify-end gap-1">
                         <span>
                           {order() !== LeaderboardOrder.MMR ? Math.round(entry.points || 0) : Math.round(entry.mmr)}
                         </span>
                         {order() !== LeaderboardOrder.MMR ? (
-                          <RankedBadge entry={entry} class="w-4 min-w-8 md:w-8" />
+                          <RankedBadge entry={entry} class="min-w-8 w-4 md:w-8" />
                         ) : (
                           "MMR"
                         )}
                       </div>
                     </td>
-                    <td class="border-b border-gray-700/50 pr-0.5 text-right text-sm text-gray-100">
+                    <td class="pr-2 md:pr-4 text-gray-100 text-right text-sm border-b border-gray-700/50">
                       {entry.wins}
                       <span class="text-green-400"> W</span>
                     </td>
-                    <td class="border-b border-gray-700/50 pr-0.5 text-right text-sm text-gray-100">
+                    <td class="pr-2 md:pr-4 text-gray-100 text-right text-sm border-b border-gray-700/50">
                       {entry.losses}
                       <span class="text-red-400"> L</span>
                     </td>
-                    <td class="border-b border-gray-700/50 pr-2 text-right text-sm text-gray-100">
+                    <td class="pr-2 md:pr-4 text-right text-gray-100 text-sm border-b border-gray-700/50">
                       {Math.round((entry.win_rate <= 1 ? entry.win_rate * 100 : entry.win_rate) ?? 0)}%
                     </td>
                   </tr>
@@ -245,7 +245,7 @@ export function Leaderboard(props: Props) {
       {props.hideUi ? (
         <></>
       ) : (
-        <div class="flex justify-center py-4">
+        <div class="py-4 flex justify-center">
           {totalPages() > 0 && (
             <Pagination
               page={Math.min(totalPages(), page())}

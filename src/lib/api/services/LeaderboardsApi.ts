@@ -2,13 +2,13 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { LeaderboardDumpResponse } from "../models/LeaderboardDumpResponse"
-import type { LeaderboardOrder } from "../models/LeaderboardOrder"
-import type { LeaderboardResponse } from "../models/LeaderboardResponse"
-import type { Race } from "../models/Race"
-import type { CancelablePromise } from "../core/CancelablePromise"
-import { OpenAPI } from "../core/OpenAPI"
-import { request as __request } from "../core/request"
+import type { LeaderboardDumpResponse } from '../models/LeaderboardDumpResponse';
+import type { LeaderboardOrder } from '../models/LeaderboardOrder';
+import type { LeaderboardResponse } from '../models/LeaderboardResponse';
+import type { Race } from '../models/Race';
+import type { CancelablePromise } from '../core/CancelablePromise';
+import { OpenAPI } from '../core/OpenAPI';
+import { request as __request } from '../core/request';
 export class LeaderboardsApi {
   /**
    * @returns LeaderboardResponse Leaderboard
@@ -21,23 +21,23 @@ export class LeaderboardsApi {
     order,
     query,
   }: {
-    race?: Race | null
-    page?: number | null
-    count?: number | null
-    order?: LeaderboardOrder | null
-    query?: string | null
+    race?: Race | null,
+    page?: number | null,
+    count?: number | null,
+    order?: LeaderboardOrder | null,
+    query?: string | null,
   }): CancelablePromise<LeaderboardResponse> {
     return __request(OpenAPI, {
-      method: "GET",
-      url: "/v0/leaderboards/ranked_1v1",
+      method: 'GET',
+      url: '/v0/leaderboards/ranked_1v1',
       query: {
-        race: race,
-        page: page,
-        count: count,
-        order: order,
-        query: query,
+        'race': race,
+        'page': page,
+        'count': count,
+        'order': order,
+        'query': query,
       },
-    })
+    });
   }
   /**
    * @returns LeaderboardDumpResponse Leaderboard
@@ -45,8 +45,8 @@ export class LeaderboardsApi {
    */
   public static getLeaderboardDump(): CancelablePromise<LeaderboardDumpResponse> {
     return __request(OpenAPI, {
-      method: "GET",
-      url: "/v0/leaderboards/ranked_1v1/dump",
-    })
+      method: 'GET',
+      url: '/v0/leaderboards/ranked_1v1/dump',
+    });
   }
 }

@@ -5,7 +5,7 @@ import { classes, styles } from "../../lib/theme"
 export function Pagination(props: { page: number; setPage: (page: number) => void; totalPages: number }) {
   return (
     <KPagination.Root
-      class="[&>ul]:inline-flex [&>ul]:items-center [&>ul]:justify-center [&>ul]:gap-2"
+      class="[&>ul]:inline-flex [&>ul]:justify-center [&>ul]:gap-2 [&>ul]:items-center"
       count={props.totalPages}
       page={props.page}
       onPageChange={props.setPage}
@@ -16,8 +16,8 @@ export function Pagination(props: { page: number; setPage: (page: number) => voi
           class={classes(
             styles.button.base,
             styles.button.sm,
-            "ui-current:border-gray-600 ui-current:bg-gray-600/70 ui-current:text-gray-50",
-            "hidden ui-current:inline-flex sm:inline-flex"
+            "ui-current:text-gray-50 ui-current:bg-gray-600/70 ui-current:border-gray-600",
+            "hidden sm:inline-flex ui-current:inline-flex"
           )}
           page={p.page}
         >
@@ -29,7 +29,7 @@ export function Pagination(props: { page: number; setPage: (page: number) => voi
           class={classes(
             styles.button.base,
             styles.button.sm,
-            "hidden border-transparent !bg-transparent sm:inline-flex"
+            "border-transparent !bg-transparent hidden sm:inline-flex"
           )}
         >
           ...

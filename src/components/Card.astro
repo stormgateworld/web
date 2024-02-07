@@ -16,7 +16,7 @@ const isStormgatenexus = data.source == "news" && data.author_url?.includes("sto
 ---
 
 <div
-  class="group flex flex-col overflow-hidden rounded-xl border border-gray-800 bg-gray-900/80 shadow-sm backdrop-blur transition focus-within:border-orange-500 hover:border-orange-500 hover:shadow-xl"
+  class="group flex flex-col overflow-hidden rounded-xl border border-gray-800 bg-gray-900/80 backdrop-blur shadow-sm transition focus-within:border-orange-500 hover:border-orange-500 hover:shadow-xl"
   class:list={[isStormgatenexus && "!bg-[#0d1e2a] hover:!border-[#ffae14] !focus-within:!border-[#ffae14]"]}
 >
   {
@@ -37,7 +37,7 @@ const isStormgatenexus = data.source == "news" && data.author_url?.includes("sto
   {
     data.image_url?.length && (
       <div
-        class="pointer-events-none absolute inset-0 bg-cover bg-center opacity-15 blur-xl"
+        class="absolute inset-0 blur-xl opacity-15 bg-center bg-cover pointer-events-none"
         style={{ backgroundImage: `url(${data.image_url})` }}
       />
     )
@@ -95,7 +95,8 @@ const isStormgatenexus = data.source == "news" && data.author_url?.includes("sto
         ) : data.source === "tool" ? (
           <ToolMeta data={data} />
         ) : (
-          <slot />
+          <slot>
+          </slot>
         )
       }
 
