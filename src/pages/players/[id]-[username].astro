@@ -6,9 +6,9 @@ import { Image } from "astro:assets"
 import infernals from "../../assets/game/factions/infernals-small.png"
 import vanguard from "../../assets/game/factions/vanguard-small.png"
 import MatchPreview from "../../components/widgets/MatchPreview.astro"
-import { PlayersApi } from "../../lib/api"
-import { leagues } from "../../assets/game/leagues/leagues"
+import { PlayersApi, type PlayerActivityStats } from "../../lib/api"
 import { RankedBadge } from "../../components/ui/RankedBadge"
+import PlayerActivity from "../../components/widgets/PlayerActivity.astro"
 const themes = {
   infernals: {
     badge: "bg-red-800/20 border-red-500/50",
@@ -33,55 +33,68 @@ const highestLeague = player.leaderboard_entries.reduce(
   (acc, entry) => (entry.points > acc.points ? entry : acc),
   player.leaderboard_entries[0]
 )
+
+const playerActivity = (await PlayersApi.getPlayerStatisticsActivity({ playerId })) as any as PlayerActivityStats
 ---
 
 <Layout title={player.nickname}>
   <div class="w-full border-b border-gray-700/50 bg-gray-800/50 backdrop-blur-lg">
-    <div class="mx-auto flex max-w-screen-md flex-wrap items-center gap-4 px-4 py-4">
+    <div class="mx-auto flex max-w-screen-lg flex-wrap items-center gap-4 px-4 py-4">
       <RankedBadge entry={highestLeague} class="w-20" client:load />
       <h1 class="flex-auto text-2xl font-bold text-gray-50">{player.nickname}</h1>
-
-      <div class="flex flex-wrap gap-4">
-        {
-          player.leaderboard_entries.map((entry) => (
-            <div
-              class:list={[
-                "border rounded-lg px-4 py-2 flex items-center gap-3 text-sm sm:text-base",
-                themes[entry.race as Theme].badge,
-              ]}
-            >
-              <Image
-                src={entry.race === "infernals" ? infernals : vanguard}
-                alt={entry.race}
-                class="size-6 sm:size-10"
-              />
-              <div>
-                <span class:list={["text-xs", themes[entry.race as Theme].badgeLabel]}>Rank</span>
-                <p>#{entry.rank}</p>
-              </div>
-              <div>
-                <span class:list={["text-xs", themes[entry.race as Theme].badgeLabel]}>Points</span>
-                <p>
-                  {Math.round(entry.points)}
-
-                  <RankedBadge entry={entry} class="inline-block w-4" client:load />
-                </p>
-              </div>
-              <div>
-                <span class:list={["text-xs", themes[entry.race as Theme].badgeLabel]}>MMR</span>
-                <p>{Math.round(entry.mmr)}</p>
-              </div>
-            </div>
-          ))
-        }
-      </div>
     </div>
   </div>
-  <section class="relative mx-auto max-w-screen-md px-4 py-8">
-    <Widget title="Recent Matches" label="Closed Beta Ranked">
-      <div class="-mx-3 sm:-mx-4">
-        {playerMatches.matches.map((match) => <MatchPreview match={match} mainPlayerId={playerId} />)}
+  <section class="relative mx-auto flex max-w-screen-lg flex-col gap-6 px-4 py-8 md:px-7 lg:flex-row">
+    <div class="flex-auto">
+      <Widget title="Recent Matches" label="Closed Beta Ranked">
+        <div class="">
+          {playerMatches.matches.map((match) => <MatchPreview match={match} mainPlayerId={playerId} />)}
+        </div>
+      </Widget>
+    </div>
+    <div class="order-first flex basis-1/4 flex-col gap-6 sm:flex-row lg:order-none lg:flex-col">
+      <Widget title="Top Ranks">
+        <div class="flex flex-col gap-2">
+          {
+            player.leaderboard_entries.map((entry) => (
+              <div
+                class:list={[
+                  "rounded-lg pl-3 pr-1 py-2 -mx-2 flex items-center gap-3 text-sm sm:text-base",
+                  themes[entry.race as Theme].badge,
+                ]}
+              >
+                <Image
+                  src={entry.race === "infernals" ? infernals : vanguard}
+                  alt={entry.race}
+                  class="size-6 sm:size-10"
+                />
+                <div>
+                  <span class:list={["text-xs", themes[entry.race as Theme].badgeLabel]}>Rank</span>
+                  <p>#{entry.rank}</p>
+                </div>
+                <div>
+                  <span class:list={["text-xs", themes[entry.race as Theme].badgeLabel]}>Points</span>
+                  <p>
+                    {Math.round(entry.points)}
+
+                    <RankedBadge entry={entry} class="inline-block w-4" client:load />
+                  </p>
+                </div>
+                <div>
+                  <span class:list={["text-xs", themes[entry.race as Theme].badgeLabel]}>MMR</span>
+                  <p>{Math.round(entry.mmr)}</p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </Widget>
+      <div class="hidden sm:block">
+        <PlayerActivity activity={playerActivity} {player} />
       </div>
-    </Widget>
+    </div>
+    <div class="sm:hidden">
+      <PlayerActivity activity={playerActivity} {player} />
+    </div>
   </section>
 </Layout>
