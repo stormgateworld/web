@@ -5,5 +5,6 @@
 export type PlayerStatsEntryNumBreakdown = {
   max?: number | null
   min?: number | null
+  median?: number | null
   average?: number | null
 }

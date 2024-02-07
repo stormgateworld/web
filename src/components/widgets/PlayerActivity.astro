@@ -18,6 +18,19 @@ function getWinrateClass(winrate: number) {
   return "bg-red-500"
 }
 
+function getDaySize(dayMatches: number, medianMatches: number) {
+  if (dayMatches === 0 || medianMatches == 0) return 0
+
+  const minSize = 50
+  const maxSize = 100
+  const size = (dayMatches / medianMatches) * 100
+
+  console.log(dayMatches, medianMatches)
+  console.log(size)
+
+  return Math.max(minSize, Math.min(size, maxSize))
+}
+
 const maxMatches = Math.max(...activity.history.map((d) => d.matches))
 type Day = { date: Date; win_rate: number; games_count: number; size: number; tooltip: string }
 type Week = Day[]
@@ -35,7 +48,7 @@ for (let i = 0; i < 12; i++) {
       date,
       win_rate: (day?.win_rate ?? 0) / 100,
       games_count: day?.matches ?? 0,
-      size: day?.matches ? Math.max(50, Math.min((day.matches / maxMatches) * 150, 100)) : 0,
+      size: getDaySize(day?.matches ?? 0, activity.aggregated?.matches_per_day?.median ?? 0),
       tooltip: day?.matches
         ? `${date.toLocaleDateString("en", { dateStyle: "long" })}\n${day.matches} Games\n${Math.round(
             day.win_rate

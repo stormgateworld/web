@@ -7,7 +7,7 @@
     "start": "astro dev",
     "build": "astro build",
     "astro": "astro",
-    "build-api": "openapi --input https://api.stormgateworld.com/api-docs/openapi.json --output ./src/lib/api --postfixServices Api --useOptions --indent 2",
+    "build-api": "openapi --input https://api.stormgateworld.com/api-docs/openapi.json --output ./src/lib/api --postfixServices Api --useOptions --indent 2 && pnpm format",
     "format": "prettier --write --plugin-search-dir=. .",
     "prepare": "husky"
   },

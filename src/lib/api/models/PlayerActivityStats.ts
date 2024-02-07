@@ -4,9 +4,10 @@
 /* eslint-disable */
 import type { PlayerActivityStatsRace } from "./PlayerActivityStatsRace"
 import type { PlayerStatsEntry } from "./PlayerStatsEntry"
+import type { PlayerStatsEntryAggregated } from "./PlayerStatsEntryAggregated"
 export type PlayerActivityStats = {
   updated_at: string
-  aggregated?: PlayerStatsEntry | null
+  aggregated?: PlayerStatsEntryAggregated | null
   history: Array<PlayerStatsEntry>
   races: Array<PlayerActivityStatsRace>
 }
