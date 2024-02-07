@@ -4,6 +4,6 @@
 /* eslint-disable */
 export type MatchParticipantPlayerResponse = {
   player_id: string
-  nickname: string
-  nickname_discriminator: string
+  nickname?: string | null
+  nickname_discriminator?: string | null
 }

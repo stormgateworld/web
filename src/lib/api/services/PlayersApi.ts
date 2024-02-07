@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { MatchResponse } from "../models/MatchResponse"
+import type { PlayerActivityStats } from "../models/PlayerActivityStats"
 import type { PlayerMatchesResponse } from "../models/PlayerMatchesResponse"
 import type { PlayerPreferences } from "../models/PlayerPreferences"
 import type { PlayerResponse } from "../models/PlayerResponse"
@@ -130,7 +131,7 @@ export class PlayersApi {
     })
   }
   /**
-   * @returns MatchResponse Player found successfully
+   * @returns PlayerActivityStats Player found successfully
    * @throws ApiError
    */
   public static getPlayerStatisticsActivity({
@@ -140,7 +141,7 @@ export class PlayersApi {
      * Player ID
      */
     playerId: string
-  }): CancelablePromise<MatchResponse> {
+  }): CancelablePromise<PlayerActivityStats> {
     return __request(OpenAPI, {
       method: "GET",
       url: "/v0/players/{player_id}/statistics/activity",
