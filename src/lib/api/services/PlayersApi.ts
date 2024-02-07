@@ -129,4 +129,27 @@ export class PlayersApi {
       },
     })
   }
+  /**
+   * @returns MatchResponse Player found successfully
+   * @throws ApiError
+   */
+  public static getPlayerStatisticsActivity({
+    playerId,
+  }: {
+    /**
+     * Player ID
+     */
+    playerId: string
+  }): CancelablePromise<MatchResponse> {
+    return __request(OpenAPI, {
+      method: "GET",
+      url: "/v0/players/{player_id}/statistics/activity",
+      path: {
+        player_id: playerId,
+      },
+      errors: {
+        404: `Player was not found`,
+      },
+    })
+  }
 }
