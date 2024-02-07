@@ -6,7 +6,7 @@ import type { PlayerActivityStatsRace } from "./PlayerActivityStatsRace"
 import type { PlayerStatsEntry } from "./PlayerStatsEntry"
 import type { PlayerStatsEntryAggregated } from "./PlayerStatsEntryAggregated"
 export type PlayerActivityStats = {
-  updated_at: string
+  cached_at: string
   aggregated?: PlayerStatsEntryAggregated | null
   history: Array<PlayerStatsEntry>
   races: Array<PlayerActivityStatsRace>

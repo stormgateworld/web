@@ -5,6 +5,7 @@
 import type { StatsByTimeEntry } from "./StatsByTimeEntry"
 import type { StatsByTimeMatchLength } from "./StatsByTimeMatchLength"
 export type StatsByTime = {
+  cached_at: string
   updated_at: string
   period: string
   count: number

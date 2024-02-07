@@ -11,7 +11,7 @@ import Timeago from "../components/Timeago.astro"
 import { LeagueDropdown } from "../components/widgets/LeagueDropdown"
 
 const league = new URLSearchParams(Astro.url.search).get("league")
-const { races, updated_at } = await StatisticsApi.getStatistics({ league })
+const { races, cached_at } = await StatisticsApi.getStatistics({ league })
 const durationLabels = ["0-300", "301-600", "601-900", "901-1200", "1201+"]
 const durationPrettyLabels = ["0-5m", "5-10m", "10-15m", "15-20m", "20m+"]
 
@@ -72,7 +72,7 @@ const factions = [
         <h1 class="flex-auto text-2xl font-bold text-white">Statistics</h1>
       </div>
       <p class="text-xs text-gray-500">
-        Last updated <Timeago date={new Date(updated_at)} />
+        Last updated <Timeago date={new Date(cached_at)} />
       </p>
     </div>
   </div>

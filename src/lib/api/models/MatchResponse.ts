@@ -6,6 +6,7 @@ import type { Leaderboard } from "./Leaderboard"
 import type { MatchParticipantResponse } from "./MatchParticipantResponse"
 import type { MatchState } from "./MatchState"
 export type MatchResponse = {
+  cached_at: string
   match_id: string
   state?: MatchState | null
   leaderboard: Leaderboard

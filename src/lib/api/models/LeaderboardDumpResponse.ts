@@ -5,6 +5,6 @@
 import type { LeaderboardEntryResponse } from "./LeaderboardEntryResponse"
 export type LeaderboardDumpResponse = {
   count: number
-  updated_at: string
+  cached_at: string
   entries: Array<LeaderboardEntryResponse>
 }
