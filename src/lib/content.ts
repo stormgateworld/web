@@ -2,7 +2,7 @@ import { debugLog } from "./utils"
 
 export const validContentOrders = ["score_relevant", "score_popular", "published_at"] as const
 export const validCreatorsOrders = ["popular", "active"] as const
-export const validSources = ["youtube", "twitter", "reddit", "news"] as const
+export const validSources = ["youtube", "twitter", "reddit", "news", "tool"] as const
 export const validLanguages = ["any", "en", "es", "fr", "de", "it", "pt", "ru", "zh"] as const
 
 export type FetchContentOrder = (typeof validContentOrders)[number]
@@ -53,7 +53,7 @@ export async function fetchContent<S extends Content["source"][] = []>(sources: 
   })
 
   if (sources.length > 0) {
-    sources.forEach((s) => urlParams.append("sources[]", s))
+    sources.forEach((s) => urlParams.append("sources[]", s || ""))
   }
 
   const url = `https://api.stormgateworld.com/v0/content?${urlParams.toString()}`
@@ -66,21 +66,21 @@ export async function fetchContent<S extends Content["source"][] = []>(sources: 
 }
 
 export type SourceData<Source extends string, T = undefined> = {
-  id: number
+  id?: number
   source: Source
-  source_id: string
-  metadata: T
-  score: number
+  source_id?: string
+  metadata?: T
+  score?: number
   title: string
   description: string
   url: string
   image_url: string
-  author: string
-  author_url: string
-  author_image_url: string
-  published_at: string
-  updated_at: string
-  created_at: string
+  author?: string
+  author_url?: string
+  author_image_url?: string
+  published_at?: string
+  updated_at?: string
+  created_at?: string
 }
 
 export type TwitterData = {
@@ -103,11 +103,15 @@ export type RedditData = {
   upvotes_count: number
 }
 
+export type ToolData = {
+  tags: string[]
+}
 
 export type YoutubeContent = SourceData<"youtube", YoutubeData>
 export type TwitterContent = SourceData<"twitter", TwitterData>
 export type RedditContent = SourceData<"reddit", RedditData>
 export type NewsContent = SourceData<"news">
-export type Content = YoutubeContent | TwitterContent | RedditContent | NewsContent
+export type ToolContent = SourceData<"tool", ToolData>
+export type Content = YoutubeContent | TwitterContent | RedditContent | NewsContent | ToolContent
 
 type FilteredContentType<T extends Content["source"]> = Extract<Content, { source: T }>

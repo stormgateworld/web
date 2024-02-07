@@ -1,0 +1,12 @@
+---
+import type { ToolContent } from "../../lib/content"
+import { styles } from "../../lib/theme"
+
+export interface Props {
+  data: ToolContent
+}
+
+const { data } = Astro.props
+---
+
+{data.metadata?.tags.map((tag) => <div class={styles.tag.base}>{tag}</div>)}
