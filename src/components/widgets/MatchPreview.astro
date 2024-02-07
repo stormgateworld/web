@@ -14,7 +14,7 @@ const { match, mainPlayerId } = Astro.props
 const mainPlayer = match.players.find((player) => player.player?.player_id === mainPlayerId) ?? { result: "unknown" }
 ---
 
-<div class="flex items-center gap-4 border-b border-gray-700/50 px-3 sm:px-4 py-2.5">
+<div class="flex items-center gap-4 border-b border-gray-700/50 px-3 py-2.5 sm:px-4">
   <div
     class:list={[
       "size-6 text-sm ml-1 flex justify-center items-center rounded text-gray-800 font-extrabold uppercase",
@@ -41,7 +41,7 @@ const mainPlayer = match.players.find((player) => player.player?.player_id === m
             <Image
               src={player.race === "infernals" ? infernals : vanguard}
               alt={player.race}
-              class="flex-none object-contain size-7"
+              class="size-7 flex-none object-contain"
             />
           </Tooltip>
           <div class:list={["flex flex-auto items-center gap-2 py-1.5", pos > 0 && "border-t border-gray-600/50"]}>
@@ -55,22 +55,22 @@ const mainPlayer = match.players.find((player) => player.player?.player_id === m
             ) : (
               <em class="text-gray-300">Unknown</em>
             )}
-            <div class="hidden md:block text-sm">
-              <span class="text-gray-500 inline-flex items-center">
+            <div class="hidden text-sm md:block">
+              <span class="inline-flex items-center text-gray-500">
                 {player.player_leaderboard_entry ? (
                   <>
-                    <RankedBadge entry={player.player_leaderboard_entry!} class="w-4 mr-1" client:idle />
+                    <RankedBadge entry={player.player_leaderboard_entry!} class="mr-1 w-4" client:idle />
                     {`#${Math.round(player.player_leaderboard_entry?.rank!)} `} {Math.round(player.rating)}
                   </>
                 ) : (
                   <>
-                    <RankedBadge unranked class="w-4 mr-1" client:idle /> {Math.round(player.rating)}
+                    <RankedBadge unranked class="mr-1 w-4" client:idle /> {Math.round(player.rating)}
                   </>
                 )}
               </span>
             </div>
             {player.scores?.resources_mined > 0 && (
-              <div class="justify-end flex-auto text-sm text-gray-100 font-bold gap-1.5 hidden xs:flex">
+              <div class="hidden flex-auto justify-end gap-1.5 text-sm font-bold text-gray-100 xs:flex">
                 <Tooltip client:idle content="Total Units killed">
                   {player.scores?.units_killed}
                 </Tooltip>
@@ -93,7 +93,7 @@ const mainPlayer = match.players.find((player) => player.player?.player_id === m
       ))
     }
   </div>
-  <div class="text-xs text-gray-400 text-right basis-1/6 hidden sm:block">
+  <div class="hidden basis-1/6 text-right text-xs text-gray-400 sm:block">
     <p>{formatDuration(match.duration)}</p>
     <p>
       {

@@ -3,6 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export enum ProfilePrivacy {
-  PUBLIC = 'public',
-  PRIVATE = 'private',
+  PUBLIC = "public",
+  PRIVATE = "private",
 }
