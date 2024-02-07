@@ -185,17 +185,17 @@ export function Leaderboard(props: Props) {
               <tbody>
                 {data()?.entries.map((entry) => (
                   <tr>
-                    <td class="text-md border-b border-gray-700/50 py-2 pr-0.5 text-right font-extrabold text-gray-400 md:pr-2 md:text-lg">
+                    <td class="text-md border-b border-gray-700/50 px-1 py-2 text-right font-extrabold text-gray-400 md:px-4 md:text-lg">
                       {entry.rank}.
                     </td>
-                    <td class="border-b border-gray-700/50 pr-0.5 md:pr-2">
+                    <td class="min-w-10 border-b border-gray-700/50 pr-2 md:pr-4">
                       <img
                         src={entry.race === "infernals" ? infernals.src : vanguard.src}
                         alt={entry.race}
                         class="h-6 w-6"
                       />
                     </td>
-                    <td class="max-w-20 truncate border-b border-gray-700/50 pr-2 font-bold  text-gray-50 md:max-w-none">
+                    <td class="w-full max-w-20 truncate border-b border-gray-700/50 pr-2 font-bold text-gray-50  md:max-w-none md:pr-4">
                       <div class="flex items-center gap-2">
                         <a
                           href={`/players/${entry.player_id}-${urlencode(entry.nickname!)}`}
@@ -212,7 +212,7 @@ export function Leaderboard(props: Props) {
                         )}
                       </div>
                     </td>
-                    <td class="border-b border-gray-700/50 pr-1 text-right text-sm  font-bold text-gray-100">
+                    <td class="border-b border-gray-700/50 pr-2 text-right text-sm font-bold  text-gray-100 md:pr-4">
                       <div class="flex items-center justify-end gap-1">
                         <span>
                           {order() !== LeaderboardOrder.MMR ? Math.round(entry.points || 0) : Math.round(entry.mmr)}
@@ -224,15 +224,15 @@ export function Leaderboard(props: Props) {
                         )}
                       </div>
                     </td>
-                    <td class="border-b border-gray-700/50 pr-0.5 text-right text-sm text-gray-100">
+                    <td class="border-b border-gray-700/50 pr-2 text-right text-sm text-gray-100 md:pr-4">
                       {entry.wins}
                       <span class="text-green-400"> W</span>
                     </td>
-                    <td class="border-b border-gray-700/50 pr-0.5 text-right text-sm text-gray-100">
+                    <td class="border-b border-gray-700/50 pr-2 text-right text-sm text-gray-100 md:pr-4">
                       {entry.losses}
                       <span class="text-red-400"> L</span>
                     </td>
-                    <td class="border-b border-gray-700/50 pr-2 text-right text-sm text-gray-100">
+                    <td class="border-b border-gray-700/50 pr-2 text-right text-sm text-gray-100 md:pr-4">
                       {Math.round((entry.win_rate <= 1 ? entry.win_rate * 100 : entry.win_rate) ?? 0)}%
                     </td>
                   </tr>
