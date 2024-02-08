@@ -37,6 +37,20 @@ export const styles = {
         outline-none
         transition duration-200 px-3 py-1.5 text-sm`,
   },
+  badges: {
+    infernals: {
+      badge: "bg-red-800/20 border-red-500/50",
+      badgeLabel: "text-red-500",
+    },
+    vanguard: {
+      badge: "bg-blue-800/20 border-blue-500/50",
+      badgeLabel: "text-blue-500",
+    },
+    default: {
+      badge: "bg-gray-800/20 border-gray-500/50",
+      badgeLabel: "text-gray-600",
+    },
+  },
 }
 
 export function classes(...args: (string | undefined | number)[]) {

@@ -5,6 +5,7 @@
 import type { MatchResponse } from "../models/MatchResponse"
 import type { PlayerActivityStats } from "../models/PlayerActivityStats"
 import type { PlayerMatchesResponse } from "../models/PlayerMatchesResponse"
+import type { PlayerMatchupsStats } from "../models/PlayerMatchupsStats"
 import type { PlayerPreferences } from "../models/PlayerPreferences"
 import type { PlayerResponse } from "../models/PlayerResponse"
 import type { CancelablePromise } from "../core/CancelablePromise"
@@ -145,6 +146,29 @@ export class PlayersApi {
     return __request(OpenAPI, {
       method: "GET",
       url: "/v0/players/{player_id}/statistics/activity",
+      path: {
+        player_id: playerId,
+      },
+      errors: {
+        404: `Player was not found`,
+      },
+    })
+  }
+  /**
+   * @returns PlayerMatchupsStats Player found successfully
+   * @throws ApiError
+   */
+  public static getPlayerStatisticsMatchups({
+    playerId,
+  }: {
+    /**
+     * Player ID
+     */
+    playerId: string
+  }): CancelablePromise<PlayerMatchupsStats> {
+    return __request(OpenAPI, {
+      method: "GET",
+      url: "/v0/players/{player_id}/statistics/matchups",
       path: {
         player_id: playerId,
       },

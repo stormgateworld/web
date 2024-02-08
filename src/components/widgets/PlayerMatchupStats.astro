@@ -1,0 +1,89 @@
+---
+import { Race, type PlayerMatchupsStats } from "../../lib/api"
+import Widget from "../Widget.astro"
+import { styles } from "../../lib/theme"
+import { Image } from "astro:assets"
+import infernals from "../../assets/game/factions/infernals-small.png"
+import vanguard from "../../assets/game/factions/vanguard-small.png"
+
+type Theme = keyof typeof styles.badges
+interface Props {
+  playerMatchupStats: PlayerMatchupsStats
+}
+
+const { playerMatchupStats } = Astro.props
+
+const winrateVvV = playerMatchupStats.matchups.find(
+  (matchup) => matchup.race === Race.VANGUARD && matchup.opponent_race === Race.VANGUARD
+)?.aggregated.win_rate
+
+const winrateVvI = playerMatchupStats.matchups.find(
+  (matchup) => matchup.race === Race.VANGUARD && matchup.opponent_race === Race.INFERNALS
+)?.aggregated.win_rate
+
+const winrateIvI = playerMatchupStats.matchups.find(
+  (matchup) => matchup.race === Race.INFERNALS && matchup.opponent_race === Race.INFERNALS
+)?.aggregated.win_rate
+
+const winrateIvV = playerMatchupStats.matchups.find(
+  (matchup) => matchup.race === Race.INFERNALS && matchup.opponent_race === Race.VANGUARD
+)?.aggregated.win_rate
+---
+
+<Widget title="Winrates by matchup">
+  <div class="flex flex-col gap-2">
+    <div
+      class:list={[
+        "rounded-lg px-3 py-2 -mx-2 flex items-center gap-3 text-sm sm:text-base justify-between",
+        styles.badges[Race.VANGUARD as Theme].badge,
+      ]}
+    >
+      <div class="flex gap-2">
+        <Image src={vanguard} alt={Race.VANGUARD} class="size-6" />
+        vs
+        <Image src={vanguard} alt={Race.VANGUARD} class="size-6" />
+      </div>
+      {winrateVvV ? Math.round(winrateVvV) : "-"} %
+    </div>
+
+    <div
+      class:list={[
+        "rounded-lg px-3 py-2 -mx-2 flex items-center gap-3 text-sm sm:text-base justify-between",
+        styles.badges[Race.VANGUARD as Theme].badge,
+      ]}
+    >
+      <div class="flex gap-2">
+        <Image src={vanguard} alt={Race.VANGUARD} class="size-6" />
+        vs
+        <Image src={infernals} alt={Race.INFERNALS} class="size-6" />
+      </div>
+      {winrateVvI ? Math.round(winrateVvI) : "-"} %
+    </div>
+    <div
+      class:list={[
+        "rounded-lg px-3 py-2 -mx-2 flex items-center gap-3 text-sm sm:text-base justify-between",
+        styles.badges[Race.INFERNALS as Theme].badge,
+      ]}
+    >
+      <div class="flex gap-2">
+        <Image src={infernals} alt={Race.INFERNALS} class="size-6" />
+        vs
+        <Image src={vanguard} alt={Race.VANGUARD} class="size-6" />
+      </div>
+      {winrateIvV ? Math.round(winrateIvV) : "-"} %
+    </div>
+    <div
+      class:list={[
+        "rounded-lg px-3 py-2 -mx-2 flex items-center gap-3 text-sm sm:text-base justify-between",
+        styles.badges[Race.INFERNALS as Theme].badge,
+      ]}
+    >
+      <div class="flex gap-2">
+        <Image src={infernals} alt={Race.INFERNALS} class="size-6" />
+        vs
+        <Image src={infernals} alt={Race.INFERNALS} class="size-6" />
+      </div>
+      {winrateIvI ? Math.round(winrateIvI) : "-"} %
+    </div>
+  </div>
+</Widget>

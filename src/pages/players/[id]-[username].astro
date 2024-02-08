@@ -6,26 +6,13 @@ import { Image } from "astro:assets"
 import infernals from "../../assets/game/factions/infernals-small.png"
 import vanguard from "../../assets/game/factions/vanguard-small.png"
 import MatchPreview from "../../components/widgets/MatchPreview.astro"
-import { PlayersApi, type PlayerActivityStats, type PlayerResponse, type PlayerMatchesResponse } from "../../lib/api"
+import { PlayersApi } from "../../lib/api"
 import { RankedBadge } from "../../components/ui/RankedBadge"
 import PlayerActivity from "../../components/widgets/PlayerActivity.astro"
-import Stats from "../stats.astro"
-import { MatchState } from "../../lib/api"
-const themes = {
-  infernals: {
-    badge: "bg-red-800/20 border-red-500/50",
-    badgeLabel: "text-red-500",
-  },
-  vanguard: {
-    badge: "bg-blue-800/20 border-blue-500/50",
-    badgeLabel: "text-blue-500",
-  },
-  default: {
-    badge: "bg-gray-800/20 border-gray-500/50",
-    badgeLabel: "text-gray-600",
-  },
-} as const
-type Theme = keyof typeof themes
+import PlayerMatchupStats from "../../components/widgets/PlayerMatchupStats.astro"
+import { styles } from "../../lib/theme"
+
+type Theme = keyof typeof styles.badges
 
 // to be moved to own file
 async function getDataOrErrorResponse<T extends readonly unknown[] | []>(...values: T): Promise<[{ -readonly [P in keyof T]: Awaited<T[P]>; }, error: Response | null]> {
@@ -38,10 +25,11 @@ async function getDataOrErrorResponse<T extends readonly unknown[] | []>(...valu
 }
 
 const playerId = Astro.params.id!
-const [[player, playerMatches, playerActivity], error] = await getDataOrErrorResponse(
+const [[player, playerMatches, playerActivity, playerMatchupStats], error] = await getDataOrErrorResponse(
   PlayersApi.getPlayer({ playerId }),
   PlayersApi.getPlayerMatches({ playerId }),
   PlayersApi.getPlayerStatisticsActivity({ playerId }),
+  PlayersApi.getPlayerStatisticsMatchups({ playerId })
 )
 if(error) return error;
 
@@ -73,7 +61,7 @@ const highestLeague = player?.leaderboard_entries?.reduce(
               <div
                 class:list={[
                   "rounded-lg pl-3 pr-1 py-2 -mx-2 flex items-center gap-3 text-sm sm:text-base",
-                  themes[entry.race as Theme].badge,
+                  styles.badges[entry.race as Theme].badge,
                 ]}
               >
                 <Image
@@ -82,11 +70,11 @@ const highestLeague = player?.leaderboard_entries?.reduce(
                   class="size-6 sm:size-10"
                 />
                 <div>
-                  <span class:list={["text-xs", themes[entry.race as Theme].badgeLabel]}>Rank</span>
+                  <span class:list={["text-xs", styles.badges[entry.race as Theme].badgeLabel]}>Rank</span>
                   <p>#{entry.rank}</p>
                 </div>
                 <div>
-                  <span class:list={["text-xs", themes[entry.race as Theme].badgeLabel]}>Points</span>
+                  <span class:list={["text-xs", styles.badges[entry.race as Theme].badgeLabel]}>Points</span>
                   <p>
                     {Math.round(entry.points)}
 
@@ -94,7 +82,7 @@ const highestLeague = player?.leaderboard_entries?.reduce(
                   </p>
                 </div>
                 <div>
-                  <span class:list={["text-xs", themes[entry.race as Theme].badgeLabel]}>MMR</span>
+                  <span class:list={["text-xs", styles.badges[entry.race as Theme].badgeLabel]}>MMR</span>
                   <p>{Math.round(entry.mmr)}</p>
                 </div>
               </div>
@@ -111,7 +99,3 @@ const highestLeague = player?.leaderboard_entries?.reduce(
     </div>
   </section>
 </Layout>
-
-<div class="sm:hidden">
-  <PlayerActivity activity={playerActivity} {player} />
-</div>
