@@ -17,7 +17,14 @@ const { page = 1, query, faction, order } = Object.fromEntries(new URL(Astro.req
     <div class="absolute inset-0 bg-gradient-to-b from-gray-950/60 to-gray-950"></div>
   </div>
   <section class="relative mx-auto max-w-screen-md space-y-4 px-4 py-0">
-    <Leaderboard mode={mode} query={query} faction={faction as Race} page={Number(page)} order={order as LeaderboardOrder} client:load />
+    <Leaderboard
+      mode={mode}
+      query={query}
+      faction={faction as Race}
+      page={Number(page)}
+      order={order as LeaderboardOrder}
+      client:load
+    />
     <EsoPromo />
   </section>
 </Layout>

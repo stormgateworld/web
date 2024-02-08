@@ -26,15 +26,19 @@ const themes = {
 type Theme = keyof typeof themes
 
 const playerId = Astro.params.id!
-const player = await PlayersApi.getPlayer({ playerId })
-const playerMatches = await PlayersApi.getPlayerMatches({ playerId })
+
+const playerRequest = PlayersApi.getPlayer({ playerId })
+const playerMatchesRequest = PlayersApi.getPlayerMatches({ playerId })
+const playerActivityRequest = PlayersApi.getPlayerStatisticsActivity({ playerId })
+
+const player = await playerRequest
+const playerMatches = await playerMatchesRequest
+const playerActivity = await playerActivityRequest
 
 const highestLeague = player.leaderboard_entries.reduce(
   (acc, entry) => (entry.points > acc.points ? entry : acc),
   player.leaderboard_entries[0]
 )
-
-const playerActivity = (await PlayersApi.getPlayerStatisticsActivity({ playerId })) as any as PlayerActivityStats
 ---
 
 <Layout title={player.nickname}>
