@@ -2,8 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { PlayerStatsMatchupEntry } from "./PlayerStatsMatchupEntry"
+import type { PlayerMatchupsStatsMatchup } from "./PlayerMatchupsStatsMatchup"
 export type PlayerMatchupsStats = {
   cached_at: string
-  matchups: Array<PlayerStatsMatchupEntry>
+  matchups: Array<PlayerMatchupsStatsMatchup>
 }
