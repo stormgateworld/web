@@ -9,6 +9,8 @@ import MatchPreview from "../../components/widgets/MatchPreview.astro"
 import { PlayersApi, type PlayerActivityStats, type PlayerResponse, type PlayerMatchesResponse } from "../../lib/api"
 import { RankedBadge } from "../../components/ui/RankedBadge"
 import PlayerActivity from "../../components/widgets/PlayerActivity.astro"
+import Stats from "../stats.astro"
+import { MatchState } from "../../lib/api"
 const themes = {
   infernals: {
     badge: "bg-red-800/20 border-red-500/50",
@@ -109,3 +111,7 @@ const highestLeague = player?.leaderboard_entries?.reduce(
     </div>
   </section>
 </Layout>
+
+<div class="sm:hidden">
+  <PlayerActivity activity={playerActivity} {player} />
+</div>
