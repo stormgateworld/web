@@ -12,7 +12,7 @@ const toolsContent: ToolContent[] = [
     description: "A tool for streamers to display information about ongoing games in their broadcasts.",
     url: "https://overlay.stormgateworld.com/",
     image_url: "https://raw.githubusercontent.com/stormgateworld/overlay/main/Preview.png",
-    metadata: { tags: ["Overlay", "By SGW"] },
+    metadata: { external: false, tags: ["Overlay"] },
   },
   {
     title: "Luminite.gg",
@@ -20,7 +20,7 @@ const toolsContent: ToolContent[] = [
     description: "Discover and share build orders. View unit information and ladder stats.",
     url: "https://luminite.gg/",
     image_url: luminiteImage.src,
-    metadata: { tags: ["Build orders", "Stats", "External"] },
+    metadata: { external: true, tags: ["Build orders", "Stats"] },
   },
   {
     title: "Replay Renamer",
@@ -28,7 +28,8 @@ const toolsContent: ToolContent[] = [
     description: "Python script to rename replays.",
     url: "https://gist.github.com/acarapetis/b5e9cf199ea2a468ace2f756ac287268",
     image_url: replayRenamerImage.src,
-    metadata: { tags: ["Replays", "External"] },
+    metadata: { external: true, tags: ["Replays"] },
+  },
   },
 ]
 ---

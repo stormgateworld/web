@@ -31,11 +31,10 @@ export const styles = {
             `,
   },
   tag: {
-    base: `inline-flex items-center justify-center rounded-sm
-        bg-gray-700/50 border border-gray-500 backdrop-blur-sm rounded-xl
-        text-gray-100 font-semibold whitespace-nowrap
-        outline-none
-        transition duration-200 px-3 py-1.5 text-sm`,
+    base: `inline-flex items-center justify-center rounded-lg
+        bg-gray-700/50 border border-gray-500 backdrop-blur-sm
+        text-gray-100 font-semibold whitespace-nowrap text-sm
+        outline-none transition duration-200 px-3 py-1.5`,
   },
   badges: {
     infernals: {

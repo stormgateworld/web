@@ -104,7 +104,8 @@ export type RedditData = {
 }
 
 export type ToolData = {
-  tags: string[]
+  tags: string[],
+  external: boolean
 }
 
 export type YoutubeContent = SourceData<"youtube", YoutubeData>

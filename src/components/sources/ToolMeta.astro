@@ -1,12 +1,24 @@
 ---
 import type { ToolContent } from "../../lib/content"
 import { styles } from "../../lib/theme"
-
+import externalIcon from "lucide-static/icons/arrow-up-right-from-square.svg?raw"
 export interface Props {
   data: ToolContent
 }
 
 const { data } = Astro.props
+const domain = new URL(data.url).hostname
 ---
 
+<div class="w-full text-gray-300">
+  {
+    data.metadata?.external ? (
+      <>
+        {domain} <span class="*:w-3 *:h-3 *:inline-block ml-1 text-gray-400" set:html={externalIcon} />
+      </>
+    ) : (
+      "Made by Stormgate World"
+    )
+  }
+</div>
 {data.metadata?.tags.map((tag) => <div class={styles.tag.base}>{tag}</div>)}
