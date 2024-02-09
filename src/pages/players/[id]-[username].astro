@@ -10,6 +10,7 @@ import { PlayersApi } from "../../lib/api"
 import { RankedBadge } from "../../components/ui/RankedBadge"
 import PlayerActivity from "../../components/widgets/PlayerActivity.astro"
 import PlayerMatchupStats from "../../components/widgets/PlayerMatchupStats.astro"
+import PlayerOpponents from "../../components/widgets/PlayerOpponents.astro"
 import { styles } from "../../lib/theme"
 
 type Theme = keyof typeof styles.badges
@@ -27,12 +28,14 @@ async function getDataOrErrorResponse<T extends readonly unknown[] | []>(
 }
 
 const playerId = Astro.params.id!
-const [[player, playerMatches, playerActivity, playerMatchupStats], error] = await getDataOrErrorResponse(
-  PlayersApi.getPlayer({ playerId }),
-  PlayersApi.getPlayerMatches({ playerId }),
-  PlayersApi.getPlayerStatisticsActivity({ playerId }),
-  PlayersApi.getPlayerStatisticsMatchups({ playerId })
-)
+const [[player, playerMatches, playerActivity, playerMatchupStats, playerOpponents], error] =
+  await getDataOrErrorResponse(
+    PlayersApi.getPlayer({ playerId }),
+    PlayersApi.getPlayerMatches({ playerId }),
+    PlayersApi.getPlayerStatisticsActivity({ playerId }),
+    PlayersApi.getPlayerStatisticsMatchups({ playerId }),
+    PlayersApi.getPlayerStatisticsOpponents({ playerId, count: 5 })
+  )
 if (error) return error
 
 const highestLeague = player?.leaderboard_entries?.reduce(
@@ -99,12 +102,18 @@ const highestLeague = player?.leaderboard_entries?.reduce(
       <div class="hidden lg:block">
         {playerMatchupStats.matchups.length && <PlayerMatchupStats playerMatchupStats={playerMatchupStats} />}
       </div>
+      <div class="hidden lg:block">
+        {playerOpponents.opponents.length && <PlayerOpponents opponents={playerOpponents} />}
+      </div>
     </div>
     <div class="sm:hidden">
       {playerActivity?.history && <PlayerActivity activity={playerActivity} {player} />}
     </div>
     <div class="lg:hidden">
       {playerMatchupStats.matchups.length && <PlayerMatchupStats playerMatchupStats={playerMatchupStats} />}
+    </div>
+    <div class="lg:hidden">
+      {playerOpponents.opponents.length && <PlayerOpponents opponents={playerOpponents} />}
     </div>
   </section>
 </Layout>

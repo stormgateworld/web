@@ -21,12 +21,13 @@ export class LeaderboardEntriesApi {
   }): CancelablePromise<LeaderboardEntryHistory> {
     return __request(OpenAPI, {
       method: "GET",
-      url: "/v0/leaderboard-enties/{leaderboard_entry_id}/history",
+      url: "/v0/leaderboard-entries/{leaderboard_entry_id}/history",
       path: {
         leaderboard_entry_id: leaderboardEntryId,
       },
       errors: {
         404: `Player leaderboard entry was not found`,
+        500: `Server error`,
       },
     })
   }

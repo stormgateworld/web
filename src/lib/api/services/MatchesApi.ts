@@ -29,6 +29,9 @@ export class MatchesApi {
         count: count,
         state: state,
       },
+      errors: {
+        500: `Server error`,
+      },
     })
   }
 }

@@ -1,0 +1,42 @@
+---
+import type { PlayerOpponentsStats } from "../../lib/api"
+import { classes } from "../../lib/theme"
+import Widget from "../Widget.astro"
+import { urlencode } from "../../lib/utils"
+
+interface Props {
+  opponents: PlayerOpponentsStats
+}
+
+const { opponents } = Astro.props
+---
+
+<Widget title="Top opponents">
+  <table class={classes("mx-auto w-full table-auto whitespace-nowrap text-left transition-opacity")}>
+    <tbody>
+      {
+        opponents.opponents.map((opponent) => (
+          <tr class="border-b border-gray-700/50 last:border-b-0">
+            <td class="w-full truncate  p-2 font-semibold text-gray-50">
+              <a
+                href={`/players/${opponent.player.player_id}-${urlencode(opponent.player.nickname!)}`}
+                class="truncat hover:underline"
+              >
+                {opponent.player.nickname}
+              </a>
+            </td>
+            <td class="pr-2 text-right text-sm text-gray-100">
+              {opponent.wins_count}
+              <span class="text-green-400"> W</span>
+            </td>
+            <td class="pr-2 text-right  text-sm text-gray-100">
+              {opponent.losses_count}
+              <span class="text-red-400"> L</span>
+            </td>
+            <td class=" text-right text-sm text-gray-100">{Math.round(opponent.win_rate)}%</td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</Widget>
