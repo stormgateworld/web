@@ -100,20 +100,20 @@ const highestLeague = player?.leaderboard_entries?.reduce(
         {playerActivity?.history && <PlayerActivity activity={playerActivity} {player} />}
       </div>
       <div class="hidden lg:block">
-        {playerMatchupStats.matchups.length && <PlayerMatchupStats playerMatchupStats={playerMatchupStats} />}
+        {playerMatchupStats.matchups.length > 0 && <PlayerMatchupStats playerMatchupStats={playerMatchupStats} />}
       </div>
       <div class="hidden lg:block">
-        {playerOpponents.opponents.length && <PlayerOpponents opponents={playerOpponents} />}
+        {playerOpponents.opponents.length > 0 && <PlayerOpponents opponents={playerOpponents} />}
       </div>
     </div>
     <div class="sm:hidden">
       {playerActivity?.history && <PlayerActivity activity={playerActivity} {player} />}
     </div>
     <div class="lg:hidden">
-      {playerMatchupStats.matchups.length && <PlayerMatchupStats playerMatchupStats={playerMatchupStats} />}
+      {playerMatchupStats.matchups.length > 0 && <PlayerMatchupStats playerMatchupStats={playerMatchupStats} />}
     </div>
     <div class="lg:hidden">
-      {playerOpponents.opponents.length && <PlayerOpponents opponents={playerOpponents} />}
+      {playerOpponents.opponents.length > 0 && <PlayerOpponents opponents={playerOpponents} />}
     </div>
   </section>
 </Layout>
