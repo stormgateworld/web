@@ -59,14 +59,16 @@ const highestLeague = player?.leaderboard_entries?.reduce(
         </div>
       </Widget>
     </div>
-    <div class="order-first flex basis-1/4 flex-col gap-6 sm:flex-row lg:order-none lg:flex-col">
+    <div
+      class="order-first flex basis-1/4 flex-col items-start justify-center gap-6 sm:flex-row lg:order-none lg:flex-col lg:items-stretch lg:justify-start"
+    >
       <Widget title="Top Ranks">
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-col gap-2 px-2">
           {
             player.leaderboard_entries.map((entry) => (
               <div
                 class:list={[
-                  "rounded-lg pl-3 pr-1 py-2 -mx-2 flex items-center gap-3 text-sm sm:text-base",
+                  "rounded-lg px-4 py-2 -mx-2 flex items-center gap-3 text-sm sm:text-base justify-center",
                   styles.badges[entry.race as Theme].badge,
                 ]}
               >

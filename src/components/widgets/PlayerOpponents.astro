@@ -1,6 +1,5 @@
 ---
 import type { PlayerOpponentsStats } from "../../lib/api"
-import { classes } from "../../lib/theme"
 import Widget from "../Widget.astro"
 import { urlencode } from "../../lib/utils"
 
@@ -12,7 +11,7 @@ const { opponents } = Astro.props
 ---
 
 <Widget title="Top opponents">
-  <table class={classes("mx-auto w-full table-auto whitespace-nowrap text-left transition-opacity")}>
+  <table class="mx-auto w-full table-auto whitespace-nowrap text-left transition-opacity">
     <tbody>
       {
         opponents.opponents.map((opponent) => (
@@ -20,7 +19,7 @@ const { opponents } = Astro.props
             <td class="w-full truncate  p-2 font-semibold text-gray-50">
               <a
                 href={`/players/${opponent.player.player_id}-${urlencode(opponent.player.nickname!)}`}
-                class="truncat hover:underline"
+                class="truncate hover:underline"
               >
                 {opponent.player.nickname}
               </a>

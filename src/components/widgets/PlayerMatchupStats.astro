@@ -16,19 +16,21 @@ const matchupsSortedByRace = playerMatchupStats.matchups.sort((a, b) => a.race.l
 ---
 
 <Widget title="Winrates by matchup">
-  <table class="mx-auto w-full table-auto whitespace-nowrap text-left text-sm transition-opacity">
+  <table class="mx-auto w-full table-auto whitespace-nowrap text-left transition-opacity">
     <tbody>
       {
         matchupsSortedByRace.map((matchup) => (
           <tr class="border-b border-gray-700/50 last:border-b-0">
-            <td class="flex w-full  gap-2 truncate p-2 font-semibold text-gray-50">
-              <Image src={matchup.race === "infernals" ? infernals : vanguard} alt={matchup.race} class="size-6" />
-              vs
-              <Image
-                src={matchup.opponent_race === "infernals" ? infernals : vanguard}
-                alt={matchup.opponent_race}
-                class="size-6"
-              />
+            <td class="w-full truncate p-2 font-semibold text-gray-50">
+              <div class="flex gap-2">
+                <Image src={matchup.race === "infernals" ? infernals : vanguard} alt={matchup.race} class="size-6" />
+                vs
+                <Image
+                  src={matchup.opponent_race === "infernals" ? infernals : vanguard}
+                  alt={matchup.opponent_race}
+                  class="size-6"
+                />
+              </div>
             </td>
             <td class="pr-2 text-right text-sm text-gray-100">
               {matchup.aggregated.wins_count}
