@@ -9,6 +9,7 @@ import MatchPreview from "../../components/widgets/MatchPreview.astro"
 import { PlayersApi, type PlayerActivityStats, type PlayerResponse, type PlayerMatchesResponse } from "../../lib/api"
 import { RankedBadge } from "../../components/ui/RankedBadge"
 import PlayerActivity from "../../components/widgets/PlayerActivity.astro"
+import PlayerOpponents from "../../components/widgets/PlayerOpponents.astro"
 const themes = {
   infernals: {
     badge: "bg-red-800/20 border-red-500/50",
@@ -26,28 +27,32 @@ const themes = {
 type Theme = keyof typeof themes
 
 // to be moved to own file
-async function getDataOrErrorResponse<T extends readonly unknown[] | []>(...values: T): Promise<[{ -readonly [P in keyof T]: Awaited<T[P]>; }, error: Response | null]> {
+async function getDataOrErrorResponse<T extends readonly unknown[] | []>(
+  ...values: T
+): Promise<[{ -readonly [P in keyof T]: Awaited<T[P]> }, error: Response | null]> {
   try {
     const result = await Promise.all(values)
     return [result, null]
   } catch (e) {
-    return [[] as any, new Response(null, { status: 500, statusText: `${e}`})]
+    return [[] as any, new Response(null, { status: 500, statusText: `${e}` })]
   }
 }
 
 const playerId = Astro.params.id!
-const [[player, playerMatches, playerActivity], error] = await getDataOrErrorResponse(
+const [[player, playerMatches, playerActivity, playerOpponents], error] = await getDataOrErrorResponse(
   PlayersApi.getPlayer({ playerId }),
   PlayersApi.getPlayerMatches({ playerId }),
   PlayersApi.getPlayerStatisticsActivity({ playerId }),
+  PlayersApi.getPlayerStatisticsOpponents({ playerId, count: 5 })
 )
-if(error) return error;
+if (error) return error
 
 const highestLeague = player?.leaderboard_entries?.reduce(
   (acc, entry) => (entry.points > acc.points ? entry : acc),
   player.leaderboard_entries[0]
 )
 ---
+
 <Layout title={player?.nickname}>
   <div class="w-full border-b border-gray-700/50 bg-gray-800/50 backdrop-blur-lg">
     <div class="mx-auto flex max-w-screen-lg flex-wrap items-center gap-4 px-4 py-4">
@@ -101,11 +106,17 @@ const highestLeague = player?.leaderboard_entries?.reduce(
         </div>
       </Widget>
       <div class="hidden sm:block">
-        {playerActivity?.history ? <PlayerActivity activity={playerActivity} {player} /> : <></>}
+        {playerActivity?.history && <PlayerActivity activity={playerActivity} {player} />}
+      </div>
+      <div class="hidden lg:block">
+        {playerOpponents.opponents.length && <PlayerOpponents opponents={playerOpponents} />}
       </div>
     </div>
     <div class="sm:hidden">
-      {playerActivity?.history ? <PlayerActivity activity={playerActivity} {player} /> : <></>}
+      {playerActivity?.history && <PlayerActivity activity={playerActivity} {player} />}
+    </div>
+    <div class="lg:hidden">
+      {playerOpponents.opponents.length && <PlayerOpponents opponents={playerOpponents} />}
     </div>
   </section>
 </Layout>
