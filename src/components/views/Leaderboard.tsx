@@ -175,7 +175,7 @@ export function Leaderboard(props: Props) {
       <Widget title="Leaderboard" label="Ranked Beta" class="-mx-3 sm:mx-0">
         <Suspense fallback={<div>Loading...</div>}>
           {data()?.total == 0 && <div class="my-6 text-center text-gray-400">No results found</div>}
-          <div class="-mx-3 -mb-3 sm:-mx-4">
+          <div class="-mx-3 -mb-3 md:-mb-3.5 sm:-mx-4">
             <table
               class={classes(
                 "mx-auto w-full table-auto whitespace-nowrap text-left transition-opacity md:text-lg",
@@ -184,18 +184,18 @@ export function Leaderboard(props: Props) {
             >
               <tbody>
                 {data()?.entries.map((entry) => (
-                  <tr>
-                    <td class="text-md border-b border-gray-700/50 px-1 py-2 text-right font-extrabold text-gray-400 md:px-4 md:text-lg">
+                  <tr class="border-b border-gray-700/50 last:border-b-0">
+                    <td class="text-md  px-1 py-2 text-right font-extrabold text-gray-400 md:px-4 md:text-lg">
                       {entry.rank}.
                     </td>
-                    <td class="min-w-10 border-b border-gray-700/50 pr-2 md:pr-4">
+                    <td class="min-w-10 pr-2 md:pr-4">
                       <img
                         src={entry.race === "infernals" ? infernals.src : vanguard.src}
                         alt={entry.race}
                         class="h-6 w-6"
                       />
                     </td>
-                    <td class="w-full max-w-20 truncate border-b border-gray-700/50 pr-2 font-bold text-gray-50  md:max-w-none md:pr-4">
+                    <td class="w-full max-w-20 truncate pr-2 font-bold text-gray-50  md:max-w-none md:pr-4">
                       <div class="flex items-center gap-2">
                         <a
                           href={`/players/${entry.player_id}-${urlencode(entry.nickname!)}`}
@@ -212,7 +212,7 @@ export function Leaderboard(props: Props) {
                         )}
                       </div>
                     </td>
-                    <td class="border-b border-gray-700/50 pr-2 text-right text-sm font-bold  text-gray-100 md:pr-4">
+                    <td class=" pr-2 text-right text-sm font-bold  text-gray-100 md:pr-4">
                       <div class="flex items-center justify-end gap-1">
                         <span>
                           {order() !== LeaderboardOrder.MMR ? Math.round(entry.points || 0) : Math.round(entry.mmr)}
@@ -224,15 +224,15 @@ export function Leaderboard(props: Props) {
                         )}
                       </div>
                     </td>
-                    <td class="border-b border-gray-700/50 pr-2 text-right text-sm text-gray-100 md:pr-4">
+                    <td class=" pr-2 text-right text-sm text-gray-100 md:pr-4">
                       {entry.wins}
                       <span class="text-green-400"> W</span>
                     </td>
-                    <td class="border-b border-gray-700/50 pr-2 text-right text-sm text-gray-100 md:pr-4">
+                    <td class=" pr-2 text-right text-sm text-gray-100 md:pr-4">
                       {entry.losses}
                       <span class="text-red-400"> L</span>
                     </td>
-                    <td class="border-b border-gray-700/50 pr-2 text-right text-sm text-gray-100 md:pr-4">
+                    <td class="pr-2 text-right text-sm text-gray-100 md:pr-4">
                       {Math.round((entry.win_rate <= 1 ? entry.win_rate * 100 : entry.win_rate) ?? 0)}%
                     </td>
                   </tr>
