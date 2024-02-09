@@ -6,7 +6,7 @@ import { Image } from "astro:assets"
 import infernals from "../../assets/game/factions/infernals-small.png"
 import vanguard from "../../assets/game/factions/vanguard-small.png"
 import MatchPreview from "../../components/widgets/MatchPreview.astro"
-import { PlayersApi, type PlayerActivityStats } from "../../lib/api"
+import { PlayersApi, type PlayerActivityStats, type PlayerResponse, type PlayerMatchesResponse } from "../../lib/api"
 import { RankedBadge } from "../../components/ui/RankedBadge"
 import PlayerActivity from "../../components/widgets/PlayerActivity.astro"
 const themes = {
@@ -25,23 +25,30 @@ const themes = {
 } as const
 type Theme = keyof typeof themes
 
+// to be moved to own file
+async function getDataOrErrorResponse<T extends readonly unknown[] | []>(...values: T): Promise<[{ -readonly [P in keyof T]: Awaited<T[P]>; }, error: Response | null]> {
+  try {
+    const result = await Promise.all(values)
+    return [result, null]
+  } catch (e) {
+    return [[] as any, new Response(null, { status: 500, statusText: `${e}`})]
+  }
+}
+
 const playerId = Astro.params.id!
+const [[player, playerMatches, playerActivity], error] = await getDataOrErrorResponse(
+  PlayersApi.getPlayer({ playerId }),
+  PlayersApi.getPlayerMatches({ playerId }),
+  PlayersApi.getPlayerStatisticsActivity({ playerId }),
+)
+if(error) return error;
 
-const playerRequest = PlayersApi.getPlayer({ playerId })
-const playerMatchesRequest = PlayersApi.getPlayerMatches({ playerId })
-const playerActivityRequest = PlayersApi.getPlayerStatisticsActivity({ playerId }).catch(() => {})
-
-const player = await playerRequest
-const playerMatches = await playerMatchesRequest
-const playerActivity = await playerActivityRequest
-
-const highestLeague = player.leaderboard_entries.reduce(
+const highestLeague = player?.leaderboard_entries?.reduce(
   (acc, entry) => (entry.points > acc.points ? entry : acc),
   player.leaderboard_entries[0]
 )
 ---
-
-<Layout title={player.nickname}>
+<Layout title={player?.nickname}>
   <div class="w-full border-b border-gray-700/50 bg-gray-800/50 backdrop-blur-lg">
     <div class="mx-auto flex max-w-screen-lg flex-wrap items-center gap-4 px-4 py-4">
       <RankedBadge entry={highestLeague} class="w-20" client:load />
