@@ -37,6 +37,9 @@ export class LeaderboardsApi {
         order: order,
         query: query,
       },
+      errors: {
+        500: `Server error`,
+      },
     })
   }
   /**
@@ -47,6 +50,9 @@ export class LeaderboardsApi {
     return __request(OpenAPI, {
       method: "GET",
       url: "/v0/leaderboards/ranked_1v1/dump",
+      errors: {
+        500: `Server error`,
+      },
     })
   }
 }

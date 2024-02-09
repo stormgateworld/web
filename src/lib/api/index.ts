@@ -7,6 +7,7 @@ export { CancelablePromise, CancelError } from "./core/CancelablePromise"
 export { OpenAPI } from "./core/OpenAPI"
 export type { OpenAPIConfig } from "./core/OpenAPI"
 
+export type { ErrorResponse } from "./models/ErrorResponse"
 export { Leaderboard } from "./models/Leaderboard"
 export type { LeaderboardDumpResponse } from "./models/LeaderboardDumpResponse"
 export type { LeaderboardEntryHistory } from "./models/LeaderboardEntryHistory"

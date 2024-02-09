@@ -18,6 +18,9 @@ export class StatisticsApi {
       query: {
         league: league,
       },
+      errors: {
+        500: `Server error`,
+      },
     })
   }
 }

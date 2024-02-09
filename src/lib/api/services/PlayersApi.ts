@@ -33,6 +33,7 @@ export class PlayersApi {
       },
       errors: {
         404: `Player was not found`,
+        500: `Server error`,
       },
     })
   }
@@ -56,6 +57,7 @@ export class PlayersApi {
       },
       errors: {
         404: `Player was not found`,
+        500: `Server error`,
       },
     })
   }
@@ -79,6 +81,7 @@ export class PlayersApi {
       },
       errors: {
         404: `Player was not found`,
+        500: `Server error`,
       },
     })
   }
@@ -102,6 +105,7 @@ export class PlayersApi {
       },
       errors: {
         404: `Player was not found`,
+        500: `Server error`,
       },
     })
   }
@@ -129,6 +133,7 @@ export class PlayersApi {
       mediaType: "application/json",
       errors: {
         404: `Player was not found`,
+        500: `Server error`,
       },
     })
   }
@@ -152,6 +157,7 @@ export class PlayersApi {
       },
       errors: {
         404: `Player was not found`,
+        500: `Server error`,
       },
     })
   }
@@ -175,6 +181,7 @@ export class PlayersApi {
       },
       errors: {
         404: `Player was not found`,
+        500: `Server error`,
       },
     })
   }
@@ -203,6 +210,7 @@ export class PlayersApi {
       },
       errors: {
         404: `Player was not found`,
+        500: `Server error`,
       },
     })
   }

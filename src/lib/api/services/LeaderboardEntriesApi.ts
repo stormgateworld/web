@@ -27,6 +27,7 @@ export class LeaderboardEntriesApi {
       },
       errors: {
         404: `Player leaderboard entry was not found`,
+        500: `Server error`,
       },
     })
   }
