@@ -15,12 +15,14 @@ import { styles } from "../../lib/theme"
 type Theme = keyof typeof styles.badges
 
 // to be moved to own file
-async function getDataOrErrorResponse<T extends readonly unknown[] | []>(...values: T): Promise<[{ -readonly [P in keyof T]: Awaited<T[P]>; }, error: Response | null]> {
+async function getDataOrErrorResponse<T extends readonly unknown[] | []>(
+  ...values: T
+): Promise<[{ -readonly [P in keyof T]: Awaited<T[P]> }, error: Response | null]> {
   try {
     const result = await Promise.all(values)
     return [result, null]
   } catch (e) {
-    return [[] as any, new Response(null, { status: 500, statusText: `${e}`})]
+    return [[] as any, new Response(null, { status: 500, statusText: `${e}` })]
   }
 }
 
@@ -31,13 +33,14 @@ const [[player, playerMatches, playerActivity, playerMatchupStats], error] = awa
   PlayersApi.getPlayerStatisticsActivity({ playerId }),
   PlayersApi.getPlayerStatisticsMatchups({ playerId })
 )
-if(error) return error;
+if (error) return error
 
 const highestLeague = player?.leaderboard_entries?.reduce(
   (acc, entry) => (entry.points > acc.points ? entry : acc),
   player.leaderboard_entries[0]
 )
 ---
+
 <Layout title={player?.nickname}>
   <div class="w-full border-b border-gray-700/50 bg-gray-800/50 backdrop-blur-lg">
     <div class="mx-auto flex max-w-screen-lg flex-wrap items-center gap-4 px-4 py-4">
@@ -91,17 +94,17 @@ const highestLeague = player?.leaderboard_entries?.reduce(
         </div>
       </Widget>
       <div class="hidden sm:block">
-        {playerActivity?.history ? <PlayerActivity activity={playerActivity} {player} /> : <></>}
+        {playerActivity?.history && <PlayerActivity activity={playerActivity} {player} />}
       </div>
       <div class="hidden lg:block">
-        {playerMatchupStats.matchups.length ? <PlayerMatchupStats playerMatchupStats={playerMatchupStats} /> : <></>}
+        {playerMatchupStats.matchups.length && <PlayerMatchupStats playerMatchupStats={playerMatchupStats} />}
       </div>
     </div>
     <div class="sm:hidden">
-      {playerActivity?.history ? <PlayerActivity activity={playerActivity} {player} /> : <></>}
+      {playerActivity?.history && <PlayerActivity activity={playerActivity} {player} />}
     </div>
     <div class="lg:hidden">
-      {playerMatchupStats.matchups.length ? <PlayerMatchupStats playerMatchupStats={playerMatchupStats} /> : <></>}
+      {playerMatchupStats.matchups.length && <PlayerMatchupStats playerMatchupStats={playerMatchupStats} />}
     </div>
   </section>
 </Layout>
