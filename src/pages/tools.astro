@@ -4,6 +4,7 @@ import Card from "../components/Card.astro"
 import type { ToolContent } from "../lib/content"
 import luminiteImage from "../assets/content/luminite.png"
 import replayRenamerImage from "../assets/content/replay-renamer.png"
+import bobBotImage from "../assets/content/bob-bot.png"
 
 const toolsContent: ToolContent[] = [
   {
@@ -30,6 +31,13 @@ const toolsContent: ToolContent[] = [
     image_url: replayRenamerImage.src,
     metadata: { external: true, tags: ["Replays"] },
   },
+  {
+    title: "B.O.B. Discord Bot",
+    source: "tool",
+    description: "Discord Commands for searching players, the leaderboard, and more.",
+    url: "https://github.com/joshleblanc/stormgate-world-discord",
+    image_url: bobBotImage.src,
+    metadata: { external: true, tags: ["Discord"] },
   },
 ]
 ---
