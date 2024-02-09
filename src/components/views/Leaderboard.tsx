@@ -175,7 +175,7 @@ export function Leaderboard(props: Props) {
       <Widget title="Leaderboard" label="Ranked Beta" class="-mx-3 sm:mx-0">
         <Suspense fallback={<div>Loading...</div>}>
           {data()?.total == 0 && <div class="my-6 text-center text-gray-400">No results found</div>}
-          <div class="-mx-3 -mb-3 sm:-mx-4">
+          <div class="-mx-3 -mb-3 md:-mb-3.5 sm:-mx-4">
             <table
               class={classes(
                 "mx-auto w-full table-auto whitespace-nowrap text-left transition-opacity md:text-lg",
