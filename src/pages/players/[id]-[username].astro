@@ -29,7 +29,7 @@ const playerId = Astro.params.id!
 
 const playerRequest = PlayersApi.getPlayer({ playerId })
 const playerMatchesRequest = PlayersApi.getPlayerMatches({ playerId })
-const playerActivityRequest = PlayersApi.getPlayerStatisticsActivity({ playerId })
+const playerActivityRequest = PlayersApi.getPlayerStatisticsActivity({ playerId }).catch(() => {})
 
 const player = await playerRequest
 const playerMatches = await playerMatchesRequest
@@ -94,11 +94,11 @@ const highestLeague = player.leaderboard_entries.reduce(
         </div>
       </Widget>
       <div class="hidden sm:block">
-        <PlayerActivity activity={playerActivity} {player} />
+        {playerActivity?.history ? <PlayerActivity activity={playerActivity} {player} /> : <></>}
       </div>
     </div>
     <div class="sm:hidden">
-      <PlayerActivity activity={playerActivity} {player} />
+      {playerActivity?.history ? <PlayerActivity activity={playerActivity} {player} /> : <></>}
     </div>
   </section>
 </Layout>
