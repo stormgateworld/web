@@ -1,13 +1,8 @@
 // @ts-nocheck
 
 import { onMount } from "solid-js"
-import Chart from "chart.js/auto"
-import { Colors, Title, Tooltip, type ChartOptions, type ChartData } from "chart.js"
+import { Chart, BarController, Colors, Title, Tooltip, type ChartOptions, type ChartData } from "chart.js"
 import { DefaultChart } from "solid-chartjs"
-
-type GameLengthProps = {
-  data: Array[]
-}
 
 const prettyLabels = {
   "0-120": "<2m",
@@ -24,21 +19,13 @@ const prettyLabels = {
 }
 
 export function GameLengthChart(props: GameLengthChartProps) {
-  var labels = []
-  var wins = []
-  var losses = []
-  var games = []
-  props.data.map((period) => labels.push(prettyLabels[period.match_length_range]))
-  props.data.map((period) => wins.push(period.wins_count))
-  props.data.map((period) => losses.push(period.losses_count))
-  props.data.map((period) => games.push(period.matches_count))
-  let canvas: HTMLCanvasElement
-  onMount(() => {
-    Chart.register(Title, Tooltip, Colors)
-  })
+  const labels = props.data.map((period) => prettyLabels[period.match_length_range])
+  const wins = props.data.map((period) => period.wins_count)
+  const losses = props.data.map((period) => period.losses_count)
 
-  const min = 0
-  const max = Math.max(...games)
+  onMount(() => {
+    Chart.register(BarController, Title, Tooltip, Colors)
+  })
 
   const chartData: ChartData = {
     labels: labels,
@@ -83,14 +70,7 @@ export function GameLengthChart(props: GameLengthChartProps) {
 
   return (
     <div class="relative w-full overflow-hidden">
-      <DefaultChart
-        type="bar"
-        data={chartData}
-        options={chartOptions}
-        height={100}
-        width={300}
-        ref={(c) => (canvas = c)}
-      />
+      <DefaultChart type="bar" data={chartData} options={chartOptions} height={100} width={300} />
     </div>
   )
 }
