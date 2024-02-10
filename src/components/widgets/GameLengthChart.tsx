@@ -67,6 +67,9 @@ export function GameLengthChart(props: GameLengthChartProps) {
       title: {
         display: false,
       },
+      legend: {
+        display: false,
+      },
     },
     scales: {
       x: {
