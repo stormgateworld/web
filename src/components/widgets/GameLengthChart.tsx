@@ -1,7 +1,7 @@
 // @ts-nocheck
 
-import { onMount } from "solid-js"
-import { Chart, BarController, Colors, Title, Tooltip, type ChartOptions, type ChartData } from "chart.js"
+import { type ChartOptions, type ChartData } from "chart.js"
+import "chart.js/auto"
 import { DefaultChart } from "solid-chartjs"
 
 const prettyLabels = {
@@ -22,10 +22,6 @@ export function GameLengthChart(props: GameLengthChartProps) {
   const labels = props.data.map((period) => prettyLabels[period.match_length_range])
   const wins = props.data.map((period) => period.wins_count)
   const losses = props.data.map((period) => period.losses_count)
-
-  onMount(() => {
-    Chart.register(BarController, Title, Tooltip, Colors)
-  })
 
   const chartData: ChartData = {
     labels: labels,
