@@ -33,10 +33,10 @@ const news = (await newsRequest).sort((a, b) => {
   <section class="relative mx-auto max-w-screen-2xl px-4">
     <div id="twitch-wrapper">
       <!-- Add a placeholder for the Twitch embed -->
-      <h2 class="text-xl md:text-2xl font-black my-6 text-white/90 text-center mt-12">
+      <h2 class="my-6 mt-12 text-center text-xl font-black text-white/90 md:text-2xl">
         Now Streaming EGCTV Stormgate Open Live on Twitch
       </h2>
-      <div id="twitch-embed" class="w-full aspect-video relative"></div>
+      <div id="twitch-embed" class="relative aspect-video w-full"></div>
 
       <!-- Load the Twitch embed script -->
       <script src="https://player.twitch.tv/js/embed/v1.js" is:inline></script>

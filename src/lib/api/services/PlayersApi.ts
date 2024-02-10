@@ -43,17 +43,25 @@ export class PlayersApi {
    */
   public static getPlayerMatches({
     playerId,
+    page,
+    count,
   }: {
     /**
      * Player ID
      */
     playerId: string
+    page?: number | null
+    count?: number | null
   }): CancelablePromise<PlayerMatchesResponse> {
     return __request(OpenAPI, {
       method: "GET",
       url: "/v0/players/{player_id}/matches",
       path: {
         player_id: playerId,
+      },
+      query: {
+        page: page,
+        count: count,
       },
       errors: {
         404: `Player was not found`,

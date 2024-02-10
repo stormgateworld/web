@@ -8,7 +8,8 @@ export type PlayerStatsEntryAggregated = {
   matches_per_day: PlayerStatsEntryNumBreakdown
   wins: number
   losses: number
-  win_rate: number
+  ties: number
+  win_rate?: number | null
   mmr: PlayerStatsEntryNumBreakdown
   points: PlayerStatsEntryNumBreakdown
   match_length: PlayerStatsEntryNumBreakdown
