@@ -1,10 +1,10 @@
 // @ts-nocheck
 
 import { onMount } from "solid-js"
-import { BarController, Chart, Colors, Title, Tooltip, type ChartOptions, type ChartData } from "chart.js"
+import { Bar, Chart, Colors, Title, Tooltip, type ChartOptions, type ChartData } from "chart.js"
 import { DefaultChart } from "solid-chartjs"
 
-Chart.register(Title, Tooltip, Colors, BarController)
+Chart.register(Title, Tooltip, Colors, Bar)
 
 type GameLengthProps = {
   data: Array[]
