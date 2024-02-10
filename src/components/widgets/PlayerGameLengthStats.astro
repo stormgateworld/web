@@ -1,0 +1,46 @@
+---
+import { Race, type PlayerMatchupsStats } from "../../lib/api"
+import Widget from "../Widget.astro"
+import { classes, styles } from "../../lib/theme"
+import { Image } from "astro:assets"
+import infernals from "../../assets/game/factions/infernals-small.png"
+import vanguard from "../../assets/game/factions/vanguard-small.png"
+import { GameLengthChart } from "./GameLengthChart"
+
+type Theme = keyof typeof styles.badges
+interface Props {
+  playerMatchupStats: PlayerMatchupsStats
+}
+
+const { playerMatchupStats } = Astro.props
+const matchupsSortedByRace = playerMatchupStats.matchups.sort((a, b) => a.race.localeCompare(b.race))
+---
+
+<Widget title="Game Length">
+  <table class="mx-auto w-full table-auto whitespace-nowrap text-left text-sm transition-opacity">
+    <tbody>
+      {
+        matchupsSortedByRace.map((matchup) => (
+          <>
+            <tr class="border-b border-gray-700/50 last:border-b-0">
+              <td class="flex w-full  gap-2 truncate p-2 font-semibold text-gray-50">
+                <Image src={matchup.race === "infernals" ? infernals : vanguard} alt={matchup.race} class="size-6" />
+                vs
+                <Image
+                  src={matchup.opponent_race === "infernals" ? infernals : vanguard}
+                  alt={matchup.opponent_race}
+                  class="size-6"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td class="pr-2 text-right text-sm text-gray-100">
+                <GameLengthChart data={matchup.match_length} client:idle />
+              </td>
+            </tr>
+          </>
+        ))
+      }
+    </tbody>
+  </table>
+</Widget>

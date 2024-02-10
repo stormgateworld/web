@@ -10,6 +10,7 @@ import { PlayersApi } from "../../lib/api"
 import { RankedBadge } from "../../components/ui/RankedBadge"
 import PlayerActivity from "../../components/widgets/PlayerActivity.astro"
 import PlayerMatchupStats from "../../components/widgets/PlayerMatchupStats.astro"
+import PlayerGameLengthStats from "../../components/widgets/PlayerGameLengthStats.astro"
 import PlayerOpponents from "../../components/widgets/PlayerOpponents.astro"
 import { styles } from "../../lib/theme"
 
@@ -103,6 +104,9 @@ const highestLeague = player?.leaderboard_entries?.reduce(
         {playerMatchupStats.matchups.length > 0 && <PlayerMatchupStats playerMatchupStats={playerMatchupStats} />}
       </div>
       <div class="hidden lg:block">
+        {playerMatchupStats.matchups.length > 0 && <PlayerGameLengthStats playerMatchupStats={playerMatchupStats} />}
+      </div>
+      <div class="hidden lg:block">
         {playerOpponents.opponents.length > 0 && <PlayerOpponents opponents={playerOpponents} />}
       </div>
     </div>
@@ -111,6 +115,9 @@ const highestLeague = player?.leaderboard_entries?.reduce(
     </div>
     <div class="lg:hidden">
       {playerMatchupStats.matchups.length > 0 && <PlayerMatchupStats playerMatchupStats={playerMatchupStats} />}
+    </div>
+    <div class="lg:hidden">
+      {playerMatchupStats.matchups.length > 0 && <PlayerGameLengthStats playerMatchupStats={playerMatchupStats} />}
     </div>
     <div class="lg:hidden">
       {playerOpponents.opponents.length > 0 && <PlayerOpponents opponents={playerOpponents} />}
