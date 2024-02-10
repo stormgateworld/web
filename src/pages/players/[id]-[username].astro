@@ -47,9 +47,12 @@ const highestLeague = player?.leaderboard_entries?.reduce(
 
 <Layout title={player?.nickname}>
   <div class="w-full border-b border-gray-700/50 bg-gray-800/50 backdrop-blur-lg">
-    <div class="mx-auto flex max-w-screen-lg flex-wrap items-center gap-4 px-4 py-4">
-      <RankedBadge entry={highestLeague} class="w-20" client:load />
-      <h1 class="flex-auto text-2xl font-bold text-gray-50">{player.nickname}</h1>
+    <div class="mx-auto flex max-w-screen-lg flex-wrap items-center gap-4 px-4 md:px-8 py-4">
+      <div class="flex-auto flex items-center gap-3">
+        {player.avatar_url ? <img src={player.avatar_url} alt={player.nickname} class="rounded-sm w-6 md:w-8" /> : <></>}
+        <h1 class="flex-auto text-lg md:text-2xl font-bold text-gray-50">{player.nickname}</h1>
+      </div>
+      <RankedBadge entry={highestLeague} class="w-16 md:w-20" client:load />
     </div>
   </div>
   <section class="relative mx-auto flex max-w-screen-lg flex-col gap-6 px-4 py-8 md:px-7 lg:flex-row">
