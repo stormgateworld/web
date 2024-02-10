@@ -104,7 +104,7 @@ export type RedditData = {
 }
 
 export type ToolData = {
-  tags: string[],
+  tags: string[]
   external: boolean
 }
 

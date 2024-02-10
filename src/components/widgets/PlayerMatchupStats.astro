@@ -15,7 +15,7 @@ const { playerMatchupStats } = Astro.props
 const matchupsSortedByRace = playerMatchupStats.matchups.sort((a, b) => a.race.localeCompare(b.race))
 ---
 
-<Widget title="Winrates by matchup">
+<Widget title="Winrates By Matchup">
   <table class="mx-auto w-full table-auto whitespace-nowrap text-left text-sm transition-opacity">
     <tbody>
       {
