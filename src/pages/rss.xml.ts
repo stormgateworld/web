@@ -1,8 +1,6 @@
 export const prerender = false
 
-import type { APIRoute } from "astro"
-
-export const get: APIRoute = async ({ request }) => {
+export async function GET() {
   const response = await fetch(`https://api.stormgateworld.com/rss.xml`)
   const code = response.status
   const feed = await response.text()
