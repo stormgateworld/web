@@ -33,3 +33,17 @@ export function formatDuration(seconds?: number | null) {
 export function urlencode(str: string) {
   return encodeURIComponent(str).replace(/%20/g, "-").replace(/%2F/g, "-")
 }
+
+export function encodeParams(obj: Record<string, any>): string {
+  const encodedParams: string[] = [];
+
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      const value = obj[key];
+      encodedParams.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+    }
+  }
+
+  return encodedParams.join('&');
+}
+

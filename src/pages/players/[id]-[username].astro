@@ -7,6 +7,7 @@ import infernals from "../../assets/game/factions/infernals-small.png"
 import vanguard from "../../assets/game/factions/vanguard-small.png"
 import MatchPreview from "../../components/widgets/MatchPreview.astro"
 import { PlayersApi } from "../../lib/api"
+import { encodeParams } from "../../lib/utils"
 import { RankedBadge } from "../../components/ui/RankedBadge"
 import PlayerActivity from "../../components/widgets/PlayerActivity.astro"
 import PlayerMatchupStats from "../../components/widgets/PlayerMatchupStats.astro"
@@ -43,10 +44,12 @@ const highestLeague = player?.leaderboard_entries?.reduce(
   (acc, entry) => (entry.points > acc.points ? entry : acc),
   player.leaderboard_entries[0]
 )
+const ogImageData = encodeParams(player) + encodeParams(highestLeague)
 ---
 
-<Layout title={player?.nickname}>
+<Layout title={player?.nickname} ogImage={`https://418e-2001-569-bdb2-5700-f0a2-6841-bcf7-4cef.ngrok-free.app/og-images/players/${playerId}}.png?${ogImageData}`}>
   <div class="w-full border-b border-gray-700/50 bg-gray-800/50 backdrop-blur-lg">
+    <p>?{ogImageData}</p>
     <div class="mx-auto flex max-w-screen-lg flex-wrap items-center gap-4 px-4 py-4">
       <RankedBadge entry={highestLeague} class="w-20" client:load />
       <h1 class="flex-auto text-2xl font-bold text-gray-50">{player.nickname}</h1>

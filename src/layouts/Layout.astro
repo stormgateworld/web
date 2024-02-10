@@ -6,9 +6,10 @@ import { classes } from "../lib/theme"
 
 export interface Props {
   title: string
+  ogImage?: string
 }
 
-const { title } = Astro.props
+const { title, ogImage } = Astro.props
 const currentRoute = new URL(Astro.request.url).pathname
 
 const navLinks = [
@@ -29,6 +30,19 @@ const navLinks = [
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.22.0/tabler-icons.min.css" />
     <link rel="icon" type="image/svg+xml" href="/favicon.png" />
     <meta name="generator" content={Astro.generator} />
+    <meta property="og:site_name" content="Stormgate World"/>
+    <meta property="og:image:type" content="image/png"/>
+    <meta property="og:image" content={ ogImage }/>
+    <meta property="og:image:width" content="900"/>
+    <meta property="og:image:height" content="450"/>
+    <meta property="og:type" content="profile"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content=""/>
+    <meta name="twitter:description" content=""/>
+    <meta name="twitter:image:type" content="image/png"/>
+    <meta name="twitter:image" content={ ogImage }/>
+    <meta name="twitter:image:width" content="900"/>
+    <meta name="twitter:image:height" content="450"/>
     <title>
       {title ? `${title} - Stormgate World` : "Stormgate World"}
     </title>
