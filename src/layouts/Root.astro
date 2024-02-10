@@ -1,0 +1,25 @@
+---
+import "@fontsource-variable/nunito-sans"
+
+export interface Props {
+  title: string
+}
+
+const { title } = Astro.props
+---
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-pt-24">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.png" />
+    <meta name="generator" content={Astro.generator} />
+    <title>
+      {title ? `${title} - Stormgate World` : "Stormgate World"}
+    </title>
+  </head>
+  <body class="bg-body text-body font-body scroll-pt-24 bg-gray-950 text-white antialiased">
+    <slot />
+  </body>
+</html>
