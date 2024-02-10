@@ -1,4 +1,8 @@
 export const styles = {
+  layout: {
+    containerPadding: `px-4 md:px-6`,
+    container: `mx-auto max-w-screen-xl`,
+  },
   button: {
     base: `inline-flex items-center justify-center rounded-sm
             bg-gray-800/85 border border-gray-700 backdrop-blur-sm
