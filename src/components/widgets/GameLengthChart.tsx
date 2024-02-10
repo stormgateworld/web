@@ -1,8 +1,13 @@
 // @ts-nocheck
 
 import { onMount } from "solid-js"
-import { Chart, BarController, Colors, Title, Tooltip, type ChartOptions, type ChartData } from "chart.js"
-import { DefaultChart } from "solid-chartjs"
+import { Chart, Colors, Title, Tooltip, type ChartOptions, type ChartData } from "chart.js"
+import { Bar } from "solid-chartjs"
+import type { PlayerMatchupsStatsEntry } from "../../lib/api/models/PlayerMatchupsStatsEntry"
+
+type GameLengthProps = {
+  data: Array<PlayerMatchupsStatsEntry>
+}
 
 const prettyLabels = {
   "0-120": "<2m",
@@ -16,15 +21,15 @@ const prettyLabels = {
   "961-1080": "18-20m",
   "1081-1200": "20-22m",
   "1320+": "22m+",
-}
+} as const
 
-export function GameLengthChart(props: GameLengthChartProps) {
-  const labels = props.data.map((period) => prettyLabels[period.match_length_range])
+export function GameLengthChart(props: GameLengthProps) {
+  const labels = props.data.map((period) => prettyLabels[period.match_length_range as keyof typeof prettyLabels])
   const wins = props.data.map((period) => period.wins_count)
   const losses = props.data.map((period) => period.losses_count)
 
   onMount(() => {
-    Chart.register(BarController, Title, Tooltip, Colors)
+    Chart.register(Title, Tooltip, Colors)
   })
 
   const chartData: ChartData = {
@@ -33,12 +38,12 @@ export function GameLengthChart(props: GameLengthChartProps) {
       {
         label: "Wins",
         data: wins,
-        backgroundColor: "green",
+        backgroundColor: "#5EC269",
       },
       {
         label: "Losses",
         data: losses,
-        backgroundColor: "red",
+        backgroundColor: "#DD524C",
       },
     ],
   }
@@ -46,6 +51,7 @@ export function GameLengthChart(props: GameLengthChartProps) {
   const chartOptions: ChartOptions = {
     responsive: true,
     maintainAspectRatio: true,
+    animation: false,
     interaction: {
       intersect: false,
       mode: "index",
@@ -70,7 +76,7 @@ export function GameLengthChart(props: GameLengthChartProps) {
 
   return (
     <div class="relative w-full overflow-hidden">
-      <DefaultChart type="bar" data={chartData} options={chartOptions} height={100} width={300} />
+      <Bar data={chartData} options={chartOptions} height={100} width={300} />
     </div>
   )
 }
