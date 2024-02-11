@@ -1,0 +1,53 @@
+---
+import { styles } from "../../lib/theme"
+const currentRoute = new URL(Astro.request.url).pathname
+type Link = {
+  label: string
+  href?: string
+}
+
+interface Props {
+  /** The breadcrumb up to but excluding current page */
+  breadcrumb?: Link[]
+  /** The current page or current and sibling pages/tabs */
+  current: Link | Link[]
+}
+const { breadcrumb, current } = Astro.props
+const tabs = Array.isArray(current) ? current : [current]
+---
+
+<div class="scrollbar-hide overflow-x-auto border-b border-white/7 bg-white/3">
+  <div
+    class:list={[
+      styles.layout.container,
+      styles.layout.containerPadding,
+      "flex items-center gap-y-4 gap-4 sm:gap-8 py-2 font-extrabold text-xs md:text-sm whitespace-nowrap",
+    ]}
+  >
+    {
+      breadcrumb?.map(({ label, href }) => (
+        <>
+          <a href={href} class:list={["text-white/50", tabs.length > 1 && "hidden sm:inline"]}>
+            {label}
+          </a>
+          <span class:list={["text-white/35 w-2 -mx-2 text-center", tabs.length > 1 && "hidden sm:inline"]}>/</span>
+        </>
+      ))
+    }
+    {
+      tabs.map(({ label, href }) => (
+        <>
+          <a
+            href={href}
+            class:list={[
+              "text-xs md:text-sm font-bold",
+              href == currentRoute ? "text-white/90" : "text-white/50 hover:text-white/100",
+            ]}
+          >
+            {label}
+          </a>
+        </>
+      ))
+    }
+  </div>
+</div>

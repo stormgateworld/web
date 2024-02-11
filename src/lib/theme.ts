@@ -1,7 +1,8 @@
 export const styles = {
   layout: {
-    containerPadding: `px-4 md:px-6`,
+    containerPadding: `px-4 md:px-8`,
     container: `mx-auto max-w-screen-xl`,
+    gap: `gap-4 md:gap-6`,
   },
   button: {
     base: `inline-flex items-center justify-center rounded-sm
