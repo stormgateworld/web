@@ -65,11 +65,11 @@ export async function GET({ params, request }) {
                 </div>
               </div>
               <div class="flex mt-7 w-full">
-                <div class="flex flex-col pl-8 mr-16">
+                <div class="flex flex-col pl-8 mr-20">
                   <p class="m-0 text-gray-400 font-bold text-2xl">MMR</p>
                   <p class="m-0 text-gray-100 text-3xl font-bold">${highestLeague?.mmr?.toFixed()}</p>
                 </div>
-                <div class="flex flex-col mr-10">
+                <div class="flex flex-col mr-14">
                   <p class="m-0 text-gray-400 font-bold text-2xl">Win Rate</p>
                   <p class="m-0 text-gray-100 text-3xl font-bold">${highestLeague?.win_rate?.toFixed()}%</p>
                 </div>
@@ -100,7 +100,7 @@ export async function GET({ params, request }) {
           class="flex w-full rounded-xl items-center justify-center"
           style="
             background: url('https://${host}/images/game/vanguard-base-hero.jpg');
-            background-size: 1000px 500px; background-repeat: no-repeat;
+            background-size: 1050px 500px; background-repeat: no-repeat;
             height: 100%;"
         >
           <div class="flex flex-col w-full text-center bg-zinc-800/90 self-end p-8 mb-8 border-t border-b border-blue-500/20">
@@ -126,7 +126,7 @@ export async function GET({ params, request }) {
     </div>`)
 
   const svg = await satori(markup, {
-    width: 900,
+    width: 1050,
     height: 450,
     fonts: [
       {
