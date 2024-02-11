@@ -9,6 +9,11 @@ import { StatisticsApi } from "../lib/api/services/StatisticsApi"
 import { formatNumber } from "../lib/utils"
 import Timeago from "../components/Timeago.astro"
 import { LeagueDropdown } from "../components/widgets/LeagueDropdown"
+import Header from "../components/layout/Header.astro"
+import Section from "../components/layout/Section.astro"
+import HeaderMeta from "../components/layout/HeaderMeta.astro"
+import { formatDateRelative } from "../lib/format"
+import Main from "../components/layout/Main.astro"
 
 const league = new URLSearchParams(Astro.url.search).get("league")
 const { races, cached_at } = await StatisticsApi.getStatistics({ league })
@@ -65,70 +70,64 @@ const factions = [
 ---
 
 <Layout title="Statistics">
-  <div class="w-full border-b border-gray-700/50 bg-gray-800/50 backdrop-blur-lg">
-    <div class="mx-auto flex max-w-screen-md flex-wrap items-center justify-between gap-4 px-4 py-8 md:px-7">
-      <div>
-        <p class="font-bold text-gray-500">Game</p>
-        <h1 class="flex-auto text-2xl font-bold text-white">Statistics</h1>
-      </div>
-      <p class="text-xs text-gray-500">
-        Last updated <Timeago date={new Date(cached_at)} />
-      </p>
-    </div>
-  </div>
-  <div class="mx-auto w-full max-w-screen-md p-4 md:px-7 md:py-8">
-    <div class="flex justify-between py-4">
-      <div>
-        <h2 class="flex-auto text-2xl font-bold text-white">Factions</h2>
-        <p class="text-gray-400">Excludes Mirrors.</p>
+  <Header section="Insights" title="Statistics">
+    <HeaderMeta
+      items={[
         {
-          league && (
-            <p class="text-balance text-sm text-gray-500">
-              League stats are based on <em>all matches</em> by players who are currently in the {league} league.
-            </p>
-          )
+          icon: import("lucide-static/icons/clock.svg?raw"),
+          label: `Last updated ${formatDateRelative(new Date(cached_at))}`,
+        },
+      ]}
+    />
+  </Header>
+  <Section title="Factions" class="!max-w-screen-md">
+    {
+      league && (
+        <p slot="header" class="text-balance text-sm text-gray-500">
+          League stats are based on <em>all matches</em> by players who are currently in the {league} league.
+        </p>
+      )
+    }
+    <div slot="controls">
+      <LeagueDropdown selected={league} queryParam="league" client:idle />
+    </div>
+    <div>
+      <div class="flex w-full flex-wrap gap-4 sm:flex-nowrap">
+        {
+          factions.map((faction) => (
+            <div class="min-w-0 flex-auto rounded-xl border border-gray-800 bg-gray-900 p-4">
+              <h2 class="mb-4 text-xl font-black">{faction.name}</h2>
+              <div class="flex gap-2 xs:gap-4">
+                <Image src={faction.icon} alt="Vanguard" class="size-12 xs:size-16" />
+                <div class="flex flex-col">
+                  <span class="text-sm font-bold text-gray-300">Win Rate</span>
+                  <span
+                    class:list={[
+                      "text-xl xs:text-3xl font-black",
+                      faction.stats.winrate >= 50 ? "text-lime-500" : "text-red-500",
+                    ]}
+                  >
+                    {faction.stats.winrate}%
+                  </span>
+                </div>
+                <div class="flex flex-col">
+                  <span class="text-sm font-bold text-gray-300">Pick Rate</span>
+                  <span class="text-xl font-black xs:text-3xl">{faction.stats.pickrate}%</span>
+                </div>
+              </div>
+              <WinrateChart data={faction.stats.history.data} labels={faction.stats.history.labels} client:idle />
+              {/*<WinrateChart data={faction.stats.duration.data} labels={faction.stats.duration.labels} client:idle />*/}
+              <p class="mt-2 pl-1 text-xs leading-snug text-gray-500">
+                Based on {formatNumber(faction.stats.matches.count!)} matches in the past 7 days, excl.{" "}
+                {formatNumber(faction.stats.matches.mirrors!)} mirrors
+              </p>
+            </div>
+          ))
         }
       </div>
-      <div class="flex-none">
-        <LeagueDropdown selected={league} queryParam="league" client:idle />
+      <div class="mt-4 min-w-0 flex-auto rounded-xl border border-gray-800 bg-gray-900 p-6">
+        <h2 class="flex-auto text-center text-2xl font-bold text-gray-600">More stats soon</h2>
       </div>
     </div>
-
-    <div class="flex w-full flex-wrap gap-4 sm:flex-nowrap">
-      {
-        factions.map((faction) => (
-          <div class="min-w-0 flex-auto rounded-xl border border-gray-800 bg-gray-900 p-4">
-            <h2 class="mb-4 text-xl font-black">{faction.name}</h2>
-            <div class="flex gap-2 xs:gap-4">
-              <Image src={faction.icon} alt="Vanguard" class="size-12 xs:size-16" />
-              <div class="flex flex-col">
-                <span class="text-sm font-bold text-gray-300">Win Rate</span>
-                <span
-                  class:list={[
-                    "text-xl xs:text-3xl font-black",
-                    faction.stats.winrate >= 50 ? "text-lime-500" : "text-red-500",
-                  ]}
-                >
-                  {faction.stats.winrate}%
-                </span>
-              </div>
-              <div class="flex flex-col">
-                <span class="text-sm font-bold text-gray-300">Pick Rate</span>
-                <span class="text-xl font-black xs:text-3xl">{faction.stats.pickrate}%</span>
-              </div>
-            </div>
-            <WinrateChart data={faction.stats.history.data} labels={faction.stats.history.labels} client:idle />
-            {/*<WinrateChart data={faction.stats.duration.data} labels={faction.stats.duration.labels} client:idle />*/}
-            <p class="mt-2 pl-1 text-xs leading-snug text-gray-500">
-              Based on {formatNumber(faction.stats.matches.count!)} matches in the past 7 days, excl.{" "}
-              {formatNumber(faction.stats.matches.mirrors!)} mirrors
-            </p>
-          </div>
-        ))
-      }
-    </div>
-    <div class="mt-4 min-w-0 flex-auto rounded-xl border border-gray-800 bg-gray-900 p-6">
-      <h2 class="flex-auto text-center text-2xl font-bold text-gray-600">More stats soon</h2>
-    </div>
-  </div>
+  </Section>
 </Layout>

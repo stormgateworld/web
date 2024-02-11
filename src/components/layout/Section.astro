@@ -4,15 +4,16 @@ import { styles } from "../../lib/theme"
 interface Props {
   title?: string
   description?: string
+  class?: string
 }
-const { title, description } = Astro.props
+const { title, description, class: classes } = Astro.props
 const hasHeader = title || description || Astro.slots.header || Astro.slots.controls
 ---
 
-<div class:list={[styles.layout.container, styles.layout.containerPadding, "pt-4 md:pt-6"]}>
+<div class:list={[styles.layout.container, styles.layout.containerPadding, "pt-4 md:pt-6", classes]}>
   {
     hasHeader && (
-      <div class="flex justify-between my-4 md:my-6 gap-4">
+      <div class="my-4 flex justify-between gap-4 md:my-6">
         <div class="flex-auto">
           {title && <h2 class="text-2xl font-bold text-white">{title}</h2>}
           {description && <p class="text-gray-400">{description}</p>}

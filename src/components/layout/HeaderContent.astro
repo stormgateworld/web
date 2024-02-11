@@ -9,15 +9,26 @@ interface Props {
 const { title, section } = Astro.props
 ---
 
-<div class:list={[styles.layout.container, styles.layout.containerPadding]}>
-  <div class="py-4 flex items-center">
+<div class:list={[styles.layout.container, styles.layout.containerPadding, "relative"]}>
+  <div class="flex items-center py-4">
+    {
+      Astro.slots.has("left") && (
+        <div>
+          <slot name="left" />
+        </div>
+      )
+    }
     <div class="flex-auto py-4">
-      {section && <p class="mb-2 text-base font-bold text-white/60">{section}</p>}
+      {section && <p class="text-base font-bold text-white/60">{section}</p>}
       {title && <h1 class="text-xl font-black text-white/90 md:text-3xl">{title}</h1>}
       <slot />
     </div>
-    <div>
-      <slot name="actions" />
-    </div>
+    {
+      Astro.slots.has("right") && (
+        <div>
+          <slot name="right" />
+        </div>
+      )
+    }
   </div>
 </div>

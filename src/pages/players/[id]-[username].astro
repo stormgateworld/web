@@ -1,6 +1,6 @@
 ---
 export const prerender = false
-import Layout from "../../layouts/New.astro"
+import Layout from "../../layouts/Layout.astro"
 import Header from "../../components/layout/Header.astro"
 import HeaderContent from "../../components/layout/HeaderContent.astro"
 
@@ -20,6 +20,7 @@ import HeaderMeta from "../../components/layout/HeaderMeta.astro"
 import Section from "../../components/layout/Section.astro"
 import Main from "../../components/layout/Main.astro"
 import Sidebar from "../../components/layout/Sidebar.astro"
+import { formatDateRelative } from "../../lib/format"
 
 type Theme = keyof typeof styles.badges
 
@@ -53,21 +54,27 @@ const highestLeague = player?.leaderboard_entries?.reduce(
 ---
 
 <Layout title={player?.nickname!}>
-  <Header>
-    <HeaderContent section="Players">
-      <div class="flex items-center gap-3">
-        {player.avatar_url && <img src={player.avatar_url} alt={player.nickname} class="w-6 rounded-sm md:w-8" />}
-        <h1 class="text-xl font-black text-white/90 md:text-3xl">{player.nickname}</h1>
-      </div>
-      <div slot="actions">
-        <RankedBadge entry={highestLeague} class="w-16 md:w-20" client:load />
-      </div>
+  <Header backdropImage={player.avatar_url}>
+    <HeaderContent section="Players" title={player.nickname!}>
+      {
+        player.avatar_url && (
+          <img
+            slot="left"
+            src={player.avatar_url}
+            alt={player.nickname}
+            class="mr-4 size-8 flex-none rounded md:size-16"
+          />
+        )
+      }
+      <RankedBadge slot="right" entry={highestLeague} class="w-16 md:w-20" client:load />
     </HeaderContent>
     <HeaderMeta
       items={[
         {
           icon: import("lucide-static/icons/activity.svg?raw"),
-          label: `Last Match ${new Date(player.last_match_ended_at!).toLocaleDateString()}`,
+          label: `Last Match ${formatDateRelative(
+            new Date(playerMatches.matches[0]?.created_at || player.last_match_ended_at!)
+          )}`,
         },
         { icon: import("lucide-static/icons/hash.svg?raw"), label: player.id },
       ]}
@@ -76,7 +83,7 @@ const highestLeague = player?.leaderboard_entries?.reduce(
   <Section>
     <Main>
       <Widget title="Top Ranks">
-        <div class="flex flex-row gap-2 -mx-2">
+        <div class="flex flex-row flex-wrap gap-2">
           {
             player.leaderboard_entries.map((entry) => (
               <div
@@ -98,7 +105,6 @@ const highestLeague = player?.leaderboard_entries?.reduce(
                   <span class:list={["text-xs", styles.badges[entry.race as Theme].badgeLabel]}>Points</span>
                   <p>
                     {Math.round(entry.points)}
-
                     <RankedBadge entry={entry} class="inline-block w-4" client:load />
                   </p>
                 </div>
@@ -119,11 +125,8 @@ const highestLeague = player?.leaderboard_entries?.reduce(
     </Main>
     <Sidebar>
       {playerActivity?.history && <PlayerActivity activity={playerActivity} {player} />}
-
       {playerMatchupStats.matchups.length > 0 && <PlayerMatchupStats playerMatchupStats={playerMatchupStats} />}
-
       {playerMatchupStats.matchups.length > 0 && <PlayerGameLengthStats playerMatchupStats={playerMatchupStats} />}
-
       {playerOpponents.opponents.length > 0 && <PlayerOpponents opponents={playerOpponents} />}
     </Sidebar>
   </Section>
