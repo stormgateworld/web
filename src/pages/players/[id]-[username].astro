@@ -43,9 +43,17 @@ const highestLeague = player?.leaderboard_entries?.reduce(
   (acc, entry) => (entry.points > acc.points ? entry : acc),
   player.leaderboard_entries[0]
 )
+
+const ogTitle = `${player.nickname} - ${highestLeague.rank ? `Rank # ${highestLeague.rank} - ` : ""} Stormgate World`
+const ogDescription = `View the match history, win rates, top opponents, and more stats for ${player.nickname}.`
 ---
 
-<Layout title={player.nickname} ogImage={`/og-image/players/${playerId}-${player.nickname}.png`}>
+<Layout
+  title={player.nickname}
+  ogImageUrl={`/og-image/players/${playerId}-${player.nickname}.png`}
+  ogTitle={ogTitle}
+  ogDescription={ogDescription}
+>
   <div class="w-full border-b border-gray-700/50 bg-gray-800/50 backdrop-blur-lg">
     <div class="mx-auto flex max-w-screen-lg flex-wrap items-center gap-4 px-4 py-4">
       <RankedBadge entry={highestLeague} class="w-20" client:load />

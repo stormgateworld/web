@@ -2,14 +2,16 @@
 import "@fontsource-variable/nunito-sans"
 
 import Footer from "../components/Footer.astro"
-import Meta from "./Meta.astro"
+import MetaImage from "./MetaImage.astro"
 
 export interface Props {
   title: string
-  ogImage?: string
+  ogImageUrl?: string
+  ogDescription?: string
+  ogTitle?: string
 }
 
-const { title, ogImage } = Astro.props
+const { title, ogImageUrl, ogTitle, ogDescription } = Astro.props
 const currentRoute = new URL(Astro.request.url).pathname
 
 const navLinks = [
@@ -30,7 +32,9 @@ const navLinks = [
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.22.0/tabler-icons.min.css" />
     <link rel="icon" type="image/svg+xml" href="/favicon.png" />
     <meta name="generator" content={Astro.generator} />
-    {ogImage && <Meta ogImageUrl={ogImage} />}
+    {ogImageUrl && <MetaImage ogImageUrl={ogImageUrl} />}
+    {ogTitle && <meta property="og:title" content={ogTitle} />}
+    {ogDescription && <meta property="og:description" content={ogDescription} />}
     <title>
       {title ? `${title} - Stormgate World` : "Stormgate World"}
     </title>
