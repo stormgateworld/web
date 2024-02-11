@@ -18,6 +18,7 @@ export type { LeaderboardEntryHistoryEntry } from "./models/LeaderboardEntryHist
 export type { LeaderboardEntryResponse } from "./models/LeaderboardEntryResponse"
 export { LeaderboardOrder } from "./models/LeaderboardOrder"
 export type { LeaderboardResponse } from "./models/LeaderboardResponse"
+export { League } from "./models/League"
 export type { MatchesResponse } from "./models/MatchesResponse"
 export type { MatchParticipantPlayerLeaderboardEntryResponse } from "./models/MatchParticipantPlayerLeaderboardEntryResponse"
 export type { MatchParticipantPlayerResponse } from "./models/MatchParticipantPlayerResponse"

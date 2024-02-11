@@ -2,9 +2,10 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { League } from "./League"
 export type MatchParticipantPlayerLeaderboardEntryResponse = {
   leaderboard_entry_id: string
-  league?: string | null
+  league?: League | null
   tier?: number | null
   rank?: number | null
   wins: number

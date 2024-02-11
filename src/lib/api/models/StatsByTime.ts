@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { League } from "./League"
 import type { StatsByTimeEntry } from "./StatsByTimeEntry"
 import type { StatsByTimeMatchLength } from "./StatsByTimeMatchLength"
 export type StatsByTime = {
@@ -9,7 +10,7 @@ export type StatsByTime = {
   updated_at: string
   period: string
   count: number
-  league?: string | null
+  league?: League | null
   races: Array<StatsByTimeEntry>
   match_length: StatsByTimeMatchLength
 }

@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { ActivityStatistics } from "../models/ActivityStatistics"
+import type { League } from "../models/League"
 import type { StatsByTime } from "../models/StatsByTime"
 import type { CancelablePromise } from "../core/CancelablePromise"
 import { OpenAPI } from "../core/OpenAPI"
@@ -29,7 +30,7 @@ export class StatisticsApi {
     league,
     count,
   }: {
-    league?: string | null
+    league?: League | null
     count?: number | null
   }): CancelablePromise<StatsByTime> {
     return __request(OpenAPI, {

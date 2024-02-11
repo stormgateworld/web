@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { Leaderboard } from "./Leaderboard"
+import type { League } from "./League"
 import type { Race } from "./Race"
 export type LeaderboardEntryResponse = {
   leaderboard_entry_id: string
@@ -14,7 +15,7 @@ export type LeaderboardEntryResponse = {
   avatar_url?: string | null
   rank?: number | null
   race: Race
-  league?: string | null
+  league?: League | null
   tier?: number | null
   mmr: number
   max_confirmed_mmr?: number | null
