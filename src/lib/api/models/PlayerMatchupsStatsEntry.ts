@@ -8,6 +8,9 @@ export type PlayerMatchupsStatsEntry = {
   matches_count: number
   wins_count: number
   losses_count: number
-  win_rate: number
+  wins: number
+  losses: number
+  ties: number
+  win_rate?: number | null
   match_length: PlayerStatsEntryNumBreakdown
 }

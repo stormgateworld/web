@@ -47,6 +47,17 @@
   ],
   "prettier": {
     "printWidth": 120,
-    "semi": false
+    "semi": false,
+    "plugins": [
+      "prettier-plugin-astro"
+    ],
+    "overrides": [
+      {
+        "files": "*.astro",
+        "options": {
+          "parser": "astro"
+        }
+      }
+    ]
   }
 }
