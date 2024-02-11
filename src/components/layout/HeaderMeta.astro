@@ -6,22 +6,31 @@ interface Props {
   items?: MetaItem[]
 }
 
-const items = await Promise.all(Astro.props.items ? Astro.props.items.map(async (item) => {
-  return {
-    ...item,
-    icon: item.icon ? (await item.icon)?.default : undefined
-  }
-}) : [])
-
+const items = await Promise.all(
+  Astro.props.items
+    ? Astro.props.items.map(async (item) => {
+        return {
+          ...item,
+          icon: item.icon ? (await item.icon)?.default : undefined,
+        }
+      })
+    : []
+)
 ---
 
-<div class="bg-black/35">
-  <div class:list={[styles.layout.container, styles.layout.containerPadding, "flex flex-wrap items-center gap-y-4 gap-4 md:gap-8 py-4"]}>
+<div class="bg-black/20">
+  <div
+    class:list={[
+      styles.layout.container,
+      styles.layout.containerPadding,
+      "flex flex-wrap items-center gap-y-4 gap-4 md:gap-8 py-4",
+    ]}
+  >
     {
       items?.map(({ label, icon }) => (
         <div class="flex items-center gap-2">
-          {icon ? <span class="text-white opacity-50  *:h-5 *:w-5" set:html={icon} /> : <></>}
-          <span class="text-white/60 text-sm font-bold">{label}</span>
+          {icon && <span class="text-white opacity-20  *:h-4 *:w-4 md:*:h-5 md:*:w-5" set:html={icon} />}
+          <span class="text-xs font-bold text-white/30 md:text-sm">{label}</span>
         </div>
       ))
     }
