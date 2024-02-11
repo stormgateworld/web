@@ -47,7 +47,8 @@ export async function GET({ params, request }) {
                 <img src="${badge}" class="w-16 mr-4 -mt-3" />
                 <div class="flex flex-col mt-2 mb-3">
                   <p class="w-full text-gray-400 text-2xl capitalize -mt-1 -mb-3 py-2 font-bold">
-                  ${highestLeague.league} ${highestLeague.tier}</p>
+                    ${highestLeague.league} ${highestLeague.tier}
+                  </p>
                   <h1 class="w-full text-gray-200 text-4xl capitalize m-0 pb-3">${player.nickname}</h1>
                 </div>
               </div>
