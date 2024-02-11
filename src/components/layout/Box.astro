@@ -1,3 +1,7 @@
-<div class="bg-gray-900/70 border border-gray-800/50 rounded-none md:rounded-xl min-h-52 -mx-4 md:mx-0">
+---
+import { styles } from "../../lib/theme"
+---
+
+<div class:list={[styles.box.base, "min-h-52"]}>
   <slot />
 </div>
