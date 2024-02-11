@@ -1,5 +1,4 @@
 // @ts-nocheck
-
 import { onMount } from "solid-js"
 import { Chart, Colors, Title, Tooltip, type ChartOptions, type ChartData } from "chart.js"
 import { Bar } from "solid-chartjs"
@@ -38,12 +37,12 @@ export function GameLengthChart(props: GameLengthProps) {
       {
         label: "Wins",
         data: wins,
-        backgroundColor: "#5EC269",
+        backgroundColor: "#4CA154",
       },
       {
         label: "Losses",
         data: losses,
-        backgroundColor: "#DD524C",
+        backgroundColor: "#CA3A31",
       },
     ],
   }

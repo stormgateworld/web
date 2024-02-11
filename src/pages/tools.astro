@@ -5,6 +5,8 @@ import type { ToolContent } from "../lib/content"
 import luminiteImage from "../assets/content/luminite.png"
 import replayRenamerImage from "../assets/content/replay-renamer.png"
 import bobBotImage from "../assets/content/bob-bot.png"
+import Header from "../components/layout/Header.astro"
+import Section from "../components/layout/Section.astro"
 
 const toolsContent: ToolContent[] = [
   {
@@ -43,17 +45,10 @@ const toolsContent: ToolContent[] = [
 ---
 
 <Layout title="Tools">
-  <div class="w-full border-b border-gray-700/50 bg-gray-800/50 backdrop-blur-lg">
-    <div class="mx-auto flex max-w-screen-lg flex-wrap items-center justify-between gap-4 px-4 py-8 md:px-7">
-      <div>
-        <p class="font-bold text-gray-500">Community</p>
-        <h1 class="flex-auto text-2xl font-bold text-white">Tools and Projects</h1>
-      </div>
-    </div>
-  </div>
-  <div class="mx-auto w-full max-w-screen-lg p-4 md:px-7 md:py-8">
-    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+  <Header title="Tools and Projects" section="Community" />
+  <Section>
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {toolsContent.map((c) => <Card data={c} />)}
     </div>
-  </div>
+  </Section>
 </Layout>

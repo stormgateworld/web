@@ -1,4 +1,12 @@
 export const styles = {
+  layout: {
+    containerPadding: `px-4 md:px-8`,
+    container: `mx-auto max-w-screen-xl`,
+    gap: `gap-4 md:gap-6`,
+  },
+  box: {
+    base: `bg-gray-900/70 border border-gray-800/50 rounded-none md:rounded-xl -mx-4 md:mx-0`,
+  },
   button: {
     base: `inline-flex items-center justify-center rounded-sm
             bg-gray-800/85 border border-gray-700 backdrop-blur-sm

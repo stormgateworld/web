@@ -18,7 +18,7 @@ const mainPlayer = match.players.find((player) => player.player?.player_id === m
   <div
     class:list={[
       "size-6 text-sm ml-1 flex justify-center items-center rounded text-gray-800 font-extrabold uppercase",
-      mainPlayer.result === "win" ? "bg-green-500" : mainPlayer.result === "loss" ? "bg-red-500" : "bg-gray-500",
+      mainPlayer.result === "win" ? "bg-green-600" : mainPlayer.result === "loss" ? "bg-red-600" : "bg-gray-500",
     ]}
   >
     {mainPlayer.result === "win" ? "W" : mainPlayer.result === "loss" ? "L" : "-"}
@@ -33,7 +33,7 @@ const mainPlayer = match.players.find((player) => player.player?.player_id === m
             <span
               class:list={[
                 "w-8 flex-none text-xs whitespace-nowrap text-right",
-                player.mmr_diff! > 0 ? "text-green-500" : player.mmr_diff! < 0 ? "text-red-500" : "text-gray-500",
+                player.mmr_diff! > 0 ? "text-green-600" : player.mmr_diff! < 0 ? "text-red-600" : "text-gray-500",
               ]}
             >
               {player.mmr_diff! > 0 ? "↑" : "↓"}

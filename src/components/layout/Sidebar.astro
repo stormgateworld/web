@@ -1,0 +1,9 @@
+---
+import { styles } from "../../lib/theme"
+---
+
+<div
+  class:list={["flex md:grid grid-cols-2 only:*:[grid-column:span_2] basis-1/4 lg:flex flex-col", styles.layout.gap]}
+>
+  <slot />
+</div>
