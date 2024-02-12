@@ -1,25 +1,37 @@
 ---
 import Svg from "@jasikpark/astro-svg-loader"
+import { classes } from "../../lib/theme"
+
+const navLinks = [
+  { href: "/faq", text: "FAQ" },
+  { href: "/api", text: "API" },
+  { href: "/privacy", text: "Privacy" },
+  { href: "/about", text: "About" },
+  {
+    href: "https://twitter.com/StormgateWorld",
+    text: "Twitter",
+    target: "_blank",
+    icon: "ti-brand-twitter-filled",
+  },
+  { href: "/rss.xml", text: "RSS Feed", target: "_blank", icon: "ti-rss" },
+]
 ---
 
 <footer class="mt-4 border-t border-gray-900 py-32 text-center md:mt-8">
   <div class="mx-auto">
     <nav class="flex columns-2 flex-wrap justify-center gap-x-8 gap-y-2 pb-6 sm:space-x-12" aria-label="Footer">
-      <a href="/api" class="text-sm leading-6 text-gray-100 hover:text-white">API</a>
-      <a href="/privacy" class="text-sm leading-6 text-gray-100 hover:text-white">Privacy</a>
-      <a href="/about" class="text-sm leading-6 text-gray-100 hover:text-white">About</a>
-      <a
-        href="https://twitter.com/StormgateWorld"
-        target="_blank"
-        class="text-sm leading-6 text-gray-100 hover:text-white"
-      >
-        <i class="ti ti-brand-twitter-filled"></i>
-        Twitter
-      </a>
-      <a href="/rss.xml" target="_blank" class="text-sm leading-6 text-gray-100 hover:text-white">
-        <i class="ti ti-rss"></i>
-        RSS Feed
-      </a>
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            target={link.target ? link.target : "_self"}
+            class="text-sm leading-6 text-gray-100 hover:text-white"
+          >
+            {link.icon && <i class={classes("ti", link.icon)} />}
+            {link.text}
+          </a>
+        ))
+      }
     </nav>
   </div>
   <div class="flex flex-col items-center gap-4">
