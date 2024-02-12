@@ -14,9 +14,9 @@ const { player, activity } = Astro.props
 
 function getWinrateClass(winrate: number) {
   if (winrate >= 0.65) return "bg-green-500"
-  if (winrate > 0.5) return "bg-lime-500"
+  if (winrate > 0.5) return "bg-green-600"
   if (winrate >= 0.45) return "bg-yellow-500"
-  if (winrate > 0) return "bg-orange-500"
+  if (winrate > 0.3) return "bg-orange-500"
   return "bg-red-500"
 }
 
@@ -25,7 +25,7 @@ function getDaySize(dayMatches: number, medianMatches: number) {
 
   const minSize = 50
   const maxSize = 100
-  const size = (dayMatches / medianMatches) * 100
+  const size = (dayMatches / medianMatches) * 0.7 * 100
 
   return Math.max(minSize, Math.min(size, maxSize))
 }
@@ -79,10 +79,7 @@ function formatMonth(date: Date) {
             ) : (
               <Tooltip content={tooltip} client:idle>
                 <div class="relative flex h-4 w-4 items-center justify-center">
-                  <div
-                    class:list={[" rounded-sm", getWinrateClass(win_rate)]}
-                    style={`width: ${size}%; height: ${size}%;`}
-                  />
+                  <div class:list={["rounded w-full h-full", getWinrateClass(win_rate)]} style={`scale: ${size}%;`} />
                 </div>
               </Tooltip>
             )

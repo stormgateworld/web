@@ -1,0 +1,138 @@
+---
+import { Image } from "astro:assets"
+import Svg from "@jasikpark/astro-svg-loader"
+import infernalsPortrait from "../../assets/game/factions/infernals-portrait.png"
+import vanguardPortrait from "../../assets/game/factions/vanguard-portrait.png"
+import vanguardIcon from "../../assets/game/factions/vanguard-small-glow.png"
+import infernalsIcon from "../../assets/game/factions/infernals-small-glow.png"
+import { RankedBadge } from "../ui/RankedBadge"
+import type { LeaderboardEntryResponse } from "../../lib/api"
+import { formatLeague } from "../../lib/format"
+import { Tooltip } from "../ui/Tooltip"
+
+interface Props {
+  faction: "infernals" | "vanguard"
+  entry: LeaderboardEntryResponse
+  class?: string
+}
+const styles = {
+  stat: {
+    label: "text-white/30 text-xs xs:text-sm font-extrabold mb-px truncate",
+    value: "text-white text-sm xs:text-base whitespace-nowrap font-black",
+  },
+}
+const factions = {
+  infernals: {
+    name: "Infernals",
+    portrait: infernalsPortrait,
+    icon: infernalsIcon,
+    card: `ring-[rgba(214,0,0,0.34)] from-[rgba(82,5,0,0.50)] to-[rgba(82,0,0,0.50)]`,
+  },
+  vanguard: {
+    name: "Vanguard",
+    portrait: vanguardPortrait,
+    icon: vanguardIcon,
+    card: `ring-[rgba(0,96,214,0.34)] from-[rgba(2,0,77,0.50)] to-[rgba(0,9,56,0.50)]`,
+  },
+} as const
+
+const entry = Astro.props.entry
+const faction = factions[Astro.props.faction as "infernals" | "vanguard"]
+const winrate = Math.round((entry.win_rate <= 1 ? entry.win_rate * 100 : entry.win_rate) ?? 0)
+
+const rankAvailable = entry.rank !== null && entry.rank! < 997 // Todo: Remove when we support ranks over 1000
+const lastRankAvailable =
+  entry.points !== null && `Last known rank #${entry.rank}\n${Math.round(entry.points!)} RP \n${formatLeague(entry)}`
+---
+
+<div
+  class:list={[
+    "flex flex-row relative rounded-xl overflow-hidden ring-inset ring-1 bg-gradient-to-br transition-all hover:brightness-125",
+    faction.card,
+    Astro.props.class,
+  ]}
+>
+  <Image
+    src={faction.portrait}
+    alt=""
+    class="pointer-events-none absolute inset-0 object-cover opacity-20 mix-blend-screen blur-xl brightness-150 saturate-150"
+    widths={[200, 400]}
+  />
+  <div class="relative flex flex-auto basis-3/4 flex-col">
+    <div class="flex items-center gap-3 bg-black/40 px-4 py-3 bg-blend-multiply">
+      <Image src={faction.icon} alt={faction.name} class="w-5 xs:w-8" />
+      <p class="text-lg font-bold text-white">{faction.name}</p>
+    </div>
+    <div class="flex flex-auto flex-wrap items-center gap-3 gap-y-2 p-4">
+      {
+        rankAvailable ? (
+          <>
+            <div class="-mb-5 -ml-2 -mr-1 -mt-3 w-12 flex-none xs:w-16">
+              <RankedBadge size="s" entry={entry} class="brightness-110 contrast-125 drop-shadow" />
+            </div>
+            <div>
+              <p class={styles.stat.label}>Rank</p>
+              <p class={styles.stat.value}># {entry.rank}</p>
+            </div>
+            <div>
+              <p class={styles.stat.label}>Points</p>
+              <p class={styles.stat.value}>{Math.round(entry.points!)}</p>
+            </div>
+            <div>
+              <p class={styles.stat.label}>League</p>
+              <p class={styles.stat.value}>{formatLeague(entry)} </p>
+            </div>
+          </>
+        ) : (
+          <Tooltip client:idle content={lastRankAvailable || "There is no up to date ranking and league available"}>
+            <div class="flex items-center gap-1">
+              <Svg src={import("lucide-static/icons/cloud-off.svg?raw")} class="mr-2 w-4 stroke-[3] opacity-40 " />
+              <p class="font-extrabold text-white/40">Rank Unavailable</p>
+              <a href="/faq/#why-is-my-rank-1000" class="text-xs font-bold text-white/50 mix-blend-screen">
+                <Svg
+                  src={import("lucide-static/icons/help-circle.svg?raw")}
+                  class="mr-2 w-4 fill-white stroke-black stroke-[3] opacity-30"
+                  aria-label="Learn more"
+                />
+              </a>
+            </div>
+          </Tooltip>
+        )
+      }
+    </div>
+    <div class="flex flex-wrap items-center gap-6 gap-y-2 bg-black/40 px-4 py-4 bg-blend-multiply">
+      <div>
+        <p class={styles.stat.label}>MMR</p>
+        <p class={styles.stat.value}>{Math.round(entry.mmr!)}</p>
+      </div>
+      <div class="max-w-48 flex-auto">
+        <div class="flex items-center justify-between">
+          <p class={styles.stat.label}>Win Rate</p>
+          <div class="text-xs font-extrabold">
+            <span class="text-green-600">{entry.wins}</span>
+            <span class="text-white/50">-</span>
+            <span class="text-red-600">{entry.matches - entry.wins}</span>
+          </div>
+        </div>
+        <div class="flex items-center justify-between">
+          <p class={styles.stat.value}>{winrate}%</p>
+          <div class="relative ml-4 h-1.5 flex-auto rounded-sm bg-red-600">
+            <div class="absolute inset-0 rounded-l-sm bg-green-600" style={{ width: `${winrate}%` }}></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="relative flex flex-none flex-shrink flex-grow basis-10 rounded-r-xl bg-black/40 bg-blend-multiply ring-1 ring-[inherit] xs:basis-24"
+  >
+    <div class="relative my-px mr-px overflow-hidden rounded-r-xl">
+      <Image
+        src={faction.portrait}
+        alt="Vanguard"
+        class="h-full w-full object-cover brightness-110 contrast-125"
+        widths={[200, 400]}
+      />
+    </div>
+  </div>
+</div>

@@ -21,7 +21,8 @@ import Section from "../../components/layout/Section.astro"
 import Main from "../../components/layout/Main.astro"
 import Sidebar from "../../components/layout/Sidebar.astro"
 import { formatDateRelative } from "../../lib/format"
-import { Tooltip } from "../../components/ui/Tooltip"
+import PlayerFactionCard from "../../components/widgets/PlayerFactionCard.astro"
+import Box from "../../components/layout/Box.astro"
 
 type Theme = keyof typeof styles.badges
 
@@ -48,10 +49,11 @@ const [[player, playerMatches, playerActivity, playerMatchupStats, playerOpponen
   )
 if (error) return error
 
-const highestLeague = player?.leaderboard_entries?.reduce(
-  (acc, entry) => (entry.points > acc.points ? entry : acc),
-  player.leaderboard_entries[0]
-)
+const leaderboardEntries = player?.leaderboard_entries
+  .filter((x) => x.matches > 0)
+  .sort((a, b) => (b.points ?? 0) - (a.points ?? 0))
+
+const highestLeague = leaderboardEntries?.[0]
 ---
 
 <Layout title={player?.nickname!}>
@@ -83,51 +85,24 @@ const highestLeague = player?.leaderboard_entries?.reduce(
   </Header>
   <Section>
     <Main>
-      <Widget title="Top Ranks">
-        <div class="flex flex-row flex-wrap gap-2">
-          {
-            player.leaderboard_entries.map((entry) => (
-              <div
-                class:list={[
-                  "flex-auto rounded-lg pl-3 pr-1 py-2 flex items-center gap-3 text-sm sm:text-base",
-                  styles.badges[entry.race as Theme].badge,
-                ]}
-              >
-                <Image
-                  src={entry.race === "infernals" ? infernals : vanguard}
-                  alt={entry.race}
-                  class="size-6 sm:size-10"
-                />
-                <div>
-                  <span class:list={["text-xs", styles.badges[entry.race as Theme].badgeLabel]}>Rank</span>
-                  {/* TODO: remove when more data is available */}
-                  {entry.rank ? (
-                    <p>#{entry.rank}</p>
-                  ) : (
-                    <p>
-                      <Tooltip content="Ranking Unavailable" client:idle>
-                        <a href="/faq/#why-is-my-rank-1000">&gt;1000</a>
-                      </Tooltip>
-                    </p>
-                  )}
-                </div>
-                <div>
-                  <span class:list={["text-xs", styles.badges[entry.race as Theme].badgeLabel]}>Points</span>
-                  <p>
-                    {/* TODO: remove when more data is available */}
-                    {entry.points ? Math.round(entry.points) : <a href="/faq/#rp">-</a>}
-                    <RankedBadge entry={entry} class="inline-block w-4" client:load />
-                  </p>
-                </div>
-                <div>
-                  <span class:list={["text-xs", styles.badges[entry.race as Theme].badgeLabel]}>MMR</span>
-                  <p>{Math.round(entry.mmr)}</p>
-                </div>
-              </div>
-            ))
-          }
-        </div>
-      </Widget>
+      <div class="flex flex-col gap-4 md:flex-row">
+        {
+          leaderboardEntries.map((entry) => (
+            <PlayerFactionCard
+              faction={entry.race === "infernals" ? "infernals" : "vanguard"}
+              entry={entry}
+              class="flex-grow basis-1/2"
+            />
+          ))
+        }
+        {
+          leaderboardEntries.length === 1 && (
+            <Box class="hidden basis-2/5 items-center justify-center opacity-70 md:flex">
+              <p class="text-center font-bold text-gray-500">No other factions played</p>
+            </Box>
+          )
+        }
+      </div>
       <Widget title="Recent Matches" label="Closed Beta Ranked">
         <div class="">
           {playerMatches.matches.map((match) => <MatchPreview match={match} mainPlayerId={playerId} />)}
