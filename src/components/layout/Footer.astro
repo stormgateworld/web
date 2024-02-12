@@ -1,25 +1,32 @@
 ---
 import Svg from "@jasikpark/astro-svg-loader"
+
+const navLinks = [
+  { href: "/faq", text: "FAQ" },
+  { href: "/api", text: "API" },
+  { href: "/privacy", text: "Privacy" },
+  { href: "/about", text: "About" },
+  { href: "https://twitter.com/StormgateWorld", text: "Twitter", newWindow: true, twitter: true },
+  { href: "/rss.xml", text: "RSS Feed", newWindow: true, rss: true },
+]
 ---
 
 <footer class="mt-4 border-t border-gray-900 py-32 text-center md:mt-8">
   <div class="mx-auto">
     <nav class="flex columns-2 flex-wrap justify-center gap-x-8 gap-y-2 pb-6 sm:space-x-12" aria-label="Footer">
-      <a href="/api" class="text-sm leading-6 text-gray-100 hover:text-white">API</a>
-      <a href="/privacy" class="text-sm leading-6 text-gray-100 hover:text-white">Privacy</a>
-      <a href="/about" class="text-sm leading-6 text-gray-100 hover:text-white">About</a>
-      <a
-        href="https://twitter.com/StormgateWorld"
-        target="_blank"
-        class="text-sm leading-6 text-gray-100 hover:text-white"
-      >
-        <i class="ti ti-brand-twitter-filled"></i>
-        Twitter
-      </a>
-      <a href="/rss.xml" target="_blank" class="text-sm leading-6 text-gray-100 hover:text-white">
-        <i class="ti ti-rss"></i>
-        RSS Feed
-      </a>
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            target={link.newWindow ? "_blank" : "_self"}
+            class="text-sm leading-6 text-gray-100 hover:text-white"
+          >
+            {link.twitter && <i class="ti ti-brand-twitter-filled" />}
+            {link.rss && <i class="ti ti-rss" />}
+            {link.text}
+          </a>
+        ))
+      }
     </nav>
   </div>
   <div class="flex flex-col items-center gap-4">
