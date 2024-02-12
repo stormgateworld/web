@@ -1,6 +1,9 @@
 ---
 export const prerender = false
 import Layout from "../../layouts/Layout.astro"
+import Header from "../../components/layout/Header.astro"
+import HeaderContent from "../../components/layout/HeaderContent.astro"
+
 import Widget from "../../components/Widget.astro"
 import { Image } from "astro:assets"
 import infernals from "../../assets/game/factions/infernals-small.png"
@@ -13,6 +16,11 @@ import PlayerMatchupStats from "../../components/widgets/PlayerMatchupStats.astr
 import PlayerGameLengthStats from "../../components/widgets/PlayerGameLengthStats.astro"
 import PlayerOpponents from "../../components/widgets/PlayerOpponents.astro"
 import { styles } from "../../lib/theme"
+import HeaderMeta from "../../components/layout/HeaderMeta.astro"
+import Section from "../../components/layout/Section.astro"
+import Main from "../../components/layout/Main.astro"
+import Sidebar from "../../components/layout/Sidebar.astro"
+import { formatDateRelative } from "../../lib/format"
 
 type Theme = keyof typeof styles.badges
 
@@ -48,37 +56,42 @@ const ogTitle = `${player.nickname} - ${highestLeague.rank ? `Rank # ${highestLe
 const ogDescription = `View the match history, win rates, top opponents, and more stats for ${player.nickname}.`
 ---
 
-<Layout
-  title={player.nickname}
-  ogImageUrl={`/og-image/players/${playerId}-${player.nickname}.png`}
-  ogTitle={ogTitle}
-  ogDescription={ogDescription}
->
-  <div class="w-full border-b border-gray-700/50 bg-gray-800/50 backdrop-blur-lg">
-    <div class="mx-auto flex max-w-screen-lg flex-wrap items-center gap-4 px-4 py-4 md:px-8">
-      <div class="flex flex-auto items-center gap-3">
-        {player.avatar_url && <img src={player.avatar_url} alt={player.nickname} class="w-6 rounded-sm md:w-8" />}
-        <h1 class="flex-auto text-lg font-bold text-gray-50 md:text-2xl">{player.nickname}</h1>
-      </div>
-      <RankedBadge entry={highestLeague} class="w-16 md:w-20" client:load />
-    </div>
-  </div>
-  <section class="relative mx-auto flex max-w-screen-lg flex-col gap-6 px-4 py-8 md:px-7 lg:flex-row">
-    <div class="flex-auto">
-      <Widget title="Recent Matches" label="Closed Beta Ranked">
-        <div class="">
-          {playerMatches.matches.map((match) => <MatchPreview match={match} mainPlayerId={playerId} />)}
-        </div>
-      </Widget>
-    </div>
-    <div class="order-first flex basis-1/4 flex-col gap-6 sm:flex-row lg:order-none lg:flex-col">
+<Layout title={player?.nickname!}>
+  <Header backdropImage={player.avatar_url}>
+    <HeaderContent section="Players" title={player.nickname!}>
+      {
+        player.avatar_url && (
+          <img
+            slot="left"
+            src={player.avatar_url}
+            alt={player.nickname}
+            class="mr-4 size-8 flex-none rounded md:size-16"
+          />
+        )
+      }
+      <RankedBadge slot="right" entry={highestLeague} class="w-16 md:w-20" client:load />
+    </HeaderContent>
+    <HeaderMeta
+      items={[
+        {
+          icon: import("lucide-static/icons/activity.svg?raw"),
+          label: `Last Match ${formatDateRelative(
+            new Date(playerMatches.matches[0]?.created_at || player.last_match_ended_at!)
+          )}`,
+        },
+        { icon: import("lucide-static/icons/hash.svg?raw"), label: player.id },
+      ]}
+    />
+  </Header>
+  <Section>
+    <Main>
       <Widget title="Top Ranks">
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-row flex-wrap gap-2">
           {
             player.leaderboard_entries.map((entry) => (
               <div
                 class:list={[
-                  "rounded-lg pl-3 pr-1 py-2 -mx-2 flex items-center gap-3 text-sm sm:text-base",
+                  "flex-auto rounded-lg pl-3 pr-1 py-2 flex items-center gap-3 text-sm sm:text-base",
                   styles.badges[entry.race as Theme].badge,
                 ]}
               >
@@ -95,7 +108,6 @@ const ogDescription = `View the match history, win rates, top opponents, and mor
                   <span class:list={["text-xs", styles.badges[entry.race as Theme].badgeLabel]}>Points</span>
                   <p>
                     {Math.round(entry.points)}
-
                     <RankedBadge entry={entry} class="inline-block w-4" client:load />
                   </p>
                 </div>
@@ -108,30 +120,17 @@ const ogDescription = `View the match history, win rates, top opponents, and mor
           }
         </div>
       </Widget>
-      <div class="hidden sm:block">
-        {playerActivity?.history && <PlayerActivity activity={playerActivity} {player} />}
-      </div>
-      <div class="hidden lg:block">
-        {playerMatchupStats.matchups.length > 0 && <PlayerMatchupStats playerMatchupStats={playerMatchupStats} />}
-      </div>
-      <div class="hidden lg:block">
-        {playerMatchupStats.matchups.length > 0 && <PlayerGameLengthStats playerMatchupStats={playerMatchupStats} />}
-      </div>
-      <div class="hidden lg:block">
-        {playerOpponents.opponents.length > 0 && <PlayerOpponents opponents={playerOpponents} />}
-      </div>
-    </div>
-    <div class="sm:hidden">
+      <Widget title="Recent Matches" label="Closed Beta Ranked">
+        <div class="">
+          {playerMatches.matches.map((match) => <MatchPreview match={match} mainPlayerId={playerId} />)}
+        </div>
+      </Widget>
+    </Main>
+    <Sidebar>
       {playerActivity?.history && <PlayerActivity activity={playerActivity} {player} />}
-    </div>
-    <div class="lg:hidden">
       {playerMatchupStats.matchups.length > 0 && <PlayerMatchupStats playerMatchupStats={playerMatchupStats} />}
-    </div>
-    <div class="lg:hidden">
       {playerMatchupStats.matchups.length > 0 && <PlayerGameLengthStats playerMatchupStats={playerMatchupStats} />}
-    </div>
-    <div class="lg:hidden">
       {playerOpponents.opponents.length > 0 && <PlayerOpponents opponents={playerOpponents} />}
-    </div>
-  </section>
+    </Sidebar>
+  </Section>
 </Layout>

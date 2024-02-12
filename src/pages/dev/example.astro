@@ -1,0 +1,65 @@
+---
+import Layout from "../../layouts/Layout.astro"
+import Header from "../../components/layout/Header.astro"
+import HeaderContent from "../../components/layout/HeaderContent.astro"
+import HeaderMeta from "../../components/layout/HeaderMeta.astro"
+import HeaderNav from "../../components/layout/HeaderNav.astro"
+import Section from "../../components/layout/Section.astro"
+import Main from "../../components/layout/Main.astro"
+import Sidebar from "../../components/layout/Sidebar.astro"
+import Box from "../../components/layout/Box.astro"
+---
+
+<Layout title="Test">
+  {
+    /* The Main Navigation is contained within Layout, the main nav is semi-transparent overlayed on top of the header. 
+        Ideally all pages have an header */
+  }
+  <Header>
+    {/* The Header contains the main gradient/color used for tinting */}
+    <HeaderNav
+      breadcrumb={[
+        { href: "#", label: "Development" },
+        { href: "#", label: "Layout" },
+      ]}
+      current={[
+        { href: "/dev/example", label: "Example Page" },
+        { href: "#", label: "An other tab" },
+        { href: "#", label: "Example 3" },
+      ]}
+    />
+    {/* Optional, for including breadcrumbs as well as a list of subpages/tabs that are available */}
+
+    <HeaderContent title={"Example Page"} section="Development">
+      {/* Very simple header, always. At most some visual and text and not too much UI */}
+      {/* Slot content can be used in plage of standard title */}
+    </HeaderContent>
+    <HeaderMeta
+      items={[
+        { icon: import("lucide-static/icons/activity.svg?raw"), label: "Last active 3 hours ago" },
+        { icon: import("lucide-static/icons/calendar.svg?raw"), label: "March 12, 2024" },
+        { icon: import("lucide-static/icons/hash.svg?raw"), label: "s83akdy" },
+      ]}
+    >
+      {/* Optional for 'stats' like last updated, last game data, user id, etc */}
+    </HeaderMeta>
+  </Header>
+  <Section>
+    <Main>
+      <Box />
+      <Box />
+    </Main>
+    <Sidebar>
+      <Box />
+      <Box />
+    </Sidebar>
+  </Section>
+  <Section title="Subsection" description="More info here">
+    <Main>
+      <Box />
+    </Main>
+    <Sidebar>
+      <Box />
+    </Sidebar>
+  </Section>
+</Layout>

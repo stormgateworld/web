@@ -1,6 +1,9 @@
 ---
 import type { MarkdownLayoutProps } from "astro"
 import Layout from "./Layout.astro"
+import Header from "../components/layout/Header.astro"
+import HeaderContent from "../components/layout/HeaderContent.astro"
+import { styles } from "../lib/theme"
 
 type Props = MarkdownLayoutProps<{
   title: string
@@ -9,7 +12,15 @@ const { title } = Astro.props.frontmatter
 ---
 
 <Layout title={title}>
-  <section class="relative mx-auto my-12 flex max-w-screen-lg flex-wrap gap-12 px-4 md:flex-nowrap">
+  <Header title={title} />
+  <section
+    <div
+    class:list={[
+      styles.layout.container,
+      styles.layout.containerPadding,
+      "relative mx-auto my-12 flex flex-wrap gap-12 px-4 md:flex-nowrap",
+    ]}
+  >
     <div>
       <ul class="sticky top-20 min-w-48">
         <li class="mb-4 text-2xl font-bold text-white">Contents</li>

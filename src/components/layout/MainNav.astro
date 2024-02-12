@@ -1,0 +1,57 @@
+---
+import { styles } from "../../lib/theme"
+const currentRoute = new URL(Astro.request.url).pathname
+const navLinks = [
+  { href: "/leaderboards/ranked_1v1", text: "Leaderboard" },
+  { href: "/stats", text: "Stats" },
+  { href: "/social", text: "Content" },
+  { href: "/api", text: "API" },
+  { href: "/tools", text: "Tools" },
+  // { href: "/creators", text: "Creators" },
+]
+---
+
+<div
+  class="to-black-20 sticky top-0 z-10 h-20 w-full border-b border-white/5 bg-gradient-to-r from-black/40 via-black/25 mix-blend-screen backdrop-blur md:h-16"
+>
+  <nav
+    class:list={[
+      styles.layout.container,
+      "flex flex-wrap md:flex-nowrap items-center gap-y-2 py-2 md:min-h-16 md:py-4",
+    ]}
+  >
+    <a
+      href="/"
+      class:list={[
+        styles.layout.containerPadding,
+        "basis-full whitespace-nowrap md:pr-2 text-xl font-extrabold text-white/90 md:basis-auto ",
+      ]}
+    >
+      Stormgate World
+    </a>
+
+    <div
+      class:list={[
+        styles.layout.containerPadding,
+        "scrollbar-hide -ml-2 flex max-w-full flex-auto gap-1 gap-y-2 overflow-x-auto md:ml-0 md:gap-4 md:pr-7",
+      ]}
+    >
+      {
+        navLinks.map(({ href, text }) => (
+          <a
+            href={href}
+            class:list={[
+              "font-extrabold rounded px-2 text-sm md:text-base md:px-3 py-1 md:py-1.5",
+              currentRoute === href ? "bg-white/5 text-white/80" : "hover:bg-white/5 text-white/60 ",
+            ]}
+          >
+            {text}
+          </a>
+        ))
+      }
+
+      <div class="flex-auto"></div>
+      <div>{/*search etc */}</div>
+    </div>
+  </nav>
+</div>

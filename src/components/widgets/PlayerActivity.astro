@@ -3,6 +3,8 @@ import type { PlayerActivityStats, PlayerResponse } from "../../lib/api"
 import Widget from "../Widget.astro"
 import { Tooltip } from "../ui/Tooltip"
 
+const WEEKS_DISPLAYED = 15
+
 interface Props {
   player: PlayerResponse
   activity: PlayerActivityStats
@@ -33,9 +35,13 @@ type Day = { date: Date; win_rate: number; games_count: number; size: number; to
 type Week = Day[]
 const today = new Date()
 // get the date of monday 12 weeks ago, fully including this week
-const start = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay() - 11 * 7)
+const start = new Date(
+  today.getFullYear(),
+  today.getMonth(),
+  today.getDate() - today.getDay() - (WEEKS_DISPLAYED - 1) * 7
+)
 const weeks: Week[] = []
-for (let i = 0; i < 12; i++) {
+for (let i = 0; i < WEEKS_DISPLAYED; i++) {
   const week: Week = []
   for (let j = 0; j < 7; j++) {
     const date = new Date(start.getFullYear(), start.getMonth(), start.getDate() + i * 7 + j)

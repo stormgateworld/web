@@ -28,5 +28,11 @@ const { title, ogImageUrl, ogDescription, ogTitle } = Astro.props
   </head>
   <body class="bg-body text-body font-body scroll-pt-24 bg-gray-950 text-white antialiased">
     <slot />
+    <style is:global>
+      .scrollbar-hide {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+      }
+    </style>
   </body>
 </html>

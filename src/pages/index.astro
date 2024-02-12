@@ -31,7 +31,8 @@ const news = (await newsRequest).sort((a, b) => {
   </div>
 
   <section class="relative mx-auto max-w-screen-2xl px-4">
-    <div id="twitch-wrapper">
+    {
+      /* <div id="twitch-wrapper">
       <!-- Add a placeholder for the Twitch embed -->
       <h2 class="my-6 mt-12 text-center text-xl font-black text-white/90 md:text-2xl">
         Now Streaming EGCTV Stormgate Open Live on Twitch
@@ -52,7 +53,8 @@ const news = (await newsRequest).sort((a, b) => {
           window.document.getElementById("twitch-wrapper").remove()
         }
       </script>
-    </div>
+    </div>  */
+    }
     <main>
       <div class="px-2 pb-6 pt-12">
         <Image src={logoWhite} alt="Stormgate Logo" class="-ml-2 h-16 w-auto" />
