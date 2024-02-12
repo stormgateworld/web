@@ -1,13 +1,19 @@
 ---
 import Svg from "@jasikpark/astro-svg-loader"
+import { classes } from "../../lib/theme"
 
 const navLinks = [
   { href: "/faq", text: "FAQ" },
   { href: "/api", text: "API" },
   { href: "/privacy", text: "Privacy" },
   { href: "/about", text: "About" },
-  { href: "https://twitter.com/StormgateWorld", text: "Twitter", newWindow: true, twitter: true },
-  { href: "/rss.xml", text: "RSS Feed", newWindow: true, rss: true },
+  {
+    href: "https://twitter.com/StormgateWorld",
+    text: "Twitter",
+    target: "_blank",
+    icon: "ti-brand-twitter-filled",
+  },
+  { href: "/rss.xml", text: "RSS Feed", target: "_blank", icon: "ti-rss" },
 ]
 ---
 
@@ -18,11 +24,10 @@ const navLinks = [
         navLinks.map((link) => (
           <a
             href={link.href}
-            target={link.newWindow ? "_blank" : "_self"}
+            target={link.target ? link.target : "_self"}
             class="text-sm leading-6 text-gray-100 hover:text-white"
           >
-            {link.twitter && <i class="ti ti-brand-twitter-filled" />}
-            {link.rss && <i class="ti ti-rss" />}
+            {link.icon && <i class={classes("ti", link.icon)} />}
             {link.text}
           </a>
         ))
