@@ -3,22 +3,44 @@ export const prerender = false
 
 import { Image } from "astro:assets"
 import { WinrateChart } from "../components/widgets/WinrateChart"
+import { GameNumberChart } from "../components/widgets/GameNumberChart"
+import { PlayerNumberChart } from "../components/widgets/PlayerNumberChart"
+
 import Layout from "../layouts/Layout.astro"
-import { Race, type StatsByTimeEntry } from "../lib/api"
+import { League, Race, type StatsByTimeEntry } from "../lib/api"
 import { StatisticsApi } from "../lib/api/services/StatisticsApi"
-import { formatNumber } from "../lib/utils"
+import { formatNumber, getDataOrErrorResponse } from "../lib/utils"
 import Timeago from "../components/Timeago.astro"
 import { LeagueDropdown } from "../components/widgets/LeagueDropdown"
 import Header from "../components/layout/Header.astro"
 import Section from "../components/layout/Section.astro"
 import HeaderMeta from "../components/layout/HeaderMeta.astro"
 import { formatDateRelative } from "../lib/format"
-import Main from "../components/layout/Main.astro"
 
 const league = new URLSearchParams(Astro.url.search).get("league")
-const { races, cached_at } = await StatisticsApi.getStatistics({ league })
+
+const longNumberFormatter = new Intl.NumberFormat("en-us")
+
+const [[{ races, cached_at }, { activity }], error] = await getDataOrErrorResponse(
+  StatisticsApi.getStatistics({ league: league ? (league as League) : null }),
+  StatisticsApi.getStatisticsActivity()
+)
+if (error) return error
+
 const durationLabels = ["0-300", "301-600", "601-900", "901-1200", "1201+"]
 const durationPrettyLabels = ["0-5m", "5-10m", "10-15m", "15-20m", "20m+"]
+
+const numberPlayers: number[] = []
+const numberMatches: number[] = []
+const dateLabels: string[] = []
+for (const entry of activity) {
+  dateLabels.push(entry.date)
+  numberMatches.push(entry.matches)
+  numberPlayers.push(entry.players)
+}
+
+const sumMatches = numberMatches.reduce((total, value) => total + value, 0)
+const earliestDate = new Date(dateLabels[0])
 
 function mapFactionWinrate(race: StatsByTimeEntry) {
   const round = (value: number) => Math.round(value * 10) / 10
@@ -28,7 +50,7 @@ function mapFactionWinrate(race: StatsByTimeEntry) {
   const data: number[] = []
   if (!race.history.at(-1)?.matches_count) race.history.pop()
   for (const entry of race.history) {
-    labels.push(new Date(entry.date!).toLocaleDateString("en-US", { month: "short", day: "numeric" }))
+    labels.push(entry.date!)
     data.push(round(entry.win_rate!))
   }
   const duration = {
@@ -125,9 +147,23 @@ const factions = [
           ))
         }
       </div>
-      <div class="mt-4 min-w-0 flex-auto rounded-xl border border-gray-800 bg-gray-900 p-6">
-        <h2 class="flex-auto text-center text-2xl font-bold text-gray-600">More stats soon</h2>
-      </div>
+    </div>
+  </Section>
+  <Section title="Activity" class="!max-w-screen-md">
+    <div class="min-w-0 flex-auto rounded-xl border border-gray-800 bg-gray-900 p-4">
+      <h2 class="mb-4 text-xl font-black">Ladder games played</h2>
+      <GameNumberChart data={numberMatches} labels={dateLabels} client:idle />
+      <p class="mt-2 pl-1 text-xs leading-snug text-gray-500">
+        In total, {longNumberFormatter.format(sumMatches)} ladder games were played since {
+          earliestDate.toLocaleDateString("en", { dateStyle: "long" })
+        }.
+      </p>
+    </div>
+  </Section>
+  <Section class="!max-w-screen-md">
+    <div class="min-w-0 flex-auto rounded-xl border border-gray-800 bg-gray-900 p-4">
+      <h2 class="mb-4 text-xl font-black">Ladder players</h2>
+      <PlayerNumberChart data={numberPlayers} labels={dateLabels} client:idle />
     </div>
   </Section>
 </Layout>

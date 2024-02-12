@@ -13,6 +13,7 @@ import {
   type ChartArea,
 } from "chart.js"
 import { Line } from "solid-chartjs"
+import "chartjs-adapter-luxon"
 
 type WinrateChartProps = {
   labels: string[]
@@ -63,6 +64,8 @@ export function WinrateChart(props: WinrateChartProps) {
       },
       x: {
         display: true,
+        type: "time",
+        time: { unit: "day", tooltipFormat: "DD" },
         ticks: {
           align: "inner",
           rotation: 0,

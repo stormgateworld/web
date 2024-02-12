@@ -21,20 +21,9 @@ import Section from "../../components/layout/Section.astro"
 import Main from "../../components/layout/Main.astro"
 import Sidebar from "../../components/layout/Sidebar.astro"
 import { formatDateRelative } from "../../lib/format"
+import { getDataOrErrorResponse } from "../../lib/utils"
 
 type Theme = keyof typeof styles.badges
-
-// to be moved to own file
-async function getDataOrErrorResponse<T extends readonly unknown[] | []>(
-  ...values: T
-): Promise<[{ -readonly [P in keyof T]: Awaited<T[P]> }, error: Response | null]> {
-  try {
-    const result = await Promise.all(values)
-    return [result, null]
-  } catch (e) {
-    return [[] as any, new Response(null, { status: 500, statusText: `${e}` })]
-  }
-}
 
 const playerId = Astro.params.id!
 const [[player, playerMatches, playerActivity, playerMatchupStats, playerOpponents], error] =
