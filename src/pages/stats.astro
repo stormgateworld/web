@@ -151,10 +151,10 @@ const factions = [
   </Section>
   <Section title="Activity" class="!max-w-screen-md">
     <div class="min-w-0 flex-auto rounded-xl border border-gray-800 bg-gray-900 p-4">
-      <h2 class="mb-4 text-xl font-black">Ladder games played</h2>
+      <h2 class="mb-4 text-xl font-black">Ranked games played</h2>
       <GameNumberChart data={numberMatches} labels={dateLabels} client:idle />
       <p class="mt-2 pl-1 text-xs leading-snug text-gray-500">
-        In total, {longNumberFormatter.format(sumMatches)} ladder games were played since {
+        In total, {longNumberFormatter.format(sumMatches)} ranked games were played since {
           earliestDate.toLocaleDateString("en", { dateStyle: "long" })
         }.
       </p>
