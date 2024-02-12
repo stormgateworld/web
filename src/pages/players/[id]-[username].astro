@@ -21,6 +21,7 @@ import Section from "../../components/layout/Section.astro"
 import Main from "../../components/layout/Main.astro"
 import Sidebar from "../../components/layout/Sidebar.astro"
 import { formatDateRelative } from "../../lib/format"
+import { Tooltip } from "../../components/ui/Tooltip"
 
 type Theme = keyof typeof styles.badges
 
@@ -104,7 +105,9 @@ const highestLeague = player?.leaderboard_entries?.reduce(
                     <p>#{entry.rank}</p>
                   ) : (
                     <p>
-                      <a href="/faq/#rp">&lt;1000</a>
+                      <Tooltip content="Ranking Unavailable" client:idle>
+                        <a href="/faq/#why-is-my-rank-1000">&gt;1000</a>
+                      </Tooltip>
                     </p>
                   )}
                 </div>

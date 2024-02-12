@@ -187,7 +187,14 @@ export function Leaderboard(props: Props) {
                   <tr class="border-b border-gray-700/50 last:border-b-0">
                     <td class="text-md  px-1 py-2 text-right font-extrabold text-gray-400 md:px-4 md:text-lg">
                       {/* TODO: remove when more data is available */}
-                      {entry.rank ? entry.rank : <a href="/faq/#rp">&lt;1000</a>}.
+                      {order() === LeaderboardOrder.MMR ? (
+                        entry.rank
+                      ) : entry.rank && entry.rank < 1000 ? (
+                        entry.rank
+                      ) : (
+                        <a href="/faq/#rp">&gt;1000</a>
+                      )}
+                      .
                     </td>
                     <td class="min-w-10 pr-2 md:pr-4">
                       <img
@@ -221,7 +228,7 @@ export function Leaderboard(props: Props) {
                             entry.points ? (
                               Math.round(entry.points)
                             ) : (
-                              <a href="/faq/#rp">-</a>
+                              <a href="/faq/#why-is-my-rank-1000">-</a>
                             )
                           ) : (
                             Math.round(entry.mmr)
