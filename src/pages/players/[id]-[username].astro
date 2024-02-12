@@ -99,12 +99,20 @@ const highestLeague = player?.leaderboard_entries?.reduce(
                 />
                 <div>
                   <span class:list={["text-xs", styles.badges[entry.race as Theme].badgeLabel]}>Rank</span>
-                  <p>#{entry.rank}</p>
+                  {/* TODO: remove when more data is available */}
+                  {entry.rank ? (
+                    <p>#{entry.rank}</p>
+                  ) : (
+                    <p>
+                      <a href="/faq/#rp">&lt;1000</a>
+                    </p>
+                  )}
                 </div>
                 <div>
                   <span class:list={["text-xs", styles.badges[entry.race as Theme].badgeLabel]}>Points</span>
                   <p>
-                    {Math.round(entry.points)}
+                    {/* TODO: remove when more data is available */}
+                    {entry.points ? Math.round(entry.points) : <a href="/faq/#rp">-</a>}
                     <RankedBadge entry={entry} class="inline-block w-4" client:load />
                   </p>
                 </div>

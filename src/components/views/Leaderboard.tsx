@@ -186,7 +186,8 @@ export function Leaderboard(props: Props) {
                 {data()?.entries.map((entry) => (
                   <tr class="border-b border-gray-700/50 last:border-b-0">
                     <td class="text-md  px-1 py-2 text-right font-extrabold text-gray-400 md:px-4 md:text-lg">
-                      {entry.rank}.
+                      {/* TODO: remove when more data is available */}
+                      {entry.rank ? entry.rank : <a href="/faq/#rp">&lt;1000</a>}.
                     </td>
                     <td class="min-w-10 pr-2 md:pr-4">
                       <img
@@ -215,7 +216,16 @@ export function Leaderboard(props: Props) {
                     <td class=" pr-2 text-right text-sm font-bold  text-gray-100 md:pr-4">
                       <div class="flex items-center justify-end gap-1">
                         <span>
-                          {order() !== LeaderboardOrder.MMR ? Math.round(entry.points || 0) : Math.round(entry.mmr)}
+                          {/* TODO: remove when more data is available */}
+                          {order() !== LeaderboardOrder.MMR ? (
+                            entry.points ? (
+                              Math.round(entry.points)
+                            ) : (
+                              <a href="/faq/#rp">-</a>
+                            )
+                          ) : (
+                            Math.round(entry.mmr)
+                          )}
                         </span>
                         {order() !== LeaderboardOrder.MMR ? (
                           <RankedBadge entry={entry} class="w-4 min-w-8 md:w-8" />
