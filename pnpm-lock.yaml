@@ -1,9 +1,5 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 dependencies:
   '@astrojs/node':
     specifier: ^7.0.4
@@ -62,7 +58,7 @@ dependencies:
 
 devDependencies:
   '@jasikpark/astro-svg-loader':
-    specifier: ^0.2.0
+    specifier: github:robertvanhoesel/astro-svg-loader
     version: 0.2.0(astro@4.2.4)
   '@tailwindcss/typography':
     specifier: ^0.5.10
@@ -3991,3 +3987,7 @@ packages:
 
   /zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
