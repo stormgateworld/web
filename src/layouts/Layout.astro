@@ -9,7 +9,7 @@ export interface Props {
   ogTitle?: string
 }
 
-const { title } = Astro.props
+const { title, ogImageUrl, ogTitle, ogDescription } = Astro.props
 ---
 
 <Root title={title} ogImageUrl={ogImageUrl} ogTitle={ogTitle} ogDescription={ogDescription}>
