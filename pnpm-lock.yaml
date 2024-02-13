@@ -64,8 +64,8 @@ dependencies:
 
 devDependencies:
   '@jasikpark/astro-svg-loader':
-    specifier: ^0.2.0
-    version: 0.2.0(astro@4.2.4)
+    specifier: github:robertvanhoesel/astro-svg-loader
+    version: github.com/robertvanhoesel/astro-svg-loader/c87829131ea16c01f6e97742304d3c3558d80db5(astro@4.2.4)
   '@tailwindcss/typography':
     specifier: ^0.5.10
     version: 0.5.10(tailwindcss@3.4.1)
@@ -636,17 +636,6 @@ packages:
       strip-ansi-cjs: /strip-ansi@6.0.1
       wrap-ansi: 8.1.0
       wrap-ansi-cjs: /wrap-ansi@7.0.0
-
-  /@jasikpark/astro-svg-loader@0.2.0(astro@4.2.4):
-    resolution: {integrity: sha512-s9OSILZ1xvEzH8CiOcz4cd2Q2DPbYQvJT4IyKvx/L5hwyYasE6HHShbkut7H2vqYP73TWMOtz8qE8xyYaGrhbw==}
-    engines: {node: '>18', pnpm: '>=7.9.5'}
-    requiresBuild: true
-    peerDependencies:
-      astro: ^2.0.0 || ^3.0.0
-    dependencies:
-      astro: 4.2.4
-      ultrahtml: 1.5.2
-    dev: true
 
   /@jridgewell/gen-mapping@0.3.3:
     resolution: {integrity: sha512-HLhSWOLRi875zjjMG/r+Nv0oCW8umGb0BgEhyX3dDX3egwZtB8PqLnjz3yedt8R5StBrzcg4aBpnh8UA9D1BoQ==}
@@ -4099,6 +4088,20 @@ packages:
 
   /zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
+
+  github.com/robertvanhoesel/astro-svg-loader/c87829131ea16c01f6e97742304d3c3558d80db5(astro@4.2.4):
+    resolution: {tarball: https://codeload.github.com/robertvanhoesel/astro-svg-loader/tar.gz/c87829131ea16c01f6e97742304d3c3558d80db5}
+    id: github.com/robertvanhoesel/astro-svg-loader/c87829131ea16c01f6e97742304d3c3558d80db5
+    name: '@jasikpark/astro-svg-loader'
+    version: 0.2.0
+    engines: {node: '>18', pnpm: '>=7.9.5'}
+    requiresBuild: true
+    peerDependencies:
+      astro: ^2.0.0 || ^3.0.0
+    dependencies:
+      astro: 4.2.4
+      ultrahtml: 1.5.2
+    dev: true
 
 settings:
   autoInstallPeers: true

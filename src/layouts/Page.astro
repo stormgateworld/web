@@ -2,7 +2,6 @@
 import type { MarkdownLayoutProps } from "astro"
 import Layout from "./Layout.astro"
 import Header from "../components/layout/Header.astro"
-import HeaderContent from "../components/layout/HeaderContent.astro"
 import { styles } from "../lib/theme"
 
 type Props = MarkdownLayoutProps<{
@@ -46,7 +45,11 @@ const { title } = Astro.props.frontmatter
         }
       </ul>
     </div>
-    <div class="prose prose-invert max-w-prose text-white prose-headings:font-bold prose-h1:font-extrabold">
+    <div
+      class={`prose prose-invert max-w-prose text-white prose-p:text-gray-50 prose-headings:font-extrabold prose-h1:font-extrabold
+        prose-h2:pb-2 prose-h2:border-b prose-h2:border-gray-700 prose-h4:text-lg
+        prose-pre:max-w-[90vw] [&_*:target]:before:content-['▶︎'] [&_*:target]:before:inline-block [&_*:target]:before:w-6 [&_*:target]:before:-ml-6 [&_*:target]:underline`}
+    >
       <slot />
     </div>
   </section>

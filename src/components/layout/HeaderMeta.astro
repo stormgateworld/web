@@ -1,21 +1,11 @@
 ---
+import Svg from "@jasikpark/astro-svg-loader"
 import { styles } from "../../lib/theme"
 
 type MetaItem = { label: string; icon?: Promise<typeof import("*.svg?raw")> }
 interface Props {
   items?: MetaItem[]
 }
-
-const items = await Promise.all(
-  Astro.props.items
-    ? Astro.props.items.map(async (item) => {
-        return {
-          ...item,
-          icon: item.icon ? (await item.icon)?.default : undefined,
-        }
-      })
-    : []
-)
 ---
 
 <div class="bg-black/20">
@@ -27,9 +17,9 @@ const items = await Promise.all(
     ]}
   >
     {
-      items?.map(({ label, icon }) => (
+      Astro.props.items?.map(({ label, icon }) => (
         <div class="flex items-center gap-2">
-          {icon && <span class="text-white opacity-20  *:h-4 *:w-4 md:*:h-5 md:*:w-5" set:html={icon} />}
+          {icon && <Svg class="h-4 w-4 text-white opacity-20 md:h-5 md:w-5" src={icon} />}
           <span class="text-xs font-bold text-white/30 md:text-sm">{label}</span>
         </div>
       ))

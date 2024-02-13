@@ -1,25 +1,42 @@
 ---
 import Svg from "@jasikpark/astro-svg-loader"
+
+const navLinks = [
+  { href: "/faq", text: "FAQ" },
+  { href: "/api", text: "API" },
+  { href: "/privacy", text: "Privacy" },
+  { href: "/about", text: "About" },
+  {
+    href: "https://github.com/stormgateworld/web",
+    text: "GitHub",
+    target: "_blank",
+    icon: import("lucide-static/icons/github.svg?raw"),
+  },
+  {
+    href: "https://twitter.com/StormgateWorld",
+    text: "Twitter",
+    target: "_blank",
+    icon: import("lucide-static/icons/twitter.svg?raw"),
+  },
+  { href: "/rss.xml", text: "RSS Feed", target: "_blank", icon: import("lucide-static/icons/rss.svg?raw") },
+]
 ---
 
-<footer class="mt-4 border-t border-gray-900 py-32 text-center md:mt-8">
-  <div class="mx-auto">
-    <nav class="flex columns-2 flex-wrap justify-center gap-x-8 gap-y-2 pb-6 sm:space-x-12" aria-label="Footer">
-      <a href="/api" class="text-sm leading-6 text-gray-100 hover:text-white">API</a>
-      <a href="/privacy" class="text-sm leading-6 text-gray-100 hover:text-white">Privacy</a>
-      <a href="/about" class="text-sm leading-6 text-gray-100 hover:text-white">About</a>
-      <a
-        href="https://twitter.com/StormgateWorld"
-        target="_blank"
-        class="text-sm leading-6 text-gray-100 hover:text-white"
-      >
-        <i class="ti ti-brand-twitter-filled"></i>
-        Twitter
-      </a>
-      <a href="/rss.xml" target="_blank" class="text-sm leading-6 text-gray-100 hover:text-white">
-        <i class="ti ti-rss"></i>
-        RSS Feed
-      </a>
+<footer class="relative mt-4 border-t border-gray-900 py-16 text-center md:mt-8 md:py-24">
+  <div class="mx-auto max-w-screen-xl">
+    <nav class="flex columns-2 flex-wrap justify-evenly gap-x-2 gap-y-2 px-4 pb-6 sm:space-x-12" aria-label="Footer">
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            target={link.target ? link.target : "_self"}
+            class="text-sm leading-6 text-gray-100 hover:text-white"
+          >
+            {link.icon && <Svg src={link.icon} class="inline-block w-3.5" />}
+            {link.text}
+          </a>
+        ))
+      }
     </nav>
   </div>
   <div class="flex flex-col items-center gap-4">

@@ -34,7 +34,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@jasikpark/astro-svg-loader": "^0.2.0",
+    "@jasikpark/astro-svg-loader": "github:robertvanhoesel/astro-svg-loader",
     "@tailwindcss/typography": "^0.5.10",
     "husky": "^9.0.10",
     "openapi-typescript-codegen": "^0.27.0",
