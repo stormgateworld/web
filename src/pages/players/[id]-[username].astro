@@ -3,19 +3,16 @@ export const prerender = false
 import Layout from "../../layouts/Layout.astro"
 import Header from "../../components/layout/Header.astro"
 import HeaderContent from "../../components/layout/HeaderContent.astro"
+import HeaderNav from "../../components/layout/HeaderNav.astro"
 
 import Widget from "../../components/Widget.astro"
-import { Image } from "astro:assets"
-import infernals from "../../assets/game/factions/infernals-small.png"
-import vanguard from "../../assets/game/factions/vanguard-small.png"
-import MatchPreview from "../../components/widgets/MatchPreview.astro"
+import MatchPreview from "../../components/widgets/MatchPreview.tsx"
 import { PlayersApi } from "../../lib/api"
 import { RankedBadge } from "../../components/ui/RankedBadge"
 import PlayerActivity from "../../components/widgets/PlayerActivity.astro"
 import PlayerMatchupStats from "../../components/widgets/PlayerMatchupStats.astro"
 import PlayerGameLengthStats from "../../components/widgets/PlayerGameLengthStats.astro"
 import PlayerOpponents from "../../components/widgets/PlayerOpponents.astro"
-import { styles } from "../../lib/theme"
 import HeaderMeta from "../../components/layout/HeaderMeta.astro"
 import Section from "../../components/layout/Section.astro"
 import Main from "../../components/layout/Main.astro"
@@ -23,8 +20,6 @@ import Sidebar from "../../components/layout/Sidebar.astro"
 import { formatDateRelative } from "../../lib/format"
 import PlayerFactionCard from "../../components/widgets/PlayerFactionCard.astro"
 import Box from "../../components/layout/Box.astro"
-
-type Theme = keyof typeof styles.badges
 
 // to be moved to own file
 async function getDataOrErrorResponse<T extends readonly unknown[] | []>(
@@ -39,10 +34,11 @@ async function getDataOrErrorResponse<T extends readonly unknown[] | []>(
 }
 
 const playerId = Astro.params.id!
+const playerUsername = Astro.params.username!
 const [[player, playerMatches, playerActivity, playerMatchupStats, playerOpponents], error] =
   await getDataOrErrorResponse(
     PlayersApi.getPlayer({ playerId }),
-    PlayersApi.getPlayerMatches({ playerId }),
+    PlayersApi.getPlayerMatches({ playerId, count: 5 }),
     PlayersApi.getPlayerStatisticsActivity({ playerId }),
     PlayersApi.getPlayerStatisticsMatchups({ playerId }),
     PlayersApi.getPlayerStatisticsOpponents({ playerId, count: 5 })
@@ -62,6 +58,12 @@ const ogDescription = `View the match history, win rates, top opponents, and mor
 
 <Layout title={player?.nickname!} ogTitle={ogTitle} ogDescription={ogDescription} ogImageUrl={ogImageUrl}>
   <Header backdropImage={player.avatar_url}>
+    <HeaderNav
+      current={[
+        { href: `/players/${playerId}-${playerUsername}`, label: "Overview" },
+        { href: `/players/${playerId}-${playerUsername}/history`, label: "History" },
+      ]}
+    />
     <HeaderContent section="Players" title={player.nickname!}>
       {
         player.avatar_url && (
@@ -108,9 +110,12 @@ const ogDescription = `View the match history, win rates, top opponents, and mor
         }
       </div>
       <Widget title="Recent Matches" label="Closed Beta Ranked">
-        <div class="">
+        <div>
           {playerMatches.matches.map((match) => <MatchPreview match={match} mainPlayerId={playerId} />)}
         </div>
+        <p class="pt-4 text-right text-sm font-bold text-gray-500">
+          <a href=`/players/${playerId}-${playerUsername}/history`>Open the full history →</a>
+        </p>
       </Widget>
     </Main>
     <Sidebar>

@@ -14,7 +14,7 @@ const { match, mainPlayerId } = Astro.props
 const mainPlayer = match.players.find((player) => player.player?.player_id === mainPlayerId) ?? { result: "unknown" }
 ---
 
-<div class="flex items-center gap-4 border-b border-gray-700/50 px-3 py-2.5 sm:px-4">
+<div class="flex items-center gap-4 border-b border-gray-700/50 px-3 py-2.5 last:border-b-0 sm:px-4">
   <div
     class:list={[
       "size-6 text-sm ml-1 flex justify-center items-center rounded text-gray-800 font-extrabold uppercase",

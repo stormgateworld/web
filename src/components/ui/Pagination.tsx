@@ -1,5 +1,4 @@
 import { Pagination as KPagination } from "@kobalte/core"
-import { type Accessor } from "solid-js"
 import { classes, styles } from "../../lib/theme"
 
 export function Pagination(props: { page: number; setPage: (page: number) => void; totalPages: number }) {

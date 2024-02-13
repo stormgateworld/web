@@ -1,0 +1,87 @@
+---
+export const prerender = false
+import Layout from "../../../layouts/Layout.astro"
+import Header from "../../../components/layout/Header.astro"
+import HeaderContent from "../../../components/layout/HeaderContent.astro"
+import HeaderNav from "../../../components/layout/HeaderNav.astro"
+
+import { MatchHistory } from "../../../components/widgets/MatchHistory.tsx"
+import { PlayersApi } from "../../../lib/api"
+import { RankedBadge } from "../../../components/ui/RankedBadge"
+import HeaderMeta from "../../../components/layout/HeaderMeta.astro"
+import Section from "../../../components/layout/Section.astro"
+import Main from "../../../components/layout/Main.astro"
+import { formatDateRelative } from "../../../lib/format"
+
+const { page = 1 } = Object.fromEntries(new URL(Astro.request.url).searchParams.entries())
+
+// to be moved to own file
+async function getDataOrErrorResponse<T extends readonly unknown[] | []>(
+  ...values: T
+): Promise<[{ -readonly [P in keyof T]: Awaited<T[P]> }, error: Response | null]> {
+  try {
+    const result = await Promise.all(values)
+    return [result, null]
+  } catch (e) {
+    return [[] as any, new Response(null, { status: 500, statusText: `${e}` })]
+  }
+}
+
+const playerId = Astro.params.id!
+const playerUsername = Astro.params.username!
+const [[player, playerMatches], error] = await getDataOrErrorResponse(
+  PlayersApi.getPlayer({ playerId }),
+  PlayersApi.getPlayerMatches({ playerId })
+)
+if (error) return error
+
+const leaderboardEntries = player?.leaderboard_entries
+  .filter((x) => x.matches > 0)
+  .sort((a, b) => (b.points ?? 0) - (a.points ?? 0))
+
+const highestLeague = leaderboardEntries?.[0]
+const url = Astro.url
+const ogImageUrl = `${url.protocol}//${url.host}/og-image/players/${playerId}-${player.nickname}.png?t=${player.last_match_ended_at}`
+const ogTitle = `${player.nickname} - ${highestLeague.rank ? `Rank # ${highestLeague.rank} - ` : ""} Stormgate World`
+const ogDescription = `View the match history, win rates, top opponents, and more stats for ${player.nickname}.`
+---
+
+<Layout title={player?.nickname!} ogTitle={ogTitle} ogDescription={ogDescription} ogImageUrl={ogImageUrl}>
+  <Header backdropImage={player.avatar_url}>
+    <HeaderNav
+      current={[
+        { href: `/players/${playerId}-${playerUsername}`, label: "Overview" },
+        { href: `/players/${playerId}-${playerUsername}/history`, label: "History" },
+      ]}
+    />
+    <HeaderContent section="Players" title={player.nickname!}>
+      {
+        player.avatar_url && (
+          <img
+            slot="left"
+            src={player.avatar_url}
+            alt={player.nickname}
+            class="mr-4 size-8 flex-none rounded md:size-16"
+          />
+        )
+      }
+      <RankedBadge slot="right" entry={highestLeague} class="w-16 md:w-20" client:load />
+    </HeaderContent>
+    <HeaderMeta
+      items={[
+        {
+          icon: import("lucide-static/icons/activity.svg?raw"),
+          label: `Last Match ${formatDateRelative(
+            new Date(playerMatches.matches[0]?.created_at || player.last_match_ended_at!)
+          )}`,
+        },
+        { icon: import("lucide-static/icons/hash.svg?raw"), label: player.id },
+      ]}
+    />
+  </Header>
+  <Section>
+    <Main>
+      <MatchHistory playerId={playerId} page={Number(page)} client:load />
+    </Main>
+  </Section>
+</Layout>
