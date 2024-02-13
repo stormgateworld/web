@@ -27,7 +27,7 @@ dependencies:
     version: 2.9.41
   astro:
     specifier: ^4.2.4
-    version: 4.2.4
+    version: 4.2.4(@types/node@20.11.17)
   chart.js:
     specifier: ^4.4.1
     version: 4.4.1
@@ -69,6 +69,9 @@ devDependencies:
   '@tailwindcss/typography':
     specifier: ^0.5.10
     version: 0.5.10(tailwindcss@3.4.1)
+  '@types/node':
+    specifier: ^20.11.17
+    version: 20.11.17
   husky:
     specifier: ^9.0.10
     version: 9.0.10
@@ -144,7 +147,7 @@ packages:
     peerDependencies:
       astro: ^4.0.0
     dependencies:
-      astro: 4.2.4
+      astro: 4.2.4(@types/node@20.11.17)
       send: 0.18.0
       server-destroy: 1.0.1
     transitivePeerDependencies:
@@ -177,7 +180,7 @@ packages:
       astro: ^3.0.0 || ^4.0.0
       tailwindcss: ^3.0.24
     dependencies:
-      astro: 4.2.4
+      astro: 4.2.4(@types/node@20.11.17)
       autoprefixer: 10.4.17(postcss@8.4.33)
       postcss: 8.4.33
       postcss-load-config: 4.0.2(postcss@8.4.33)
@@ -1118,6 +1121,11 @@ packages:
     dependencies:
       '@types/unist': 2.0.10
 
+  /@types/node@20.11.17:
+    resolution: {integrity: sha512-QmgQZGWu1Yw9TDyAP9ZzpFJKynYNeOvwMJmaxABfieQoVoiVOS6MN1WSpqpRcbeA5+RW82kraAVxCCJg+780Qw==}
+    dependencies:
+      undici-types: 5.26.5
+
   /@types/unist@2.0.10:
     resolution: {integrity: sha512-IfYcSBWE3hLpBg8+X2SEa8LVkJdJEkT2Ese2aaLs3ptGdVtABxndrMaxuFlQ1qdFf9Q5rDvDpxI3WwgvKFAsQA==}
 
@@ -1190,7 +1198,7 @@ packages:
   /array-iterate@2.0.1:
     resolution: {integrity: sha512-I1jXZMjAgCMmxT4qxXfPXa6SthSoE8h6gkSI9BGGNv8mP8G/v0blc+qFnZu6K42vTOiuME596QaLO0TP3Lk0xg==}
 
-  /astro@4.2.4:
+  /astro@4.2.4(@types/node@20.11.17):
     resolution: {integrity: sha512-z1f52lXkHf71M5HSLKrd5G1PH5/Zfq4kMp0iUT7Na5VHcPDma/NYFPFPewDxqV6UPmyxupj3xuooFaN3j8zaow==}
     engines: {node: '>=18.14.1', npm: '>=6.14.0'}
     hasBin: true
@@ -1253,7 +1261,7 @@ packages:
       tsconfck: 3.0.1
       unist-util-visit: 5.0.0
       vfile: 6.0.1
-      vite: 5.0.12
+      vite: 5.0.12(@types/node@20.11.17)
       vitefu: 0.2.5(vite@5.0.12)
       which-pm: 2.1.1
       yargs-parser: 21.1.1
@@ -3921,6 +3929,9 @@ packages:
   /ultrahtml@1.5.2:
     resolution: {integrity: sha512-qh4mBffhlkiXwDAOxvSGxhL0QEQsTbnP9BozOK3OYPEGvPvdWzvAUaXNtUSMdNsKDtuyjEbyVUPFZ52SSLhLqw==}
 
+  /undici-types@5.26.5:
+    resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
+
   /unherit@3.0.1:
     resolution: {integrity: sha512-akOOQ/Yln8a2sgcLj4U0Jmx0R5jpIg2IUyRrWOzmEbjBtGzBdHtSeFKgoEcoH4KYIG/Pb8GQ/BwtYm0GCq1Sqg==}
 
@@ -4086,13 +4097,13 @@ packages:
       merge-anything: 5.1.7
       solid-js: 1.8.12
       solid-refresh: 0.6.3(solid-js@1.8.12)
-      vite: 5.1.1
+      vite: 5.1.1(@types/node@20.11.17)
       vitefu: 0.2.5(vite@5.1.1)
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /vite@5.0.12:
+  /vite@5.0.12(@types/node@20.11.17):
     resolution: {integrity: sha512-4hsnEkG3q0N4Tzf1+t6NdN9dg/L3BM+q8SWgbSPnJvrgH2kgdyzfVJwbR1ic69/4uMJJ/3dqDZZE5/WwqW8U1w==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -4120,13 +4131,14 @@ packages:
       terser:
         optional: true
     dependencies:
+      '@types/node': 20.11.17
       esbuild: 0.19.12
       postcss: 8.4.33
       rollup: 4.9.6
     optionalDependencies:
       fsevents: 2.3.3
 
-  /vite@5.1.1:
+  /vite@5.1.1(@types/node@20.11.17):
     resolution: {integrity: sha512-wclpAgY3F1tR7t9LL5CcHC41YPkQIpKUGeIuT8MdNwNZr6OqOTLs7JX5vIHAtzqLWXts0T+GDrh9pN2arneKqg==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -4154,6 +4166,7 @@ packages:
       terser:
         optional: true
     dependencies:
+      '@types/node': 20.11.17
       esbuild: 0.19.12
       postcss: 8.4.35
       rollup: 4.10.0
@@ -4169,7 +4182,7 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: 5.0.12
+      vite: 5.0.12(@types/node@20.11.17)
 
   /vitefu@0.2.5(vite@5.1.1):
     resolution: {integrity: sha512-SgHtMLoqaeeGnd2evZ849ZbACbnwQCIwRH57t18FxcXoZop0uQu0uzlIhJBlF/eWVzuce0sHeqPcDo+evVcg8Q==}
@@ -4179,7 +4192,7 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: 5.1.1
+      vite: 5.1.1(@types/node@20.11.17)
     dev: false
 
   /web-namespaces@2.0.1:
@@ -4281,7 +4294,7 @@ packages:
     peerDependencies:
       astro: ^2.0.0 || ^3.0.0
     dependencies:
-      astro: 4.2.4
+      astro: 4.2.4(@types/node@20.11.17)
       ultrahtml: 1.5.2
     dev: true
 
