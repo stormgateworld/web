@@ -14,4 +14,9 @@ export default defineConfig({
   markdown: {
     shikiConfig: { theme: "aurora-x" },
   },
+  vite: {
+    optimizeDeps: {
+      exclude: ["sharp"],
+    },
+  },
 })

@@ -1,20 +1,23 @@
 export const prerender = false
 
+import type { APIRoute } from "astro"
 import { PlayersApi } from "../../../lib/api"
 import { readFileSync } from "node:fs"
 import { Buffer } from "node:buffer"
 import process from "node:process"
-import { parse } from "node:url"
 import { html } from "satori-html"
 import satori from "satori"
 import sharp from "sharp"
+import { getImage } from "astro:assets"
 
-export async function GET({ params, request }) {
-  const { host } = parse(request.url, true)
-  const playerId = params.id
+const images = import.meta.glob<{ default: ImageMetadata }>("/src/assets/**/*.{jpeg,jpg,png,gif}")
+
+export const GET: APIRoute = async ({ params, request }) => {
+  const url = new URL(request.url)
+  const playerId = params.id!
   const player = await PlayersApi.getPlayer({ playerId })
 
-  const getCardHTML = () => {
+  const getCardHTML = async () => {
     let cardHTML: string = ""
 
     const highestLeague = player?.leaderboard_entries?.reduce(
@@ -23,9 +26,23 @@ export async function GET({ params, request }) {
     )
 
     if (highestLeague?.rank) {
-      const badge = `https://${host}/images/game/factions/${highestLeague.race}-small-glow.png`
-      const leagueIcon = `https://${host}/images/game/leagues/${highestLeague.league}-${highestLeague.tier}.png`
-      const banner = `https://${host}/images/game/factions/${highestLeague.race}-banner.png`
+      const bannerImg = await getImage({
+        src: images[`/src/assets/game/factions/${highestLeague.race}-banner.png`](),
+        format: "png",
+      })
+      const badgeImg = await getImage({
+        src: images[`/src/assets/game/factions/${highestLeague.race}-small-glow.png`](),
+        format: "png",
+      })
+      const leagueImg = await getImage({
+        src: images[`/src/assets/game/leagues/${highestLeague.league}-${highestLeague.tier}.png`](),
+        format: "png",
+      })
+
+      const bannerUrl = `${url.protocol}//${url.host}${bannerImg.src}`
+      const badgeUrl = `${url.protocol}//${url.host}${badgeImg.src}`
+      const leagueUrl = `${url.protocol}//${url.host}${leagueImg.src}`
+
       const color = highestLeague.race === "infernals" ? "red" : "blue"
 
       const backgroundColor =
@@ -41,7 +58,7 @@ export async function GET({ params, request }) {
           <div class="flex w-full">
             <div class="flex flex-col w-2/3">
               <div class="flex items-center px-6 pt-4 ">
-                <img src="${badge}" class="w-16 mr-4 -mt-3" />
+                <img src="${badgeUrl}" class="w-16 mr-4 -mt-3" />
                 <div class="flex flex-col mt-2 mb-3">
                   <p class="w-full text-gray-400 text-2xl capitalize -mt-1 -mb-3 py-2 font-bold">
                     ${highestLeague.league} ${highestLeague.tier}
@@ -51,7 +68,7 @@ export async function GET({ params, request }) {
               </div>
               <div class="flex items-center bg-${color}-800/10 border-l border-${color}-500/50 py-3">
                 <div class="flex flex-col w-1/4 items-center ${highestLeague.tier == 1 ? "ml-4" : ""}">
-                  <img src="${leagueIcon}" width="150" />
+                  <img src="${leagueUrl}" width="150" />
                 </div>
                 <div class="flex flex-col w-1/3 ml-8">
                   <p class="m-0 text-gray-400 text-3xl font-bold min-w-32 mb-1">Rank</p>
@@ -73,7 +90,7 @@ export async function GET({ params, request }) {
                 </div>
                 <div class="flex flex-col w-60 h-16 mt-2 -ml-5">
                   <p class="m-0 -mb-3 text-gray-400 font-bold text-3xl flex self-end">
-                    <span style="color:#55EA00;">${highestLeague.wins}</span> 
+                    <span style="color:#55EA00;">${highestLeague.wins}</span>
                     <span class="mx-2"> - </span>
                     <span style="color:#EA0000;">${highestLeague.losses}</span>
                   </p>
@@ -84,8 +101,8 @@ export async function GET({ params, request }) {
                 </div>
               </div>
             </div>
-            <div 
-               style="background: url('${banner}');"
+            <div
+               style="background: url('${bannerUrl}');"
                class="flex w-full h-full border-l border-${color}-800/50"
              />
             </div>
@@ -93,10 +110,13 @@ export async function GET({ params, request }) {
         </div>
       `
     } else {
+      const backgroundImg = await getImage({ src: images["/src/assets/game/vanguard-base-hero.jpg"](), format: "jpg" })
+      const backgroundUrl = `${url.protocol}//${url.host}${backgroundImg.src}`
+
       cardHTML += `
-        <div 
+        <div
           class="flex w-full rounded-xl items-center justify-center h-full"
-          style="background: url('https://${host}/images/game/vanguard-base-hero.jpg');background-size: 1050px 500px;"
+          style="background: url('${backgroundUrl}');background-size: 1050px 500px;"
         >
           <div class="flex flex-col w-full text-center bg-zinc-800/90 self-end p-8 mb-8 border-t border-b border-blue-500/20">
             <h1 class="text-gray-200 text-5xl capitalize m-0 mb-2">
@@ -115,7 +135,7 @@ export async function GET({ params, request }) {
     <div class="flex bg-transparent w-full h-full items-center">
       <div class="flex rounded-xl h-full w-full px-2 items-center"">
         <div class="flex flex-col w-full border-2 border-zinc-500/20 rounded-xl">
-          ${getCardHTML()}
+          ${await getCardHTML()}
         </div>
       </div>
     </div>`)
