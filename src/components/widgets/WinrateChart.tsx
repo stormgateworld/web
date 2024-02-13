@@ -5,7 +5,6 @@ import {
   Chart,
   Title,
   Tooltip,
-  Legend,
   Colors,
   type ChartOptions,
   type ChartData,

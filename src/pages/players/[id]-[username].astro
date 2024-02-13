@@ -18,20 +18,9 @@ import Section from "../../components/layout/Section.astro"
 import Main from "../../components/layout/Main.astro"
 import Sidebar from "../../components/layout/Sidebar.astro"
 import { formatDateRelative } from "../../lib/format"
+import { getDataOrErrorResponse } from "../../lib/utils"
 import PlayerFactionCard from "../../components/widgets/PlayerFactionCard.astro"
 import Box from "../../components/layout/Box.astro"
-
-// to be moved to own file
-async function getDataOrErrorResponse<T extends readonly unknown[] | []>(
-  ...values: T
-): Promise<[{ -readonly [P in keyof T]: Awaited<T[P]> }, error: Response | null]> {
-  try {
-    const result = await Promise.all(values)
-    return [result, null]
-  } catch (e) {
-    return [[] as any, new Response(null, { status: 500, statusText: `${e}` })]
-  }
-}
 
 const playerId = Astro.params.id!
 const playerUsername = Astro.params.username!
@@ -59,9 +48,13 @@ const ogDescription = `View the match history, win rates, top opponents, and mor
 <Layout title={player?.nickname!} ogTitle={ogTitle} ogDescription={ogDescription} ogImageUrl={ogImageUrl}>
   <Header backdropImage={player.avatar_url}>
     <HeaderNav
+      breadcrumb={[
+        { href: "/leaderboard", label: "Leaderboard" },
+        { href: "/players/${playerId}-${playerUsername}", label: playerUsername },
+      ]}
       current={[
         { href: `/players/${playerId}-${playerUsername}`, label: "Overview" },
-        { href: `/players/${playerId}-${playerUsername}/history`, label: "History" },
+        { href: `/players/${playerId}-${playerUsername}/history`, label: "Match History" },
       ]}
     />
     <HeaderContent section="Players" title={player.nickname!}>
