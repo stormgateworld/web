@@ -11,7 +11,6 @@ import sharp from "sharp"
 import { getImage } from "astro:assets"
 
 const images = import.meta.glob<{ default: ImageMetadata }>("/src/assets/**/*.{jpeg,jpg,png,gif}")
-
 const cwd = (process as any).cwd()
 
 export const GET: APIRoute = async ({ params, request }) => {
