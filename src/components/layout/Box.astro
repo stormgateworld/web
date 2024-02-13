@@ -1,7 +1,11 @@
 ---
 import { styles } from "../../lib/theme"
+
+interface Props {
+  class?: string
+}
 ---
 
-<div class:list={[styles.box.base, "min-h-52"]}>
+<div class:list={[styles.box.base, "min-h-52", Astro.props.class]}>
   <slot />
 </div>

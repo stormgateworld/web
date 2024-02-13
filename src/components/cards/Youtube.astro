@@ -14,12 +14,6 @@ const { data } = Astro.props
     <i class="ti ti-thumb-up mr-1 w-4"></i>
     {formatNumber(data.metadata?.likes_count)}
   </a>
-  {
-    /*<span class="inline-flex items-center">
-          <Icon name="tabler:eye" class="w-4 mr-1" />
-          {formatNumber(data.statistics.viewCount)}
-        </span>*/
-  }
   <a class="inline-flex items-center truncate">
     <img src="/content/websites/youtube.com.png" class="mr-2 h-3" />
     {data.author}

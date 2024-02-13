@@ -1,3 +1,5 @@
+import type { LeaderboardEntryResponse } from "./api"
+
 export function formatDateRelative(date: Date, format: "short" | "medium" = "medium") {
   const now = new Date()
   const diff = now.getTime() - date.getTime()
@@ -19,4 +21,16 @@ export function formatDateRelative(date: Date, format: "short" | "medium" = "med
   else if (hours > 0) return `${hours} hour${hours > 1 ? "s" : ""} ago`
   else if (minutes > 0) return `${minutes} minute${minutes > 1 ? "s" : ""} ago`
   else return "today"
+}
+
+export function formatLeague(entry: Pick<LeaderboardEntryResponse, "league" | "tier">) {
+  const tier = ["I", "II", "III"][(entry.tier ?? 0) - 1] ?? ""
+  if (entry.league == "master") return `Master ${tier}`
+  if (entry.league == "diamond") return `Diamond ${tier}`
+  if (entry.league == "platinum") return `Platinum ${tier}`
+  if (entry.league == "gold") return `Gold ${tier}`
+  if (entry.league == "silver") return `Silver ${tier}`
+  if (entry.league == "bronze") return `Bronze ${tier}`
+  if (entry.league == "aspirant") return `Aspirant ${tier}`
+  return "Unranked"
 }

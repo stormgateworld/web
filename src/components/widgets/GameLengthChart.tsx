@@ -37,12 +37,12 @@ export function GameLengthChart(props: GameLengthProps) {
       {
         label: "Wins",
         data: wins,
-        backgroundColor: "#4CA154",
+        backgroundColor: "#55EA00",
       },
       {
         label: "Losses",
         data: losses,
-        backgroundColor: "#CA3A31",
+        backgroundColor: "#EA0000",
       },
     ],
   }

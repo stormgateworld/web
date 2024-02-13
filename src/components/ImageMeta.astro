@@ -1,0 +1,20 @@
+---
+export interface Props {
+  ogImageUrl: string
+}
+
+const { ogImageUrl } = Astro.props
+---
+
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image" content={ogImageUrl} />
+<meta property="og:image:width" content="900" />
+<meta property="og:image:height" content="450" />
+<meta property="og:type" content="profile" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="" />
+<meta name="twitter:description" content="" />
+<meta name="twitter:image:type" content="image/png" />
+<meta name="twitter:image" content={ogImageUrl} />
+<meta name="twitter:image:width" content="900" />
+<meta name="twitter:image:height" content="450" />
