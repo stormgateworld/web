@@ -37,10 +37,7 @@ export async function GET({ params, request }) {
       const winRateRedBar = (10 - parseInt(winRateGreenBar)).toString()
 
       cardHTML += `
-        <div 
-          style="${backgroundColor} height:100%;"
-          class="flex border-2 rounded-xl border-${color}-500/20 overflow-hidden"
-        >
+        <div style="${backgroundColor}" class="flex border-2 rounded-xl border-${color}-500/20 overflow-hidden h-full">
           <div class="flex w-full">
             <div class="flex flex-col w-2/3">
               <div class="flex items-center px-6 pt-4 ">
@@ -88,7 +85,7 @@ export async function GET({ params, request }) {
               </div>
             </div>
             <div 
-               style="background: url('${banner}');background-size: 535px 450px;background-repeat:no-repeat;"
+               style="background: url('${banner}');"
                class="flex w-full h-full border-l border-${color}-800/50"
              />
             </div>
@@ -98,11 +95,8 @@ export async function GET({ params, request }) {
     } else {
       cardHTML += `
         <div 
-          class="flex w-full rounded-xl items-center justify-center"
-          style="
-            background: url('https://${host}/images/game/vanguard-base-hero.jpg');
-            background-size: 1050px 500px; background-repeat: no-repeat;
-            height: 100%;"
+          class="flex w-full rounded-xl items-center justify-center h-full"
+          style="background: url('https://${host}/images/game/vanguard-base-hero.jpg');background-size: 1050px 500px;"
         >
           <div class="flex flex-col w-full text-center bg-zinc-800/90 self-end p-8 mb-8 border-t border-b border-blue-500/20">
             <h1 class="text-gray-200 text-5xl capitalize m-0 mb-2">
