@@ -5,7 +5,7 @@ import {
   Chart,
   Title,
   Tooltip,
-  Legend,
+  TimeScale,
   Colors,
   type ChartOptions,
   type ChartData,
@@ -13,7 +13,7 @@ import {
   type ChartArea,
 } from "chart.js"
 import { Line } from "solid-chartjs"
-import "chartjs-adapter-luxon"
+import "chartjs-adapter-date-fns"
 
 type WinrateChartProps = {
   labels: string[]
@@ -23,7 +23,7 @@ type WinrateChartProps = {
 export function WinrateChart(props: WinrateChartProps) {
   let canvas: HTMLCanvasElement
   onMount(() => {
-    Chart.register(Title, Tooltip, Colors)
+    Chart.register(Title, Tooltip, Colors, TimeScale)
   })
 
   const min = Math.min(...props.data) - 5
@@ -65,7 +65,7 @@ export function WinrateChart(props: WinrateChartProps) {
       x: {
         display: true,
         type: "time",
-        time: { unit: "day", tooltipFormat: "DD" },
+        time: { unit: "day", tooltipFormat: "d MMM, y" },
         ticks: {
           align: "inner",
           rotation: 0,

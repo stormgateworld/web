@@ -3,8 +3,7 @@ export const prerender = false
 
 import { Image } from "astro:assets"
 import { WinrateChart } from "../components/widgets/WinrateChart"
-import { GameNumberChart } from "../components/widgets/GameNumberChart"
-import { PlayerNumberChart } from "../components/widgets/PlayerNumberChart"
+import { TimeBarChart } from "../components/widgets/TimeBarChart"
 
 import Layout from "../layouts/Layout.astro"
 import { League, Race, type StatsByTimeEntry } from "../lib/api"
@@ -16,6 +15,7 @@ import Header from "../components/layout/Header.astro"
 import Section from "../components/layout/Section.astro"
 import HeaderMeta from "../components/layout/HeaderMeta.astro"
 import { formatDateRelative } from "../lib/format"
+import { Widget } from "../components/ui/Widget"
 
 const league = new URLSearchParams(Astro.url.search).get("league")
 
@@ -23,7 +23,7 @@ const longNumberFormatter = new Intl.NumberFormat("en-us")
 
 const [[{ races, cached_at }, { activity }], error] = await getDataOrErrorResponse(
   StatisticsApi.getStatistics({ league: league ? (league as League) : null }),
-  StatisticsApi.getStatisticsActivity()
+  StatisticsApi.getStatisticsActivity({})
 )
 if (error) return error
 
@@ -33,13 +33,14 @@ const durationPrettyLabels = ["0-5m", "5-10m", "10-15m", "15-20m", "20m+"]
 const numberPlayers: number[] = []
 const numberMatches: number[] = []
 const dateLabels: string[] = []
-for (const entry of activity) {
-  dateLabels.push(entry.date)
-  numberMatches.push(entry.matches)
-  numberPlayers.push(entry.players)
+for (const entry of activity.history) {
+  if (entry.date) {
+    dateLabels.push(entry.date)
+    numberMatches.push(entry.matches)
+    numberPlayers.push(entry.players)
+  }
 }
 
-const sumMatches = numberMatches.reduce((total, value) => total + value, 0)
 const earliestDate = new Date(dateLabels[0])
 
 function mapFactionWinrate(race: StatsByTimeEntry) {
@@ -117,8 +118,7 @@ const factions = [
       <div class="flex w-full flex-wrap gap-4 sm:flex-nowrap">
         {
           factions.map((faction) => (
-            <div class="min-w-0 flex-auto rounded-xl border border-gray-800 bg-gray-900 p-4">
-              <h2 class="mb-4 text-xl font-black">{faction.name}</h2>
+            <Widget title={faction.name}>
               <div class="flex gap-2 xs:gap-4">
                 <Image src={faction.icon} alt="Vanguard" class="size-12 xs:size-16" />
                 <div class="flex flex-col">
@@ -143,27 +143,30 @@ const factions = [
                 Based on {formatNumber(faction.stats.matches.count!)} matches in the past 7 days, excl.{" "}
                 {formatNumber(faction.stats.matches.mirrors!)} mirrors
               </p>
-            </div>
+            </Widget>
           ))
         }
       </div>
     </div>
   </Section>
   <Section title="Activity" class="!max-w-screen-md">
-    <div class="min-w-0 flex-auto rounded-xl border border-gray-800 bg-gray-900 p-4">
-      <h2 class="mb-4 text-xl font-black">Ranked games played</h2>
-      <GameNumberChart data={numberMatches} labels={dateLabels} client:idle />
-      <p class="mt-2 pl-1 text-xs leading-snug text-gray-500">
-        In total, {longNumberFormatter.format(sumMatches)} ranked games were played since {
-          earliestDate.toLocaleDateString("en", { dateStyle: "long" })
-        }.
-      </p>
-    </div>
-  </Section>
-  <Section class="!max-w-screen-md">
-    <div class="min-w-0 flex-auto rounded-xl border border-gray-800 bg-gray-900 p-4">
-      <h2 class="mb-4 text-xl font-black">Ladder players</h2>
-      <PlayerNumberChart data={numberPlayers} labels={dateLabels} client:idle />
+    <div class="flex w-full flex-col gap-4">
+      <Widget title="Ranked games played">
+        <TimeBarChart data={numberMatches} labels={dateLabels} labelObjectName="games" client:idle />
+        <p class="mt-2 pl-1 text-xs leading-snug text-gray-500">
+          In total, {longNumberFormatter.format(activity.aggregated.matches)} ranked games were played since {
+            earliestDate.toLocaleDateString("en", { dateStyle: "long" })
+          }.
+        </p>
+      </Widget>
+      <Widget title="Ladder players">
+        <TimeBarChart data={numberPlayers} labels={dateLabels} client:idle labelObjectName="players" />
+        <p class="mt-2 pl-1 text-xs leading-snug text-gray-500">
+          In total, {longNumberFormatter.format(activity.aggregated.players)} persons played on the ladder since {
+            earliestDate.toLocaleDateString("en", { dateStyle: "long" })
+          }.
+        </p>
+      </Widget>
     </div>
   </Section>
 </Layout>

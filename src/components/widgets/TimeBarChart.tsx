@@ -3,16 +3,17 @@
 import { onMount } from "solid-js"
 import { Chart, Title, Tooltip, Colors, TimeScale, type ChartOptions, type ChartData } from "chart.js"
 import { Bar } from "solid-chartjs"
-import "chartjs-adapter-luxon"
+import "chartjs-adapter-date-fns"
 
-type GameNumberChartProps = {
+type TimeBarChartProps = {
   labels: string[]
   data: number[]
+  labelObjectName: string
 }
 
 const longNumberFormatter = new Intl.NumberFormat("en-us")
 
-export function GameNumberChart(props: GameNumberChartProps) {
+export function TimeBarChart(props: TimeBarChartProps) {
   let canvas: HTMLCanvasElement
   onMount(() => {
     Chart.register(Title, Tooltip, Colors, TimeScale)
@@ -22,7 +23,6 @@ export function GameNumberChart(props: GameNumberChartProps) {
     labels: props.labels,
     datasets: [
       {
-        label: "Games",
         data: props.data,
         backgroundColor: "#5EC269",
       },
@@ -40,14 +40,14 @@ export function GameNumberChart(props: GameNumberChartProps) {
     scales: {
       x: {
         type: "time",
-        time: { unit: "day", tooltipFormat: "DD" },
+        time: { unit: "day", tooltipFormat: "d MMM, y" },
       },
     },
     plugins: {
       tooltip: {
         displayColors: false,
         callbacks: {
-          label: (c) => `${longNumberFormatter.format(c.parsed.y)} games`,
+          label: (c) => `${longNumberFormatter.format(c.parsed.y)} ${props.labelObjectName}`,
         },
       },
     },

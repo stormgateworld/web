@@ -13,10 +13,20 @@ export class StatisticsApi {
    * @returns ActivityStatistics Stats
    * @throws ApiError
    */
-  public static getStatisticsActivity(): CancelablePromise<ActivityStatistics> {
+  public static getStatisticsActivity({
+    since,
+    until,
+  }: {
+    since?: string | null
+    until?: string | null
+  }): CancelablePromise<ActivityStatistics> {
     return __request(OpenAPI, {
       method: "GET",
       url: "/v0/statistics/activity",
+      query: {
+        since: since,
+        until: until,
+      },
       errors: {
         500: `Server error`,
       },
