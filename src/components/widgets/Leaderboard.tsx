@@ -38,7 +38,7 @@ const getFactionOption = (value: string | undefined) =>
   factionOptions.find((option) => option.value === value) || factionOptions[0]
 
 export function Leaderboard(props: Props) {
-  const [count, setCount] = createSignal(props.limit ?? 100)
+  const [count, setCount] = createSignal(props.limit ?? perPage)
   const [query, setQuery] = createSignal(props.query || undefined)
   const [page, setPage] = createSignal(props.page || 1)
   const [mode, setMode] = createSignal(props.mode ?? "ranked_1v1")

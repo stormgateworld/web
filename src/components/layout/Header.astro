@@ -19,9 +19,9 @@ const imageUrl = backdropImage ? (isUrl ? backdropImage : (await getImage(backdr
 >
   {
     backdropImage && (
-      <div class="absolute inset-0 overflow-hidden">
+      <div class="pointer-events-none absolute inset-0 overflow-hidden">
         <div
-          class="h-full w-full bg-cover bg-center opacity-40 mix-blend-lighten blur-3xl brightness-50 saturate-150"
+          class="h-full w-full bg-cover bg-center opacity-40 mix-blend-lighten blur-3xl brightness-50 saturate-150 "
           style={`background-image: url(${imageUrl})`}
         />
       </div>
