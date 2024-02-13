@@ -12,7 +12,6 @@ import {
   type ChartArea,
 } from "chart.js"
 import { Line } from "solid-chartjs"
-import "chartjs-adapter-date-fns"
 
 type WinrateChartProps = {
   labels: string[]
