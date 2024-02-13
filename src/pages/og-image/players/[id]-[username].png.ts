@@ -12,6 +12,8 @@ import { getImage } from "astro:assets"
 
 const images = import.meta.glob<{ default: ImageMetadata }>("/src/assets/**/*.{jpeg,jpg,png,gif}")
 
+const cwd = (process as any).cwd()
+
 export const GET: APIRoute = async ({ params, request }) => {
   const url = new URL(request.url)
   const playerId = params.id!
@@ -133,7 +135,7 @@ export const GET: APIRoute = async ({ params, request }) => {
 
   const markup = html(`
     <div class="flex bg-transparent w-full h-full items-center">
-      <div class="flex rounded-xl h-full w-full px-2 items-center"">
+      <div class="flex rounded-xl h-full w-full px-2 items-center">
         <div class="flex flex-col w-full border-2 border-zinc-500/20 rounded-xl">
           ${await getCardHTML()}
         </div>
@@ -148,13 +150,13 @@ export const GET: APIRoute = async ({ params, request }) => {
         name: "Nunito",
         style: "normal",
         weight: 400,
-        data: readFileSync(`${process.cwd()}/src/assets/fonts/NunitoSans_7pt-Regular.ttf`),
+        data: readFileSync(`${cwd}/src/assets/fonts/NunitoSans_7pt-Regular.ttf`),
       },
       {
         name: "Nunito",
         style: "normal",
         weight: 700,
-        data: readFileSync(`${process.cwd()}/src/assets/fonts/NunitoSans_7pt-Bold.ttf`),
+        data: readFileSync(`${cwd}/src/assets/fonts/NunitoSans_7pt-Bold.ttf`),
       },
     ],
   })
