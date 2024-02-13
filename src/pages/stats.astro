@@ -3,13 +3,12 @@ export const prerender = false
 
 import { Image } from "astro:assets"
 import { WinrateChart } from "../components/widgets/WinrateChart"
-import { TimeBarChart } from "../components/widgets/TimeBarChart"
+import { BarChart } from "../components/widgets/BarChart"
 
 import Layout from "../layouts/Layout.astro"
 import { League, Race, type StatsByTimeEntry } from "../lib/api"
 import { StatisticsApi } from "../lib/api/services/StatisticsApi"
 import { formatNumber, getDataOrErrorResponse } from "../lib/utils"
-import Timeago from "../components/Timeago.astro"
 import { LeagueDropdown } from "../components/widgets/LeagueDropdown"
 import Header from "../components/layout/Header.astro"
 import Section from "../components/layout/Section.astro"
@@ -51,7 +50,7 @@ function mapFactionWinrate(race: StatsByTimeEntry) {
   const data: number[] = []
   if (!race.history.at(-1)?.matches_count) race.history.pop()
   for (const entry of race.history) {
-    labels.push(entry.date!)
+    labels.push(new Date(entry.date!).toLocaleDateString("en-US", { month: "short", day: "numeric" }))
     data.push(round(entry.win_rate!))
   }
   const duration = {
@@ -152,7 +151,7 @@ const factions = [
   <Section title="Activity" class="!max-w-screen-md">
     <div class="flex w-full flex-col gap-4">
       <Widget title="Ranked games played">
-        <TimeBarChart data={numberMatches} labels={dateLabels} labelObjectName="games" client:idle />
+        <BarChart data={numberMatches} labels={dateLabels} labelObjectName="games" client:idle useTimeScale />
         <p class="mt-2 pl-1 text-xs leading-snug text-gray-500">
           In total, {longNumberFormatter.format(activity.aggregated.matches)} ranked games were played since {
             earliestDate.toLocaleDateString("en", { dateStyle: "long" })
@@ -160,7 +159,7 @@ const factions = [
         </p>
       </Widget>
       <Widget title="Ladder players">
-        <TimeBarChart data={numberPlayers} labels={dateLabels} client:idle labelObjectName="players" />
+        <BarChart data={numberPlayers} labels={dateLabels} client:idle labelObjectName="players" useTimeScale />
         <p class="mt-2 pl-1 text-xs leading-snug text-gray-500">
           In total, {longNumberFormatter.format(activity.aggregated.players)} persons played on the ladder since {
             earliestDate.toLocaleDateString("en", { dateStyle: "long" })

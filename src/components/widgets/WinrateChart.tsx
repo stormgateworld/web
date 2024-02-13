@@ -5,7 +5,6 @@ import {
   Chart,
   Title,
   Tooltip,
-  TimeScale,
   Colors,
   type ChartOptions,
   type ChartData,
@@ -23,7 +22,7 @@ type WinrateChartProps = {
 export function WinrateChart(props: WinrateChartProps) {
   let canvas: HTMLCanvasElement
   onMount(() => {
-    Chart.register(Title, Tooltip, Colors, TimeScale)
+    Chart.register(Title, Tooltip, Colors)
   })
 
   const min = Math.min(...props.data) - 5
@@ -64,8 +63,6 @@ export function WinrateChart(props: WinrateChartProps) {
       },
       x: {
         display: true,
-        type: "time",
-        time: { unit: "day", tooltipFormat: "d MMM, y" },
         ticks: {
           align: "inner",
           rotation: 0,

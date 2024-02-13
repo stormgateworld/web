@@ -5,15 +5,16 @@ import { Chart, Title, Tooltip, Colors, TimeScale, type ChartOptions, type Chart
 import { Bar } from "solid-chartjs"
 import "chartjs-adapter-date-fns"
 
-type TimeBarChartProps = {
+type BarChartProps = {
   labels: string[]
   data: number[]
   labelObjectName: string
+  useTimeScale?: boolean
 }
 
 const longNumberFormatter = new Intl.NumberFormat("en-us")
 
-export function TimeBarChart(props: TimeBarChartProps) {
+export function BarChart(props: BarChartProps) {
   let canvas: HTMLCanvasElement
   onMount(() => {
     Chart.register(Title, Tooltip, Colors, TimeScale)
@@ -38,10 +39,12 @@ export function TimeBarChart(props: TimeBarChartProps) {
       mode: "index",
     },
     scales: {
-      x: {
-        type: "time",
-        time: { unit: "day", tooltipFormat: "d MMM, y" },
-      },
+      x: props.useTimeScale
+        ? {
+            type: "time",
+            time: { unit: "day", tooltipFormat: "d MMM, y" },
+          }
+        : {},
     },
     plugins: {
       tooltip: {
