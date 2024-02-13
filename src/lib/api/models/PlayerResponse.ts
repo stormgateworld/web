@@ -11,4 +11,5 @@ export type PlayerResponse = {
   avatar_url?: string | null
   leaderboard_entries: Array<LeaderboardEntryResponse>
   last_match_ended_at?: string | null
+  last_match_started_at?: string | null
 }

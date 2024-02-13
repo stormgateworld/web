@@ -33,3 +33,14 @@ export function formatDuration(seconds?: number | null) {
 export function urlencode(str: string) {
   return encodeURIComponent(str).replace(/%20/g, "-").replace(/%2F/g, "-")
 }
+
+export async function getDataOrErrorResponse<T extends readonly unknown[] | []>(
+  ...values: T
+): Promise<[{ -readonly [P in keyof T]: Awaited<T[P]> }, error: Response | null]> {
+  try {
+    const result = await Promise.all(values)
+    return [result, null]
+  } catch (e) {
+    return [[] as any, new Response(null, { status: 500, statusText: `${e}` })]
+  }
+}

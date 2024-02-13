@@ -2,9 +2,11 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { ActivityStatisticsDayEntry } from "./ActivityStatisticsDayEntry"
+import type { ActivityStatisticsActivity } from "./ActivityStatisticsActivity"
 import type { ActivityStatisticsServerEntry } from "./ActivityStatisticsServerEntry"
 export type ActivityStatistics = {
-  activity: Array<ActivityStatisticsDayEntry>
+  since: string
+  until: string
+  activity: ActivityStatisticsActivity
   servers: Array<ActivityStatisticsServerEntry>
 }
