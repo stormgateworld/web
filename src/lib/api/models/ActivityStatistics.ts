@@ -5,6 +5,7 @@
 import type { ActivityStatisticsActivity } from "./ActivityStatisticsActivity"
 import type { ActivityStatisticsServerEntry } from "./ActivityStatisticsServerEntry"
 export type ActivityStatistics = {
+  cached_at: string
   since: string
   until: string
   activity: ActivityStatisticsActivity

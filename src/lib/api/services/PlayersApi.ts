@@ -9,6 +9,7 @@ import type { PlayerMatchupsStats } from "../models/PlayerMatchupsStats"
 import type { PlayerOpponentsStats } from "../models/PlayerOpponentsStats"
 import type { PlayerPreferences } from "../models/PlayerPreferences"
 import type { PlayerResponse } from "../models/PlayerResponse"
+import type { Race } from "../models/Race"
 import type { CancelablePromise } from "../core/CancelablePromise"
 import { OpenAPI } from "../core/OpenAPI"
 import { request as __request } from "../core/request"
@@ -43,6 +44,7 @@ export class PlayersApi {
    */
   public static getPlayerMatches({
     playerId,
+    race,
     page,
     count,
   }: {
@@ -50,6 +52,7 @@ export class PlayersApi {
      * Player ID
      */
     playerId: string
+    race?: Race | null
     page?: number | null
     count?: number | null
   }): CancelablePromise<PlayerMatchesResponse> {
@@ -60,6 +63,7 @@ export class PlayersApi {
         player_id: playerId,
       },
       query: {
+        race: race,
         page: page,
         count: count,
       },

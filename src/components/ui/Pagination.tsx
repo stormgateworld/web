@@ -1,21 +1,15 @@
 import { Pagination as KPagination } from "@kobalte/core"
 import { classes, styles } from "../../lib/theme"
 
-export function Pagination(props: {
-  page: number
-  setPage: (page: number) => void
-  totalPages: number
-  showLast?: boolean
-}) {
+export function Pagination(props: { page: number; setPage: (page: number) => void; totalPages: number }) {
   return (
     <KPagination.Root
       class="[&>ul]:inline-flex [&>ul]:items-center [&>ul]:justify-center [&>ul]:gap-2"
       count={props.totalPages}
       page={props.page}
       onPageChange={props.setPage}
-      fixedItems={props.showLast === false ? false : props.totalPages > 5}
+      fixedItems={props.totalPages > 5}
       siblingCount={1}
-      showLast={props.showLast !== undefined ? props.showLast : true}
       itemComponent={(p) => (
         <KPagination.Item
           class={classes(
