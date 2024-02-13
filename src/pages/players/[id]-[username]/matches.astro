@@ -29,6 +29,7 @@ async function getDataOrErrorResponse<T extends readonly unknown[] | []>(
 
 const playerId = Astro.params.id!
 const playerUsername = Astro.params.username!
+
 const [[player, playerMatches], error] = await getDataOrErrorResponse(
   PlayersApi.getPlayer({ playerId }),
   PlayersApi.getPlayerMatches({ playerId })
@@ -43,19 +44,19 @@ const highestLeague = leaderboardEntries?.[0]
 const url = Astro.url
 const ogImageUrl = `${url.protocol}//${url.host}/og-image/players/${playerId}-${player.nickname}.png?t=${player.last_match_ended_at}`
 const ogTitle = `${player.nickname} - ${highestLeague.rank ? `Rank # ${highestLeague.rank} - ` : ""} Stormgate World`
-const ogDescription = `View the match history, win rates, top opponents, and more stats for ${player.nickname}.`
+const ogDescription = `View the match history for ${player.nickname}.`
 ---
 
 <Layout title={player?.nickname!} ogTitle={ogTitle} ogDescription={ogDescription} ogImageUrl={ogImageUrl}>
   <Header backdropImage={player.avatar_url}>
     <HeaderNav
       breadcrumb={[
-        { href: "/leaderboard", label: "Leaderboard" },
-        { href: "/players/${playerId}-${playerUsername}", label: playerUsername },
+        { href: "/leaderboards/ranked_1v1", label: "Leaderboard" },
+        { href: `/players/${playerId}-${playerUsername}`, label: player.nickname || playerUsername },
       ]}
       current={[
         { href: `/players/${playerId}-${playerUsername}`, label: "Overview" },
-        { href: `/players/${playerId}-${playerUsername}/history`, label: "Match History" },
+        { href: `/players/${playerId}-${playerUsername}/matches`, label: "Match History" },
       ]}
     />
     <HeaderContent section="Players" title={player.nickname!}>
@@ -84,8 +85,8 @@ const ogDescription = `View the match history, win rates, top opponents, and mor
     />
   </Header>
   <Section>
-    <Main>
+    <div class="w-full">
       <MatchHistory playerId={playerId} page={Number(page)} client:load />
-    </Main>
+    </div>
   </Section>
 </Layout>

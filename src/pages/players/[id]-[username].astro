@@ -27,7 +27,7 @@ const playerUsername = Astro.params.username!
 const [[player, playerMatches, playerActivity, playerMatchupStats, playerOpponents], error] =
   await getDataOrErrorResponse(
     PlayersApi.getPlayer({ playerId }),
-    PlayersApi.getPlayerMatches({ playerId, count: 5 }),
+    PlayersApi.getPlayerMatches({ playerId, count: 10 }),
     PlayersApi.getPlayerStatisticsActivity({ playerId }),
     PlayersApi.getPlayerStatisticsMatchups({ playerId }),
     PlayersApi.getPlayerStatisticsOpponents({ playerId, count: 5 })
@@ -49,12 +49,12 @@ const ogDescription = `View the match history, win rates, top opponents, and mor
   <Header backdropImage={player.avatar_url}>
     <HeaderNav
       breadcrumb={[
-        { href: "/leaderboard", label: "Leaderboard" },
-        { href: "/players/${playerId}-${playerUsername}", label: playerUsername },
+        { href: "/leaderboards/ranked_1v1", label: "Leaderboard" },
+        { href: `/players/${playerId}-${playerUsername}`, label: player.nickname || playerUsername },
       ]}
       current={[
         { href: `/players/${playerId}-${playerUsername}`, label: "Overview" },
-        { href: `/players/${playerId}-${playerUsername}/history`, label: "Match History" },
+        { href: `/players/${playerId}-${playerUsername}/matches`, label: "Match History" },
       ]}
     />
     <HeaderContent section="Players" title={player.nickname!}>
@@ -107,7 +107,7 @@ const ogDescription = `View the match history, win rates, top opponents, and mor
           {playerMatches.matches.map((match) => <MatchPreview match={match} mainPlayerId={playerId} />)}
         </div>
         <p class="pt-4 text-right text-sm font-bold text-gray-500">
-          <a href=`/players/${playerId}-${playerUsername}/history`>Open the full history →</a>
+          <a href=`/players/${playerId}-${playerUsername}/matches`>Open the full history →</a>
         </p>
       </Widget>
     </Main>

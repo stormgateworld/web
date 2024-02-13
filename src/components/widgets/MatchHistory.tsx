@@ -27,9 +27,6 @@ export function MatchHistory(props: Props) {
     playerId: props.playerId,
   })
   const [data] = createResource(getOptions, PlayersApi.getPlayerMatches)
-  // FIXME
-  // const totalPages = () => Math.ceil((data()?.total ?? 1000) / count())
-  const totalPages = 1000
 
   function updateHistory(options: ReturnType<typeof getOptions>, replace: boolean = false) {
     const searchParams = new URLSearchParams(window?.location.search)
@@ -71,10 +68,9 @@ export function MatchHistory(props: Props) {
 
   return (
     <div>
-      <Widget title="Match history" label="Closed Beta Ranked">
+      <Widget title="Match History" label="Closed Beta Ranked">
         <Suspense fallback={<div>Loading...</div>}>
-          {/* FIXME */}
-          {false && <div class="my-6 text-center text-gray-400">No results found</div>}
+          {(data()?.matches || []).length === 0 && <div class="my-6 text-center text-gray-400">No results found</div>}
           <div class={isPending() ? "opacity-70" : ""}>
             {data()?.matches.map((match) => (
               <MatchPreview match={match} mainPlayerId={playerId} />
@@ -82,14 +78,12 @@ export function MatchHistory(props: Props) {
           </div>
 
           <div class="flex justify-center py-4">
-            {/* FIXME */}
-            {totalPages > 0 && (
-              <Pagination
-                page={Math.min(totalPages, page())}
-                totalPages={totalPages}
-                setPage={(p: number) => start(() => setPage(p))}
-              />
-            )}
+            <Pagination
+              page={page()}
+              setPage={(p: number) => start(() => setPage(p))}
+              showLast={false}
+              totalPages={(data()?.matches || []).length < perPage ? page() : page() + 2}
+            />
           </div>
         </Suspense>
       </Widget>
