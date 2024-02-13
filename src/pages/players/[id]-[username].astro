@@ -54,6 +54,9 @@ const leaderboardEntries = player?.leaderboard_entries
   .sort((a, b) => (b.points ?? 0) - (a.points ?? 0))
 
 const highestLeague = leaderboardEntries?.[0]
+const ogImageUrl = `/og-image/players/${playerId}-${player.nickname}.png?timestamp=${player.last_match_ended_at}`
+const ogTitle = `${player.nickname} - ${highestLeague.rank ? `Rank # ${highestLeague.rank} - ` : ""} Stormgate World`
+const ogDescription = `View the match history, win rates, top opponents, and more stats for ${player.nickname}.`
 ---
 
 <Layout title={player?.nickname!} ogTitle={ogTitle} ogDescription={ogDescription} ogImageUrl={ogImageUrl}>
