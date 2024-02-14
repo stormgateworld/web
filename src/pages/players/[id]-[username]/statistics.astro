@@ -1,0 +1,89 @@
+---
+export const prerender = false
+
+import { PlayersApi } from "../../../lib/api"
+import Section from "../../../components/layout/Section.astro"
+import Main from "../../../components/layout/Main.astro"
+import { MmrHistoryChart } from "../../../components/widgets/MmrHistoryChart"
+import { Widget } from "../../../components/ui/Widget"
+import { FactionDropdown } from "../../../components/widgets/FactionDropdown"
+import { getDataOrErrorResponse } from "../../../lib/utils"
+import Sidebar from "../../../components/layout/Sidebar.astro"
+import PlayerActivity from "../../../components/widgets/PlayerActivity.astro"
+import PlayerMatchupStats from "../../../components/widgets/PlayerMatchupStats.astro"
+import PlayerGameLengthStats from "../../../components/widgets/PlayerGameLengthStats.astro"
+import PlayerOpponents from "../../../components/widgets/PlayerOpponents.astro"
+import PlayerLayout from "../../../layouts/PlayerLayout.astro"
+
+const playerId = Astro.params.id!
+const playerUsername = Astro.params.username!
+
+const [[player, playerMatches, playerActivity, playerMatchupStats, playerOpponents], error] =
+  await getDataOrErrorResponse(
+    PlayersApi.getPlayer({ playerId }),
+    PlayersApi.getPlayerMatches({ playerId, count: 1 }),
+    PlayersApi.getPlayerStatisticsActivity({ playerId }),
+    PlayersApi.getPlayerStatisticsMatchups({ playerId }),
+    PlayersApi.getPlayerStatisticsOpponents({ playerId, count: 10 })
+  )
+if (error) return error
+
+const leaderboardEntries = player?.leaderboard_entries
+  .filter((x) => x.matches > 0)
+  .sort((a, b) => (b.points ?? 0) - (a.points ?? 0))
+
+const faction = new URLSearchParams(Astro.url.search).get("faction") || leaderboardEntries?.[0].race
+
+const factionActivity = playerActivity.races.find((activity) => activity.aggregated?.race === faction)
+const league = leaderboardEntries.find((leaderboard) => leaderboard.race === faction) || leaderboardEntries?.[0]
+
+const mmrEntries: number[] = []
+const dateLabels: string[] = []
+if (factionActivity) {
+  for (const entry of factionActivity.history) {
+    if (entry.date && entry.mmr.median) {
+      dateLabels.push(entry.date)
+      mmrEntries.push(Math.round(entry.mmr.median))
+    }
+  }
+}
+const today = new Date().toISOString().slice(0, 10)
+if (dateLabels[dateLabels.length - 1] !== today) {
+  dateLabels.push(today)
+  mmrEntries.push(Math.round(league.mmr))
+} else {
+  mmrEntries[mmrEntries.length - 1] = Math.round(league.mmr)
+}
+
+const url = Astro.url
+const ogImageUrl = `${url.protocol}//${url.host}/og-image/players/${playerId}-${player.nickname}.png?t=${player.last_match_ended_at}`
+const ogTitle = `${player.nickname} - ${league.rank ? `Rank # ${league.rank} - ` : ""} Stormgate World`
+const ogDescription = `View statistics for ${player.nickname}.`
+
+const highestLeague = leaderboardEntries?.[0]
+---
+
+<PlayerLayout player={player}>
+  <Section>
+    <Main>
+      <div class="w-fit pt-2">
+        <FactionDropdown selected={faction} queryParam="faction" client:idle />
+      </div>
+      {
+        mmrEntries.length > 1 && (
+          <Widget title="MMR History">
+            <div>
+              <MmrHistoryChart data={mmrEntries} labels={dateLabels} client:idle />
+            </div>
+          </Widget>
+        )
+      }
+    </Main>
+    <Sidebar>
+      {playerActivity?.history && <PlayerActivity activity={playerActivity} {player} />}
+      {playerMatchupStats.matchups.length > 0 && <PlayerMatchupStats playerMatchupStats={playerMatchupStats} />}
+      {playerMatchupStats.matchups.length > 0 && <PlayerGameLengthStats playerMatchupStats={playerMatchupStats} />}
+      {playerOpponents.opponents.length > 0 && <PlayerOpponents opponents={playerOpponents} />}
+    </Sidebar>
+  </Section>
+</PlayerLayout>
