@@ -101,17 +101,17 @@ export function MatchHistory(props: Props) {
 
   return (
     <div>
-      <Widget title="Match History" label="Closed Beta Ranked">
-        <div class="flex flex-wrap justify-between gap-4 py-4">
-          <div class="flex flex-wrap justify-between gap-2">
-            <SelectButton
-              options={factionOptions}
-              value={selectedFaction}
-              setValue={setSelectedFaction}
-              class="flex-auto sm:flex-none"
-            />
-          </div>
+      <div class="flex flex-wrap justify-between gap-4 py-4">
+        <div class="flex flex-wrap justify-between gap-2">
+          <SelectButton
+            options={factionOptions}
+            value={selectedFaction}
+            setValue={setSelectedFaction}
+            class="flex-auto sm:flex-none"
+          />
         </div>
+      </div>
+      <Widget title="Match History" label="Closed Beta Ranked">
         <Suspense fallback={<div>Loading...</div>}>
           {data()?.total == 0 && <div class="my-6 text-center text-gray-400">No results found</div>}
           <div class={isPending() ? "opacity-70" : ""}>
