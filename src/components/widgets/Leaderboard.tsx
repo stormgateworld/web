@@ -10,8 +10,8 @@ import { Pagination } from "../ui/Pagination"
 import searchIcon from "lucide-static/icons/search.svg?raw"
 import { RankedBadge } from "../ui/RankedBadge"
 import { Tooltip } from "../ui/Tooltip"
-
 import EsoIcon from "../promos/eso.png?url"
+import { getPlayerSlug } from "../../lib/format"
 
 interface Props {
   mode?: string
@@ -206,7 +206,7 @@ export function Leaderboard(props: Props) {
                     <td class="w-full max-w-20 truncate pr-2 font-bold text-gray-50  md:max-w-none md:pr-4">
                       <div class="flex items-center gap-2">
                         <a
-                          href={`/players/${entry.player_id}-${urlencode(entry.nickname!)}`}
+                          href={`/players/${getPlayerSlug({ id: entry.player_id!, nickname: entry.nickname })}`}
                           class="truncate outline-none hover:text-white focus:text-white"
                         >
                           {entry.nickname}
