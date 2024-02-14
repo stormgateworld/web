@@ -16,16 +16,13 @@ import PlayerOpponents from "../../../components/widgets/PlayerOpponents.astro"
 import PlayerLayout from "../../../layouts/PlayerLayout.astro"
 
 const playerId = Astro.params.id!
-const playerUsername = Astro.params.username!
 
-const [[player, playerMatches, playerActivity, playerMatchupStats, playerOpponents], error] =
-  await getDataOrErrorResponse(
-    PlayersApi.getPlayer({ playerId }),
-    PlayersApi.getPlayerMatches({ playerId, count: 1 }),
-    PlayersApi.getPlayerStatisticsActivity({ playerId }),
-    PlayersApi.getPlayerStatisticsMatchups({ playerId }),
-    PlayersApi.getPlayerStatisticsOpponents({ playerId, count: 10 })
-  )
+const [[player, playerActivity, playerMatchupStats, playerOpponents], error] = await getDataOrErrorResponse(
+  PlayersApi.getPlayer({ playerId }),
+  PlayersApi.getPlayerStatisticsActivity({ playerId }),
+  PlayersApi.getPlayerStatisticsMatchups({ playerId }),
+  PlayersApi.getPlayerStatisticsOpponents({ playerId, count: 10 })
+)
 if (error) return error
 
 const leaderboardEntries = player?.leaderboard_entries
@@ -54,13 +51,6 @@ if (dateLabels[dateLabels.length - 1] !== today) {
 } else {
   mmrEntries[mmrEntries.length - 1] = Math.round(league.mmr)
 }
-
-const url = Astro.url
-const ogImageUrl = `${url.protocol}//${url.host}/og-image/players/${playerId}-${player.nickname}.png?t=${player.last_match_ended_at}`
-const ogTitle = `${player.nickname} - ${league.rank ? `Rank # ${league.rank} - ` : ""} Stormgate World`
-const ogDescription = `View statistics for ${player.nickname}.`
-
-const highestLeague = leaderboardEntries?.[0]
 ---
 
 <PlayerLayout player={player}>

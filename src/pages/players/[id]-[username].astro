@@ -17,7 +17,6 @@ import PlayerFactionCard from "../../components/widgets/PlayerFactionCard.astro"
 import Box from "../../components/layout/Box.astro"
 
 const playerId = Astro.params.id!
-const playerUsername = Astro.params.username!
 const [[player, playerMatches, playerActivity, playerMatchupStats, playerOpponents], error] =
   await getDataOrErrorResponse(
     PlayersApi.getPlayer({ playerId }),
