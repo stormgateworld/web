@@ -8,6 +8,10 @@ import { RankedBadge } from "../components/ui/RankedBadge"
 import HeaderMeta from "../components/layout/HeaderMeta.astro"
 import { formatDateRelative, getPlayerSlug } from "../lib/format"
 import type { PlayerResponse } from "../lib/api"
+import { getCollection, getEntry } from "astro:content"
+import { Image } from "astro:assets"
+import { Tooltip } from "../components/ui/Tooltip"
+import type { Code } from "astro:components"
 
 interface Props {
   player: PlayerResponse
@@ -25,6 +29,9 @@ const url = Astro.url
 const ogImageUrl = `${url.protocol}//${url.host}/og-image/players/${slug}.png?t=${player.last_match_ended_at}`
 const ogTitle = `${player.nickname} - ${highestLeague.rank ? `Rank # ${highestLeague.rank} - ` : ""} Stormgate World`
 const ogDescription = `View the match history, win rates, top opponents, and more stats for ${player.nickname}.`
+
+const badges = (await getCollection("badges")).filter((badge) => badge.data.playerIds.includes(player.id))
+const playerInfo = (await getCollection("players")).find((p) => p.data.playerId === player.id)
 ---
 
 <Layout title={username} ogTitle={ogTitle} ogDescription={ogDescription} ogImageUrl={ogImageUrl}>
@@ -39,7 +46,7 @@ const ogDescription = `View the match history, win rates, top opponents, and mor
         { href: `/players/${slug}/matches`, label: "Match History" },
       ]}
     />
-    <HeaderContent section="Players" title={player.nickname!}>
+    <HeaderContent>
       {
         player.avatar_url && (
           <img
@@ -50,6 +57,28 @@ const ogDescription = `View the match history, win rates, top opponents, and mor
           />
         )
       }
+      <div>
+        <div class="flex items-center gap-2">
+          <h1 class="text-xl font-black text-white/90 md:text-3xl">{player.nickname!}</h1>
+          {
+            badges.map((badge) => (
+              <Tooltip content={badge.data.name} client:idle>
+                <Image
+                  src={badge.data.icon}
+                  alt={badge.data.name}
+                  title={badge.data.name}
+                  class="mr-2 h-8 w-8 rounded-full "
+                />
+              </Tooltip>
+            ))
+          }
+        </div>
+        {
+          playerInfo && playerInfo.data.name != player.nickname && (
+            <p class="mt-0.5 text-sm font-semibold text-white/50">Also known as {playerInfo.data.name}</p>
+          )
+        }
+      </div>
       <RankedBadge slot="right" entry={highestLeague} class="w-16 md:w-20" client:load />
     </HeaderContent>
     <HeaderMeta
@@ -59,6 +88,15 @@ const ogDescription = `View the match history, win rates, top opponents, and mor
           label: `Last Match ${formatDateRelative(new Date(player.last_match_ended_at!))}`,
         },
         { icon: import("lucide-static/icons/hash.svg?raw"), label: player.id, tooltip: "Stormgate World Player ID" },
+        ...(playerInfo?.data.liquipediaUrl
+          ? [
+              {
+                icon: import("lucide-static/icons/award.svg?raw"),
+                label: `Verified Pro`,
+                href: playerInfo.data.liquipediaUrl,
+              },
+            ]
+          : []),
       ]}
     />
   </Header>

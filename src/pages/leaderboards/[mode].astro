@@ -6,9 +6,12 @@ import { Image } from "astro:assets"
 import { Leaderboard } from "../../components/widgets/Leaderboard.tsx"
 import type { LeaderboardOrder, Race } from "../../lib/api"
 import EsoPromo from "../../components/promos/EsoPromo.astro"
+import { getCollection } from "astro:content"
 const mode = Astro.params.mode
 // todo, mode as query param
 const { page = 1, query, faction, order } = Object.fromEntries(new URL(Astro.request.url).searchParams.entries())
+
+const badges = (await getCollection("badges")).map((b) => ({ ...b.data, icon: b.data.icon.src }))
 ---
 
 <Layout title="Leaderboard">
@@ -23,6 +26,7 @@ const { page = 1, query, faction, order } = Object.fromEntries(new URL(Astro.req
       faction={faction as Race}
       page={Number(page)}
       order={order as LeaderboardOrder}
+      badges={badges}
       client:load
     />
     <EsoPromo />

@@ -21,6 +21,7 @@ interface Props {
   limit?: number
   hideUi?: boolean
   order?: LeaderboardOrder
+  badges?: { icon: string; name: string; playerIds: string[] }[]
 }
 const perPage = 100
 
@@ -46,6 +47,8 @@ export function Leaderboard(props: Props) {
   const [faction, setFaction] = createSignal(props.faction ?? undefined)
   const [isPending, start] = useTransition()
   const [isBrowserNavigation, setIsBrowserNavigation] = createSignal(true)
+
+  const badgesForPlayer = (playerId: string) => props.badges?.filter((badge) => badge.playerIds.includes(playerId))
 
   const getOptions = () => ({
     count: count(),
@@ -211,13 +214,11 @@ export function Leaderboard(props: Props) {
                         >
                           {entry.nickname}
                         </a>
-                        {order() !== LeaderboardOrder.MMR && entry.rank && entry.rank <= 4 ? (
-                          <Tooltip content="Top 4 Qualify for EGC Open Tournament" class="text-xs text-gray-400">
-                            <img src={EsoIcon} class="w-6 flex-none" />
+                        {badgesForPlayer(entry.player_id!)?.map((badge) => (
+                          <Tooltip content={badge.name} class="text-xs text-gray-400">
+                            <img src={badge.icon} class="w-6 flex-none" />
                           </Tooltip>
-                        ) : (
-                          <></>
-                        )}
+                        ))}
                       </div>
                     </td>
                     <td class=" pr-2 text-right text-sm font-bold  text-gray-100 md:pr-4">
