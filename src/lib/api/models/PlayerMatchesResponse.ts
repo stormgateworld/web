@@ -6,5 +6,6 @@ import type { MatchResponse } from "./MatchResponse"
 export type PlayerMatchesResponse = {
   count: number
   page: number
+  total: number
   matches: Array<MatchResponse>
 }
