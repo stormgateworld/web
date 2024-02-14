@@ -25,8 +25,8 @@ interface Props {
   >
     {
       Astro.props.items?.map(({ label, icon, tooltip, href }) => (
-        <div class="flex items-center gap-2">
-          <Tooltip content={tooltip}>
+        <Tooltip content={tooltip} client:idle>
+          <div class="flex items-center gap-2">
             {icon && "src" in icon && <Image class="h-4 w-4  md:h-5 md:w-5" src={icon} alt="" />}
             {icon && icon instanceof Promise && <Svg class="h-4 w-4 text-white opacity-20 md:h-5 md:w-5" src={icon} />}
             <span class="text-xs font-bold text-white/40 md:text-sm">
@@ -42,8 +42,8 @@ interface Props {
                 label
               )}
             </span>
-          </Tooltip>
-        </div>
+          </div>
+        </Tooltip>
       ))
     }
   </div>
