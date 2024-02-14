@@ -13,6 +13,7 @@ import NewsMeta from "../components/sources/NewsMeta.astro"
 import { Image } from "astro:assets"
 import { Leaderboard } from "../components/widgets/Leaderboard"
 import { styles } from "../lib/theme"
+import EsoPromo from "../components/promos/EsoPromo.astro"
 
 export const prerender = false
 
@@ -67,7 +68,8 @@ const news = (await newsRequest).sort((a, b) => {
       </div>
 
       <div class="my-8 flex flex-col gap-8 lg:flex-row">
-        <div class="flex-auto">
+        <div class="flex-auto space-y-6">
+          <EsoPromo />
           <Box title={"Latest News"}>
             <div class="space-y-6">
               {

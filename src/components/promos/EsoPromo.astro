@@ -1,5 +1,6 @@
 ---
 import { Image } from "astro:assets"
+import Svg from "@jasikpark/astro-svg-loader"
 import logo from "./eso.png"
 ---
 
@@ -8,17 +9,24 @@ import logo from "./eso.png"
   <div class="relative flex flex-col items-center gap-4 bg-black/70 p-4 sm:flex-row">
     <Image src={logo} alt="Eso Logo" widths={[200, 400]} class="w-40" />
     <div class="text-center sm:text-left">
-      <p class="text-orange-600">February 10-11 and 17-18</p>
-      <h3 class="text-lg font-bold">EGCTV Stormgate Open</h3>
+      <p class="text-orange-600">February 17-18</p>
+      <h3 class="text-lg font-bold">EGCTV Stormgate Open Playoffs</h3>
       <p class="my-1 text-balance text-sm leading-snug">
-        Get ready to compete in Stormgate's First Major Tournament with open qualifiers and a $10k prize pool!
+        Stormgate's First Major Tournament featuring $10k prize pool!
       </p>
       <div class="mt-4 flex flex-wrap items-center justify-center gap-4 sm:justify-start">
+        <a
+          href="https://www.twitch.tv/egctv"
+          target="_blank"
+          class="inline-flex whitespace-nowrap rounded-lg bg-[#6441A5] px-4 py-2 font-bold text-white hover:bg-[#6f48b6]"
+        >
+          <Svg src={import("lucide-static/icons/twitch.svg?raw")} class="mr-1 w-4" /> Twitch
+        </a>
         <a
           href="https://discord.gg/upYNfphHcD"
           target="_blank"
           class="inline-flex whitespace-nowrap rounded-lg bg-red-900 px-4 py-2 font-bold text-white hover:bg-red-800"
-          >Learn More</a
+          ><Svg src={import("lucide-static/icons/info.svg?raw")} class="mr-1 w-4" /> Learn More</a
         >
         <p class="text-xs text-white/50">Will open EGCTV's Discord</p>
       </div>
