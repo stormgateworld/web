@@ -58,7 +58,7 @@ const ogDescription = `View the match history, win rates, top opponents, and mor
           icon: import("lucide-static/icons/activity.svg?raw"),
           label: `Last Match ${formatDateRelative(new Date(player.last_match_ended_at!))}`,
         },
-        { icon: import("lucide-static/icons/hash.svg?raw"), label: player.id },
+        { icon: import("lucide-static/icons/hash.svg?raw"), label: player.id, tooltip: "Stormgate World Player ID" },
       ]}
     />
   </Header>

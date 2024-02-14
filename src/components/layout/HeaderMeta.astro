@@ -1,8 +1,15 @@
 ---
 import Svg from "@jasikpark/astro-svg-loader"
 import { styles } from "../../lib/theme"
+import { Image } from "astro:assets"
+import { Tooltip } from "../ui/Tooltip"
 
-type MetaItem = { label: string; icon?: Promise<typeof import("*.svg?raw")> }
+type MetaItem = {
+  label: string
+  icon?: Promise<typeof import("*.svg?raw")> | ImageMetadata
+  tooltip?: string
+  href?: string
+}
 interface Props {
   items?: MetaItem[]
 }
@@ -17,10 +24,25 @@ interface Props {
     ]}
   >
     {
-      Astro.props.items?.map(({ label, icon }) => (
+      Astro.props.items?.map(({ label, icon, tooltip, href }) => (
         <div class="flex items-center gap-2">
-          {icon && <Svg class="h-4 w-4 text-white opacity-20 md:h-5 md:w-5" src={icon} />}
-          <span class="text-xs font-bold text-white/30 md:text-sm">{label}</span>
+          <Tooltip content={tooltip}>
+            {icon && "src" in icon && <Image class="h-4 w-4  md:h-5 md:w-5" src={icon} alt="" />}
+            {icon && icon instanceof Promise && <Svg class="h-4 w-4 text-white opacity-20 md:h-5 md:w-5" src={icon} />}
+            <span class="text-xs font-bold text-white/40 md:text-sm">
+              {href ? (
+                <a href={href} target="_blank" class=" hover:text-white/60">
+                  {label}{" "}
+                  <Svg
+                    class="mb-px ml-1 inline-block h-3 w-3 stroke-[2] text-white/30"
+                    src={import("lucide-static/icons/arrow-up-right-from-square.svg?raw")}
+                  />
+                </a>
+              ) : (
+                label
+              )}
+            </span>
+          </Tooltip>
         </div>
       ))
     }
