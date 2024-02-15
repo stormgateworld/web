@@ -5,6 +5,7 @@ import { formatDuration, urlencode } from "../../lib/utils"
 import { Tooltip } from "../ui/Tooltip"
 import { RankedBadge } from "../ui/RankedBadge"
 import { classes } from "../../lib/theme"
+import { raceLabels } from "../../lib/labels"
 
 export default function MatchPreview(props: { match: MatchResponse; mainPlayerId: string }) {
   const { match, mainPlayerId } = props
@@ -34,7 +35,7 @@ export default function MatchPreview(props: { match: MatchResponse; mainPlayerId
                 {player.mmr_diff! > 0 ? "↑" : "↓"}
                 {Math.abs(Math.round(player.mmr_diff!))}
               </span>
-              <Tooltip content={(player.race as string)[0].toUpperCase() + (player.race as string).slice(1)}>
+              <Tooltip content={raceLabels[player.race]}>
                 <img
                   src={player.race === "infernals" ? infernals.src : vanguard.src}
                   alt={player.race}
