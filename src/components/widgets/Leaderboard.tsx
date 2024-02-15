@@ -192,7 +192,7 @@ export function Leaderboard(props: Props) {
                       ) : entry.rank && entry.rank < 1000 ? (
                         entry.rank
                       ) : (
-                        <a href="/faq/#rp">&gt;1000</a>
+                        <a href="/faq/#why-is-my-rank-1000">&gt;1000</a>
                       )}
                       .
                     </td>
