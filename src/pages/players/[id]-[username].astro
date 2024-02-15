@@ -17,7 +17,6 @@ import PlayerFactionCard from "../../components/widgets/PlayerFactionCard.astro"
 import Box from "../../components/layout/Box.astro"
 
 const playerId = Astro.params.id!
-const playerUsername = Astro.params.username!
 const [[player, playerMatches, playerActivity, playerMatchupStats, playerOpponents], error] =
   await getDataOrErrorResponse(
     PlayersApi.getPlayer({ playerId }),
@@ -56,7 +55,7 @@ const leaderboardEntries = player?.leaderboard_entries
       </div>
       <Widget title="Recent Matches" label="Closed Beta Ranked">
         <div>
-          {playerMatches.matches.map((match) => <MatchPreview match={match} mainPlayerId={playerId} />)}
+          {playerMatches.matches.map((match) => <MatchPreview match={match} mainPlayerId={playerId} client:idle />)}
         </div>
         <p class="pt-4 text-right text-sm font-bold text-gray-500">
           <a href=`/players/${getPlayerSlug(player)}/matches`>Open the full history →</a>

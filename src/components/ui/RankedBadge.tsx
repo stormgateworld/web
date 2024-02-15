@@ -3,6 +3,7 @@ import { leagues } from "../../assets/game/leagues/leagues"
 import type { LeaderboardEntryResponse, MatchParticipantPlayerLeaderboardEntryResponse } from "../../lib/api"
 import { getImage } from "astro:assets"
 import { Tooltip } from "./Tooltip"
+import { formatLeague } from "../../lib/format"
 
 const sizes = { s: 32, m: 64, l: 128, xl: 256 }
 
@@ -21,10 +22,7 @@ export function RankedBadge(
   const size = sizes[local.size ?? "m"]
   const [image] = createResource(src, () => getImage({ src, sizes: [32, 64, 128, 256] }))
 
-  const label = () =>
-    local.unranked || !local.entry?.league
-      ? "Unranked"
-      : `${local.entry.league.charAt(0).toUpperCase() + local.entry.league.substring(1)} ${local.entry.tier}`
+  const label = () => local.unranked || formatLeague({ league: local.entry?.league, tier: local.entry?.tier })
 
   return (
     <Suspense fallback={<div>Loading...</div>}>

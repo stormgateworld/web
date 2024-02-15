@@ -5,6 +5,7 @@ import { formatDuration, urlencode } from "../../lib/utils"
 import { Tooltip } from "../ui/Tooltip"
 import { RankedBadge } from "../ui/RankedBadge"
 import { classes } from "../../lib/theme"
+import { raceLabels } from "../../lib/labels"
 
 export default function MatchPreview(props: { match: MatchResponse; mainPlayerId: string }) {
   const { match, mainPlayerId } = props
@@ -34,7 +35,7 @@ export default function MatchPreview(props: { match: MatchResponse; mainPlayerId
                 {player.mmr_diff! > 0 ? "↑" : "↓"}
                 {Math.abs(Math.round(player.mmr_diff!))}
               </span>
-              <Tooltip content={player.race}>
+              <Tooltip content={raceLabels[player.race]}>
                 <img
                   src={player.race === "infernals" ? infernals.src : vanguard.src}
                   alt={player.race}
@@ -62,7 +63,12 @@ export default function MatchPreview(props: { match: MatchResponse; mainPlayerId
                     {player.player_leaderboard_entry ? (
                       <>
                         <RankedBadge entry={player.player_leaderboard_entry!} class="mr-1 w-4" />
-                        {`#${Math.round(player.player_leaderboard_entry?.rank!)} `}
+                        {/* TODO: remove when more data is available */}
+                        {player.player_leaderboard_entry?.rank ? (
+                          `#${player.player_leaderboard_entry?.rank}`
+                        ) : (
+                          <a href="/faq/#why-is-my-rank-1000">#&gt;1000</a>
+                        )}
                       </>
                     ) : (
                       <>
