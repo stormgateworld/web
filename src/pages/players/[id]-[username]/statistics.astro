@@ -65,8 +65,6 @@ const today = new Date().toISOString().slice(0, 10)
 if (dateLabels[dateLabels.length - 1] !== today) {
   dateLabels.push(today)
   mmrEntries.push(Math.round(leaderboard.mmr))
-} else {
-  mmrEntries[mmrEntries.length - 1] = Math.round(leaderboard.mmr)
 }
 ---
 
