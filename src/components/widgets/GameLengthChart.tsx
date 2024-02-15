@@ -55,6 +55,7 @@ export function GameLengthChart(props: GameLengthProps) {
       intersect: false,
       mode: "index",
     },
+    maxBarThickness: 50,
     plugins: {
       title: {
         display: false,
