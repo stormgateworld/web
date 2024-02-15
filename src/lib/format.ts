@@ -1,4 +1,5 @@
 import type { LeaderboardEntryResponse, PlayerResponse } from "./api"
+import { leagueLabels } from "./labels"
 
 export function formatDateRelative(date: Date, format: "short" | "medium" = "medium") {
   const now = new Date()
@@ -25,13 +26,10 @@ export function formatDateRelative(date: Date, format: "short" | "medium" = "med
 
 export function formatLeague(entry: Pick<LeaderboardEntryResponse, "league" | "tier">) {
   const tier = ["I", "II", "III"][(entry.tier ?? 0) - 1] ?? ""
-  if (entry.league == "master") return `Master ${tier}`
-  if (entry.league == "diamond") return `Diamond ${tier}`
-  if (entry.league == "platinum") return `Platinum ${tier}`
-  if (entry.league == "gold") return `Gold ${tier}`
-  if (entry.league == "silver") return `Silver ${tier}`
-  if (entry.league == "bronze") return `Bronze ${tier}`
-  if (entry.league == "aspirant") return `Aspirant ${tier}`
+
+  if (entry.league) {
+    return `${leagueLabels[entry.league]} ${tier}`
+  }
   return "Unranked"
 }
 
