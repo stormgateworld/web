@@ -1,7 +1,13 @@
 ---
 export const prerender = false
 
-import { PlayersApi } from "../../../lib/api"
+import {
+  Aggregation,
+  LeaderboardEntriesApi,
+  LeaderboardEntryHistoryRow,
+  PlayersApi,
+  Resolution,
+} from "../../../lib/api"
 import Section from "../../../components/layout/Section.astro"
 import Main from "../../../components/layout/Main.astro"
 import { MmrHistoryChart } from "../../../components/widgets/MmrHistoryChart"
@@ -30,26 +36,37 @@ const leaderboardEntries = player?.leaderboard_entries
   .sort((a, b) => (b.points ?? 0) - (a.points ?? 0))
 
 const faction = new URLSearchParams(Astro.url.search).get("faction") || leaderboardEntries?.[0].race
+const leaderboard = leaderboardEntries.find((leaderboard) => leaderboard.race === faction) || leaderboardEntries?.[0]
 
-const factionActivity = playerActivity.races.find((activity) => activity.aggregated?.race === faction)
-const league = leaderboardEntries.find((leaderboard) => leaderboard.race === faction) || leaderboardEntries?.[0]
+let leaderboardHistory: LeaderboardEntryHistoryRow[] = []
+
+if (leaderboard?.leaderboard_entry_id) {
+  const [[leaderboardEntryHistory], error2] = await getDataOrErrorResponse(
+    LeaderboardEntriesApi.getLeaderboardEntryHistory({
+      leaderboardEntryId: leaderboard?.leaderboard_entry_id,
+      resolution: Resolution.DAY,
+      aggregation: Aggregation.LAST,
+    })
+  )
+  leaderboardHistory = leaderboardEntryHistory.history
+  if (error2) return error
+}
 
 const mmrEntries: number[] = []
 const dateLabels: string[] = []
-if (factionActivity) {
-  for (const entry of factionActivity.history) {
-    if (entry.date && entry.mmr.median) {
-      dateLabels.push(entry.date)
-      mmrEntries.push(Math.round(entry.mmr.median))
-    }
+for (const entry of leaderboardHistory) {
+  if (entry.mmr) {
+    dateLabels.push(entry.time)
+    mmrEntries.push(Math.round(entry.mmr))
   }
 }
+
 const today = new Date().toISOString().slice(0, 10)
 if (dateLabels[dateLabels.length - 1] !== today) {
   dateLabels.push(today)
-  mmrEntries.push(Math.round(league.mmr))
+  mmrEntries.push(Math.round(leaderboard.mmr))
 } else {
-  mmrEntries[mmrEntries.length - 1] = Math.round(league.mmr)
+  mmrEntries[mmrEntries.length - 1] = Math.round(leaderboard.mmr)
 }
 ---
 
@@ -60,10 +77,14 @@ if (dateLabels[dateLabels.length - 1] !== today) {
         <FactionDropdown selected={faction} queryParam="faction" client:idle />
       </div>
       {
-        mmrEntries.length > 1 && (
+        (
           <Widget title="MMR History">
             <div>
-              <MmrHistoryChart data={mmrEntries} labels={dateLabels} client:idle />
+              {mmrEntries.length > 1 ? (
+                <MmrHistoryChart data={mmrEntries} labels={dateLabels} client:idle />
+              ) : (
+                <p>Not enough data</p>
+              )}
             </div>
           </Widget>
         )

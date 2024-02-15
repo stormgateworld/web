@@ -2,7 +2,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export enum Race {
-  INFERNALS = "infernals",
-  VANGUARD = "vanguard",
+export enum Resolution {
+  MINUTE = "minute",
+  HOUR = "hour",
+  DAY = "day",
+  WEEK = "week",
 }
