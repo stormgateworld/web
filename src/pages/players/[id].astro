@@ -1,0 +1,14 @@
+---
+export const prerender = false
+
+import { PlayersApi } from "../../lib/api"
+import { getDataOrErrorResponse } from "../../lib/utils"
+import { urlencode } from "../../lib/utils"
+
+const playerId = Astro.params.id!
+const [[player], error] = await getDataOrErrorResponse(PlayersApi.getPlayer({ playerId }))
+
+if (error) return error
+
+return Astro.redirect(`/players/${player.id}-${urlencode(player.nickname)}`)
+---
