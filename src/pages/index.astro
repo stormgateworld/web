@@ -82,7 +82,7 @@ const news = (await newsRequest).sort((a, b) => {
                       {data.description?.length ? (
                         <p class="line-clamp-2 max-w-prose leading-relaxed text-gray-100" set:text={data.description} />
                       ) : null}
-                      <div class="flex flex-wrap gap-3 text-sm text-gray-300">
+                      <div class="flex flex-wrap gap-3 text-sm text-gray-300 items-center">
                         {data.source === "reddit" ? <RedditMeta data={data} /> : <NewsMeta data={data} />}
 
                         {data.published_at && (
