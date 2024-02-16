@@ -43,7 +43,7 @@ export function Leaderboard(props: Props) {
   const [query, setQuery] = createSignal(props.query || undefined)
   const [page, setPage] = createSignal(props.page || 1)
   const [mode, setMode] = createSignal(props.mode ?? "ranked_1v1")
-  const [order, setOrder] = createSignal(props.order ?? undefined)
+  const [order, setOrder] = createSignal(props.order ?? LeaderboardOrder.POINTS)
   const [faction, setFaction] = createSignal(props.faction ?? undefined)
   const [isPending, start] = useTransition()
   const [isBrowserNavigation, setIsBrowserNavigation] = createSignal(true)
@@ -164,11 +164,11 @@ export function Leaderboard(props: Props) {
               class={classes(styles.button.sm, "flex-auto bg-transparent text-white outline-none")}
               placeholder="Search"
               ref={searchInput}
-              onKeyDown={(e) => e.key === "Enter" && setQuery(searchInput?.value)}
+              onKeyDown={(e) => e.key === "Enter" && setQuery(searchInput?.value.trim() || undefined)}
             />
             <button
               class={classes(styles.button.sm, styles.button.control, styles.button.trigger)}
-              onClick={() => setQuery(searchInput?.value)}
+              onClick={() => setQuery(searchInput?.value.trim() || undefined)}
             >
               <span innerHTML={searchIcon} class="text-gray-200 *:w-4" />
             </button>
