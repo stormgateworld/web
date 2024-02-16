@@ -1,0 +1,121 @@
+---
+export const prerender = false
+
+import {
+  Aggregation,
+  LeaderboardEntriesApi,
+  LeaderboardEntryHistoryRow,
+  PlayersApi,
+  Resolution,
+} from "../../../lib/api"
+import Section from "../../../components/layout/Section.astro"
+import Main from "../../../components/layout/Main.astro"
+import { MmrHistoryChart } from "../../../components/widgets/MmrHistoryChart"
+import Widget from "../../../components/Widget.astro"
+import { FactionDropdown } from "../../../components/widgets/FactionDropdown"
+import { getDataOrErrorResponse } from "../../../lib/utils"
+import Sidebar from "../../../components/layout/Sidebar.astro"
+import PlayerActivity from "../../../components/widgets/PlayerActivity.astro"
+import PlayerMatchupStats from "../../../components/widgets/PlayerMatchupStats.astro"
+import PlayerGameLengthStats from "../../../components/widgets/PlayerGameLengthStats.astro"
+import PlayerOpponents from "../../../components/widgets/PlayerOpponents.astro"
+import PlayerLayout from "../../../layouts/PlayerLayout.astro"
+import { GameLengthChart } from "../../../components/widgets/GameLengthChart"
+import { Image } from "astro:assets"
+import infernals from "../../../assets/game/factions/infernals-small.png"
+import vanguard from "../../../assets/game/factions/vanguard-small.png"
+import { raceLabels } from "../../../lib/labels"
+
+const playerId = Astro.params.id!
+
+const [[player, playerActivity, playerMatchupStats, playerOpponents], error] = await getDataOrErrorResponse(
+  PlayersApi.getPlayer({ playerId }),
+  PlayersApi.getPlayerStatisticsActivity({ playerId }),
+  PlayersApi.getPlayerStatisticsMatchups({ playerId }),
+  PlayersApi.getPlayerStatisticsOpponents({ playerId, count: 10 })
+)
+if (error) return error
+
+const leaderboardEntries = player?.leaderboard_entries
+  .filter((x) => x.matches > 0)
+  .sort((a, b) => (b.points ?? 0) - (a.points ?? 0))
+
+const faction = new URLSearchParams(Astro.url.search).get("faction") || leaderboardEntries?.[0].race
+const leaderboard = leaderboardEntries.find((leaderboard) => leaderboard.race === faction) || leaderboardEntries?.[0]
+
+let leaderboardHistory: LeaderboardEntryHistoryRow[] = []
+
+if (leaderboard?.leaderboard_entry_id) {
+  const [[leaderboardEntryHistory], error2] = await getDataOrErrorResponse(
+    LeaderboardEntriesApi.getLeaderboardEntryHistory({
+      leaderboardEntryId: leaderboard?.leaderboard_entry_id,
+      resolution: Resolution.DAY,
+      aggregation: Aggregation.LAST,
+    })
+  )
+  leaderboardHistory = leaderboardEntryHistory.history
+  if (error2) return error
+}
+
+const mmrEntries: number[] = []
+const dateLabels: string[] = []
+for (const entry of leaderboardHistory) {
+  if (entry.mmr) {
+    dateLabels.push(entry.time)
+    mmrEntries.push(Math.round(entry.mmr))
+  }
+}
+
+const today = new Date().toISOString().slice(0, 10)
+if (dateLabels[dateLabels.length - 1] !== today) {
+  dateLabels.push(today)
+  mmrEntries.push(Math.round(leaderboard.mmr))
+}
+---
+
+<PlayerLayout player={player}>
+  <Section>
+    <Main>
+      <div class="w-fit pt-2">
+        <FactionDropdown selected={faction} queryParam="faction" client:idle />
+      </div>
+      {
+        (
+          <Widget title="MMR History">
+            <div>
+              {mmrEntries.length > 1 ? (
+                <MmrHistoryChart data={mmrEntries} labels={dateLabels} client:idle />
+              ) : (
+                <p>Not enough data</p>
+              )}
+            </div>
+          </Widget>
+        )
+      }
+      {
+        playerMatchupStats.matchups
+          .filter((m) => m.race == faction)
+          .map((matchup) => (
+            <Widget title="Matchup Win Rate over Game Length">
+              <GameLengthChart data={matchup.match_length} client:idle />
+              <div class="mt-4 flex items-center justify-center gap-2 text-gray-200">
+                <Image src={matchup.race === "infernals" ? infernals : vanguard} alt={matchup.race} class="size-6" />
+                <span>{raceLabels[matchup.race]}</span>
+                <span>vs</span>
+                <Image
+                  src={matchup.opponent_race === "infernals" ? infernals : vanguard}
+                  alt={matchup.opponent_race}
+                  class="size-6"
+                />
+                <span>{raceLabels[matchup.opponent_race]}</span>
+              </div>
+            </Widget>
+          ))
+      }
+    </Main>
+    <Sidebar>
+      {playerActivity?.history && <PlayerActivity activity={playerActivity} {player} />}
+      {playerMatchupStats.matchups.length > 0 && <PlayerMatchupStats playerMatchupStats={playerMatchupStats} />}
+    </Sidebar>
+  </Section>
+</PlayerLayout>

@@ -44,6 +44,7 @@ const playerInfo = (await getCollection("players")).find((p) => p.data.playerId 
       current={[
         { href: `/players/${slug}`, label: "Overview" },
         { href: `/players/${slug}/matches`, label: "Match History" },
+        { href: `/players/${slug}/statistics`, label: "Statistics" },
       ]}
     />
     <HeaderContent>
