@@ -4,27 +4,13 @@ import PlayerLayout from "../../../layouts/PlayerLayout.astro"
 import { MatchHistory } from "../../../components/widgets/MatchHistory.tsx"
 import { PlayersApi, Race } from "../../../lib/api"
 import Section from "../../../components/layout/Section.astro"
+import { getDataOrErrorResponse } from "../../../lib/utils"
 
 const { page = 1, faction } = Object.fromEntries(new URL(Astro.request.url).searchParams.entries())
 
-// to be moved to own file
-async function getDataOrErrorResponse<T extends readonly unknown[] | []>(
-  ...values: T
-): Promise<[{ -readonly [P in keyof T]: Awaited<T[P]> }, error: Response | null]> {
-  try {
-    const result = await Promise.all(values)
-    return [result, null]
-  } catch (e) {
-    return [[] as any, new Response(null, { status: 500, statusText: `${e}` })]
-  }
-}
-
 const playerId = Astro.params.id!
 
-const [[player], error] = await getDataOrErrorResponse(
-  PlayersApi.getPlayer({ playerId }),
-  PlayersApi.getPlayerMatches({ playerId })
-)
+const [[player], error] = await getDataOrErrorResponse(PlayersApi.getPlayer({ playerId }))
 if (error) return error
 ---
 

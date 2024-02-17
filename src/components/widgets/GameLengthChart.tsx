@@ -19,7 +19,8 @@ const prettyLabels = {
   "841-960": "14-16m",
   "961-1080": "16-18m",
   "1081-1200": "18-20m",
-  "1200+": "20m+",
+  "1201-1320": "20-22m",
+  "1320+": "22m+",
 } as const
 
 export function GameLengthChart(props: GameLengthProps) {
@@ -55,6 +56,7 @@ export function GameLengthChart(props: GameLengthProps) {
       intersect: false,
       mode: "index",
     },
+    maxBarThickness: 50,
     plugins: {
       title: {
         display: false,

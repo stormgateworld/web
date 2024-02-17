@@ -2,9 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type LeaderboardEntryHistoryEntry = {
+export type LeaderboardEntryHistoryRow = {
   time: string
-  mmr: number
-  max_confirmed_mmr?: number | null
+  mmr?: number | null
   points?: number | null
 }

@@ -2,7 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { ProfilePrivacy } from "./ProfilePrivacy"
-export type PlayerPreferences = {
-  privacy_profile?: ProfilePrivacy | null
+export enum Aggregation {
+  LAST = "last",
+  MAX_MMR = "max_mmr",
+  MAX_POINTS = "max_points",
 }

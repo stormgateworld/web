@@ -2,7 +2,12 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { LeaderboardEntryHistoryEntry } from "./LeaderboardEntryHistoryEntry"
+import type { Aggregation } from "./Aggregation"
+import type { LeaderboardEntryHistoryRow } from "./LeaderboardEntryHistoryRow"
+import type { Resolution } from "./Resolution"
 export type LeaderboardEntryHistory = {
-  history: Array<LeaderboardEntryHistoryEntry>
+  cached_at: string
+  resolution: Resolution
+  aggregation: Aggregation
+  history: Array<LeaderboardEntryHistoryRow>
 }

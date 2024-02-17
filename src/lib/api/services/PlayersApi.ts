@@ -7,7 +7,6 @@ import type { PlayerActivityStats } from "../models/PlayerActivityStats"
 import type { PlayerMatchesResponse } from "../models/PlayerMatchesResponse"
 import type { PlayerMatchupsStats } from "../models/PlayerMatchupsStats"
 import type { PlayerOpponentsStats } from "../models/PlayerOpponentsStats"
-import type { PlayerPreferences } from "../models/PlayerPreferences"
 import type { PlayerResponse } from "../models/PlayerResponse"
 import type { Race } from "../models/Race"
 import type { CancelablePromise } from "../core/CancelablePromise"
@@ -45,6 +44,7 @@ export class PlayersApi {
   public static getPlayerMatches({
     playerId,
     race,
+    opponentPlayerId,
     page,
     count,
   }: {
@@ -53,6 +53,7 @@ export class PlayersApi {
      */
     playerId: string
     race?: Race | null
+    opponentPlayerId?: string | null
     page?: number | null
     count?: number | null
   }): CancelablePromise<PlayerMatchesResponse> {
@@ -64,6 +65,7 @@ export class PlayersApi {
       },
       query: {
         race: race,
+        opponent_player_id: opponentPlayerId,
         page: page,
         count: count,
       },
@@ -91,58 +93,6 @@ export class PlayersApi {
       path: {
         player_id: playerId,
       },
-      errors: {
-        404: `Player was not found`,
-        500: `Server error`,
-      },
-    })
-  }
-  /**
-   * @returns PlayerPreferences Player found successfully
-   * @throws ApiError
-   */
-  public static getPlayerPreferences({
-    playerId,
-  }: {
-    /**
-     * Player ID
-     */
-    playerId: string
-  }): CancelablePromise<PlayerPreferences> {
-    return __request(OpenAPI, {
-      method: "GET",
-      url: "/v0/players/{player_id}/preferences",
-      path: {
-        player_id: playerId,
-      },
-      errors: {
-        404: `Player was not found`,
-        500: `Server error`,
-      },
-    })
-  }
-  /**
-   * @returns PlayerPreferences Player preferences updated successfully
-   * @throws ApiError
-   */
-  public static updatePlayerPreferences({
-    playerId,
-    requestBody,
-  }: {
-    /**
-     * Player ID
-     */
-    playerId: string
-    requestBody: PlayerPreferences
-  }): CancelablePromise<PlayerPreferences> {
-    return __request(OpenAPI, {
-      method: "PUT",
-      url: "/v0/players/{player_id}/preferences",
-      path: {
-        player_id: playerId,
-      },
-      body: requestBody,
-      mediaType: "application/json",
       errors: {
         404: `Player was not found`,
         500: `Server error`,
