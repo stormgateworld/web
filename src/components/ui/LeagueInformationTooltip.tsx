@@ -15,6 +15,11 @@ export function LeagueInformationTooltip({ leaderboard }: LeagueInformationToolt
   }
   const information = leagueInformations[leaderboard.league][leaderboard.tier as Tier]
   const points = leaderboard.points ? Math.round(leaderboard.points) : information.minPoint
+  const minPoint = information.minPoint
+  const maxPoint =
+    information.nextLeague && information.nextTier
+      ? leagueInformations[information.nextLeague][information.nextTier].minPoint - 1
+      : 0
 
   return (
     <KTooltip.Root gutter={2} openDelay={0.1} closeDelay={0} ignoreSafeArea={true}>
@@ -24,7 +29,7 @@ export function LeagueInformationTooltip({ leaderboard }: LeagueInformationToolt
       <KTooltip.Portal>
         <KTooltip.Content class=" rounded-sm border border-gray-700/50 bg-gray-800 px-1.5 py-1 text-gray-200 shadow-sm animate-in fade-in slide-in-from-bottom-1">
           <KTooltip.Arrow />
-          {information.maxPoint && information.nextLeague && information.nextTier ? (
+          {information.nextLeague && information.nextTier ? (
             <div class="m-2">
               <p class="mb-1 whitespace-nowrap text-sm font-black text-white  xs:text-base">
                 Next league: {formatLeague({ league: information.nextLeague, tier: information.nextTier })}
@@ -32,21 +37,19 @@ export function LeagueInformationTooltip({ leaderboard }: LeagueInformationToolt
               <div class="flex justify-between">
                 <div class="flex items-center gap-1">
                   <RankedBadge class="w-8" entry={{ league: leaderboard.league, tier: leaderboard.tier }} />
-                  <p>{information.minPoint}</p>
+                  <p>{minPoint}</p>
                 </div>
 
                 <div class="mr-1 flex items-center gap-1">
                   <RankedBadge class="w-8" entry={{ league: information.nextLeague, tier: information.nextTier }} />
-                  <p>{information.maxPoint}</p>
+                  <p>{maxPoint}</p>
                 </div>
               </div>
               <div class="relative mx-1 mt-2 h-1.5 flex-auto rounded-sm bg-gray-500/80">
                 <div
                   class="absolute inset-0  rounded-l-sm bg-green-600"
                   style={{
-                    width: `${
-                      ((points - information.minPoint) * 100) / (information.maxPoint - information.minPoint)
-                    }%`,
+                    width: `${((points - minPoint) * 100) / (maxPoint - minPoint)}%`,
                   }}
                 ></div>
               </div>
