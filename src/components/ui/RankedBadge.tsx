@@ -9,7 +9,9 @@ const sizes = { s: 32, m: 64, l: 128, xl: 256 }
 
 export function RankedBadge(
   props: {
-    entry?: MatchParticipantPlayerLeaderboardEntryResponse | LeaderboardEntryResponse
+    entry?:
+      | Pick<MatchParticipantPlayerLeaderboardEntryResponse, "league" | "tier">
+      | Pick<LeaderboardEntryResponse, "league" | "tier">
     unranked?: boolean
     size?: keyof typeof sizes
   } & JSX.ImgHTMLAttributes<HTMLImageElement>

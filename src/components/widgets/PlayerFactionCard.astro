@@ -9,6 +9,8 @@ import { RankedBadge } from "../ui/RankedBadge"
 import type { LeaderboardEntryResponse } from "../../lib/api"
 import { formatLeague } from "../../lib/format"
 import { Tooltip } from "../ui/Tooltip"
+import { LeagueInformationTooltip } from "../ui/LeagueInformationTooltip"
+import { classes } from "../../lib/theme"
 
 interface Props {
   faction: "infernals" | "vanguard"
@@ -79,8 +81,11 @@ const lastRankAvailable =
               <p class={styles.stat.value}>{Math.round(entry.points!)}</p>
             </div>
             <div>
-              <p class={styles.stat.label}>League</p>
-              <p class={styles.stat.value}>{formatLeague(entry)} </p>
+              <p class={classes(styles.stat.label, "flex items-center gap-1.5")}>
+                League
+                <LeagueInformationTooltip client:idle leaderboard={entry} />
+              </p>
+              <p class={styles.stat.value}>{formatLeague(entry)}</p>
             </div>
           </>
         ) : (
