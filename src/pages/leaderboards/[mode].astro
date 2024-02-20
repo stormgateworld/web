@@ -5,7 +5,6 @@ import hero from "../../assets/game/vanguard-base-hero.jpg"
 import { Image } from "astro:assets"
 import { Leaderboard } from "../../components/widgets/Leaderboard.tsx"
 import type { LeaderboardOrder, Race } from "../../lib/api"
-import EsoPromo from "../../components/promos/EsoPromo.astro"
 import { getCollection } from "astro:content"
 const mode = Astro.params.mode
 // todo, mode as query param
@@ -29,6 +28,5 @@ const badges = (await getCollection("badges")).map((b) => ({ ...b.data, icon: b.
       badges={badges}
       client:load
     />
-    <EsoPromo />
   </section>
 </Layout>
