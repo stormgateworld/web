@@ -7,6 +7,7 @@ import { PlayersApi } from "../../lib/api"
 import PlayerActivity from "../../components/widgets/PlayerActivity.astro"
 import PlayerMatchupStats from "../../components/widgets/PlayerMatchupStats.astro"
 import PlayerGameLengthStats from "../../components/widgets/PlayerGameLengthStats.astro"
+import Progression from "../../components/widgets/Progression.astro"
 import PlayerOpponents from "../../components/widgets/PlayerOpponents.astro"
 import Section from "../../components/layout/Section.astro"
 import Main from "../../components/layout/Main.astro"
@@ -64,8 +65,8 @@ const leaderboardEntries = player?.leaderboard_entries
     </Main>
     <Sidebar>
       {playerActivity?.history && <PlayerActivity activity={playerActivity} {player} />}
+      {leaderboardEntries && <Progression leaderboards={leaderboardEntries} />}
       {playerMatchupStats.matchups.length > 0 && <PlayerMatchupStats playerMatchupStats={playerMatchupStats} />}
-      {playerMatchupStats.matchups.length > 0 && <PlayerGameLengthStats playerMatchupStats={playerMatchupStats} />}
       {playerOpponents.opponents.length > 0 && <PlayerOpponents opponents={playerOpponents} />}
     </Sidebar>
   </Section>
