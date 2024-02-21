@@ -8,10 +8,9 @@ import { RankedBadge } from "../components/ui/RankedBadge"
 import HeaderMeta from "../components/layout/HeaderMeta.astro"
 import { formatDateRelative, getPlayerSlug } from "../lib/format"
 import type { PlayerResponse } from "../lib/api"
-import { getCollection, getEntry } from "astro:content"
+import { getCollection } from "astro:content"
 import { Image } from "astro:assets"
 import { Tooltip } from "../components/ui/Tooltip"
-import type { Code } from "astro:components"
 
 interface Props {
   player: PlayerResponse
@@ -88,7 +87,12 @@ const playerInfo = (await getCollection("players")).find((p) => p.data.playerId 
           icon: import("lucide-static/icons/activity.svg?raw"),
           label: `Last Match ${formatDateRelative(new Date(player.last_match_ended_at!))}`,
         },
-        { icon: import("lucide-static/icons/hash.svg?raw"), label: player.id, tooltip: "Stormgate World Player ID" },
+        {
+          icon: import("lucide-static/icons/hash.svg?raw"),
+          label: player.id,
+          tooltip: "Stormgate World Player ID",
+          clickToCopy: true,
+        },
         ...(playerInfo?.data.liquipediaUrl
           ? [
               {
