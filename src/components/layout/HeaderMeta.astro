@@ -48,7 +48,7 @@ interface Props {
         )
         if (clickToCopy) {
           return (
-            <Tooltip content={tooltip} client:idle>
+            <Tooltip content={`${tooltip}\n(click to copy)`} client:idle>
               <ClickToCopy class="flex items-center gap-2" value={label} client:idle>
                 {content}
               </ClickToCopy>
