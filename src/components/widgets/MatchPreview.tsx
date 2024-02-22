@@ -58,7 +58,7 @@ export default function MatchPreview(props: { match: MatchResponse; mainPlayerId
                 ) : (
                   <em class="text-gray-300">Unknown</em>
                 )}
-                <div class="hidden text-sm md:block">
+                <div class="hidden items-center text-sm md:flex">
                   <span class="inline-flex items-center text-gray-500">
                     {player.player_leaderboard_entry ? (
                       <>
