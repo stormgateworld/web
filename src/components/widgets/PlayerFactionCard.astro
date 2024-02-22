@@ -56,6 +56,7 @@ const maxPoint =
   tierInformation.nextLeague && tierInformation.nextTier
     ? leagueInformations[tierInformation.nextLeague || League.ASPIRANT][tierInformation.nextTier].minPoint - 1
     : 0
+const progress = ((points - minPoint) * 100) / (maxPoint - minPoint)
 ---
 
 <div
@@ -96,7 +97,7 @@ const maxPoint =
                 League
                 {entry.league && tierInformation.nextLeague && tierInformation.nextTier && (
                   <Popover client:idle>
-                    <ProgressCircle value={60} slot="trigger" />
+                    <ProgressCircle value={progress} slot="trigger" />
                     <p slot="title">
                       Next league:{" "}
                       {formatLeague({ league: tierInformation.nextLeague, tier: tierInformation.nextTier })}
@@ -116,11 +117,7 @@ const maxPoint =
                           <p>{maxPoint}</p>
                         </div>
                       </div>
-                      <ProgressBar
-                        value={((points - minPoint) * 100) / (maxPoint - minPoint)}
-                        backgroundColor="bg-gray-500/80"
-                        class="mt-2"
-                      />
+                      <ProgressBar value={progress} backgroundColor="bg-gray-500/80" class="mt-2" />
                     </div>
                   </Popover>
                 )}
