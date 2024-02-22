@@ -1,5 +1,5 @@
-import { As, Tooltip as KTooltip } from "@kobalte/core"
-import { children, createEffect, createMemo, Show, type JSX, type ParentProps } from "solid-js"
+import { Tooltip as KTooltip } from "@kobalte/core"
+import { Show, type ParentProps } from "solid-js"
 
 export function Tooltip(props: ParentProps<{ content?: string; class?: string }>) {
   return (

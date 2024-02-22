@@ -3,12 +3,14 @@ import Svg from "@jasikpark/astro-svg-loader"
 import { styles } from "../../lib/theme"
 import { Image } from "astro:assets"
 import { Tooltip } from "../ui/Tooltip"
+import { ClickToCopy } from "../ui/ClickToCopy"
 
 type MetaItem = {
   label: string
   icon?: Promise<typeof import("*.svg?raw")> | ImageMetadata
   tooltip?: string
   href?: string
+  clickToCopy?: boolean
 }
 interface Props {
   items?: MetaItem[]
@@ -24,9 +26,9 @@ interface Props {
     ]}
   >
     {
-      Astro.props.items?.map(({ label, icon, tooltip, href }) => (
-        <Tooltip content={tooltip} client:idle>
-          <div class="flex items-center gap-2">
+      Astro.props.items?.map(({ label, icon, tooltip, href, clickToCopy }) => {
+        const content = (
+          <>
             {icon && "src" in icon && <Image class="h-4 w-4  md:h-5 md:w-5" src={icon} alt="" />}
             {icon && icon instanceof Promise && <Svg class="h-4 w-4 text-white opacity-20 md:h-5 md:w-5" src={icon} />}
             <span class="text-xs font-bold text-white/40 md:text-sm">
@@ -42,9 +44,23 @@ interface Props {
                 label
               )}
             </span>
-          </div>
-        </Tooltip>
-      ))
+          </>
+        )
+        if (clickToCopy) {
+          return (
+            <Tooltip content={`${tooltip}\n(click to copy)`} client:idle>
+              <ClickToCopy class="flex items-center gap-2" value={label} client:idle>
+                {content}
+              </ClickToCopy>
+            </Tooltip>
+          )
+        }
+        return (
+          <Tooltip content={tooltip} client:idle>
+            <div class="flex items-center gap-2">{content}</div>
+          </Tooltip>
+        )
+      })
     }
   </div>
 </div>
