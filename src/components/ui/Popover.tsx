@@ -11,7 +11,7 @@ type PopoverProps = {
 export function Popover(props: PopoverProps) {
   return (
     <KPopover.Root>
-      <KPopover.Trigger class="transition-transform hover:scale-125 hover:opacity-80">{props.trigger}</KPopover.Trigger>
+      <KPopover.Trigger>{props.trigger}</KPopover.Trigger>
       <KPopover.Portal>
         <KPopover.Content class="z-50 rounded-sm border border-gray-700/50 bg-gray-800 px-1.5 py-1.5 text-gray-200 shadow-sm animate-in fade-in slide-in-from-bottom-1">
           <KPopover.Arrow />

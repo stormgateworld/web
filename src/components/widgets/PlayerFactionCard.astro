@@ -97,7 +97,11 @@ const progress = ((points - minPoint) * 100) / (maxPoint - minPoint)
                 League
                 {entry.league && tierInformation.nextLeague && tierInformation.nextTier && (
                   <Popover client:idle>
-                    <ProgressCircle value={progress} slot="trigger" />
+                    <ProgressCircle
+                      class="h-3 transition-transform hover:scale-125 hover:opacity-80"
+                      value={progress}
+                      slot="trigger"
+                    />
                     <p slot="title">
                       Next league:{" "}
                       {formatLeague({ league: tierInformation.nextLeague, tier: tierInformation.nextTier })}
