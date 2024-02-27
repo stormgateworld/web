@@ -41,7 +41,7 @@ const leaderboardEntries = player?.leaderboard_entries
   .sort((a, b) => (b.points ?? 0) - (a.points ?? 0))
 
 const faction = new URLSearchParams(Astro.url.search).get("faction") || leaderboardEntries?.[0].race
-const leaderboard = leaderboardEntries.find((leaderboard) => leaderboard.race === faction) || leaderboardEntries?.[0]
+const leaderboard = leaderboardEntries.find((leaderboard) => leaderboard.race === faction) || null
 
 let leaderboardHistory: LeaderboardEntryHistoryRow[] = []
 
@@ -67,7 +67,7 @@ for (const entry of leaderboardHistory) {
 }
 
 const today = new Date().toISOString().slice(0, 10)
-if (dateLabels[dateLabels.length - 1] !== today) {
+if (dateLabels[dateLabels.length - 1] !== today && leaderboard) {
   dateLabels.push(today)
   mmrEntries.push(Math.round(leaderboard.mmr))
 }
