@@ -63,11 +63,14 @@ export function Leaderboard(props: Props) {
   const totalPages = () => Math.ceil((data()?.total ?? 1000) / count())
 
   createEffect(
-    on([selectedFaction, query], () =>
-      start(() => {
-        setPage(1)
-        setFaction(((f) => (f === "all" ? undefined : f))(selectedFaction()?.value as Race | "all"))
-      })
+    on(
+      [selectedFaction, query, order],
+      () =>
+        start(() => {
+          setPage(1)
+          setFaction(((f) => (f === "all" ? undefined : f))(selectedFaction()?.value as Race | "all"))
+        }),
+      { defer: true }
     )
   )
 
