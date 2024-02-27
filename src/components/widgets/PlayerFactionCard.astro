@@ -49,7 +49,11 @@ const rankAvailable = entry.rank !== null && entry.rank! < 997 // Todo: Remove w
 const lastRankAvailable =
   entry.points !== null && `Last known rank #${entry.rank}\n${Math.round(entry.points!)} RP \n${formatLeague(entry)}`
 
-const tierInformation = leagueInformations[entry.league || League.ASPIRANT][entry.tier as Tier]
+const tierInformation = leagueInformations[entry.league || League.ASPIRANT][entry.tier as Tier] || {
+  minPoint: 0,
+  nextLeague: null,
+  nextTier: null,
+}
 const points = entry.points ? Math.round(entry.points) : tierInformation.minPoint
 const minPoint = tierInformation.minPoint
 const maxPoint =

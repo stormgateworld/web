@@ -11,14 +11,14 @@ type PopoverProps = {
 export function Popover(props: PopoverProps) {
   return (
     <KPopover.Root>
-      <KPopover.Trigger>{props.trigger}</KPopover.Trigger>
+      <KPopover.Trigger class="rounded outline-none focus-visible:bg-white/20">{props.trigger}</KPopover.Trigger>
       <KPopover.Portal>
-        <KPopover.Content class="z-50 rounded-sm border border-gray-700/50 bg-gray-800 px-1.5 py-1.5 text-gray-200 shadow-sm animate-in fade-in slide-in-from-bottom-1">
+        <KPopover.Content class="z-50 rounded border border-white/10 bg-gray-900 px-1.5 py-1.5 text-gray-200 shadow-2xl animate-in fade-in slide-in-from-bottom-1">
           <KPopover.Arrow />
           <div class="flex items-center justify-between gap-4 px-2.5">
             <KPopover.Title class="whitespace-nowrap text-sm font-black text-white">{props.title}</KPopover.Title>
-            <KPopover.CloseButton>
-              <span innerHTML={xIcon} class="text-gray-200 *:w-4" />
+            <KPopover.CloseButton class="text-gray-200 outline-none focus-visible:text-white">
+              <span innerHTML={xIcon} class="*:w-4" />
             </KPopover.CloseButton>
           </div>
           <KPopover.Description class="m-2">{props.content}</KPopover.Description>

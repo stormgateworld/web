@@ -13,7 +13,7 @@ export function ProgressCircle(props: ProgressCircleProps) {
 
   return (
     <svg class={props.class} viewBox="0 0 120 120">
-      <path class=" opacity-10" stroke="white" stroke-width={stroke} d="M60 10 a 50 50 0 1 0 1 0 Z" />
+      <path class="opacity-10" stroke="white" stroke-width={stroke} d="M60 10 a 50 50 0 1 0 1 0 Z" />
       <path
         class="fill-none opacity-30"
         stroke="white"
