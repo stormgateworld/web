@@ -6,9 +6,14 @@ import vanguardPortrait from "../../assets/game/factions/vanguard-portrait.png"
 import vanguardIcon from "../../assets/game/factions/vanguard-small-glow.png"
 import infernalsIcon from "../../assets/game/factions/infernals-small-glow.png"
 import { RankedBadge } from "../ui/RankedBadge"
-import type { LeaderboardEntryResponse } from "../../lib/api"
+import { League, type LeaderboardEntryResponse } from "../../lib/api"
 import { formatLeague } from "../../lib/format"
 import { Tooltip } from "../ui/Tooltip"
+import { classes } from "../../lib/theme"
+import { ProgressCircle } from "../ui/ProgressCircle"
+import { ProgressBar } from "../ui/ProgressBar"
+import { Popover } from "../ui/Popover"
+import { Tier, leagueInformations } from "../../lib/leagues"
 
 interface Props {
   faction: "infernals" | "vanguard"
@@ -43,6 +48,19 @@ const winrate = Math.round((entry.win_rate <= 1 ? entry.win_rate * 100 : entry.w
 const rankAvailable = entry.rank !== null && entry.rank! < 997 // Todo: Remove when we support ranks over 1000
 const lastRankAvailable =
   entry.points !== null && `Last known rank #${entry.rank}\n${Math.round(entry.points!)} RP \n${formatLeague(entry)}`
+
+const tierInformation = leagueInformations[entry.league || League.ASPIRANT][entry.tier as Tier] || {
+  minPoint: 0,
+  nextLeague: null,
+  nextTier: null,
+}
+const points = entry.points ? Math.round(entry.points) : tierInformation.minPoint
+const minPoint = tierInformation.minPoint
+const maxPoint =
+  tierInformation.nextLeague && tierInformation.nextTier
+    ? leagueInformations[tierInformation.nextLeague || League.ASPIRANT][tierInformation.nextTier].minPoint - 1
+    : 0
+const progress = ((points - minPoint) * 100) / (maxPoint - minPoint)
 ---
 
 <div
@@ -79,8 +97,40 @@ const lastRankAvailable =
               <p class={styles.stat.value}>{Math.round(entry.points!)}</p>
             </div>
             <div>
-              <p class={styles.stat.label}>League</p>
-              <p class={styles.stat.value}>{formatLeague(entry)} </p>
+              <p class={classes(styles.stat.label, "flex items-center gap-1.5")}>
+                League
+                {entry.league && tierInformation.nextLeague && tierInformation.nextTier && (
+                  <Popover client:idle>
+                    <ProgressCircle
+                      class="h-3 transition-transform hover:scale-125 hover:opacity-80"
+                      value={progress}
+                      slot="trigger"
+                    />
+                    <p slot="title">
+                      Next league:{" "}
+                      {formatLeague({ league: tierInformation.nextLeague, tier: tierInformation.nextTier })}
+                    </p>
+                    <div slot="content">
+                      <div class="flex justify-between">
+                        <div class="flex items-center gap-1">
+                          <RankedBadge class="w-8" entry={{ league: entry.league, tier: entry.tier }} />
+                          <p>{minPoint}</p>
+                        </div>
+
+                        <div class="mr-1 flex items-center gap-1">
+                          <RankedBadge
+                            class="w-8"
+                            entry={{ league: tierInformation.nextLeague, tier: tierInformation.nextTier }}
+                          />
+                          <p>{maxPoint}</p>
+                        </div>
+                      </div>
+                      <ProgressBar value={progress} backgroundColor="bg-gray-500/80" class="mt-2" />
+                    </div>
+                  </Popover>
+                )}
+              </p>
+              <p class={styles.stat.value}>{formatLeague(entry)}</p>
             </div>
           </>
         ) : (
@@ -116,9 +166,7 @@ const lastRankAvailable =
         </div>
         <div class="flex items-center justify-between">
           <p class={styles.stat.value}>{winrate}%</p>
-          <div class="relative ml-4 h-1.5 flex-auto rounded-sm bg-red-600">
-            <div class="absolute inset-0 rounded-l-sm bg-green-600" style={{ width: `${winrate}%` }}></div>
-          </div>
+          <ProgressBar value={winrate} class="ml-4" />
         </div>
       </div>
     </div>
