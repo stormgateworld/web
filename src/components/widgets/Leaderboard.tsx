@@ -65,7 +65,7 @@ export function Leaderboard(props: Props) {
   createEffect(
     on([selectedFaction, query], () =>
       start(() => {
-        setPage(1)
+        setPage(props.page ?? 1)
         setFaction(((f) => (f === "all" ? undefined : f))(selectedFaction()?.value as Race | "all"))
       })
     )
