@@ -1,5 +1,4 @@
-import { createSignal, onCleanup } from "solid-js"
-import { isServer } from "solid-js/web"
+import { createSignal, onCleanup, onMount } from "solid-js"
 
 export type DateFormat = "shortdate" | "mediumdate" | "shortdatetime" | "mediumdatetime" | "relative" | "shortrelative"
 interface StyleMap {
@@ -79,20 +78,24 @@ export interface FormatDateProps {
 }
 export default function FormatDate({ date, format }: FormatDateProps) {
   const d = parseUTC(date)
-  const [output, setOutput] = createSignal<string>("")
+  const [output, setOutput] = createSignal<string>(formatDate(d, format, true))
   const isRelative = format === "relative" || format === "shortrelative"
-  const update = () => {
-    const x = formatDate(d, format, isServer)
-    console.log("New date rendered:", x)
-    setOutput(x)
-  }
 
-  if (isRelative && !isServer) {
-    // Dynamically updating display for client-side relative times
-    const interval = setInterval(update, 1000)
-    onCleanup(() => clearInterval(interval))
-  }
+  onMount(() => {
+    const update = () => {
+      const x = formatDate(d, format, false)
+      console.log("New date rendered:", x)
+      setOutput(x)
+    }
 
-  update()
+    if (isRelative) {
+      // Dynamically updating display for client-side relative times
+      const interval = setInterval(update, 1000)
+      onCleanup(() => clearInterval(interval))
+    }
+
+    update()
+  })
+
   return <>{output()}</>
 }
