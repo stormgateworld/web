@@ -60,7 +60,7 @@ export function formatDateRelative(date: Date, short: boolean = false) {
     else if (days > 0) return `${days}d`
     else if (hours > 0) return `${hours}h`
     else if (minutes > 0) return `${minutes}m`
-    else if (seconds > 0) return `${seconds}m`
+    else if (seconds > 0) return `${seconds}s`
     return "now"
   }
   if (years > 0) return `${years} year${years > 1 ? "s" : ""} ago`
