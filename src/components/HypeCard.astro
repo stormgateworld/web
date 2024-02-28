@@ -35,7 +35,7 @@ const website = (await getCollection("websites", ({ data }) => url?.includes(dat
       {
         date && (
           <p>
-            <FormatDate date={date} format="relative" />
+            <FormatDate date={date} format="relative" client:load />
           </p>
         )
       }
