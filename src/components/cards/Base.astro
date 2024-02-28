@@ -1,6 +1,6 @@
 ---
 import type { Content } from "../../lib/content"
-import Timeago from "../Timeago.astro"
+import FormatDate from "../widgets/FormatDate.astro"
 import unescape from "lodash/unescape"
 export interface Props {
   data: Content
@@ -60,7 +60,7 @@ const { data } = Astro.props
       {
         data.published_at && (
           <span class="truncate">
-            <Timeago date={new Date(data.published_at)} format="short" />
+            <FormatDate date={data.published_at} format="shortrelative" />
           </span>
         )
       }

@@ -1,6 +1,6 @@
 ---
 import { CollectionEntry, getCollection } from "astro:content"
-import Timeago from "./Timeago.astro"
+import FormatDate from "./widgets/FormatDate.tsx"
 
 export interface Props {
   entry: CollectionEntry<"hype">
@@ -35,7 +35,7 @@ const website = (await getCollection("websites", ({ data }) => url?.includes(dat
       {
         date && (
           <p>
-            <Timeago date={date} />
+            <FormatDate date={date} format="relative" />
           </p>
         )
       }
