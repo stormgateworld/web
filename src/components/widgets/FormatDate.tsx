@@ -80,22 +80,25 @@ export default function FormatDate({ date, format }: FormatDateProps) {
   const d = parseUTC(date)
   const [output, setOutput] = createSignal<string>(formatDate(d, format, true))
   const isRelative = format === "relative" || format === "shortrelative"
+  const [tooltip, setTooltip] = createSignal<string>(formatDate(d, isRelative ? "mediumdatetime" : format, true))
 
   onMount(() => {
-    const update = () => {
-      const x = formatDate(d, format, false)
-      console.log("New date rendered:", x)
-      setOutput(x)
-    }
+    const update = () => setOutput(formatDate(d, format, false))
 
-    if (isRelative) {
+    const ageInMinutes = (new Date().getTime() - d.getTime()) / (1000 * 60)
+
+    if (isRelative && ageInMinutes < 60) {
       // Dynamically updating display for client-side relative times
       const interval = setInterval(update, 1000)
       onCleanup(() => clearInterval(interval))
     }
 
     update()
+    if (isRelative) {
+      // Update tooltip to show absolute time in local timezone
+      setTooltip(formatDate(d, isRelative ? "mediumdatetime" : format, false))
+    }
   })
 
-  return <>{output()}</>
+  return <span title={tooltip()}>{output()}</span>
 }
