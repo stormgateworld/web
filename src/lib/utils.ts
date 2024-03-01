@@ -35,7 +35,7 @@ export function urlencode(str: string) {
   const sanitizedStr = str.replaceAll(/[^\x00-\x7F]/g, "-").replaceAll(/[\[\]# \/*]/g, "-")
   const encodedStr = encodeURIComponent(sanitizedStr).replaceAll("%20", "-").replaceAll(/-{2,}/g, "-").replace(/-$/, "")
 
-  return encodedStr
+  return encodedStr || "GigaChad"
 }
 
 export async function getDataOrErrorResponse<T extends readonly unknown[] | []>(
