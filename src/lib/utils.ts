@@ -31,7 +31,11 @@ export function formatDuration(seconds?: number | null) {
 }
 
 export function urlencode(str: string) {
-  return encodeURIComponent(str).replace(/%20/g, "-").replace(/%2F/g, "-")
+  // Remove non-ASCII characters and replace specific characters with '-'
+  const sanitizedStr = str.replaceAll(/[^\x00-\x7F]/g, "-").replaceAll(/[\[\]# \/*]/g, "-")
+  const encodedStr = encodeURIComponent(sanitizedStr).replaceAll("%20", "-").replaceAll(/-{2,}/g, "-").replace(/-$/, "")
+
+  return encodedStr
 }
 
 export async function getDataOrErrorResponse<T extends readonly unknown[] | []>(

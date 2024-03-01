@@ -1,5 +1,6 @@
 import type { LeaderboardEntryResponse, PlayerResponse } from "./api"
 import { leagueLabels } from "./labels"
+import { urlencode } from "./utils"
 
 export function formatDateRelative(date: Date, format: "short" | "medium" = "medium") {
   const now = new Date()
@@ -34,5 +35,5 @@ export function formatLeague(entry: Pick<LeaderboardEntryResponse, "league" | "t
 }
 
 export function getPlayerSlug(player: Pick<PlayerResponse, "id" | "nickname">) {
-  return player.nickname ? `${player.id}-${encodeURIComponent(player.nickname.replace(/\s/gi, "-"))}` : player.id
+  return player.nickname ? `${player.id}-${urlencode(player.nickname)}` : player.id
 }
