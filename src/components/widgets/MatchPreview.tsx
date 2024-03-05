@@ -1,6 +1,7 @@
 import type { MatchResponse } from "../../lib/api"
 import infernals from "../../assets/game/factions/infernals-small-glow.png"
 import vanguard from "../../assets/game/factions/vanguard-small-glow.png"
+import FormatDate from "./FormatDate"
 import { formatDuration, urlencode } from "../../lib/utils"
 import { Tooltip } from "../ui/Tooltip"
 import { RankedBadge } from "../ui/RankedBadge"
@@ -99,14 +100,7 @@ export default function MatchPreview(props: { match: MatchResponse; mainPlayerId
       <div class="hidden basis-1/6 text-right text-xs text-gray-400 sm:block">
         <p>{formatDuration(match.duration)}</p>
         <p>
-          {new Date(match.created_at).toLocaleString("en", {
-            year: "2-digit",
-            month: "numeric",
-            day: "numeric",
-            hour: "numeric",
-            minute: "numeric",
-            hour12: false,
-          })}
+          <FormatDate format="shortdatetime" date={match.created_at} />
         </p>
         <p>{match.server.replaceAll("_", " ")}</p>
       </div>

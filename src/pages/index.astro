@@ -5,7 +5,7 @@ import Box from "../components/Box.astro"
 import hero from "../assets/hero.png"
 import logoWhite from "../assets/stormgate-logo-white.png"
 import { fetchContent } from "../lib/content"
-import Timeago from "../components/Timeago.astro"
+import FormatDate from "../components/widgets/FormatDate"
 import RedditMeta from "../components/sources/RedditMeta.astro"
 import Card from "../components/Card.astro"
 import unescape from "lodash/unescape"
@@ -61,7 +61,7 @@ const news = (await newsRequest).sort((a, b) => {
 
                         {data.published_at && (
                           <span class="block truncate">
-                            <Timeago date={new Date(data.published_at)} />
+                            <FormatDate date={data.published_at} format="relative" client:load />
                           </span>
                         )}
                       </div>
