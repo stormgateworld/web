@@ -35,7 +35,9 @@ The leaderboard data is updated every 60 seconds.
 
 #### Why is my match missing?
 
-Our system fetches games on a best effort basis. While we have an API provided by Frost Giant Studios to fetch games, it may not be perfect and could experience downtime or issues. If you are missing a game, it is likely that the game was not fetched. We periodically attempt to fetch and update the status of older games.
+~~Our system fetches games on a best effort basis. While we have an API provided by Frost Giant Studios to fetch games, it may not be perfect and could experience downtime or issues. If you are missing a game, it is likely that the game was not fetched. We periodically attempt to fetch and update the status of older games.~~
+
+Match data is no longer available, due to restrictions from Frost Giant Studios.
 
 ### Contact
 

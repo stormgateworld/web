@@ -6,6 +6,7 @@ import { Image } from "astro:assets"
 import { Leaderboard } from "../../components/widgets/Leaderboard.tsx"
 import type { LeaderboardOrder, Race } from "../../lib/api"
 import { getCollection } from "astro:content"
+import DeprecationNotice from "../../components/promos/DeprecationNotice.astro"
 const mode = Astro.params.mode
 // todo, mode as query param
 const { page = 1, query, faction, order } = Object.fromEntries(new URL(Astro.request.url).searchParams.entries())
@@ -18,6 +19,11 @@ const badges = (await getCollection("badges")).map((b) => ({ ...b.data, icon: b.
     <Image src={hero} alt="" class="absolute h-full w-full object-cover" />
     <div class="absolute inset-0 bg-gradient-to-b from-gray-950/60 to-gray-950"></div>
   </div>
+  <DeprecationNotice
+    title="Player Profiles will no longer be updated"
+    lostValue="the 1v1 leaderboard will likely stay active but we won't be able to show match history or win rates"
+  />
+
   <section class="relative mx-auto max-w-screen-md space-y-4 px-4 py-0">
     <Leaderboard
       mode={mode}

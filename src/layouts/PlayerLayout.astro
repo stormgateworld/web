@@ -11,7 +11,7 @@ import type { PlayerResponse } from "../lib/api"
 import { getCollection } from "astro:content"
 import { Image } from "astro:assets"
 import { Tooltip } from "../components/ui/Tooltip"
-
+import DeprecationNotice from "../components/promos/DeprecationNotice.astro"
 interface Props {
   player: PlayerResponse
 }
@@ -105,5 +105,6 @@ const playerInfo = (await getCollection("players")).find((p) => p.data.playerId 
       ]}
     />
   </Header>
+  <DeprecationNotice lostValue="meaning we can't show recent matches or update player statistics" />
   <slot />
 </Layout>

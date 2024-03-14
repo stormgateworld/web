@@ -3,6 +3,14 @@ layout: "../layouts/Page.astro"
 title: "API"
 ---
 
+import DeprecationNotice from "../components/promos/DeprecationNotice.astro"
+
+<DeprecationNotice
+  class="not-prose -mt-4 mb-12 !px-0"
+  title="The Community API is no longer supported"
+  lostValue="we can no longer provide you with matches, up-to-date player profiles or win-rates. The leaderboard may continue to work, but we can't guarantee win-rates or ranking data is correct"
+/>
+
 # Community API
 
 Stormgate World provides a public API for the community to use. The API, just like the game, is currently in beta and may change without notice. The API is currently read-only and does not require authentication.
