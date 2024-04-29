@@ -1,17 +1,17 @@
 ---
 export const prerender = false
-import Layout from "./Layout.astro"
+import { Image } from "astro:assets"
+import { getCollection } from "astro:content"
 import Header from "../components/layout/Header.astro"
 import HeaderContent from "../components/layout/HeaderContent.astro"
-import HeaderNav from "../components/layout/HeaderNav.astro"
-import { RankedBadge } from "../components/ui/RankedBadge"
 import HeaderMeta from "../components/layout/HeaderMeta.astro"
-import { formatDateRelative, getPlayerSlug } from "../lib/format"
-import type { PlayerResponse } from "../lib/api"
-import { getCollection } from "astro:content"
-import { Image } from "astro:assets"
-import { Tooltip } from "../components/ui/Tooltip"
+import HeaderNav from "../components/layout/HeaderNav.astro"
 import DeprecationNotice from "../components/promos/DeprecationNotice.astro"
+import { RankedBadge } from "../components/ui/RankedBadge"
+import { Tooltip } from "../components/ui/Tooltip"
+import type { PlayerResponse } from "../lib/api"
+import { formatDateRelative, getPlayerSlug } from "../lib/format"
+import Layout from "./Layout.astro"
 interface Props {
   player: PlayerResponse
 }
@@ -105,6 +105,10 @@ const playerInfo = (await getCollection("players")).find((p) => p.data.playerId 
       ]}
     />
   </Header>
-  <DeprecationNotice lostValue="meaning we can't show recent matches or update player statistics" />
+  <DeprecationNotice>
+    <p class="text-sm text-yellow-200 mt-4">
+      Search for <a href={`https://stormgate.untapped.gg/en/players?q=${encodeURIComponent(player.nickname!)}`} target="_blank" class="text-yellow-400 underline">"{player.nickname}"</a> on the official leaderboard.
+    </p>
+  </DeprecationNotice>
   <slot />
 </Layout>

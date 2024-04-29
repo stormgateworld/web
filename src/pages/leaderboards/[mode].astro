@@ -1,12 +1,12 @@
 ---
 export const prerender = false
-import Layout from "../../layouts/Layout.astro"
-import hero from "../../assets/game/vanguard-base-hero.jpg"
 import { Image } from "astro:assets"
-import { Leaderboard } from "../../components/widgets/Leaderboard.tsx"
-import type { LeaderboardOrder, Race } from "../../lib/api"
 import { getCollection } from "astro:content"
+import hero from "../../assets/game/vanguard-base-hero.jpg"
 import DeprecationNotice from "../../components/promos/DeprecationNotice.astro"
+import { Leaderboard } from "../../components/widgets/Leaderboard.tsx"
+import Layout from "../../layouts/Layout.astro"
+import type { LeaderboardOrder, Race } from "../../lib/api"
 const mode = Astro.params.mode
 // todo, mode as query param
 const { page = 1, query, faction, order } = Object.fromEntries(new URL(Astro.request.url).searchParams.entries())
@@ -19,12 +19,16 @@ const badges = (await getCollection("badges")).map((b) => ({ ...b.data, icon: b.
     <Image src={hero} alt="" class="absolute h-full w-full object-cover" />
     <div class="absolute inset-0 bg-gradient-to-b from-gray-950/60 to-gray-950"></div>
   </div>
-  <DeprecationNotice
-    title="Player Profiles will no longer be updated"
-    lostValue="the 1v1 leaderboard will likely stay active but we won't be able to show match history or win rates"
-  />
 
   <section class="relative mx-auto max-w-screen-md space-y-4 px-4 py-0">
+    <DeprecationNotice
+      class="bg-black !p-0 mt-12 mb-4 w-full rounded-lg"
+    >
+    <p class="text-sm text-yellow-200 mt-4">
+      View the  <a href="https://stormgate.untapped.gg/en/leaderboard" class="text-yellow-400 underline" target="_blank">Official Leaderboard</a> on Untapped.gg
+    </p>
+  </DeprecationNotice>
+
     <Leaderboard
       mode={mode}
       query={query}
